@@ -192,7 +192,7 @@
         <version>1.9.0</version>
         <inherited>false</inherited>
         <configuration>
-          <header>${basedir}/header.txt</header>
+          <header>${pathtoHeader}</header>
           <aggregate>true</aggregate>
           <includes>
             <include>src/**</include>
