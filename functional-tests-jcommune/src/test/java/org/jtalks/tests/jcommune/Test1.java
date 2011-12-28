@@ -14,17 +14,10 @@
  */
 package org.jtalks.tests.jcommune;
 
-import com.thoughtworks.selenium.DefaultSelenium;
-import com.thoughtworks.selenium.HttpCommandProcessor;
-import com.thoughtworks.selenium.Selenium;
-import org.openqa.selenium.server.RemoteControlConfiguration;
-import org.openqa.selenium.server.SeleniumServer;
-import org.testng.ITestContext;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static com.thoughtworks.selenium.SeleneseTestCase.assertEquals;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,46 +27,12 @@ import static com.thoughtworks.selenium.SeleneseTestCase.assertEquals;
  * To change this template use File | Settings | File Templates.
  */
 public class Test1 {
-	private SeleniumServer server;
-	private HttpCommandProcessor proc;
-	private Selenium selenium;
 
-	@BeforeSuite(alwaysRun = true)
-	public void setupBeforeSuite(ITestContext context) {
-	  String seleniumHost = "localhost";
-	  String seleniumPort = "4447";
-	  String seleniumBrowser = "*firefox";
-	  String seleniumUrl = "http://deploy.jtalks.org";
+	public static void main(String[] args) {
+		WebDriver driver = new FirefoxDriver();
+		driver.get("http://deploy.jtalks.org/jcommune");
 
-	  RemoteControlConfiguration rcc = new RemoteControlConfiguration();
-	  rcc.setSingleWindow(true);
-	  rcc.setPort(Integer.parseInt(seleniumPort));
-
-	  try {
-		server = new SeleniumServer(false, rcc);
-		server.boot();
-	  } catch (Exception e) {
-		throw new IllegalStateException("Can't start selenium server", e);
-	  }
-
-	  proc = new HttpCommandProcessor(seleniumHost, Integer.parseInt(seleniumPort),
-		  seleniumBrowser, seleniumUrl);
-	  selenium = new DefaultSelenium(proc);
-	  selenium.start();
-	}
-
-	@AfterSuite(alwaysRun = true)
-	public void setupAfterSuite() {
-	  selenium.stop();
-	  server.stop();
-	}
-
-
-	@Test(description="Launches the WordPress site")
-	public void launchSite() throws Exception {
-	selenium.open("http://deploy.jtalks.org/jcommune");
-	selenium.waitForPageToLoad("30000");
-	assertEquals(selenium.getTitle(), "Java форум JTalks");
+		driver.quit();
 	}
 
 }
