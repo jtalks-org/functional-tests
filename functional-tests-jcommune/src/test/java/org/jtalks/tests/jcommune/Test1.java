@@ -14,9 +14,9 @@
  */
 package org.jtalks.tests.jcommune;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.annotations.Test;
 
 
 /**
@@ -28,11 +28,13 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  */
 public class Test1 {
 
-	public static void main(String[] args) {
+
+	@Test(description = "Launches the WordPress site")
+	public void launchSite() {
 		WebDriver driver = new FirefoxDriver();
 		driver.get("http://deploy.jtalks.org/jcommune");
-
 		driver.quit();
 	}
+
 
 }
