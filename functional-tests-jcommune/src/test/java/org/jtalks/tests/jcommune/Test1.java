@@ -14,9 +14,15 @@
  */
 package org.jtalks.tests.jcommune;
 
+import config.SeleniumConfig;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
+import java.net.URL;
 
 
 /**
@@ -27,14 +33,26 @@ import org.testng.annotations.Test;
  * To change this template use File | Settings | File Templates.
  */
 public class Test1 {
+	WebDriver driver;
 
 
-	@Test(description = "Launches the WordPress site")
-	public void launchSite() {
-		WebDriver driver = new FirefoxDriver();
-		driver.get("http://deploy.jtalks.org/jcommune");
-		driver.quit();
+	@BeforeSuite
+	public void setupBeforeSuite() throws Exception {
+
+		System.out.println();
+		driver = new RemoteWebDriver(
+				new URL(SeleniumConfig.getRemoteSeleniumServerUrl()),
+				SeleniumConfig.getBrowserDriver());
 	}
 
+	@AfterSuite
+	public void setupAfterSuite() {
+		driver.close();
+	}
+
+	@Test
+	public void launchSite() {
+		driver.get("http://deploy.jtalks.org/jcommune");
+	}
 
 }
