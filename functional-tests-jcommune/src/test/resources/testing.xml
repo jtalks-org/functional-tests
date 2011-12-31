@@ -1,0 +1,10 @@
+<suite name="MyTest">
+    <parameter name="selenium-server-url" value="http://autotest.jtalks.org:4444/wd/hub"/>
+    <parameter name="selenium-driver-type" value="html"/>
+    <test name="Test1">
+        <classes>
+            <class name="org.jtalks.tests.jcommune.Test1"/>
+        </classes>
+    </test>
+</suite>
+

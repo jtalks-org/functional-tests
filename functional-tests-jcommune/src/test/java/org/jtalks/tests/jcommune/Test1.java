@@ -14,12 +14,15 @@
  */
 package org.jtalks.tests.jcommune;
 
-import config.SeleniumConfig;
+import utils.SeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import java.net.URL;
@@ -35,18 +38,16 @@ import java.net.URL;
 public class Test1 {
 	WebDriver driver;
 
-
-	@BeforeSuite
-	public void setupBeforeSuite() throws Exception {
-
-		System.out.println();
+	@BeforeClass
+	@Parameters({"selenium-server-url", "selenium-driver-type"})
+	public void init(String selServerURL, String selDriverType) throws Exception {
 		driver = new RemoteWebDriver(
-				new URL(SeleniumConfig.getRemoteSeleniumServerUrl()),
-				SeleniumConfig.getBrowserDriver());
+				new URL(selServerURL),
+				SeleniumConfig.getBrowserDriver(selDriverType));
 	}
 
-	@AfterSuite
-	public void setupAfterSuite() {
+	@AfterClass
+	public void destroy() {
 		driver.close();
 	}
 
