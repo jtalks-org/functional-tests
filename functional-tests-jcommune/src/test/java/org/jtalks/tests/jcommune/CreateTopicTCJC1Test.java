@@ -2,7 +2,7 @@ package org.jtalks.tests.jcommune;
 
 import java.util.List;
 
-import org.jtalks.tests.jcommune.rserver.SeleniumServer;
+import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -17,7 +17,7 @@ import utils.StringHelp;
  *
  * @author erik
  */
-public class CreateTopicTCJC1Test extends SeleniumServer {
+public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
 	String subject;
 	String message;
 
@@ -45,20 +45,6 @@ public class CreateTopicTCJC1Test extends SeleniumServer {
 		List<WebElement> list = driver.findElements(By.xpath("//ul[@class='forum_table']/li"));
 		Assert.assertTrue(assertThatTopicPresent(list, subject));
 
-	}
-
-
-	/**
-	 * This method does the authentication
-	 *
-	 * @param username
-	 * @param password
-	 */
-	private void signIn(String username, String password, String appURL) {
-		driver.get(appURL + "/login");
-		driver.findElement(By.id("j_username")).sendKeys(username);
-		driver.findElement(By.id("j_password")).sendKeys(password);
-		driver.findElement(By.xpath("//input[@type='submit']")).click();
 	}
 
 

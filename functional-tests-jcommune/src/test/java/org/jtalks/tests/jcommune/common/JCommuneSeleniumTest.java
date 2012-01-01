@@ -1,16 +1,19 @@
-package org.jtalks.tests.jcommune.rserver;
+package org.jtalks.tests.jcommune.common;
 
 import org.dbunit.DatabaseUnitException;
+import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.XmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
+import utils.DBUnitConfig;
 import utils.SeleniumConfig;
 
 import java.io.File;
@@ -26,7 +29,7 @@ import java.sql.SQLException;
  *
  * @author masyan
  */
-public class SeleniumServer {
+public class JCommuneSeleniumTest {
 	/**
 	 * Object for work with Remote Selenium Server
 	 */
@@ -45,14 +48,18 @@ public class SeleniumServer {
 	 * @throws MalformedURLException
 	 */
 	@BeforeClass(alwaysRun = true)
-	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password"})
-	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password) throws Exception {
+	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "db-type"})
+	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String dbType) throws Exception {
 		driver = new RemoteWebDriver(
 				new URL(selServerURL),
 				SeleniumConfig.getBrowserDriver(selDriverType));
 
 
 		IDatabaseConnection conn = this.getConnection(dbDriver, dbURL, username, password);
+		DatabaseConfig config = conn.getConfig();
+		config.setProperty(DatabaseConfig.PROPERTY_DATATYPE_FACTORY,
+				DBUnitConfig.getDataTypeFactory(dbType));
+
 		IDataSet users = this.getDataSetUsers();
 
 		try {
@@ -113,5 +120,19 @@ public class SeleniumServer {
 		String fileDataPath = dir.getAbsolutePath() + fSep + "functional-tests" + fSep + "functional-tests-jcommune" +
 				fSep + "src" + fSep + "test" + fSep + "data" + fSep;
 		return new XmlDataSet(new FileInputStream(fileDataPath + "dbu_users.xml"));
+	}
+
+	/**
+	 * This method does the authentication
+	 *
+	 * @param username
+	 * @param password
+	 * @author eric
+	 */
+	public void signIn(String username, String password, String appURL) {
+		driver.get(appURL + "/login");
+		driver.findElement(By.id("j_username")).sendKeys(username);
+		driver.findElement(By.id("j_password")).sendKeys(password);
+		driver.findElement(By.xpath("//input[@type='submit']")).click();
 	}
 }

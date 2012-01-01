@@ -12,6 +12,8 @@
     <parameter name="db-driver" value="com.mysql.jdbc.Driver"/>
     <parameter name="db-username" value="jcommune"/>
     <parameter name="db-password" value="jtalks_TzA"/>
+    <!--Values:  db2, h2, hsqldb, mckoi, mssql, mysql, oracle, oracle, postgresql, netezza-->
+    <parameter name="db-type" value="mysql"/>
 
     <!--Registered users-->
     <!--simlpe user-->
