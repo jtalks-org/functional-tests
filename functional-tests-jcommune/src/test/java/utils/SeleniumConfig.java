@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Singleton. Class contains parametrs of the remote Selenium server.
+ * Class contains parametrs of the remote Selenium server.
  *
  * @author masyan
  */

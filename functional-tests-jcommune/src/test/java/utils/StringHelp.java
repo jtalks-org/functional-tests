@@ -4,11 +4,9 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * Created by IntelliJ IDEA.
- * User: masyan
- * Date: 31.12.11
- * Time: 23:49
- * To change this template use File | Settings | File Templates.
+ * Utols class. Contains methods to work with String
+ *
+ * @author masyan
  */
 public class StringHelp {
 
@@ -16,7 +14,7 @@ public class StringHelp {
 	 * this method generates String of random chars necessary length
 	 *
 	 * @param length
-	 * @return
+	 * @return String  contains random characters (count=length)
 	 */
 	public static String getRandomString(int length) {
 		Random random = new Random((new Date()).getTime());

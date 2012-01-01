@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
@@ -17,8 +18,6 @@ import utils.StringHelp;
  * @author erik
  */
 public class CreateTopicTCJC1Test extends SeleniumServer {
-	String userName = "tester112";
-	String password = "tester112";
 	String subject;
 	String message;
 
@@ -29,9 +28,11 @@ public class CreateTopicTCJC1Test extends SeleniumServer {
 	}
 
 	@Test
-	public void testCreateTopic() {
-		signIn(userName, password);
-		driver.get("http://deploy.jtalks.org/jcommune/branches/1");
+	@Parameters({"app-url", "uUsername", "uPassword"})
+	public void createTopic(String appURL, String username, String password) {
+		signIn(username, password, appURL);
+
+		driver.get(appURL + "/branches/1");
 		driver.findElement(By.xpath("//a[@href='/jcommune/topics/new?branchId=1']")).click();
 		driver.findElement(By.id("subject")).sendKeys(subject);
 		driver.findElement(By.id("tbMsg")).sendKeys(message);
@@ -40,7 +41,7 @@ public class CreateTopicTCJC1Test extends SeleniumServer {
 		Assert.assertEquals(driver.findElement(By.xpath("//a[@class='heading']")).getText(), subject);
 		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='forum_message_cell_text']")).getText(), message);
 
-		driver.get("http://deploy.jtalks.org/jcommune/branches/1");
+		driver.get(appURL + "/branches/1");
 		List<WebElement> list = driver.findElements(By.xpath("//ul[@class='forum_table']/li"));
 		Assert.assertTrue(assertThatTopicPresent(list, subject));
 
@@ -50,12 +51,12 @@ public class CreateTopicTCJC1Test extends SeleniumServer {
 	/**
 	 * This method does the authentication
 	 *
-	 * @param userName
+	 * @param username
 	 * @param password
 	 */
-	private void signIn(String userName, String password) {
-		driver.get("http://deploy.jtalks.org/jcommune/login");
-		driver.findElement(By.id("j_username")).sendKeys(userName);
+	private void signIn(String username, String password, String appURL) {
+		driver.get(appURL + "/login");
+		driver.findElement(By.id("j_username")).sendKeys(username);
 		driver.findElement(By.id("j_password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 	}

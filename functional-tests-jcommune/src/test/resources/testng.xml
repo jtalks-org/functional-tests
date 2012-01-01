@@ -1,8 +1,27 @@
 <suite name="JCommune">
+    <!--Selenium server paramentrs-->
     <parameter name="selenium-server-url" value="http://autotest.jtalks.org:4444/wd/hub"/>
+    <!--Values: chrome, ie, opera, android, ipad, iphone, html-->
     <parameter name="selenium-driver-type" value="html"/>
 
-    <test name="JCommune">
+    <!--Applicatiaon URL. Start page-->
+    <parameter name="app-url" value="http://deploy.jtalks.org/jcommune"/>
+
+    <!--Database params-->
+    <parameter name="db-url" value="jdbc:mysql://176.9.66.108/jtalks?sessionVariables=FOREIGN_KEY_CHECKS=0"/>
+    <parameter name="db-driver" value="com.mysql.jdbc.Driver"/>
+    <parameter name="db-username" value="jcommune"/>
+    <parameter name="db-password" value="jtalks_TzA"/>
+
+    <!--Registered users-->
+    <!--simlpe user-->
+    <parameter name="uUsername" value="testSel"/>
+    <parameter name="uPassword" value="testSel"/>
+    <!--Admin user-->
+    <parameter name="admUsername" value="adminSel"/>
+    <parameter name="admPassword" value="adminSel"/>
+
+    <test name="JCommuneHTMLUnit">
         <packages>
             <package name="org.jtalks.tests.jcommune"/>
         </packages>
