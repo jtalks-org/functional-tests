@@ -6,7 +6,6 @@ import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -47,9 +46,6 @@ public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
 		driver.get(appURL + "/branches/1");
 		List<WebElement> list = driver.findElements(By.xpath("//ul[@class='forum_table']/li"));
 		Assert.assertTrue(assertThatTopicPresent(list, subject));
-
-		//DBHelp.removeAllTestPosts(dbConnection);
-		//DBHelp.removeAllTestTopics(dbConnection);
 	}
 
 

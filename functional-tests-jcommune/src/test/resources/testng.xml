@@ -8,7 +8,7 @@
     <parameter name="app-url" value="http://deploy.jtalks.org/jcommune"/>
 
     <!--Database params-->
-    <parameter name="db-url" value="jdbc:mysql://176.9.66.108/jtalks?sessionVariables=FOREIGN_KEY_CHECKS=0"/>
+    <parameter name="db-url" value="jdbc:mysql://176.9.66.108/jtalks"/>
     <parameter name="db-driver" value="com.mysql.jdbc.Driver"/>
     <parameter name="db-username" value="jcommune"/>
     <parameter name="db-password" value="jtalks_TzA"/>

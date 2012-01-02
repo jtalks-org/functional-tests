@@ -42,7 +42,7 @@ public class JCommuneSeleniumTest {
 				new URL(selServerURL),
 				SeleniumConfig.getBrowserDriver(selDriverType));
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
-		//DBHelp.setForumUsers(dbConnection);
+		DBHelp.setForumUsers(dbConnection);
 	}
 
 	/**
