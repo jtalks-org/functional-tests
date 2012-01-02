@@ -6,9 +6,11 @@ import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import utils.DBHelp;
 import utils.StringHelp;
 
 /**
@@ -33,7 +35,7 @@ public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 
-		driver.get(appURL + "/branches/1");
+		driver.findElement(By.xpath("//a[@href='/jcommune/branches/1']")).click();
 		driver.findElement(By.xpath("//a[@href='/jcommune/topics/new?branchId=1']")).click();
 		driver.findElement(By.id("subject")).sendKeys(subject);
 		driver.findElement(By.id("tbMsg")).sendKeys(message);
@@ -46,6 +48,8 @@ public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
 		List<WebElement> list = driver.findElements(By.xpath("//ul[@class='forum_table']/li"));
 		Assert.assertTrue(assertThatTopicPresent(list, subject));
 
+		//DBHelp.removeAllTestPosts(dbConnection);
+		//DBHelp.removeAllTestTopics(dbConnection);
 	}
 
 

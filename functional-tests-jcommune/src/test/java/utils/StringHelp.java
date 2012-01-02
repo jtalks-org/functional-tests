@@ -42,8 +42,10 @@ public class StringHelp {
 				out += values[idx];
 			}
 		}
-
-
 		return out;
+	}
+
+	public static String getTestPrefix() {
+		return testPrefix;
 	}
 }
