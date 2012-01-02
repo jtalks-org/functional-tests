@@ -14,12 +14,14 @@
     <parameter name="db-password" value="jtalks_TzA"/>
 
     <!--Registered users-->
-    <!--simlpe user-->
+    <!--simlpe users-->
     <parameter name="uUsername" value="testSel"/>
     <parameter name="uPassword" value="testSel"/>
+    <parameter name="uUsername2" value="testSel2"/>
+    <parameter name="uPassword2" value="testSel2"/>
     <!--Admin user-->
-    <parameter name="admUsername" value="adminSel"/>
-    <parameter name="admPassword" value="adminSel"/>
+    <parameter name="aUsername" value="adminSel"/>
+    <parameter name="aPassword" value="adminSel"/>
 
     <test name="JCommuneHTMLUnit">
         <packages>
