@@ -30,6 +30,7 @@ public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
 	@Test
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void createTopic(String appURL, String username, String password) {
+		driver.get(appURL);
 		signIn(username, password, appURL);
 
 		driver.get(appURL + "/branches/1");

@@ -130,7 +130,7 @@ public class JCommuneSeleniumTest {
 	 * @author eric
 	 */
 	public void signIn(String username, String password, String appURL) {
-		driver.get(appURL + "/login");
+		driver.findElement(By.xpath("//a[@href='/jcommune/login']")).click();
 		driver.findElement(By.id("j_username")).sendKeys(username);
 		driver.findElement(By.id("j_password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
