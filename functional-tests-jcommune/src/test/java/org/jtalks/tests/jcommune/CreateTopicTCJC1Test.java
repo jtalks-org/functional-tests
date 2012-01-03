@@ -34,8 +34,8 @@ public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 
-		driver.findElement(By.xpath("//a[@href='jcommune/branches/1']")).click();
-		driver.findElement(By.xpath("//a[@href='jcommune/topics/new?branchId=1']")).click();
+		driver.findElement(By.xpath("//a[@href='/jcommune/branches/1']")).click();
+		driver.findElement(By.xpath("//a[@href='/jcommune/topics/new?branchId=1']")).click();
 		driver.findElement(By.id("subject")).sendKeys(subject);
 		driver.findElement(By.id("tbMsg")).sendKeys(message);
 		driver.findElement(By.id("post")).click();
