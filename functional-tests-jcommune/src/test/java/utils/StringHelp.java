@@ -45,6 +45,17 @@ public class StringHelp {
 		return out;
 	}
 
+	/**
+	 * Method  generate random eMail address.
+	 *
+	 * @return Streing with eMail address
+	 */
+	public static String getRandomEmail() {
+		String eMail = "";
+		eMail += getRandomString(8) + "@testdomen.tdc";
+		return eMail;
+	}
+
 	public static String getTestPrefix() {
 		return testPrefix;
 	}
