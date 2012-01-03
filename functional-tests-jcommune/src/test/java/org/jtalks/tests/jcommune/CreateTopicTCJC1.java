@@ -18,7 +18,7 @@ import utils.StringHelp;
  *
  * @author erik
  */
-public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
+public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	String subject;
 	String message;
 
@@ -30,7 +30,7 @@ public class CreateTopicTCJC1Test extends JCommuneSeleniumTest {
 
 	@Test
 	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void createTopic(String appURL, String username, String password) {
+	public void createTopicTest(String appURL, String username, String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 
