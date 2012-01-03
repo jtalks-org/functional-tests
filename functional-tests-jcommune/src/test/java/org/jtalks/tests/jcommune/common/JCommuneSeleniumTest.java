@@ -68,12 +68,22 @@ public class JCommuneSeleniumTest {
 	 *
 	 * @param username
 	 * @param password
-	 * @author eric
+	 * @author erik
 	 */
 	public void signIn(String username, String password, String appURL) {
 		driver.findElement(By.xpath("//a[@href='/jcommune/login']")).click();
 		driver.findElement(By.id("j_username")).sendKeys(username);
 		driver.findElement(By.id("j_password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
+	}
+	
+	/**
+	 * This method checks that link for logout present, than click on it 
+	 *
+	 * @author erik
+	 */
+	public void logOut(){
+		if(driver.findElement(By.xpath("//a[@href='/jcommune/logout']")).isDisplayed())
+			driver.findElement(By.xpath("//a[@href='/jcommune/logout']")).click();
 	}
 }
