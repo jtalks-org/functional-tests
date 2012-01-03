@@ -5,7 +5,7 @@
     <parameter name="selenium-driver-type" value="html"/>
 
     <!--Applicatiaon URL. Start page-->
-    <parameter name="app-url" value="http://deploy.jtalks.org/jcommune"/>
+    <parameter name="app-url" value="http://deploy.jtalks.org/jcommune/"/>
 
     <!--Database params-->
     <parameter name="db-url" value="jdbc:mysql://176.9.66.108/jtalks"/>
@@ -24,9 +24,12 @@
     <parameter name="aPassword" value="adminSel"/>
 
     <test name="JCommuneHTMLUnit">
-        <packages>
-            <package name="org.jtalks.tests.jcommune"/>
-        </packages>
+        <classes>
+            <class name="org.jtalks.tests.jcommune.SignUpTCJC5Test"/>
+        </classes>
+        <!--<packages>-->
+        <!--<package name="org.jtalks.tests.jcommune"/>-->
+        <!--</packages>-->
     </test>
 </suite>
 
