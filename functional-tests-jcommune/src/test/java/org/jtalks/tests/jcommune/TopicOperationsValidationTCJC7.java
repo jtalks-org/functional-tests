@@ -1,8 +1,11 @@
 package org.jtalks.tests.jcommune;
 
+import org.apache.commons.io.FileUtils;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -14,6 +17,7 @@ import org.testng.annotations.Test;
 import utils.CollectionHelp;
 import utils.StringHelp;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -53,26 +57,19 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 4)
-	public void checkErrorMessageWithShortTitleTopicTest() {
+	public void checkErrorMessageWithShortTitleTopicTest() throws IOException {
 		driver.findElement(By.xpath("//input[@id='subject']")).sendKeys(StringHelp.getRandomString(4));
 		driver.findElement(By.id("post")).click();
+
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[@id='subject']")));
 	}
 
+	//checking on the value of more than 255 characters do not need, because the field is limited to 255 characters
 
-	//    TODO  Uncommented Long Test. After fixed input text on JSP (now max length = 60)
-//	@Test(priority = 5)
-//	public void checkErrorMessageWithLongTitleTopicTest(){
-//		driver.findElement(By.xpath("//input[@id='subject']")).clear();
-//		driver.findElement(By.xpath("//input[@id='subject']")).sendKeys(StringHelp.getRandomString(256));
-//		driver.findElement(By.id("post")).click();
-//		Assert.assertNotNull(driver.findElement(By.xpath("//span[@id='subject']")));
-//	}
 
-	//    TODO  Change tittle size to 255. After fixed input text on JSP (now max length = 60)
-	@Test(priority = 6)
+	@Test(priority = 5)
 	public void checkErrorMessageWithValidTitleTopicTest() {
-		acceptedTitle = StringHelp.getRandomString(60);
+		acceptedTitle = StringHelp.getRandomString(255);
 		driver.findElement(By.xpath("//input[@id='subject']")).clear();
 		driver.findElement(By.xpath("//input[@id='subject']")).sendKeys(acceptedTitle);
 		driver.findElement(By.id("post")).click();
@@ -85,19 +82,19 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 		}
 	}
 
-	@Test(priority = 7)
+	@Test(priority = 6)
 	public void checkErrorMessageWithEmptyBodyTopicTest() {
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[@id='bodyText.errors']")));
 	}
 
-	@Test(priority = 8)
+	@Test(priority = 7)
 	public void checkErrorMessageWithShortBodyTopicTest() {
 		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(4));
 		driver.findElement(By.id("post")).click();
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[@id='bodyText.errors']")));
 	}
 
-	@Test(priority = 9)
+	@Test(priority = 8)
 	public void checkErrorMessageWithLongBodyTopicTest() throws InterruptedException {
 		driver.findElement(By.id("tbMsg")).clear();
 		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")), StringHelp.getRandomString(20001));
@@ -105,7 +102,7 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[@id='bodyText.errors']")));
 	}
 
-	@Test(priority = 10)
+	@Test(priority = 9)
 	public void checkErrorMessageWithValidBodyTopicTest() {
 		driver.findElement(By.id("tbMsg")).clear();
 		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")), StringHelp.getRandomString(20000));
