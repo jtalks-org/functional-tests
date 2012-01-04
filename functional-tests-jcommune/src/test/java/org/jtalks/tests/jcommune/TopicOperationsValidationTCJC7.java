@@ -34,7 +34,6 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void checkBranchesListTest(String appUrl, String username, String password) {
-		driver = new FirefoxDriver();
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		branches = driver.findElements(By.xpath("//a[@class='forum_link']"));
