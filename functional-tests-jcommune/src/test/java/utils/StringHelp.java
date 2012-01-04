@@ -1,10 +1,14 @@
 package utils;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
 import java.util.Date;
 import java.util.Random;
 
 /**
- * Utols class. Contains methods to work with String
+ * Utils class. Contains methods to work with String
  *
  * @author masyan
  */
@@ -56,6 +60,22 @@ public class StringHelp {
 		return eMail;
 	}
 
+	/**
+	 * Method set value to WebElement. This method should be used if value very long.
+	 *
+	 * @param driver  WebDriver
+	 * @param element Element in which you can enter
+	 * @param value   The entered value
+	 */
+	public static void setLongTextValue(WebDriver driver, WebElement element, String value) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].value = arguments[1]", element, value);
+	}
+
+	/**
+	 * Method return String contains test prefix.
+	 *
+	 * @return String contains test prefix
+	 */
 	public static String getTestPrefix() {
 		return testPrefix;
 	}
