@@ -4,68 +4,111 @@ import java.util.List;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import utils.DBHelp;
+
+import utils.CollectionHelp;
 import utils.StringHelp;
 
 /**
  * This functional test covers Creating topic test case TC-JC1
  * http://jtalks.org/display/jcommune/TC-JC1++Create+topic
- *
+ * 
  * @author erik
  */
 public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
+	List<WebElement> webElementsList;
+	String branchId;
 	String subject;
 	String message;
 
-	@BeforeTest
-	public void init() {
-		subject = StringHelp.getRandomString(50);
-		message = StringHelp.getRandomString(500);
-	}
 
-	@Test
-	@Parameters({"app-url", "uUsername", "uPassword"})
+	@Test(priority = 1)
+	@Parameters({ "app-url", "uUsername", "uPassword" })
 	public void createTopicTest(String appURL, String username, String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
+		
+	}
+	@Test(priority = 2)
+	public void clickOnRandomSection(){
+		webElementsList = driver.findElements(By.xpath("//a[@class='forum_header_link']"));
+		if (webElementsList.size() == 0) {
+			throw new NoSuchElementException("Sections not found");
+		}
 
-		driver.findElement(By.xpath("//a[@href='/jcommune/branches/1']")).click();
-		driver.findElement(By.xpath("//a[@href='/jcommune/topics/new?branchId=1']")).click();
+		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
+				.click();
+		
+	}
+	
+	@Test(priority = 3)
+	public void clickOnRandomBranch(){
+		webElementsList = driver.findElements(By
+				.xpath("//a[@class='forum_link']"));
+		if (webElementsList.size() == 0) {
+			throw new NoSuchElementException("Branches not found");
+		}
+		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
+				.click();
+	}
+	
+	@Test(priority = 4)
+	public void clickOnNewTopicButton(){
+		//geting branch id for creating new topic
+		branchId = driver.getCurrentUrl().substring(43);
+		driver.findElement(By.xpath("//a[@href='/jcommune/topics/new?branchId="+branchId+"']")).click();
+		Assert.assertTrue(driver.findElement(By.id("subject")).isDisplayed());
+		Assert.assertTrue(driver.findElement(By.id("tbMsg")).isDisplayed());
+	}
+	
+	@Test(priority = 5)
+	public void createNewTopic(){
+		subject = StringHelp.getRandomString(50);
+		message = StringHelp.getRandomString(500);
 		driver.findElement(By.id("subject")).sendKeys(subject);
-		driver.findElement(By.id("tbMsg")).sendKeys(message);
+		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")), message);
 		driver.findElement(By.id("post")).click();
 
-		Assert.assertEquals(driver.findElement(By.xpath("//a[@class='heading']")).getText(), subject);
-		Assert.assertEquals(driver.findElement(By.xpath("//div[@class='forum_message_cell_text']")).getText(), message);
+		Assert.assertEquals(
+				driver.findElement(By.xpath("//a[@class='heading']")).getText(),
+				subject);
+		Assert.assertEquals(
+				driver.findElement(
+						By.xpath("//div[@class='forum_message_cell_text']"))
+						.getText(), message);
+	}
+	
+	@Test(priority = 6)
+	@Parameters({"app-url"})
+	public void clickOnBackButton(String appURL){
 
-		driver.get(appURL + "/branches/1");
-		List<WebElement> list = driver.findElements(By.xpath("//ul[@class='forum_table']/li"));
+		driver.get(appURL + "/branches/"+branchId);
+		List<WebElement> list = driver.findElements(By
+				.xpath("//ul[@class='forum_table']/li"));
 		Assert.assertTrue(assertThatTopicPresent(list, subject));
 	}
 
-
 	/**
 	 * this method return true when in list presents the desired text
-	 *
-	 * @param list The list of webelements
-	 * @param text the desired text
+	 * 
+	 * @param list
+	 *            The list of webelements
+	 * @param text
+	 *            the desired text
 	 * @return
 	 */
 	private boolean assertThatTopicPresent(List<WebElement> list, String text) {
-		boolean b = false;
 		for (WebElement webElement : list) {
 			String t = webElement.getText();
 			if (t.contains(text)) {
-				b = true;
+				return true;
 			}
 		}
-		return b;
+		return false;
 	}
-
 
 }
