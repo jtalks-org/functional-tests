@@ -18,7 +18,7 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test(priority = 1)
 	@Parameters({ "app-url" })
-	public void signInWithEmtyData(String appURL) {
+	public void signInWithEmptyDataTest(String appURL) {
 		driver.get(appURL);
 		signIn("", "", appURL);
 		Assert.assertTrue(driver
@@ -27,7 +27,7 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test(priority = 2)
 	@Parameters({ "app-url", "uUsername" })
-	public void signInWithoutPassword(String appURL, String username) {
+	public void signInWithoutPasswordTest(String appURL, String username) {
 		driver.get(appURL);
 		signIn(username, "", appURL);
 		Assert.assertTrue(driver
@@ -36,7 +36,7 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test(priority = 3)
 	@Parameters({ "app-url", "uUsername" })
-	public void signInWithWrongPasword(String appURL, String username) {
+	public void signInWithWrongPasswordTest(String appURL, String username) {
 		driver.get(appURL);
 		signIn(username, wrongPassword, appURL);
 		Assert.assertTrue(driver
@@ -45,12 +45,12 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test(priority = 4)
 	@Parameters({ "app-url", "uUsername", "uPassword" })
-	public void signInWithCorrectData(String appURL, String username,
+	public void signInWithCorrectDataTest(String appURL, String username,
 			String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 		Assert.assertEquals(driver.getCurrentUrl(),
-				"http://deploy.jtalks.org/jcommune/");
+				appURL);
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//a[@class='currentusername']"))
 				.getText().equals(username));
@@ -59,7 +59,7 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test(priority = 5)
 	@Parameters({ "app-url", "uPassword" })
-	public void signInWithWrongUser(String appURL, String password) {
+	public void signInWithWrongUserTest(String appURL, String password) {
 		driver.get(appURL);
 		signIn(wrongUser, password, appURL);
 		Assert.assertTrue(driver
@@ -68,7 +68,7 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test(priority = 6)
 	@Parameters({ "app-url", "uUsername", "uPassword" })
-	public void signInUsernameInWrongRegister(String appURL, String username,
+	public void signInUsernameInWrongRegisterTest(String appURL, String username,
 			String password) {
 		driver.get(appURL);
 		signIn(username.toUpperCase(), password, appURL);
@@ -78,7 +78,7 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test(priority = 7)
 	@Parameters({ "app-url", "uUsername", "uPassword" })
-	public void signInPasswordInWrongRegister(String appURL, String username,
+	public void signInPasswordInWrongRegisterTest(String appURL, String username,
 			String password) {
 		driver.get(appURL);
 		signIn(username, password.toUpperCase(), appURL);
