@@ -24,9 +24,12 @@
     <parameter name="aPassword" value="adminSel"/>
 
     <test name="JCommuneHTMLUnit">
-        <packages>
-            <package name="org.jtalks.tests.jcommune"/>
-        </packages>
+        <classes>
+            <class name="org.jtalks.tests.jcommune.SecurityTCJC9"/>
+        </classes>
+        <!--<packages>-->
+        <!--<package name="org.jtalks.tests.jcommune"/>-->
+        <!--</packages>-->
     </test>
 </suite>
 

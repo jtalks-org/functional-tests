@@ -76,14 +76,14 @@ public class JCommuneSeleniumTest {
 		driver.findElement(By.id("j_password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 	}
-	
+
 	/**
-	 * This method checks that link for logout present, than click on it 
+	 * This method checks that link for logout present, than click on it
+	 * Method  used static link because in selenium exist bag  MoveTargetOutOfBoundsError
 	 *
 	 * @author erik
 	 */
-	public void logOut(){
-		if(driver.findElement(By.xpath("//a[@href='/jcommune/logout']")).isDisplayed())
-			driver.findElement(By.xpath("//a[@href='/jcommune/logout']")).click();
+	public void logOutWithoutLink(String appUrl) {
+		driver.get(appUrl + "logout");
 	}
 }

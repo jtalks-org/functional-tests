@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
+import org.openqa.selenium.By;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -17,6 +18,6 @@ public class LogOutTCJC6 extends JCommuneSeleniumTest {
 	public void logOutTest(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
-		logOut();
+		driver.findElement(By.xpath("//a[@href='/jcommune/logout']")).click();
 	}
 }
