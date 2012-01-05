@@ -27,7 +27,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void clickOnRandomSection(String appURL, String username,
+	public void clickOnRandomSectionTest(String appURL, String username,
 									 String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
@@ -44,7 +44,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 2)
-	public void clickOnRandomBranch() {
+	public void clickOnRandomBranchTest() {
 		webElementsList = driver.findElements(By
 				.xpath("//a[@class='forum_link']"));
 		if (webElementsList.size() == 0) {
@@ -55,7 +55,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 3)
-	public void clickOnNewTopicButton() {
+	public void clickOnNewTopicButtonTest() {
 		driver.findElement(
 				By.xpath("//a[contains(@href, '/jcommune/topics/new')]"))
 				.click();
@@ -64,7 +64,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 4)
-	public void createNewTopic() {
+	public void createNewTopicTest() {
 		subject = StringHelp.getRandomString(50);
 		message = StringHelp.getRandomString(500);
 		driver.findElement(By.id("subject")).sendKeys(subject);
@@ -83,7 +83,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 
 	@Test(priority = 5)
 	@Parameters({"app-url"})
-	public void clickOnBackButton(String appURL) {
+	public void clickOnBackButtonTest(String appURL) {
 
 		driver.findElement(
 				By.xpath("//a[contains(@href, '/jcommune/branches')]")).click();
