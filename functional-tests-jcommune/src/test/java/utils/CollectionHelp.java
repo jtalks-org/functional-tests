@@ -20,8 +20,12 @@ public class CollectionHelp {
 	 * @return one randomize element from collection
 	 */
 	public static WebElement getRandomWebElementFromCollection(List<WebElement> elements) {
+		if (elements.size() == 0) {
+			return null;
+		}
 		Random random = new Random((new Date()).getTime());
 		int idx = random.nextInt(elements.size());
 		return elements.get(idx);
 	}
+
 }
