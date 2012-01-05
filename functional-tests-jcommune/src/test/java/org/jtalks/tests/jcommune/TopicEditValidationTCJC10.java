@@ -30,7 +30,7 @@ public class TopicEditValidationTCJC10 extends JCommuneSeleniumTest {
 		signIn(username, password, appUrl);
 		branches = driver.findElements(By.xpath("//a[@class='forum_link']"));
 		if (branches.size() == 0) {
-			throw new NoSuchElementException("Branches not found");
+			Assert.assertFalse(true);
 		}
 	}
 

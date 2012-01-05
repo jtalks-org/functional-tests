@@ -35,7 +35,7 @@ public class TopicAnswerValidationTCJC8 extends JCommuneSeleniumTest {
 			brancheNames.add(branch.getText());
 		}
 		if (branches.size() == 0) {
-			throw new NoSuchElementException("Branches not found");
+			Assert.assertFalse(true);
 		}
 	}
 
@@ -51,8 +51,8 @@ public class TopicAnswerValidationTCJC8 extends JCommuneSeleniumTest {
 			}
 			driver.navigate().back();
 		}
-		//if we not found branch with topic? then throw Exception
-		throw new NoSuchElementException("Branche contains topic not found");
+		//if we not found branch with topic
+		Assert.assertFalse(true);
 	}
 
 	@Test(priority = 3)

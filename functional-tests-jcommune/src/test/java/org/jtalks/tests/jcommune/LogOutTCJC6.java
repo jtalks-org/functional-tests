@@ -2,6 +2,8 @@ package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -19,5 +21,11 @@ public class LogOutTCJC6 extends JCommuneSeleniumTest {
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		driver.findElement(By.xpath("//a[@href='/jcommune/logout']")).click();
+		try {
+			driver.findElement(By.xpath("//a[@href='/jcommune/logout']"));
+			Assert.assertFalse(true);
+		}
+		catch (NoSuchElementException e) {
+		}
 	}
 }

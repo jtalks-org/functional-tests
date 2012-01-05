@@ -19,7 +19,6 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 	String acceptedUsername;
 	String acceptedEmail;
 	String acceptedPassword;
-	boolean elementExists;
 
 	@Test(priority = 1)
 	@Parameters({"app-url"})
@@ -30,7 +29,6 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 
 	@Test(priority = 2)
 	public void checkErrorMessageWithEmptyUsernameTest() {
-
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		Assert.assertNotNull(driver.findElement(By.id("username.errors")));
 	}
@@ -59,10 +57,9 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 
 		try {
 			driver.findElement(By.id("username.errors"));
-			elementExists = true;
+			Assert.assertFalse(true);
 		}
 		catch (NoSuchElementException e) {
-			elementExists = false;
 		}
 	}
 
@@ -85,10 +82,9 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 
 		try {
 			driver.findElement(By.id("email.errors"));
-			elementExists = true;
+			Assert.assertFalse(true);
 		}
 		catch (NoSuchElementException e) {
-			elementExists = false;
 		}
 	}
 
@@ -115,10 +111,9 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 		driver.findElement(By.id("password")).sendKeys(StringHelp.getRandomString(6));
 		try {
 			driver.findElement(By.id("password.errors"));
-			elementExists = true;
+			Assert.assertFalse(true);
 		}
 		catch (NoSuchElementException e) {
-			elementExists = false;
 		}
 	}
 

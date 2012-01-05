@@ -28,7 +28,6 @@ import java.util.List;
  */
 public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 	List<WebElement> branches;
-	boolean elementExists;
 	String acceptedTitle;
 
 	@Test(priority = 1)
@@ -38,7 +37,7 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 		signIn(username, password, appUrl);
 		branches = driver.findElements(By.xpath("//a[@class='forum_link']"));
 		if (branches.size() == 0) {
-			throw new NoSuchElementException("Branches not found");
+			Assert.assertFalse(true);
 		}
 	}
 
@@ -46,7 +45,12 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 	public void clickButtonNewTopicTest() {
 		CollectionHelp.getRandomWebElementFromCollection(branches).click();
 		driver.findElement(By.xpath("//a[contains(@href,'/jcommune/topics/new')]")).click();
-		driver.findElement(By.id("topicDto"));
+		try {
+			driver.findElement(By.id("topicDto"));
+		}
+		catch (NoSuchElementException e) {
+			Assert.assertFalse(true);
+		}
 	}
 
 	@Test(priority = 3)
@@ -74,10 +78,9 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 		driver.findElement(By.id("post")).click();
 		try {
 			driver.findElement(By.xpath("//span[@id='subject']"));
-			elementExists = true;
+			Assert.assertFalse(true);
 		}
 		catch (NoSuchElementException e) {
-			elementExists = false;
 		}
 	}
 
