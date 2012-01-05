@@ -109,6 +109,7 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 	public void checkErrorMessageWithValidPasswordTest() {
 		driver.findElement(By.id("password")).clear();
 		driver.findElement(By.id("password")).sendKeys(StringHelp.getRandomString(6));
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
 		try {
 			driver.findElement(By.id("password.errors"));
 			Assert.assertFalse(true);
