@@ -25,28 +25,26 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	String subject;
 	String message;
 
-
 	@Test(priority = 1)
 	@Parameters({ "app-url", "uUsername", "uPassword" })
-	public void createTopicTest(String appURL, String username, String password) {
+	public void clickOnRandomSection(String appURL, String username,
+			String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
-		
-	}
-	@Test(priority = 2)
-	public void clickOnRandomSection(){
-		webElementsList = driver.findElements(By.xpath("//a[@class='forum_header_link']"));
+
+		webElementsList = driver.findElements(By
+				.xpath("//a[@class='forum_header_link']"));
 		if (webElementsList.size() == 0) {
 			throw new NoSuchElementException("Sections not found");
 		}
 
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
 				.click();
-		
+
 	}
-	
-	@Test(priority = 3)
-	public void clickOnRandomBranch(){
+
+	@Test(priority = 2)
+	public void clickOnRandomBranch() {
 		webElementsList = driver.findElements(By
 				.xpath("//a[@class='forum_link']"));
 		if (webElementsList.size() == 0) {
@@ -55,22 +53,24 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
 				.click();
 	}
-	
-	@Test(priority = 4)
-	public void clickOnNewTopicButton(){
-		//geting branch id for creating new topic
-		branchId = driver.getCurrentUrl().substring(43);
-		driver.findElement(By.xpath("//a[@href='/jcommune/topics/new?branchId="+branchId+"']")).click();
+
+	@Test(priority = 3)
+	public void clickOnNewTopicButton() {
+		// geting branch id for creating new topic
+		driver.findElement(
+				By.xpath("//a[contains(@href, '/jcommune/topics/new')]"))
+				.click();
 		Assert.assertTrue(driver.findElement(By.id("subject")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("tbMsg")).isDisplayed());
 	}
-	
-	@Test(priority = 5)
-	public void createNewTopic(){
+
+	@Test(priority = 4)
+	public void createNewTopic() {
 		subject = StringHelp.getRandomString(50);
 		message = StringHelp.getRandomString(500);
 		driver.findElement(By.id("subject")).sendKeys(subject);
-		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")), message);
+		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")),
+				message);
 		driver.findElement(By.id("post")).click();
 
 		Assert.assertEquals(
@@ -81,14 +81,18 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 						By.xpath("//div[@class='forum_message_cell_text']"))
 						.getText(), message);
 	}
-	
-	@Test(priority = 6)
-	@Parameters({"app-url"})
-	public void clickOnBackButton(String appURL){
 
-		driver.get(appURL + "/branches/"+branchId);
-		List<WebElement> list = driver.findElements(By
-				.xpath("//ul[@class='forum_table']/li"));
+	@Test(priority = 5)
+	@Parameters({ "app-url" })
+	public void clickOnBackButton(String appURL) {
+
+		driver.findElement(
+				By.xpath("//a[contains(@href, '/jcommune/branches')]")).click();
+
+		// driver.get(appURL + "/branches/" + branchId);
+		List<WebElement> list = driver
+				.findElements(By
+						.xpath("//ul[@class='forum_table']/li//a[@class='forum_link']"));
 		Assert.assertTrue(assertThatTopicPresent(list, subject));
 	}
 
@@ -104,7 +108,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	private boolean assertThatTopicPresent(List<WebElement> list, String text) {
 		for (WebElement webElement : list) {
 			String t = webElement.getText();
-			if (t.contains(text)) {
+			if (t.equals(text)) {
 				return true;
 			}
 		}
