@@ -9,53 +9,79 @@ import org.testng.annotations.Test;
 /**
  * This functional test covers Creating topic test case TC-JC4
  * http://jtalks.org/display/jcommune/TC-JC4+Sign+In
- *
+ * 
  * @author erik
  */
 public class SignInTCJC4 extends JCommuneSeleniumTest {
+	String wrongUser = "wrongUser";
+	String wrongPassword = "wrongPassword";
 
-	@Test
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void signInTest(String appURL, String username, String password) {
-		String wrongUser = "wrongUser";
-		String wrongPassword = "wrongPassword";
-
+	@Test(priority = 1)
+	@Parameters({ "app-url" })
+	public void signInWithEmtyData(String appURL) {
 		driver.get(appURL);
 		signIn("", "", appURL);
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
+	}
 
+	@Test(priority = 2)
+	@Parameters({ "app-url", "uUsername" })
+	public void signInWithoutPassword(String appURL, String username) {
 		driver.get(appURL);
 		signIn(username, "", appURL);
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
+	}
 
+	@Test(priority = 3)
+	@Parameters({ "app-url", "uUsername" })
+	public void signInWithWrongPasword(String appURL, String username) {
 		driver.get(appURL);
 		signIn(username, wrongPassword, appURL);
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
+	}
 
+	@Test(priority = 4)
+	@Parameters({ "app-url", "uUsername", "uPassword" })
+	public void signInWithCorrectData(String appURL, String username,
+			String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 		Assert.assertEquals(driver.getCurrentUrl(),
 				"http://deploy.jtalks.org/jcommune/");
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//a[@class='currentusername']"))
-				.getText().contains(username));
+				.getText().equals(username));
 		logOut(appURL);
+	}
 
+	@Test(priority = 5)
+	@Parameters({ "app-url", "uPassword" })
+	public void signInWithWrongUser(String appURL, String password) {
 		driver.get(appURL);
 		signIn(wrongUser, password, appURL);
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
+	}
 
+	@Test(priority = 6)
+	@Parameters({ "app-url", "uUsername", "uPassword" })
+	public void signInUsernameInWrongRegister(String appURL, String username,
+			String password) {
 		driver.get(appURL);
-		signIn("TestSel", password, appURL);
+		signIn(username.toUpperCase(), password, appURL);
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
+	}
 
+	@Test(priority = 7)
+	@Parameters({ "app-url", "uUsername", "uPassword" })
+	public void signInPasswordInWrongRegister(String appURL, String username,
+			String password) {
 		driver.get(appURL);
-		signIn(username, "TestSel", appURL);
+		signIn(username, password.toUpperCase(), appURL);
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
 
