@@ -16,7 +16,7 @@ import utils.StringHelp;
 /**
  * This functional test covers Creating topic test case TC-JC1
  * http://jtalks.org/display/jcommune/TC-JC1++Create+topic
- * 
+ *
  * @author erik
  */
 public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
@@ -26,9 +26,9 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	String message;
 
 	@Test(priority = 1)
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void clickOnRandomSection(String appURL, String username,
-			String password) {
+									 String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 
@@ -56,7 +56,6 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 
 	@Test(priority = 3)
 	public void clickOnNewTopicButton() {
-		// geting branch id for creating new topic
 		driver.findElement(
 				By.xpath("//a[contains(@href, '/jcommune/topics/new')]"))
 				.click();
@@ -83,13 +82,12 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 5)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void clickOnBackButton(String appURL) {
 
 		driver.findElement(
 				By.xpath("//a[contains(@href, '/jcommune/branches')]")).click();
 
-		// driver.get(appURL + "/branches/" + branchId);
 		List<WebElement> list = driver
 				.findElements(By
 						.xpath("//ul[@class='forum_table']/li//a[@class='forum_link']"));
@@ -98,11 +96,9 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 
 	/**
 	 * this method return true when in list presents the desired text
-	 * 
-	 * @param list
-	 *            The list of webelements
-	 * @param text
-	 *            the desired text
+	 *
+	 * @param list The list of webelements
+	 * @param text the desired text
 	 * @return
 	 */
 	private boolean assertThatTopicPresent(List<WebElement> list, String text) {
