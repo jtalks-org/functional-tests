@@ -83,7 +83,7 @@ public class JCommuneSeleniumTest {
 	 *
 	 * @author erik
 	 */
-	public void logOutWithoutLink(String appUrl) {
+	public void logOut(String appUrl) {
 		driver.get(appUrl + "logout");
 	}
 }

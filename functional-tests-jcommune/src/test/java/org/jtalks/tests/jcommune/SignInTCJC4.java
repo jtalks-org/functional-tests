@@ -9,13 +9,13 @@ import org.testng.annotations.Test;
 /**
  * This functional test covers Creating topic test case TC-JC4
  * http://jtalks.org/display/jcommune/TC-JC4+Sign+In
- * @author erik
  *
+ * @author erik
  */
 public class SignInTCJC4 extends JCommuneSeleniumTest {
 
 	@Test
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void signInTest(String appURL, String username, String password) {
 		String wrongUser = "wrongUser";
 		String wrongPassword = "wrongPassword";
@@ -42,7 +42,7 @@ public class SignInTCJC4 extends JCommuneSeleniumTest {
 		Assert.assertTrue(driver
 				.findElement(By.xpath("//a[@class='currentusername']"))
 				.getText().contains(username));
-		logOut();
+		logOut(appURL);
 
 		driver.get(appURL);
 		signIn(wrongUser, password, appURL);
