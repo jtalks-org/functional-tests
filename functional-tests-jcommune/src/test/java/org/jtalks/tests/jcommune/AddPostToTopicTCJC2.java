@@ -13,6 +13,12 @@ import org.testng.annotations.Test;
 import utils.CollectionHelp;
 import utils.StringHelp;
 
+/**
+ * This functional test covers Creating topic test case TC-JC2
+ * http://jtalks.org/display/jcommune/TC-JC2+Add+post+to+the+topic
+ *
+ * @author erik
+ */
 public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 	List<WebElement> webElementsList;
 	String postContent;
@@ -102,10 +108,17 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 		Assert.assertTrue(assertThatTopicPresent(webElementsList, postContent2));
 	}
 
+	/**
+	 * this method return true when in list presents the desired text
+	 *
+	 * @param list The list of webelements
+	 * @param text The desired text
+	 * @return
+	 */
 	private boolean assertThatTopicPresent(List<WebElement> list, String text) {
 		for (WebElement webElement : list) {
 			String t = webElement.getText();
-			if (t.contains(text)) {
+			if (t.equals(text)) {
 				return true;
 			}
 		}
