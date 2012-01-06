@@ -26,7 +26,6 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url"})
 	public void clickSignUpLinkTest(String appURL) {
-		driver = new FirefoxDriver();
 		driver.get(appURL);
 		driver.findElement(By.xpath("//a[@href='/jcommune/user/new']")).click();
 	}
