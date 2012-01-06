@@ -3,7 +3,10 @@ package org.jtalks.tests.jcommune;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -23,6 +26,7 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url"})
 	public void clickSignUpLinkTest(String appURL) {
+		driver = new FirefoxDriver();
 		driver.get(appURL);
 		driver.findElement(By.xpath("//a[@href='/jcommune/user/new']")).click();
 	}
@@ -156,27 +160,47 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 14)
-	public void checkSignUpSameUserTest() {
+	public void checkSignUpSameUsernameTest() {
 		driver.findElement(By.xpath("//a[@href='/jcommune/user/new']")).click();
 		driver.findElement(By.id("username")).sendKeys(acceptedUsername);
 		driver.findElement(By.id("email")).sendKeys(acceptedEmail);
 		driver.findElement(By.id("password")).sendKeys(acceptedPassword);
 		driver.findElement(By.id("passwordConfirm")).sendKeys(acceptedPassword);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		Assert.assertNotNull(driver.findElement(By.id("username.errors")));
+
+		(new WebDriverWait(driver, 5)).until(new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver d) {
+				boolean b = false;
+				try {
+					driver.findElement(By.id("username.errors"));
+					b = true;
+				}
+				catch (NoSuchElementException e) {
+				}
+				return b;
+			}
+		});
+
 	}
 
 	@Test(priority = 15)
+	public void checkSignUpSameEmailTest() {
+		driver.findElement(By.id("username")).clear();
+		driver.findElement(By.id("username")).sendKeys(acceptedUsername + "2");
+		driver.findElement(By.id("email")).sendKeys(acceptedEmail);
+		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		Assert.assertNotNull(driver.findElement(By.id("email.errors")));
+	}
+
+	@Test(priority = 16)
 	@Parameters({"app-url"})
 	public void checkSignUpAnotherUserTest(String appURL) {
-		driver.findElement(By.id("username")).clear();
 		driver.findElement(By.id("email")).clear();
 		driver.findElement(By.id("password")).clear();
 		driver.findElement(By.id("passwordConfirm")).clear();
-		driver.findElement(By.id("username")).sendKeys(acceptedUsername + "2");
 		driver.findElement(By.id("email")).sendKeys(StringHelp.getRandomEmail());
-		driver.findElement(By.id("password")).sendKeys(acceptedPassword + "2");
-		driver.findElement(By.id("passwordConfirm")).sendKeys(acceptedPassword + "2");
+		driver.findElement(By.id("password")).sendKeys(acceptedPassword);
+		driver.findElement(By.id("passwordConfirm")).sendKeys(acceptedPassword);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 
 		Assert.assertEquals(driver.getCurrentUrl(), appURL);
