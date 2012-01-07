@@ -40,16 +40,25 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 		//choose and click on random section
 		webElementsList = driver.findElements(By
 				.xpath("//a[@class='forum_header_link']"));
+		if (webElementsList.size() == 0) {
+			Assert.assertFalse(true);
+		}
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
 				.click();
 		//choose and click on random branch
 		webElementsList = driver.findElements(By
 				.xpath("//a[@class='forum_link']"));
+		if (webElementsList.size() == 0) {
+			Assert.assertFalse(true);
+		}
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
 				.click();
 		//choose and click on random topic
 		webElementsList = driver.findElements(By
 				.xpath("//a[@class='forum_link']"));
+		if (webElementsList.size() == 0) {
+			Assert.assertFalse(true);
+		}
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
 				.click();
 		//save topic's url
@@ -61,7 +70,7 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 2)
-	public void AddPostTest() {
+	public void addPostTest() {
 		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")),
 				postContent);
 		driver.findElement(By.id("post")).click();
@@ -75,7 +84,6 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 	@Parameters({ "app-url", "uUsername2", "uPassword2" })
 	public void clickOnAnswerButtonByAnotherUserTest(String appURL,
 			String username2, String password2) {
-		driver.get(appURL);
 		logOut(appURL);
 		signIn(username2, password2, appURL);
 		driver.get(topicURL);
