@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -109,8 +108,10 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 	/**
 	 * this method return true when in list presents the desired text
 	 * 
-	 * @param list The list of webelements
-	 * @param text The desired text
+	 * @param list
+	 *            The list of webelements
+	 * @param text
+	 *            The desired text
 	 * @return
 	 */
 	private boolean assertThatTopicPresent(List<WebElement> list, String text) {
@@ -124,11 +125,13 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 	}
 
 	/**
-	 * This method gather branches urls and clicks on it, if 
-	 * topics don't exist in branch, method takes other branch and checks if topics
-	 * exist etc. 
-	 * @param branchXpath xpath of branch webelement
-	 * @param topicXpath xpath of topic webelement
+	 * This method gather branches urls and clicks on it, if topics don't exist
+	 * in branch, method takes other branch and checks if topics exist etc.
+	 * 
+	 * @param branchXpath
+	 *            xpath of branch webelement
+	 * @param topicXpath
+	 *            xpath of topic webelement
 	 */
 	private void chooseAndClickOnBranch(String branchXpath, String topicXpath) {
 		webElementsList = driver.findElements(By.xpath(branchXpath));
@@ -137,12 +140,13 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 			if (isElementPresent(topicXpath))
 				break;
 		}
-		
+
 	}
 
-	/** 
+	/**
 	 * This method checks that webelement presents on page;
-	 * @param xpath 
+	 * 
+	 * @param xpath of necessary webelement
 	 * @return
 	 */
 	private boolean isElementPresent(String xpath) {
