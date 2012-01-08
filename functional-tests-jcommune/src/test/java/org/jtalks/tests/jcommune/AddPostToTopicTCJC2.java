@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
@@ -14,9 +15,9 @@ import utils.CollectionHelp;
 import utils.StringHelp;
 
 /**
- * This functional test covers Creating topic test case TC-JC2
+ * This functional test covers Adding post to topic test case TC-JC2
  * http://jtalks.org/display/jcommune/TC-JC2+Add+post+to+the+topic
- *
+ * 
  * @author erik
  */
 public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
@@ -37,31 +38,20 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 			String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
-		//choose and click on random section
+		// choose and click on random section
 		webElementsList = driver.findElements(By
 				.xpath("//a[@class='forum_header_link']"));
-		if (webElementsList.size() == 0) {
-			Assert.assertFalse(true);
-		}
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
 				.click();
-		//choose and click on random branch
+		// choose and click on random branch where topics present
+		chooseAndClickOnBranch("//a[@class='forum_link']",
+				"//a[@class='forum_link']");
+		// choose and click on random topic
 		webElementsList = driver.findElements(By
 				.xpath("//a[@class='forum_link']"));
-		if (webElementsList.size() == 0) {
-			Assert.assertFalse(true);
-		}
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
 				.click();
-		//choose and click on random topic
-		webElementsList = driver.findElements(By
-				.xpath("//a[@class='forum_link']"));
-		if (webElementsList.size() == 0) {
-			Assert.assertFalse(true);
-		}
-		CollectionHelp.getRandomWebElementFromCollection(webElementsList)
-				.click();
-		//save topic's url
+		// save topic's url
 		topicURL = driver.getCurrentUrl();
 		driver.findElement(
 				By.xpath("//a[contains(@href, '/jcommune/posts/new')]"))
@@ -118,7 +108,7 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 
 	/**
 	 * this method return true when in list presents the desired text
-	 *
+	 * 
 	 * @param list The list of webelements
 	 * @param text The desired text
 	 * @return
@@ -132,4 +122,34 @@ public class AddPostToTopicTCJC2 extends JCommuneSeleniumTest {
 		}
 		return false;
 	}
+
+	/**
+	 * This method gather branches urls and clicks on it, if 
+	 * topics don't exist in branch, method takes other branch and checks if topics
+	 * exist etc. 
+	 * @param branchXpath xpath of branch webelement
+	 * @param topicXpath xpath of topic webelement
+	 */
+	private void chooseAndClickOnBranch(String branchXpath, String topicXpath) {
+		webElementsList = driver.findElements(By.xpath(branchXpath));
+		for (WebElement branch : webElementsList) {
+			branch.click();
+			if (isElementPresent(topicXpath))
+				break;
+		}
+		
+	}
+
+	/** 
+	 * This method checks that webelement presents on page;
+	 * @param xpath 
+	 * @return
+	 */
+	private boolean isElementPresent(String xpath) {
+		if (driver.findElements(By.xpath(xpath)).size() > 0) {
+			return true;
+		}
+		return false;
+	}
+
 }
