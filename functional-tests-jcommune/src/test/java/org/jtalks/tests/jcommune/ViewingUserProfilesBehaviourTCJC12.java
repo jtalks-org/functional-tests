@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  * This functional test covers Viewing user profiles behaviour  test case TC-JC12
  * http://jtalks.org/display/jcommune/TC-JC12+Viewing+user+profiles+behaviour
  *
