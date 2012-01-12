@@ -49,6 +49,7 @@ public class DBHelp {
 			Statement st = conn.createStatement();
 			ResultSet rs;
 			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USER WHERE USERNAME='" + users.get("uUsername") + "' ");
+			// IMPORTANT. Language should be English
 			if (!rs.first()) {
 				st.executeUpdate("INSERT INTO USER(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD, EMAIL, ROLE, LANGUAGE, PAGE_SIZE) " +
 						"VALUES(ID, '11111111-1111-1111-1111-111111111111', 'testSel', 'testSel', 'testSel','testSel@jtalks.org'," +
