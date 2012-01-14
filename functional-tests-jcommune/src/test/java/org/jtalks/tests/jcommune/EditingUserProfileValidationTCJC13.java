@@ -20,7 +20,6 @@ public class EditingUserProfileValidationTCJC13 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void checkViewProfileEditFormTest(String appUrl, String username, String password) {
-		driver = new FirefoxDriver();
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		driver.findElement(By.xpath("//a[@class='currentusername']")).click();
