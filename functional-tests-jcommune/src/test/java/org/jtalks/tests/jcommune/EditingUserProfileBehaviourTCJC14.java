@@ -3,7 +3,6 @@ package org.jtalks.tests.jcommune;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Parameters;
@@ -21,7 +20,6 @@ public class EditingUserProfileBehaviourTCJC14 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword", "uEmail"})
 	public void checkViewProfileEditFormWithEmailTest(String appUrl, String username, String password, String email) {
-		driver = new FirefoxDriver();
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		driver.findElement(By.xpath("//a[@class='currentusername']")).click();
