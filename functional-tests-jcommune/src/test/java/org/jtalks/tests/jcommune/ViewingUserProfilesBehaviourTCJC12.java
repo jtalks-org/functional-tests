@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
@@ -39,6 +40,7 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({"app-url","uUsername","uUsername2","uPassword2","aUsername"})
 	public void sendPrivateMessageToAdminAndAnyUserTest(String appUrl, String username1, String username2, String password2, String admin){
+		driver = new FirefoxDriver();
 	   driver.get(appUrl);
 		signIn(username2, password2, appUrl);
 		driver.findElement(By.xpath("//a[@href='/jcommune/inbox']")).click();
@@ -86,11 +88,8 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 			elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'/jcommune/users')]")).click();
 			Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + sender + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lUsername + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lEmail + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lFirstName + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLastName + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLanguage + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lNumPostsOnPage + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLastLogin + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lPostCount + "']")));
 			logOut(appUrl);
@@ -127,11 +126,8 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 			elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'/jcommune/users')]")).click();
 			Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + sender + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lUsername + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lEmail + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lFirstName + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLastName + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLanguage + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lNumPostsOnPage + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLastLogin + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lPostCount + "']")));
 		}
@@ -181,11 +177,8 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 			elements.get(0).findElement(By.xpath("//div[@class='forum_userinfo']/a[contains(@href,'/jcommune/users')]")).click();
 			Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + ownerPost + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lUsername + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lEmail + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lFirstName + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLastName + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLanguage + "']")));
-			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lNumPostsOnPage + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lLastLogin + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lPostCount + "']")));
 			logOut(appUrl);

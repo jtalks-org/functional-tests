@@ -48,25 +48,37 @@ public class DBHelp {
 		try {
 			Statement st = conn.createStatement();
 			ResultSet rs;
-			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USER WHERE USERNAME='" + users.get("uUsername") + "' ");
+			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='" + users.get("uUsername") + "' ");
 			// IMPORTANT. Language should be English
 			if (!rs.first()) {
-				st.executeUpdate("INSERT INTO USER(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD, EMAIL, ROLE, LANGUAGE, PAGE_SIZE) " +
+				st.executeUpdate("INSERT INTO USERS(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD, EMAIL, ROLE) " +
 						"VALUES(ID, '11111111-1111-1111-1111-111111111111', 'testSel', 'testSel', 'testSel','testSel@jtalks.org'," +
-						" 'ROLE_USER','ENGLISH', 50)");
+						" 'ROLE_USER')");
+				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='testSel'");
+				rs.next();
+				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
+						"VALUES("+rs.getLong("ID")+",'ENGLISH',50)");
 			}
 			;
-			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USER WHERE USERNAME='" + users.get("aUsername") + "' ");
+			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='" + users.get("aUsername") + "' ");
 			if (!rs.first()) {
-				st.executeUpdate("INSERT INTO USER(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD,EMAIL, ROLE, LANGUAGE, PAGE_SIZE) " +
+				st.executeUpdate("INSERT INTO USERS(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD,EMAIL, ROLE) " +
 						"VALUES(ID, '22222222-2222-2222-2222-222222222222', 'adminSel', 'adminSel', 'adminSel','adminSel@jtalks.org'," +
-						" 'ROLE_ADMIN','ENGLISH', 50)");
+						" 'ROLE_ADMIN')");
+				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='adminSel'");
+				rs.next();
+				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
+						"VALUES("+rs.getLong("ID")+",'ENGLISH',50)");
 			}
-			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USER WHERE USERNAME='" + users.get("uUsername2") + "' ");
+			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='" + users.get("uUsername2") + "' ");
 			if (!rs.first()) {
-				st.executeUpdate("INSERT INTO USER(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD, EMAIL, ROLE, LANGUAGE, PAGE_SIZE) " +
+				st.executeUpdate("INSERT INTO USERS(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD, EMAIL, ROLE) " +
 						"VALUES(ID, '33333333-3333-3333-3333-333333333333', 'testSel2', 'testSel2', 'testSel2','testSel2@jtalks.org'," +
-						" 'ROLE_USER','ENGLISH', 50)");
+						" 'ROLE_USER')");
+				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='testSel2'");
+				rs.next();
+				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
+						"VALUES("+rs.getLong("ID")+",'ENGLISH',50)");
 			}
 			st.close();
 		}
