@@ -36,14 +36,14 @@ public class JCommuneSeleniumTest {
 	 * @throws MalformedURLException
 	 */
 	@BeforeClass(alwaysRun = true)
-	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uUsername2", "aUsername"})
+	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
-					 String uUsername2, String aUsername) throws Exception {
+					 String uEmail,	 String uUsername2, String uEmail2,  String aUsername, String aEmail) throws Exception {
 		driver = new RemoteWebDriver(
 				new URL(selServerURL),
 				SeleniumConfig.getBrowserDriver(selDriverType));
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
-		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uUsername2, aUsername));
+		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
 	}
 
 	/**

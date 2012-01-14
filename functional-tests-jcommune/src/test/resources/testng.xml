@@ -17,11 +17,14 @@
     <!--simlpe users-->
     <parameter name="uUsername" value="testSel"/>
     <parameter name="uPassword" value="testSel"/>
+    <parameter name="uEmail" value="testSel@jtalks.org"/>
     <parameter name="uUsername2" value="testSel2"/>
     <parameter name="uPassword2" value="testSel2"/>
+    <parameter name="uEmail2" value="testSel2@jtalks.org"/>
     <!--Admin user-->
     <parameter name="aUsername" value="adminSel"/>
     <parameter name="aPassword" value="adminSel"/>
+    <parameter name="aEmail" value="adminSel@jtalks.org"/>
 
     <test name="JCommuneHTMLUnit">
         <packages>
