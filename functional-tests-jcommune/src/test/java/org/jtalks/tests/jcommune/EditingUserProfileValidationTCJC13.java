@@ -2,7 +2,6 @@ package org.jtalks.tests.jcommune;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
