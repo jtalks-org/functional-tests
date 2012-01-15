@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune.common;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -41,9 +42,10 @@ public class JCommuneSeleniumTest {
 	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
 					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail) throws Exception {
-		driver = new RemoteWebDriver(
-				new URL(selServerURL),
-				SeleniumConfig.getBrowserDriver(selDriverType));
+//		driver = new RemoteWebDriver(
+//				new URL(selServerURL),
+//				SeleniumConfig.getBrowserDriver(selDriverType));
+		driver = new FirefoxDriver();
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
 		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
 	}
