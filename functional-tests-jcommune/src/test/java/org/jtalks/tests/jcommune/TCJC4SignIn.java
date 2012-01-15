@@ -66,17 +66,8 @@ public class TCJC4SignIn extends JCommuneSeleniumTest {
 				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
 	}
 
-	@Test(priority = 6)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void signInUsernameInWrongRegisterTest(String appURL, String username,
-												  String password) {
-		driver.get(appURL);
-		signIn(username.toUpperCase(), password, appURL);
-		Assert.assertTrue(driver
-				.findElement(By.xpath("//span[@class='error']")).isDisplayed());
-	}
 
-	@Test(priority = 7)
+	@Test(priority = 6)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void signInPasswordInWrongRegisterTest(String appURL, String username,
 												  String password) {
