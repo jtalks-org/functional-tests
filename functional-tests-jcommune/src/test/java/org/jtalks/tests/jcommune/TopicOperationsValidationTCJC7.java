@@ -1,16 +1,9 @@
 package org.jtalks.tests.jcommune;
 
-import org.apache.commons.io.FileUtils;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -33,7 +26,6 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void checkBranchesListTest(String appUrl, String username, String password) {
-		driver = new FirefoxDriver();
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		branches = driver.findElements(By.xpath("//a[@class='forum_link']"));
