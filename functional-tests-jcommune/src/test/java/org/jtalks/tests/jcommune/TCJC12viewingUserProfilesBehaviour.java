@@ -2,7 +2,6 @@ package org.jtalks.tests.jcommune;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
@@ -39,7 +38,6 @@ public class TCJC12viewingUserProfilesBehaviour extends JCommuneSeleniumTest {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uUsername2", "uPassword2", "aUsername"})
 	public void sendPrivateMessageToAdminAndAnyUserTest(String appUrl, String username1, String username2, String password2, String admin) {
-		driver = new FirefoxDriver();
 		driver.get(appUrl);
 		signIn(username2, password2, appUrl);
 		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/inbox']")).click();
