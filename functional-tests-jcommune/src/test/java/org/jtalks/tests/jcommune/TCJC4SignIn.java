@@ -9,15 +9,15 @@ import org.testng.annotations.Test;
 /**
  * This functional test covers Creating topic test case TC-JC4
  * http://jtalks.org/display/jcommune/TC-JC4+Sign+In
- * 
+ *
  * @author erik
  */
-public class TCJC4signIn extends JCommuneSeleniumTest {
+public class TCJC4SignIn extends JCommuneSeleniumTest {
 	String wrongUser = "wrongUser";
 	String wrongPassword = "wrongPassword";
 
 	@Test(priority = 1)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void signInWithEmptyDataTest(String appURL) {
 		driver.get(appURL);
 		signIn("", "", appURL);
@@ -26,7 +26,7 @@ public class TCJC4signIn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 2)
-	@Parameters({ "app-url", "uUsername" })
+	@Parameters({"app-url", "uUsername"})
 	public void signInWithoutPasswordTest(String appURL, String username) {
 		driver.get(appURL);
 		signIn(username, "", appURL);
@@ -35,7 +35,7 @@ public class TCJC4signIn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 3)
-	@Parameters({ "app-url", "uUsername" })
+	@Parameters({"app-url", "uUsername"})
 	public void signInWithWrongPasswordTest(String appURL, String username) {
 		driver.get(appURL);
 		signIn(username, wrongPassword, appURL);
@@ -44,9 +44,9 @@ public class TCJC4signIn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 4)
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void signInWithCorrectDataTest(String appURL, String username,
-			String password) {
+										  String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 		Assert.assertEquals(driver.getCurrentUrl(),
@@ -58,7 +58,7 @@ public class TCJC4signIn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 5)
-	@Parameters({ "app-url", "uPassword" })
+	@Parameters({"app-url", "uPassword"})
 	public void signInWithWrongUserTest(String appURL, String password) {
 		driver.get(appURL);
 		signIn(wrongUser, password, appURL);
@@ -67,9 +67,9 @@ public class TCJC4signIn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 6)
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void signInUsernameInWrongRegisterTest(String appURL, String username,
-			String password) {
+												  String password) {
 		driver.get(appURL);
 		signIn(username.toUpperCase(), password, appURL);
 		Assert.assertTrue(driver
@@ -77,9 +77,9 @@ public class TCJC4signIn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 7)
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void signInPasswordInWrongRegisterTest(String appURL, String username,
-			String password) {
+												  String password) {
 		driver.get(appURL);
 		signIn(username, password.toUpperCase(), appURL);
 		Assert.assertTrue(driver

@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @autor masyan
  */
-public class TCJC10topicEditValidation extends JCommuneSeleniumTest {
+public class TCJC10TopicEditValidation extends JCommuneSeleniumTest {
 	List<WebElement> branches;
 	String subject;
 	String message;

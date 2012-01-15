@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @autor masyan
  */
-public class TCJC12viewingUserProfilesBehaviour extends JCommuneSeleniumTest {
+public class TCJC12ViewingUserProfilesBehaviour extends JCommuneSeleniumTest {
 
 	String lUsername = "Username";
 	String lEmail = "Email";

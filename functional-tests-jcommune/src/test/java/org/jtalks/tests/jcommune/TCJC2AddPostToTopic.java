@@ -19,7 +19,7 @@ import utils.StringHelp;
  *
  * @author erik
  */
-public class TCJC2addPostToTopic extends JCommuneSeleniumTest {
+public class TCJC2AddPostToTopic extends JCommuneSeleniumTest {
 	List<WebElement> webElementsList;
 	String postContent;
 	String postContent2;

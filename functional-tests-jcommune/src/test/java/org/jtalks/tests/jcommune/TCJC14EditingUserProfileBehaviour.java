@@ -15,7 +15,7 @@ import utils.StringHelp;
  *
  * @autor masyan
  */
-public class TCJC14editingUserProfileBehaviour extends JCommuneSeleniumTest {
+public class TCJC14EditingUserProfileBehaviour extends JCommuneSeleniumTest {
 
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword", "uEmail"})

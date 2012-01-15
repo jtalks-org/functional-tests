@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @autor masyan
  */
-public class TCJC8topicAnswerValidation extends JCommuneSeleniumTest {
+public class TCJC8TopicAnswerValidation extends JCommuneSeleniumTest {
 	ArrayList<String> brancheNames = new ArrayList();
 	List<WebElement> topics;
 
