@@ -122,7 +122,9 @@ public class TCJC10topicEditValidation extends JCommuneSeleniumTest {
 	@Parameters({"app-url"})
 	public void checkEditedMessageTopicTest(String appUrl) {
 		String currentMessage = driver.findElement(By.xpath("//div[@class='forum_message_cell_text']")).getText();
-		Assert.assertEquals(currentMessage, message);
+		if (!currentMessage.contains(message)) {
+			Assert.assertFalse(true);
+		}
 		logOut(appUrl);
 	}
 }
