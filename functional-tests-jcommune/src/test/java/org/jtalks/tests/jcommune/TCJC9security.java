@@ -73,10 +73,10 @@ public class TCJC9security extends JCommuneSeleniumTest {
 		CollectionHelp.getRandomWebElementFromCollection(topics).click();
 		try {
 			driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new') and contains(@class,'disabled')]"));
+			//if element exist, then generate false to test. Because user is unregistered
+			Assert.assertFalse(true);
 		}
 		catch (NoSuchElementException e) {
-			//if element not exist, then generate false to test. Because user is unregistered
-			Assert.assertFalse(true);
 		}
 	}
 

@@ -23,7 +23,7 @@ public class TCJC14editingUserProfileBehaviour extends JCommuneSeleniumTest {
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		driver.findElement(By.xpath("//a[@class='currentusername']")).click();
-		driver.findElement(By.xpath("//a[@href='/" + getApplicationContextPath() + "/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")).click();
 		Assert.assertNotNull(driver.findElement(By.id("editProfileForm")));
 		Assert.assertEquals(driver.findElement(By.id("email")).getAttribute("value"), email);
 	}
