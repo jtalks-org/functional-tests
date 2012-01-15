@@ -20,9 +20,9 @@ public class LogOutTCJC6 extends JCommuneSeleniumTest {
 	public void logOutTest(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
-		driver.findElement(By.xpath("//a[@href='/jcommune/logout']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/logout']")).click();
 		try {
-			driver.findElement(By.xpath("//a[@href='/jcommune/logout']"));
+			driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/logout']"));
 			Assert.assertFalse(true);
 		}
 		catch (NoSuchElementException e) {

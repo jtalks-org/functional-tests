@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * This functional test covers Viewing user profiles behaviour  test case TC-JC12
  * http://jtalks.org/display/jcommune/TC-JC12+Viewing+user+profiles+behaviour
  *
@@ -38,19 +37,19 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 	List<WebElement> topics;
 
 	@BeforeClass(alwaysRun = true)
-	@Parameters({"app-url","uUsername","uUsername2","uPassword2","aUsername"})
-	public void sendPrivateMessageToAdminAndAnyUserTest(String appUrl, String username1, String username2, String password2, String admin){
+	@Parameters({"app-url", "uUsername", "uUsername2", "uPassword2", "aUsername"})
+	public void sendPrivateMessageToAdminAndAnyUserTest(String appUrl, String username1, String username2, String password2, String admin) {
 		driver = new FirefoxDriver();
-	   driver.get(appUrl);
+		driver.get(appUrl);
 		signIn(username2, password2, appUrl);
-		driver.findElement(By.xpath("//a[@href='/jcommune/inbox']")).click();
-		driver.findElement(By.xpath("//a[@href='/jcommune/pm/new']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/inbox']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/pm/new']")).click();
 		driver.findElement(By.id("recipient")).sendKeys(username1);
 		driver.findElement(By.id("title")).sendKeys(StringHelp.getRandomString(8));
 		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(8));
 		driver.findElement(By.id("post")).click();
-		driver.findElement(By.xpath("//a[@href='/jcommune/inbox']")).click();
-		driver.findElement(By.xpath("//a[@href='/jcommune/pm/new']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/inbox']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/pm/new']")).click();
 		driver.findElement(By.id("recipient")).sendKeys(admin);
 		driver.findElement(By.id("title")).sendKeys(StringHelp.getRandomString(8));
 		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(8));
@@ -77,15 +76,15 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 	@Test(priority = 2)
 	@Parameters("app-url")
 	public void viewProfileSenderOfPrivateMessagesByUserTest(String appUrl) {
-		driver.findElement(By.xpath("//a[@href='/jcommune/inbox']")).click();
-		driver.findElement(By.xpath("//a[text()='"+lInbox+"']"));
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/inbox']")).click();
+		driver.findElement(By.xpath("//a[text()='" + lInbox + "']"));
 		List<WebElement> elements = driver.findElements(By.xpath("//li[@class='forum_row']"));
 		if (elements.size() == 0) {
 			Assert.assertFalse(true);
 		}
 		else {
-			String sender = elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'/jcommune/users')]")).getText();
-			elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'/jcommune/users')]")).click();
+			String sender = elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'" + getApplicationContextPath() + "/users')]")).getText();
+			elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'" + getApplicationContextPath() + "/users')]")).click();
 			Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + sender + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lUsername + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lFirstName + "']")));
@@ -115,15 +114,15 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 	@Test(priority = 4)
 	@Parameters("app-url")
 	public void viewProfileSenderOfPrivateMessagesByAdminTest(String appUrl) {
-		driver.findElement(By.xpath("//a[@href='/jcommune/inbox']")).click();
-		driver.findElement(By.xpath("//a[text()='"+lInbox+"']"));
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/inbox']")).click();
+		driver.findElement(By.xpath("//a[text()='" + lInbox + "']"));
 		List<WebElement> elements = driver.findElements(By.xpath("//li[@class='forum_row']"));
 		if (elements.size() == 0) {
 			Assert.assertFalse(true);
 		}
 		else {
-			String sender = elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'/jcommune/users')]")).getText();
-			elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'/jcommune/users')]")).click();
+			String sender = elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'" + getApplicationContextPath() + "/users')]")).getText();
+			elements.get(0).findElement(By.xpath("//div[@class='forum_answer_left']/a[contains(@href,'" + getApplicationContextPath() + "/users')]")).click();
 			Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + sender + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lUsername + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lFirstName + "']")));
@@ -173,8 +172,8 @@ public class ViewingUserProfilesBehaviourTCJC12 extends JCommuneSeleniumTest {
 			Assert.assertFalse(true);
 		}
 		else {
-			String ownerPost = elements.get(0).findElement(By.xpath("//div[@class='forum_userinfo']/a[contains(@href,'/jcommune/users')]")).getText();
-			elements.get(0).findElement(By.xpath("//div[@class='forum_userinfo']/a[contains(@href,'/jcommune/users')]")).click();
+			String ownerPost = elements.get(0).findElement(By.xpath("//div[@class='forum_userinfo']/a[contains(@href,'" + getApplicationContextPath() + "/users')]")).getText();
+			elements.get(0).findElement(By.xpath("//div[@class='forum_userinfo']/a[contains(@href,'" + getApplicationContextPath() + "/users')]")).click();
 			Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + ownerPost + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lUsername + "']")));
 			Assert.assertNotNull(driver.findElement(By.xpath("//label[text()='" + lFirstName + "']")));

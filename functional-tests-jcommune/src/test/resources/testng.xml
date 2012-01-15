@@ -7,11 +7,13 @@
     <!--Applicatiaon URL. Start page-->
     <parameter name="app-url" value="http://deploy.jtalks.org/test-jcommune/"/>
 
+    <!--CONTEXT PATH sets in common file-->
+
     <!--Database params-->
     <parameter name="db-url" value="jdbc:mysql://176.9.66.108/test_jtalks"/>
     <parameter name="db-driver" value="com.mysql.jdbc.Driver"/>
-    <parameter name="db-username" value="jcommune"/>
-    <parameter name="db-password" value="jtalks_PgH4W"/>
+    <parameter name="db-username" value="selenium"/>
+    <parameter name="db-password" value="selenium_KjY4"/>
 
     <!--Registered users-->
     <!--simlpe users-->

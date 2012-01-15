@@ -27,6 +27,8 @@ public class JCommuneSeleniumTest {
 
 	public Connection dbConnection;
 
+	private String contextPath = "/test-jcommune";
+
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
 	 * All values are stored in tesng.xml file.
@@ -38,7 +40,7 @@ public class JCommuneSeleniumTest {
 	@BeforeClass(alwaysRun = true)
 	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
-					 String uEmail,	 String uUsername2, String uEmail2,  String aUsername, String aEmail) throws Exception {
+					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail) throws Exception {
 		driver = new RemoteWebDriver(
 				new URL(selServerURL),
 				SeleniumConfig.getBrowserDriver(selDriverType));
@@ -71,10 +73,19 @@ public class JCommuneSeleniumTest {
 	 * @author erik
 	 */
 	public void signIn(String username, String password, String appURL) {
-		driver.findElement(By.xpath("//a[@href='/jcommune/login']")).click();
+		driver.findElement(By.xpath("//a[@href='" + contextPath + "/login']")).click();
 		driver.findElement(By.id("j_username")).sendKeys(username);
 		driver.findElement(By.id("j_password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
+	}
+
+	/**
+	 * Method return application context path
+	 *
+	 * @return String. Application context
+	 */
+	public String getApplicationContextPath() {
+		return contextPath;
 	}
 
 	/**

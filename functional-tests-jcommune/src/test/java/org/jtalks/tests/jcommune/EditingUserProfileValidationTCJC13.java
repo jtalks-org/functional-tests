@@ -22,7 +22,7 @@ public class EditingUserProfileValidationTCJC13 extends JCommuneSeleniumTest {
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		driver.findElement(By.xpath("//a[@class='currentusername']")).click();
-		driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")).click();
 		Assert.assertNotNull(driver.findElement(By.id("editProfileForm")));
 	}
 
@@ -57,7 +57,7 @@ public class EditingUserProfileValidationTCJC13 extends JCommuneSeleniumTest {
 		driver.findElement(By.id("email")).sendKeys(validEmail);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 		//check view profile page
-		driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")).click();
 	}
 
 	@Test(priority = 7)
@@ -126,7 +126,7 @@ public class EditingUserProfileValidationTCJC13 extends JCommuneSeleniumTest {
 		driver.findElement(By.id("newUserPassword")).sendKeys(truePass);
 		driver.findElement(By.id("newUserPasswordConfirm")).sendKeys(truePass);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
-		Assert.assertNotNull(driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")));
+		Assert.assertNotNull(driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")));
 	}
 
 }

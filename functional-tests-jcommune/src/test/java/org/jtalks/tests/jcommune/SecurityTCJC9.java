@@ -43,7 +43,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 	public void checkButtonNewTopicByUnregisteredUserTest() {
 		driver.findElement(By.linkText(brancheNames.get(0))).click();
 		try {
-			driver.findElement(By.xpath("//a[contains(@href,'/jcommune/topics/new')]"));
+			driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/topics/new')]"));
 			//if element exist, then generate false to test. Because user is unregistered
 			Assert.assertFalse(true);
 		}
@@ -72,7 +72,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 	public void checkButtonAnswerInTopicByUnregisteredUserTest() {
 		CollectionHelp.getRandomWebElementFromCollection(topics).click();
 		try {
-			driver.findElement(By.xpath("//a[contains(@href,'/jcommune/posts/new') and contains(@class,'disabled')]"));
+			driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new') and contains(@class,'disabled')]"));
 		}
 		catch (NoSuchElementException e) {
 			//if element not exist, then generate false to test. Because user is unregistered
@@ -84,7 +84,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 	public void checkButtonsDeleteAndEditInTopicByUnregisteredUserTest() {
 		try {
 			List<WebElement> delButtons = driver.findElements(By.xpath("//a[contains(@href,'javascript:confirmAndDelete') and contains(@class,'button')]"));
-			List<WebElement> editButtons = driver.findElements(By.xpath("//a[contains(@href,'/jcommune/posts') and contains(@href,'edit')]"));
+			List<WebElement> editButtons = driver.findElements(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts') and contains(@href,'edit')]"));
 			//if Delete or Edit buttons exists, then generate false to test. Because user is unregistered
 			if (delButtons.size() > 0 || editButtons.size() > 0) {
 				Assert.assertFalse(true);
@@ -102,7 +102,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 		signIn(username, password, appUrl);
 		driver.findElement(By.linkText(brancheNames.get(0))).click();
 		try {
-			driver.findElement(By.xpath("//a[contains(@href,'/jcommune/topics/new')]"));
+			driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/topics/new')]"));
 			driver.navigate().back();
 		}
 		catch (NoSuchElementException e) {
@@ -131,7 +131,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 	public void checkButtonAnswerInTopicByRegisteredUserTest() {
 		CollectionHelp.getRandomWebElementFromCollection(topics).click();
 		try {
-			driver.findElement(By.xpath("//a[contains(@href,'/jcommune/posts/new') and @class='button top_button']"));
+			driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new') and @class='button top_button']"));
 		}
 		catch (NoSuchElementException e) {
 			//if element not exist, then generate false to test. Because user is registered
@@ -143,7 +143,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 	@Parameters({"app-url", "uUsername"})
 	public void checkButtonsDeleteAndEditForTheirPostsInTopicByRegisteredUserTest(String appUrl, String username) {
 		//create post for test permissions
-		driver.findElement(By.xpath("//a[contains(@href,'/jcommune/posts/new') and @class='button top_button']")).click();
+		driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new') and @class='button top_button']")).click();
 		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(8));
 		driver.findElement(By.id("post")).click();
 
@@ -181,7 +181,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 		signIn(username, password, appUrl);
 		driver.findElement(By.linkText(brancheNames.get(0))).click();
 		try {
-			driver.findElement(By.xpath("//a[contains(@href,'/jcommune/topics/new')]"));
+			driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/topics/new')]"));
 			driver.navigate().back();
 		}
 		catch (NoSuchElementException e) {
@@ -210,7 +210,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 	public void checkButtonAnswerInTopicByAdminUserTest() {
 		CollectionHelp.getRandomWebElementFromCollection(topics).click();
 		try {
-			driver.findElement(By.xpath("//a[contains(@href,'/jcommune/posts/new') and @class='button top_button']"));
+			driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new') and @class='button top_button']"));
 		}
 		catch (NoSuchElementException e) {
 			//if element not exist, then generate false to test. Because user is Admin
@@ -222,7 +222,7 @@ public class SecurityTCJC9 extends JCommuneSeleniumTest {
 	@Parameters({"app-url"})
 	public void checkButtonsDeleteAndEditForAllPostsInTopicByAdminUserTest(String appUrl) {
 		//create post for test permissions
-		driver.findElement(By.xpath("//a[contains(@href,'/jcommune/posts/new') and @class='button top_button']")).click();
+		driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new') and @class='button top_button']")).click();
 		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(8));
 		driver.findElement(By.id("post")).click();
 

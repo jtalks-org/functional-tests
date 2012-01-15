@@ -26,7 +26,7 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 	@Parameters({"app-url"})
 	public void clickSignUpLinkTest(String appURL) {
 		driver.get(appURL);
-		driver.findElement(By.xpath("//a[@href='/jcommune/user/new']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 	}
 
 	@Test(priority = 2)
@@ -159,7 +159,7 @@ public class SignUpTCJC5 extends JCommuneSeleniumTest {
 
 	@Test(priority = 14)
 	public void checkSignUpSameUsernameTest() {
-		driver.findElement(By.xpath("//a[@href='/jcommune/user/new']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 		driver.findElement(By.id("username")).sendKeys(acceptedUsername);
 		driver.findElement(By.id("email")).sendKeys(acceptedEmail);
 		driver.findElement(By.id("password")).sendKeys(acceptedPassword);

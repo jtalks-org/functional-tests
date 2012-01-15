@@ -58,12 +58,12 @@ public class TopicAnswerValidationTCJC8 extends JCommuneSeleniumTest {
 	@Test(priority = 3)
 	public void checkButtonAnswerInTopicTest() {
 		CollectionHelp.getRandomWebElementFromCollection(topics).click();
-		Assert.assertNotNull(driver.findElement(By.xpath("//a[contains(@href,'/jcommune/posts/new')]")));
+		Assert.assertNotNull(driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new')]")));
 	}
 
 	@Test(priority = 4)
 	public void clickButtonAnswerTest() {
-		driver.findElement(By.xpath("//a[contains(@href,'/jcommune/posts/new')]")).click();
+		driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/posts/new')]")).click();
 		Assert.assertNotNull(driver.findElement(By.id("postDto")));
 	}
 

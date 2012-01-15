@@ -28,7 +28,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void clickOnRandomSectionTest(String appURL, String username,
-									 String password) {
+										 String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 
@@ -57,7 +57,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	@Test(priority = 3)
 	public void clickOnNewTopicButtonTest() {
 		driver.findElement(
-				By.xpath("//a[contains(@href, '/jcommune/topics/new')]"))
+				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]"))
 				.click();
 		Assert.assertTrue(driver.findElement(By.id("subject")).isDisplayed());
 		Assert.assertTrue(driver.findElement(By.id("tbMsg")).isDisplayed());
@@ -86,7 +86,7 @@ public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
 	public void clickOnBackButtonTest(String appURL) {
 
 		driver.findElement(
-				By.xpath("//a[contains(@href, '/jcommune/branches')]")).click();
+				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/branches')]")).click();
 
 		List<WebElement> list = driver
 				.findElements(By

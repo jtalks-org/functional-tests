@@ -33,6 +33,7 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void checkBranchesListTest(String appUrl, String username, String password) {
+		driver = new FirefoxDriver();
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		branches = driver.findElements(By.xpath("//a[@class='forum_link']"));
@@ -44,7 +45,7 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 	@Test(priority = 2)
 	public void clickButtonNewTopicTest() {
 		CollectionHelp.getRandomWebElementFromCollection(branches).click();
-		driver.findElement(By.xpath("//a[contains(@href,'/jcommune/topics/new')]")).click();
+		driver.findElement(By.xpath("//a[contains(@href,'" + getApplicationContextPath() + "/topics/new')]")).click();
 		try {
 			driver.findElement(By.id("topicDto"));
 		}
@@ -91,17 +92,21 @@ public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
 
 	@Test(priority = 7)
 	public void checkErrorMessageWithShortBodyTopicTest() {
-		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(4));
+		String text = StringHelp.getRandomString(4);
+		driver.findElement(By.id("tbMsg")).sendKeys(text);
 		driver.findElement(By.id("post")).click();
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[@id='bodyText.errors']")));
+		Assert.assertEquals(driver.findElement(By.id("tbMsg")).getText(), text);
 	}
 
 	@Test(priority = 8)
 	public void checkErrorMessageWithLongBodyTopicTest() throws InterruptedException {
+		String text = StringHelp.getRandomString(20001);
 		driver.findElement(By.id("tbMsg")).clear();
-		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")), StringHelp.getRandomString(20001));
+		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")), text);
 		driver.findElement(By.id("post")).click();
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[@id='bodyText.errors']")));
+		Assert.assertEquals(driver.findElement(By.id("tbMsg")).getText(), text);
 	}
 
 	@Test(priority = 9)

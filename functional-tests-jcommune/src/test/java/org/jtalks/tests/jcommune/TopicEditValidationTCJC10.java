@@ -37,7 +37,7 @@ public class TopicEditValidationTCJC10 extends JCommuneSeleniumTest {
 	@Test(priority = 2)
 	public void createTopicForCheckValidationTest() {
 		CollectionHelp.getRandomWebElementFromCollection(branches).click();
-		driver.findElement(By.xpath("//a[contains(@href, '/jcommune/topics/new')]")).click();
+		driver.findElement(By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]")).click();
 		driver.findElement(By.id("subject")).sendKeys(StringHelp.getRandomString(10));
 		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(20));
 		driver.findElement(By.id("post")).click();
@@ -45,7 +45,7 @@ public class TopicEditValidationTCJC10 extends JCommuneSeleniumTest {
 
 	@Test(priority = 3)
 	public void clickButtonEditTopicTest() {
-		driver.findElement(By.xpath("//a[contains(@href, '/jcommune/topics') and contains(@href, 'edit')]")).click();
+		driver.findElement(By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics') and contains(@href, 'edit')]")).click();
 		Assert.assertNotNull(driver.findElement(By.id("topicDto")));
 	}
 

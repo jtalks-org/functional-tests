@@ -23,7 +23,7 @@ public class EditingUserProfileBehaviourTCJC14 extends JCommuneSeleniumTest {
 		driver.get(appUrl);
 		signIn(username, password, appUrl);
 		driver.findElement(By.xpath("//a[@class='currentusername']")).click();
-		driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='/" + getApplicationContextPath() + "/users/edit']")).click();
 		Assert.assertNotNull(driver.findElement(By.id("editProfileForm")));
 		Assert.assertEquals(driver.findElement(By.id("email")).getAttribute("value"), email);
 	}
@@ -32,9 +32,9 @@ public class EditingUserProfileBehaviourTCJC14 extends JCommuneSeleniumTest {
 	@Parameters({"uEmail"})
 	public void checkEmailWithoutSaveChangesTest(String email) {
 		driver.findElement(By.id("email")).clear();
-		driver.findElement(By.xpath("//div[@class='form_controls']/a[contains(@href,'/jcommune/users/')]")).click();
+		driver.findElement(By.xpath("//div[@class='form_controls']/a[contains(@href,'" + getApplicationContextPath() + "/users/')]")).click();
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + email + "']")).getText());
-		driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")).click();
 		Assert.assertEquals(driver.findElement(By.id("email")).getAttribute("value"), email);
 	}
 
@@ -44,7 +44,7 @@ public class EditingUserProfileBehaviourTCJC14 extends JCommuneSeleniumTest {
 		String randomEmail = StringHelp.getRandomEmail();
 		driver.findElement(By.id("email")).clear();
 		driver.findElement(By.id("email")).sendKeys(randomEmail);
-		driver.findElement(By.xpath("//div[@class='form_controls']/a[contains(@href,'/jcommune/users/')]")).click();
+		driver.findElement(By.xpath("//div[@class='form_controls']/a[contains(@href,'" + getApplicationContextPath() + "/users/')]")).click();
 
 		try {
 			driver.findElement(By.xpath("//span[text()='" + randomEmail + "']"));
@@ -53,7 +53,7 @@ public class EditingUserProfileBehaviourTCJC14 extends JCommuneSeleniumTest {
 		catch (NoSuchElementException e) {
 		}
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + email + "']")));
-		driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")).click();
 		Assert.assertEquals(driver.findElement(By.id("email")).getAttribute("value"), email);
 	}
 
@@ -64,7 +64,7 @@ public class EditingUserProfileBehaviourTCJC14 extends JCommuneSeleniumTest {
 		driver.findElement(By.id("email")).sendKeys(randomEmail);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + randomEmail + "']")));
-		driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")).click();
 		Assert.assertEquals(driver.findElement(By.id("email")).getAttribute("value"), randomEmail);
 	}
 
@@ -75,7 +75,7 @@ public class EditingUserProfileBehaviourTCJC14 extends JCommuneSeleniumTest {
 		driver.findElement(By.id("email")).sendKeys(email);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 		Assert.assertNotNull(driver.findElement(By.xpath("//span[text()='" + email + "']")));
-		driver.findElement(By.xpath("//a[@href='/jcommune/users/edit']")).click();
+		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/users/edit']")).click();
 		Assert.assertEquals(driver.findElement(By.id("email")).getAttribute("value"), email);
 	}
 
