@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
  * 
  * @author erik
  */
-public class SignInTCJC4 extends JCommuneSeleniumTest {
+public class TCJC4signIn extends JCommuneSeleniumTest {
 	String wrongUser = "wrongUser";
 	String wrongPassword = "wrongPassword";
 

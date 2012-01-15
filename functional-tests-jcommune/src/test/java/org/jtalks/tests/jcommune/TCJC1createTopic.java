@@ -19,7 +19,7 @@ import utils.StringHelp;
  *
  * @author erik
  */
-public class CreateTopicTCJC1 extends JCommuneSeleniumTest {
+public class TCJC1createTopic extends JCommuneSeleniumTest {
 	List<WebElement> webElementsList;
 	String branchId;
 	String subject;

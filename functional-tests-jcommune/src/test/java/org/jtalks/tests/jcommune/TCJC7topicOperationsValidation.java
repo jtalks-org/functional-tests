@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @autor masyan
  */
-public class TopicOperationsValidationTCJC7 extends JCommuneSeleniumTest {
+public class TCJC7topicOperationsValidation extends JCommuneSeleniumTest {
 	List<WebElement> branches;
 	String acceptedTitle;
 

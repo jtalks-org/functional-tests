@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
  *
  * @autor masyan
  */
-public class LogOutTCJC6 extends JCommuneSeleniumTest {
+public class TCJC6logOut extends JCommuneSeleniumTest {
 
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})

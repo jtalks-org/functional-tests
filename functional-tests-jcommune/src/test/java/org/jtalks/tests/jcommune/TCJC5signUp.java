@@ -17,7 +17,7 @@ import utils.StringHelp;
  *
  * @author masyan
  */
-public class SignUpTCJC5 extends JCommuneSeleniumTest {
+public class TCJC5signUp extends JCommuneSeleniumTest {
 	String acceptedUsername;
 	String acceptedEmail;
 	String acceptedPassword;

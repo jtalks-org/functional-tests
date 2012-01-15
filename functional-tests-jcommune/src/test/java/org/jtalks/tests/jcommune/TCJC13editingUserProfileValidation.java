@@ -14,7 +14,7 @@ import utils.StringHelp;
  *
  * @autor masyan
  */
-public class EditingUserProfileValidationTCJC13 extends JCommuneSeleniumTest {
+public class TCJC13editingUserProfileValidation extends JCommuneSeleniumTest {
 
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})

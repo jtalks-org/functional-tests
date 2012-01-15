@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @autor masyan
  */
-public class SecurityTCJC9 extends JCommuneSeleniumTest {
+public class TCJC9security extends JCommuneSeleniumTest {
 	ArrayList<String> brancheNames = new ArrayList();
 	List<WebElement> topics;
 
