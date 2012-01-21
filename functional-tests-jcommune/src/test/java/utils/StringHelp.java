@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 
 import java.util.Date;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Utils class. Contains methods to work with String
@@ -78,5 +80,17 @@ public class StringHelp {
 	 */
 	public static String getTestPrefix() {
 		return testPrefix;
+	}
+
+	/**
+	 * Method check text and find updtaed
+	 *
+	 * @param post Text of post
+	 * @return true if update exist, else false
+	 */
+	public static boolean checkUpdatedPost(String post) {
+		Pattern p = Pattern.compile("[\\w\\s\\t]*(edited\\s\\d{2}\\s[a-zA-Z]{3}\\s\\d{4}\\s\\d{2}:\\d{2})$");
+		Matcher m = p.matcher(post);
+		return m.matches();
 	}
 }
