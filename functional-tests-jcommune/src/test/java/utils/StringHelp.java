@@ -93,4 +93,21 @@ public class StringHelp {
 		Matcher m = p.matcher(post);
 		return m.matches();
 	}
+
+	/**
+	 * Method return url without host
+	 *
+	 * @param fullUrl	 Full url
+	 * @param contextPath Context path it is first part after host
+	 * @return Url without
+	 */
+	public static String getUrlWithoutHost(String fullUrl, String contextPath) {
+		String[] parts = fullUrl.split(contextPath);
+		if (parts.length > 0) {
+			return contextPath + parts[parts.length - 1];
+		}
+		else {
+			return null;
+		}
+	}
 }
