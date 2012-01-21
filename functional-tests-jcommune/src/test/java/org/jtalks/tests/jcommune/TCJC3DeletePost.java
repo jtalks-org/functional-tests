@@ -53,19 +53,16 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 				.click();
 		// save topic's url
 		topicURL = driver.getCurrentUrl();
-		System.out.println(topicURL);
 		driver.findElement(
 				By.xpath("//a[contains(@href, '" + getApplicationContextPath()
 						+ "/posts/new')]")).click();
 		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")),
 				postContent);
 		driver.findElement(By.id("post")).click();
+		
 
 		// assert that post created
-		Assert.assertEquals(
-				driver.findElement(
-						By.xpath("//li[@class='forum_row'][last()]//div[@class='forum_message_cell_text']"))
-						.getText(), postContent);
+		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='forum_row'][last()]//div[@class='forum_message_cell_text']")).getText(), postContent);
 		assertThatDeleteButtonPresent(username);
 	}
 
@@ -97,9 +94,9 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 
 		// click on delete button and dismiss alert
 		driver.findElement(
-				By.xpath("//li[@class='forum_row'][last()]//a[contains(@href, 'confirmAndDelete')]"))
+				By.xpath("//li[@class='forum_row'][last()]//a[@class='button delete']"))
 				.click();
-		driver.switchTo().alert().dismiss();
+		driver.findElement(By.id("jqi_state0_buttonCancel")).click();
 		// assert that last created post presents
 		Assert.assertEquals(
 				driver.findElement(
@@ -110,11 +107,11 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 						By.xpath("//li[@class='forum_row'][last()]//div[@class='forum_message_cell_text']"))
 						.getText(), postContent2);
 
-		// click on delete button and access alert
+		// click on delete button and accept alert
 		driver.findElement(
-				By.xpath("//li[@class='forum_row'][last()]//a[contains(@href, 'confirmAndDelete')]"))
+				By.xpath("//li[@class='forum_row'][last()]//a[@class='button delete']"))
 				.click();
-		driver.switchTo().alert().accept();
+		driver.findElement(By.id("jqi_state0_buttonOk")).click();
 		// assert that last created post not presents
 		Assert.assertFalse(driver
 				.findElement(
@@ -167,18 +164,17 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 	 * @param userName
 	 */
 	private void assertThatDeleteButtonPresent(String userName) {
-		for (int i = 1; i < driver.findElements(
-				By.xpath("//li[@class='forum_row']")).size() + 1; i++) {
+		for (int i = 1; i < driver.findElements(By.xpath("//li[@class='forum_row']")).size() + 1; i++) {
 			if (driver
 					.findElement(
 							By.xpath("//li[@class='forum_row'][" + i
 									+ "]//a[@class='username']")).getText()
 					.equals(userName)) {
 				Assert.assertTrue(isElementPresent("//li[@class='forum_row']["
-						+ i + "]//a[contains(@href, 'confirmAndDelete')]"));
+						+ i + "]//a[@class='button delete']"));
 			} else {
 				Assert.assertFalse(isElementPresent("//li[@class='forum_row']["
-						+ i + "]//a[contains(@href, 'confirmAndDelete')]"));
+						+ i + "]//a[@class='button delete']"));
 			}
 		}
 	}
