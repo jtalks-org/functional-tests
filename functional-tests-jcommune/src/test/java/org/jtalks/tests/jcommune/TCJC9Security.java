@@ -158,7 +158,7 @@ public class TCJC9Security extends JCommuneSeleniumTest {
 			userPost = post.findElement(By.xpath("div[@class='forum_userinfo']/a[@class='username']")).getText();
 			// try to find buttons Delete and Edit
 			try {
-				post.findElement(By.xpath("div[@class='forum_message_cell']/div[@class='post_details']/a[contains(@href, 'javascript:confirmAndDelete')]"));
+				post.findElement(By.xpath("div[@class='forum_message_cell']/div[@class='post_details']/a[@class='button delete']"));
 				post.findElement(By.xpath("div[@class='forum_message_cell']/div[@class='post_details']/a[contains(@href,'edit')]"));
 				// if founded, then usernaame should be owner this post
 				Assert.assertEquals(userPost, username);
@@ -169,7 +169,6 @@ public class TCJC9Security extends JCommuneSeleniumTest {
 				Assert.assertFalse(userPost.equals(username));
 			}
 		}
-		logOut(appUrl);
 	}
 
 	//Admin user
@@ -177,7 +176,7 @@ public class TCJC9Security extends JCommuneSeleniumTest {
 	@Test(priority = 10)
 	@Parameters({"app-url", "aUsername", "aPassword"})
 	public void checkButtonNewTopicByAdminUserTest(String appUrl, String username, String password) {
-
+		logOut(appUrl);
 		signIn(username, password, appUrl);
 		driver.findElement(By.linkText(brancheNames.get(0))).click();
 		try {
@@ -234,7 +233,7 @@ public class TCJC9Security extends JCommuneSeleniumTest {
 		for (WebElement post : posts) {
 			// try to find buttons Delete and Edit
 			try {
-				post.findElement(By.xpath("div[@class='forum_message_cell']/div[@class='post_details']/a[contains(@href, 'javascript:confirmAndDelete')]"));
+				post.findElement(By.xpath("div[@class='forum_message_cell']/div[@class='post_details']/a[@class='button delete']"));
 				post.findElement(By.xpath("div[@class='forum_message_cell']/div[@class='post_details']/a[contains(@href,'edit')]"));
 			}
 			catch (NoSuchElementException e) {
