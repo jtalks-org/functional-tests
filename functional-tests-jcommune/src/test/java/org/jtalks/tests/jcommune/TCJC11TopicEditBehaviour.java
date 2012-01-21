@@ -21,7 +21,6 @@ public class TCJC11TopicEditBehaviour extends JCommuneSeleniumTest {
 	List<WebElement> branches;
 	String changedTitle;
 	String changedText;
-	String updated;
 
 	@Test(priority = 1)
 	@Parameters({"app-url", "uUsername", "uPassword"})
