@@ -37,7 +37,7 @@ public class TCJC18ForumSections extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 2)
-	public void checkBrancheListInSection() {
+	public void checkBrancheListInSectionTest() {
 		WebElement usingSection = CollectionHelp.getRandomWebElementFromCollection(sections);
 		String usingSectionTitle = usingSection.getText();
 		usingSection.click();
@@ -54,7 +54,7 @@ public class TCJC18ForumSections extends JCommuneSeleniumTest {
 
 	@Test(priority = 3)
 	@Parameters("app-url")
-	public void checkTopicsListInBranch(String appUrl) {
+	public void checkTopicsListInBranchTest(String appUrl) {
 		//click to branch which choosen in previous test
 		driver.findElement(By.xpath("//a[@href='" + urlBranchForTesting + "']")).click();
 		//topic list in choosen branch
