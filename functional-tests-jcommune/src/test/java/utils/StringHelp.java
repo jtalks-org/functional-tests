@@ -83,7 +83,7 @@ public class StringHelp {
 	}
 
 	/**
-	 * Method check text and find updtaed
+	 * Method check text and find updtaed. All test users should have English locale. In method used regexp which not work with another locale
 	 *
 	 * @param post Text of post
 	 * @return true if update exist, else false
