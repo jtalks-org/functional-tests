@@ -49,36 +49,36 @@ public class DBHelp {
 			Statement st = conn.createStatement();
 			ResultSet rs;
 			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='testSel' ");
-			// IMPORTANT. Language should be English
+			// IMPORTANT. Language should be English and Post count on Page should 5
 			if (!rs.first()) {
 				st.executeUpdate("INSERT INTO USERS(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD, EMAIL, ROLE) " +
-						"VALUES(ID, '11111111-1111-1111-1111-111111111111', 'testSel', 'testSel', 'testSel','"+users.get("testSel")+"'," +
+						"VALUES(ID, '11111111-1111-1111-1111-111111111111', 'testSel', 'testSel', 'testSel','" + users.get("testSel") + "'," +
 						" 'ROLE_USER')");
 				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='testSel'");
 				rs.next();
 				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
-						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',50)");
+						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5)");
 			}
 			;
 			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='adminSel' ");
 			if (!rs.first()) {
 				st.executeUpdate("INSERT INTO USERS(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD,EMAIL, ROLE) " +
-						"VALUES(ID, '22222222-2222-2222-2222-222222222222', 'adminSel', 'adminSel', 'adminSel','"+users.get("adminSel")+"'," +
+						"VALUES(ID, '22222222-2222-2222-2222-222222222222', 'adminSel', 'adminSel', 'adminSel','" + users.get("adminSel") + "'," +
 						" 'ROLE_ADMIN')");
 				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='adminSel'");
 				rs.next();
 				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
-						"VALUES("+rs.getLong("ID")+",'ENGLISH',50)");
+						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5)");
 			}
 			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='testSel2'");
 			if (!rs.first()) {
 				st.executeUpdate("INSERT INTO USERS(ID,UUID,USERNAME,ENCODED_USERNAME, PASSWORD, EMAIL, ROLE) " +
-						"VALUES(ID, '33333333-3333-3333-3333-333333333333', 'testSel2', 'testSel2', 'testSel2','"+users.get("testSel2")+"'," +
+						"VALUES(ID, '33333333-3333-3333-3333-333333333333', 'testSel2', 'testSel2', 'testSel2','" + users.get("testSel2") + "'," +
 						" 'ROLE_USER')");
 				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='testSel2'");
 				rs.next();
 				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
-						"VALUES("+rs.getLong("ID")+",'ENGLISH',50)");
+						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5)");
 			}
 			st.close();
 		}
@@ -90,9 +90,9 @@ public class DBHelp {
 	/**
 	 * Util method. Get usernames in parametrs and returns HashMap contain all users with emails from config file (testng.xml).
 	 *
-	 *  @return HashMap contain usernames
+	 * @return HashMap contain usernames
 	 */
-	public static HashMap getUsersFromConfigFile(String username, String email, String username2, String email2,  String admin, String adminEmail) {
+	public static HashMap getUsersFromConfigFile(String username, String email, String username2, String email2, String admin, String adminEmail) {
 		HashMap<String, String> users = new HashMap<String, String>();
 		users.put(username, email);
 		users.put(username2, email2);
