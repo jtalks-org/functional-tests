@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.common;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -14,6 +15,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import static org.testng.Assert.fail;
 
 /**
  * Parent class for Tests. Contains common methods
@@ -98,5 +101,65 @@ public class JCommuneSeleniumTest {
 	 */
 	public void logOut(String appUrl) {
 		driver.get(appUrl + "logout");
+	}
+
+	/**
+	 * The method checks that the element does not exist
+	 *
+	 * @param selector Selector to find element
+	 */
+	public void assertNotExistBySelector(String selector) {
+		try {
+			driver.findElement(By.xpath(selector));
+			//if exist then fail
+			fail("The element with selector=\"" + selector + "\" should not exist");
+		}
+		catch (NoSuchElementException e) {
+		}
+	}
+
+	/**
+	 * The method checks that the element does exist
+	 *
+	 * @param selector Selector to find element
+	 */
+	public void assertExistBySelector(String selector) {
+		try {
+			driver.findElement(By.xpath(selector));
+		}
+		catch (NoSuchElementException e) {
+			//if not exist then fail
+			fail("The element with selector=\"" + selector + "\" should exist");
+		}
+	}
+
+	/**
+	 * The method checks that the element does not exist
+	 *
+	 * @param id Element id
+	 */
+	public void assertNotExistById(String id) {
+		try {
+			driver.findElement(By.id(id));
+			//if exist then fail
+			fail("The element with id=\"" + id + "\" should not exist");
+		}
+		catch (NoSuchElementException e) {
+		}
+	}
+
+	/**
+	 * The method checks that the element does not exist
+	 *
+	 * @param id Element id
+	 */
+	public void assertExistById(String id) {
+		try {
+			driver.findElement(By.id(id));
+		}
+		catch (NoSuchElementException e) {
+			//if exist then fail
+			fail("The element with id=\"" + id + "\" should exist");
+		}
 	}
 }
