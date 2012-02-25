@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -9,13 +8,14 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * This functional test covers test case JC3
  *
  * @autor masyan
  */
-public class JC3UsernameValidationWithNotValidData extends JCommuneSeleniumTest {
+public class JC3UsernameValidationWithNotValidData {
 
 	@DataProvider(name = "notValidUsername")
 	public Object[][] notValidUsername() {
@@ -36,14 +36,14 @@ public class JC3UsernameValidationWithNotValidData extends JCommuneSeleniumTest 
 
 	@BeforeMethod
 	@Parameters({"app-url"})
-	private void setupCase(String appUrl) {
+	public void setupCase(String appUrl) {
 		driver.get(appUrl);
 		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 	}
 
 
 	@Test(dataProvider = "notValidUsername")
-	private void usernameValidationWithNotValidDataTest(String username) {
+	public void usernameValidationWithNotValidDataTest(String username) {
 		driver.findElement(By.id("username")).clear();
 		driver.findElement(By.id("username")).sendKeys(username);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();

@@ -9,13 +9,14 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * This functional test covers test case JC9
  *
  * @autor masyan
  */
-public class JC9ConfirmPassValidationWithNotValidData extends JCommuneSeleniumTest {
+public class JC9ConfirmPassValidationWithNotValidData {
 
 	@DataProvider(name = "notValidConfirmPassword")
 	public Object[][] notValidConfirmPassword() {
@@ -36,14 +37,14 @@ public class JC9ConfirmPassValidationWithNotValidData extends JCommuneSeleniumTe
 
 	@BeforeMethod
 	@Parameters({"app-url"})
-	private void setupCase(String appUrl) {
+	public void setupCase(String appUrl) {
 		driver.get(appUrl);
 		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 	}
 
 
 	@Test(dataProvider = "notValidConfirmPassword")
-	private void confirmPasswordValidationForRegiteringFormTest(String pass, String confirm) {
+	public void confirmPasswordValidationForRegiteringFormTest(String pass, String confirm) {
 		driver.findElement(By.id("password")).clear();
 		driver.findElement(By.id("password")).sendKeys(pass);
 

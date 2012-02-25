@@ -9,13 +9,14 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * This functional test covers test case JC5
  *
  * @autor masyan
  */
-public class JC5EmailValidationWithNotValidData extends JCommuneSeleniumTest {
+public class JC5EmailValidationWithNotValidData {
 
 	@DataProvider(name = "notValidEmail")
 	public Object[][] notValidEmail() {
@@ -28,13 +29,13 @@ public class JC5EmailValidationWithNotValidData extends JCommuneSeleniumTest {
 
 	@BeforeMethod
 	@Parameters({"app-url"})
-	private void setupCase(String appUrl) {
+	public void setupCase(String appUrl) {
 		driver.get(appUrl);
 		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 	}
 
 	@Test(dataProvider = "notValidEmail")
-	private void emailValidationWithNotValidDataTest(String email) {
+	public void emailValidationWithNotValidDataTest(String email) {
 		driver.findElement(By.id("email")).clear();
 		driver.findElement(By.id("email")).sendKeys(email);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();

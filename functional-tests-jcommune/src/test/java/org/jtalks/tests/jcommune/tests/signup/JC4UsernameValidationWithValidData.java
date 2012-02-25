@@ -9,13 +9,14 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistById;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * This functional test covers test case JC4
  *
  * @autor masyan
  */
-public class JC4UsernameValidationWithValidData extends JCommuneSeleniumTest {
+public class JC4UsernameValidationWithValidData {
 
 
 	@DataProvider(name = "validUsername")
@@ -39,13 +40,13 @@ public class JC4UsernameValidationWithValidData extends JCommuneSeleniumTest {
 
 	@BeforeMethod
 	@Parameters({"app-url"})
-	private void setupCase(String appUrl) {
+	public void setupCase(String appUrl) {
 		driver.get(appUrl);
 		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 	}
 
 	@Test(dataProvider = "validUsername")
-	private void usernameValidationWithValidDataTest(String username) {
+	public void usernameValidationWithValidDataTest(String username) {
 		driver.findElement(By.id("username")).clear();
 		driver.findElement(By.id("username")).sendKeys(username);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();

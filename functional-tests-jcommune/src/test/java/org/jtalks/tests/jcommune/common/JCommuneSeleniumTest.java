@@ -6,7 +6,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import utils.DBHelp;
 import utils.SeleniumConfig;
@@ -27,11 +29,11 @@ public class JCommuneSeleniumTest {
 	/**
 	 * Object for work with Remote Selenium Server
 	 */
-	public WebDriver driver;
+	public static WebDriver driver;
 
 	public Connection dbConnection;
 
-	public String contextPath = "/test-jcommune";
+	public static String contextPath = "/test-jcommune";
 
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
@@ -41,7 +43,7 @@ public class JCommuneSeleniumTest {
 	 * @param selDriverType Selenium driver type
 	 * @throws MalformedURLException
 	 */
-	@BeforeClass(alwaysRun = true)
+	@BeforeSuite(alwaysRun = true)
 	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
 					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail) throws Exception {
@@ -56,7 +58,7 @@ public class JCommuneSeleniumTest {
 	/**
 	 * Method destroy connect with Selenium Server
 	 */
-	@AfterClass(alwaysRun = true)
+	@AfterSuite(alwaysRun = true)
 	public void destroy() {
 		driver.close();
 		if (dbConnection != null) {
@@ -89,7 +91,7 @@ public class JCommuneSeleniumTest {
 	 *
 	 * @return String. Application context
 	 */
-	public String getApplicationContextPath() {
+	public static String getApplicationContextPath() {
 		return contextPath;
 	}
 

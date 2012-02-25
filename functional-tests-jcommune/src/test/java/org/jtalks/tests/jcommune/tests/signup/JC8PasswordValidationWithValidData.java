@@ -9,13 +9,14 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistById;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * This functional test covers test case JC8
  *
  * @autor masyan
  */
-public class JC8PasswordValidationWithValidData extends JCommuneSeleniumTest {
+public class JC8PasswordValidationWithValidData {
 
 	@DataProvider(name = "validPassword")
 	public Object[][] validPassword() {
@@ -33,13 +34,13 @@ public class JC8PasswordValidationWithValidData extends JCommuneSeleniumTest {
 
 	@BeforeMethod
 	@Parameters({"app-url"})
-	private void setupCase(String appUrl) {
+	public void setupCase(String appUrl) {
 		driver.get(appUrl);
 		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 	}
 
 	@Test(dataProvider = "validPassword")
-	private void passwordValidationWithValidDataTest(String pass) {
+	public void passwordValidationWithValidDataTest(String pass) {
 		driver.findElement(By.id("password")).clear();
 		driver.findElement(By.id("password")).sendKeys(pass);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();

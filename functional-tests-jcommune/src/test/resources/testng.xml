@@ -28,10 +28,10 @@
     <parameter name="aPassword" value="adminSel"/>
     <parameter name="aEmail" value="adminSel@jtalks.org"/>
 
-    <test name="JCommuneHTMLUnit">
-        <!--<classes>-->
-        <!--<class name="org.jtalks.tests.jcommune.tests.signup.JC12UniqueEmail"/>-->
-        <!--</classes>-->
+    <test name="JCommune">
+        <classes>
+            <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
+        </classes>
         <packages>
             <package name="org.jtalks.tests.jcommune.tests.signup"/>
         </packages>

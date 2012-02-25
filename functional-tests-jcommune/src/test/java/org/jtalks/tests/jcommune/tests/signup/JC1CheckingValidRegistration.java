@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -9,17 +8,19 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.testng.Assert.assertEquals;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicationContextPath;
 
 /**
  * This functional test covers test case JC1
  *
  * @autor masyan
  */
-public class JC1CheckingValidRegistration extends JCommuneSeleniumTest {
+public class JC1CheckingValidRegistration {
 	String appUrl;
 
 	@DataProvider(name = "validRegistration")
-	private Object[][] validRegistration() {
+	public Object[][] validRegistration() {
 		String validUsername = StringHelp.getRandomString(10);
 		String validEmail = StringHelp.getRandomEmail();
 		String validPassword = StringHelp.getRandomString(10);
@@ -30,14 +31,14 @@ public class JC1CheckingValidRegistration extends JCommuneSeleniumTest {
 
 	@BeforeMethod
 	@Parameters({"app-url"})
-	private void setupCase(String appUrl) {
+	public void setupCase(String appUrl) {
 		this.appUrl = appUrl;
 		driver.get(appUrl);
 		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
 	}
 
 	@Test(dataProvider = "validRegistration")
-	private void validRegistrationTest(String username, String email, String pass, String confirmPass) {
+	public void validRegistrationTest(String username, String email, String pass, String confirmPass) {
 		driver.findElement(By.id("username")).sendKeys(username);
 		driver.findElement(By.id("email")).sendKeys(email);
 		driver.findElement(By.id("password")).sendKeys(pass);
