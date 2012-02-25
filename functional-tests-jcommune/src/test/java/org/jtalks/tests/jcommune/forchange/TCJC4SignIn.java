@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune;
+package org.jtalks.tests.jcommune.forchange;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;

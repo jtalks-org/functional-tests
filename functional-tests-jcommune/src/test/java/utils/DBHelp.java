@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -56,8 +57,8 @@ public class DBHelp {
 						" 'ROLE_USER')");
 				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='testSel'");
 				rs.next();
-				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
-						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5)");
+				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE, REGISTRATION_DATE, ENABLED, POST_COUNT) " +
+						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5, '2012-02-25 13:21:10',  1, 0)");
 			}
 			;
 			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='adminSel' ");
@@ -67,8 +68,8 @@ public class DBHelp {
 						" 'ROLE_ADMIN')");
 				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='adminSel'");
 				rs.next();
-				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
-						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5)");
+				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE, REGISTRATION_DATE, ENABLED, POST_COUNT) " +
+						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5, '2012-02-25 13:21:10', 1, 0)");
 			}
 			rs = st.executeQuery("SELECT USERNAME, EMAIL FROM USERS WHERE USERNAME='testSel2'");
 			if (!rs.first()) {
@@ -77,8 +78,8 @@ public class DBHelp {
 						" 'ROLE_USER')");
 				rs = st.executeQuery("SELECT ID FROM USERS WHERE USERNAME='testSel2'");
 				rs.next();
-				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE) " +
-						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5)");
+				st.executeUpdate("INSERT INTO JC_USER_DETAILS(USER_ID, LANGUAGE, PAGE_SIZE, REGISTRATION_DATE, ENABLED, POST_COUNT) " +
+						"VALUES(" + rs.getLong("ID") + ",'ENGLISH',5, '2012-02-25 13:21:10', 1, 0)");
 			}
 			st.close();
 		}

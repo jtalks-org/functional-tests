@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune;
+package org.jtalks.tests.jcommune.forchange;
 
 import java.util.List;
 

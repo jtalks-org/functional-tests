@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune;
+package org.jtalks.tests.jcommune.forchange;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.By;
@@ -12,9 +12,8 @@ import utils.StringHelp;
 /**
  * This functional test covers Last message column case TC-JC23
  * http://jtalks.org/display/jcommune/TC-JC23+Last+message+column scenario 2
- * 
+ *
  * @author erik
- * 
  */
 
 public class TCJC23_2LastMessageColumn extends JCommuneSeleniumTest {
@@ -24,10 +23,10 @@ public class TCJC23_2LastMessageColumn extends JCommuneSeleniumTest {
 	 */
 
 	@BeforeClass
-	@Parameters({ "app-url", "uUsername", "uPassword", "uUsername2",
-			"uPassword2" })
+	@Parameters({"app-url", "uUsername", "uPassword", "uUsername2",
+			"uPassword2"})
 	public void createTopicsTest(String appURL, String username,
-			String password, String username2, String password2) {
+								 String password, String username2, String password2) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 
@@ -47,9 +46,9 @@ public class TCJC23_2LastMessageColumn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 1)
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void loginneUserdOnMainPageTest(String appURL, String username,
-			String password) {
+										   String password) {
 		signIn(username, password, appURL);
 		driver.findElement(
 				By.xpath("//ul[@class='forum_table'][1]/li[@class='forum_row'][1]/div[@class='forum_last_message']/a[1]"))
@@ -94,7 +93,7 @@ public class TCJC23_2LastMessageColumn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 2)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void unloginnedUserOnMainPageTest(String appURL) {
 		driver.get(appURL);
 		driver.findElement(
@@ -126,7 +125,7 @@ public class TCJC23_2LastMessageColumn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 3)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void clickOnBackButtonOnMainPageTest(String appURL) {
 		driver.navigate().back();
 		Assert.assertEquals(driver.getCurrentUrl(), appURL);
@@ -142,7 +141,7 @@ public class TCJC23_2LastMessageColumn extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 5)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void clickOnBackButtonOnMainPage2Test(String appURL) {
 		driver.navigate().back();
 		Assert.assertEquals(driver.getCurrentUrl(), appURL);

@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune;
+package org.jtalks.tests.jcommune.forchange;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;

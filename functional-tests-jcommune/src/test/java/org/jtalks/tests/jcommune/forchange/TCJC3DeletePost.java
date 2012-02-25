@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune;
+package org.jtalks.tests.jcommune.forchange;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import utils.StringHelp;
 /**
  * This functional test covers Deleting post in the topic, test case TC-JC3
  * http://jtalks.org/display/jcommune/TC-JC3+Delete+Post
- * 
+ *
  * @author erik
  */
 
@@ -34,7 +34,7 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 1)
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void addPostTest(String appURL, String username, String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
@@ -59,7 +59,7 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")),
 				postContent);
 		driver.findElement(By.id("post")).click();
-		
+
 
 		// assert that post created
 		Assert.assertEquals(driver.findElement(By.xpath("//li[@class='forum_row'][last()]//div[@class='forum_message_cell_text']")).getText(), postContent);
@@ -67,9 +67,9 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 2)
-	@Parameters({ "app-url", "uUsername2", "uPassword2" })
+	@Parameters({"app-url", "uUsername2", "uPassword2"})
 	public void addAnotherPostTest(String appURL, String username,
-			String password) {
+								   String password) {
 		logOut(appURL);
 		signIn(username, password, appURL);
 		driver.get(topicURL);
@@ -89,7 +89,7 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 3)
-	@Parameters({ "uUsername2" })
+	@Parameters({"uUsername2"})
 	public void deletePostTest(String username2) {
 
 		// click on delete button and dismiss alert
@@ -127,11 +127,9 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 	/**
 	 * This method gather branches urls and clicks on it, if topics don't exist
 	 * in branch, method takes other branch and checks if topics exist etc.
-	 * 
-	 * @param branchXpath
-	 *            xpath of branch webelement
-	 * @param topicXpath
-	 *            xpath of topic webelement
+	 *
+	 * @param branchXpath xpath of branch webelement
+	 * @param topicXpath  xpath of topic webelement
 	 */
 	private void chooseAndClickOnBranch(String branchXpath, String topicXpath) {
 		webElementsList = driver.findElements(By.xpath(branchXpath));
@@ -144,9 +142,8 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 
 	/**
 	 * This method checks that webelement presents on page;
-	 * 
-	 * @param xpath
-	 *            of necessary webelement
+	 *
+	 * @param xpath of necessary webelement
 	 * @return
 	 */
 	private boolean isElementPresent(String xpath) {
@@ -160,7 +157,7 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 	 * this method asserts that delete button presents only in that post rows
 	 * where userName is creator, and delete button absent where userName is not
 	 * creator
-	 * 
+	 *
 	 * @param userName
 	 */
 	private void assertThatDeleteButtonPresent(String userName) {
@@ -172,7 +169,8 @@ public class TCJC3DeletePost extends JCommuneSeleniumTest {
 					.equals(userName)) {
 				Assert.assertTrue(isElementPresent("//li[@class='forum_row']["
 						+ i + "]//a[@class='button delete']"));
-			} else {
+			}
+			else {
 				Assert.assertFalse(isElementPresent("//li[@class='forum_row']["
 						+ i + "]//a[@class='button delete']"));
 			}

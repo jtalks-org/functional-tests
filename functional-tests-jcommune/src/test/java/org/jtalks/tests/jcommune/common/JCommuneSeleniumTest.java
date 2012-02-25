@@ -45,10 +45,10 @@ public class JCommuneSeleniumTest {
 	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
 					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail) throws Exception {
-//		driver = new RemoteWebDriver(
-//				new URL(selServerURL),
-//				SeleniumConfig.getBrowserDriver(selDriverType));
-		driver = new FirefoxDriver();
+		driver = new RemoteWebDriver(
+				new URL(selServerURL),
+				SeleniumConfig.getBrowserDriver(selDriverType));
+//		driver = new FirefoxDriver();
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
 		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
 	}
@@ -103,63 +103,4 @@ public class JCommuneSeleniumTest {
 		driver.get(appUrl + "logout");
 	}
 
-	/**
-	 * The method checks that the element does not exist
-	 *
-	 * @param selector Selector to find element
-	 */
-	public void assertNotExistBySelector(String selector) {
-		try {
-			driver.findElement(By.xpath(selector));
-			//if exist then fail
-			fail("The element with selector=\"" + selector + "\" should not exist");
-		}
-		catch (NoSuchElementException e) {
-		}
-	}
-
-	/**
-	 * The method checks that the element does exist
-	 *
-	 * @param selector Selector to find element
-	 */
-	public void assertExistBySelector(String selector) {
-		try {
-			driver.findElement(By.xpath(selector));
-		}
-		catch (NoSuchElementException e) {
-			//if not exist then fail
-			fail("The element with selector=\"" + selector + "\" should exist");
-		}
-	}
-
-	/**
-	 * The method checks that the element does not exist
-	 *
-	 * @param id Element id
-	 */
-	public void assertNotExistById(String id) {
-		try {
-			driver.findElement(By.id(id));
-			//if exist then fail
-			fail("The element with id=\"" + id + "\" should not exist");
-		}
-		catch (NoSuchElementException e) {
-		}
-	}
-
-	/**
-	 * The method checks that the element does not exist
-	 *
-	 * @param id Element id
-	 */
-	public void assertExistById(String id) {
-		try {
-			driver.findElement(By.id(id));
-		}
-		catch (NoSuchElementException e) {
-			//if exist then fail
-			fail("The element with id=\"" + id + "\" should exist");
-		}
-	}
 }

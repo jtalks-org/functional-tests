@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune;
+package org.jtalks.tests.jcommune.forchange;
 
 import java.util.List;
 import java.util.Random;
@@ -16,9 +16,8 @@ import utils.StringHelp;
 /**
  * This functional test covers testing of Permanent post link
  * http://jtalks.org/display/jcommune/TC-JC15+Permanent+post+link
- * 
+ *
  * @author erik
- * 
  */
 public class TCJC15PermanentPostLink extends JCommuneSeleniumTest {
 	List<WebElement> webElementsList;
@@ -28,9 +27,9 @@ public class TCJC15PermanentPostLink extends JCommuneSeleniumTest {
 	String linkToPost;
 
 	@Test(priority = 1)
-	@Parameters({ "app-url", "uUsername", "uPassword" })
+	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void signInCreateTopicAndPostTest(String appURL, String username,
-			String password) {
+											 String password) {
 		driver.get(appURL);
 		signIn(username, password, appURL);
 
@@ -99,7 +98,7 @@ public class TCJC15PermanentPostLink extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 4)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void goToMainPageAndToPostTest(String appUrl) {
 		driver.get(appUrl);
 		driver.get(linkToPost);
@@ -110,7 +109,7 @@ public class TCJC15PermanentPostLink extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 5)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void deletePostTest(String appUrl) {
 		driver.findElement(
 				By.xpath("//li[@class='forum_row'][last()]//a[@class='button delete']"))
@@ -128,7 +127,7 @@ public class TCJC15PermanentPostLink extends JCommuneSeleniumTest {
 	}
 
 	@Test(priority = 6)
-	@Parameters({ "app-url" })
+	@Parameters({"app-url"})
 	public void deleteTopicTest(String appUrl) {
 		driver.findElement(
 				By.xpath("//li[@class='forum_row'][last()]//a[@class='button delete']"))
@@ -146,11 +145,9 @@ public class TCJC15PermanentPostLink extends JCommuneSeleniumTest {
 	/**
 	 * This method gather branches urls and clicks on it, if topics don't exist
 	 * in branch, method takes other branch and checks if topics exist etc.
-	 * 
-	 * @param branchXpath
-	 *            xpath of branch webelement
-	 * @param topicXpath
-	 *            xpath of topic webelement
+	 *
+	 * @param branchXpath xpath of branch webelement
+	 * @param topicXpath  xpath of topic webelement
 	 */
 	private void chooseAndClickOnBranch(String branchXpath, String topicXpath) {
 		webElementsList = driver.findElements(By.xpath(branchXpath));
@@ -163,9 +160,8 @@ public class TCJC15PermanentPostLink extends JCommuneSeleniumTest {
 
 	/**
 	 * This method checks that webelement presents on page;
-	 * 
-	 * @param xpath
-	 *            of necessary webelement
+	 *
+	 * @param xpath of necessary webelement
 	 * @return
 	 */
 	private boolean isElementPresent(String xpath) {
