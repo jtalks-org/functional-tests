@@ -31,6 +31,7 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
+            <!--TODO delete exlude classes after install X server to server -->
             <class name="org.jtalks.tests.jcommune.tests.topic.JC13CreateTopic">
                 <methods>
                     <exclude name="createTopicTest"/>
@@ -40,6 +41,8 @@
         <packages>
             <package name="org.jtalks.tests.jcommune.tests.signup"/>
             <package name="org.jtalks.tests.jcommune.tests.topic"/>
+            <!--TODO uncomment after install X server to server -->
+            <!--<package name="org.jtalks.tests.jcommune.tests.post"/>-->
         </packages>
     </test>
 </suite>

@@ -12,6 +12,7 @@ import org.testng.annotations.Parameters;
 import utils.CollectionHelp;
 import utils.DBHelp;
 import utils.SeleniumConfig;
+import utils.StringHelp;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -117,6 +118,21 @@ public class JCommuneSeleniumTest {
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
 	}
 
+
+	/**
+	 * Method create topic. Used for create test data. Net checked elements for topic create.
+	 */
+	public static void createTopicForTest() {
+		String subject = StringHelp.getRandomString(20);
+		String message = StringHelp.getRandomString(20);
+
+		driver.findElement(
+				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]"))
+				.click();
+		driver.findElement(By.id("subject")).sendKeys(subject);
+		driver.findElement(By.id("tbMsg")).sendKeys(message);
+		driver.findElement(By.id("post")).click();
+	}
 
 	/**
 	 * Method return application context path
