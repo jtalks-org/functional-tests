@@ -34,7 +34,7 @@ public class JC16BackButtonOnCreateAnswerPage {
 	}
 
 	@Test
-	public void clickBackButtonOnCreateAnswerPage() {
+	public void clickBackButtonOnCreateAnswerPageTest() {
 		//step 1
 		driver.findElement(
 				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/posts/new')]"))

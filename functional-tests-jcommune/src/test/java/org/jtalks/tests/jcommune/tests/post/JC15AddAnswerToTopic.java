@@ -33,7 +33,7 @@ public class JC15AddAnswerToTopic {
 	}
 
 	@Test
-	public void addAnswerToTopic() {
+	public void addAnswerToTopicTest() {
 		//step 1
 		driver.findElement(
 				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/posts/new')]"))
