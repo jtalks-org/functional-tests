@@ -14,18 +14,18 @@ import org.testng.annotations.Test;
  * @autor masyan
  */
 public class TCJC6LogOut extends JCommuneSeleniumTest {
-
-	@Test(priority = 1)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void logOutTest(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password, appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/logout']")).click();
-		try {
-			driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/logout']"));
-			Assert.assertFalse(true);
-		}
-		catch (NoSuchElementException e) {
-		}
-	}
+//
+//	@Test(priority = 1)
+//	@Parameters({"app-url", "uUsername", "uPassword"})
+//	public void logOutTest(String appUrl, String username, String password) {
+//		driver.get(appUrl);
+//		signIn(username, password, appUrl);
+//		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/logout']")).click();
+//		try {
+//			driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/logout']"));
+//			Assert.assertFalse(true);
+//		}
+//		catch (NoSuchElementException e) {
+//		}
+//	}
 }

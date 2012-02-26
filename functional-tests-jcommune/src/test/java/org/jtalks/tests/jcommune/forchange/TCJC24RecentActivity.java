@@ -20,45 +20,45 @@ import java.util.List;
  */
 public class TCJC24RecentActivity extends JCommuneSeleniumTest {
 
-	List<WebElement> topics;
-
-	@BeforeClass
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void createTestData(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password, appUrl);
-		driver.findElement(By.className("forum_link")).click();
-		driver.findElement(By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]")).click();
-		driver.findElement(By.id("subject")).sendKeys(StringHelp.getRandomString(10));
-		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(10));
-		driver.findElement(By.id("post")).click();
-		logOut(appUrl);
-	}
-
-	@Test(priority = 1)
-	public void recentActivityButtonClickTest() {
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/topics/recent']")).click();
-		topics = driver.findElements(By.className("forum_link"));
-		if (topics.size() == 0) {
-			Assert.assertFalse(true);
-		}
-	}
-
-	@Test(priority = 2)
-	public void clickTopicFromRecentActivityListTest() {
-		WebElement choosenTopic = CollectionHelp.getRandomWebElementFromCollection(topics);
-		String titleTopic = choosenTopic.getText();
-		choosenTopic.click();
-		Assert.assertEquals(driver.findElement(By.xpath("//a[@class='heading' and @href='#']")).getText(), titleTopic);
-	}
-
-	@Test(priority = 3)
-	public void clickButtonBackTest() {
-		driver.findElement(By.xpath("//a[contains(@class,'button') and contains(text(),'Back')]")).click();
-		topics = driver.findElements(By.className("forum_link"));
-		if (topics.size() == 0) {
-			Assert.assertFalse(true);
-		}
-	}
+//	List<WebElement> topics;
+//
+//	@BeforeClass
+//	@Parameters({"app-url", "uUsername", "uPassword"})
+//	public void createTestData(String appUrl, String username, String password) {
+//		driver.get(appUrl);
+//		signIn(username, password, appUrl);
+//		driver.findElement(By.className("forum_link")).click();
+//		driver.findElement(By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]")).click();
+//		driver.findElement(By.id("subject")).sendKeys(StringHelp.getRandomString(10));
+//		driver.findElement(By.id("tbMsg")).sendKeys(StringHelp.getRandomString(10));
+//		driver.findElement(By.id("post")).click();
+//		logOut(appUrl);
+//	}
+//
+//	@Test(priority = 1)
+//	public void recentActivityButtonClickTest() {
+//		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/topics/recent']")).click();
+//		topics = driver.findElements(By.className("forum_link"));
+//		if (topics.size() == 0) {
+//			Assert.assertFalse(true);
+//		}
+//	}
+//
+//	@Test(priority = 2)
+//	public void clickTopicFromRecentActivityListTest() {
+//		WebElement choosenTopic = CollectionHelp.getRandomWebElementFromCollection(topics);
+//		String titleTopic = choosenTopic.getText();
+//		choosenTopic.click();
+//		Assert.assertEquals(driver.findElement(By.xpath("//a[@class='heading' and @href='#']")).getText(), titleTopic);
+//	}
+//
+//	@Test(priority = 3)
+//	public void clickButtonBackTest() {
+//		driver.findElement(By.xpath("//a[contains(@class,'button') and contains(text(),'Back')]")).click();
+//		topics = driver.findElements(By.className("forum_link"));
+//		if (topics.size() == 0) {
+//			Assert.assertFalse(true);
+//		}
+//	}
 
 }

@@ -3,13 +3,13 @@ package org.jtalks.tests.jcommune.common;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
+import utils.CollectionHelp;
 import utils.DBHelp;
 import utils.SeleniumConfig;
 
@@ -17,8 +17,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
-import static org.testng.Assert.fail;
+import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
 
 /**
  * Parent class for Tests. Contains common methods
@@ -79,12 +80,43 @@ public class JCommuneSeleniumTest {
 	 * @param password
 	 * @author erik
 	 */
-	public void signIn(String username, String password, String appURL) {
+	public static void signIn(String username, String password) {
 		driver.findElement(By.xpath("//a[@href='" + contextPath + "/login']")).click();
 		driver.findElement(By.id("j_username")).sendKeys(username);
 		driver.findElement(By.id("j_password")).sendKeys(password);
 		driver.findElement(By.xpath("//input[@type='submit']")).click();
 	}
+
+
+	/**
+	 * This method checks that link for logout present, than click on it
+	 * Method  used static link because in selenium exist bag  MoveTargetOutOfBoundsError
+	 *
+	 * @author erik
+	 */
+	public static void logOut(String appUrl) {
+		driver.get(appUrl + "logout");
+	}
+
+	/**
+	 * Method  select random branch (if exists) and open it
+	 */
+	public static void clickOnRandomBranch() {
+		List<WebElement> webElementsList = driver.findElements(By.xpath("//a[@class='forum_link']"));
+		assertNotEmptyCollection(webElementsList);
+		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
+	}
+
+
+	/**
+	 * Method select random section (if exists) and open it
+	 */
+	public static void clickOnRandomSection() {
+		List<WebElement> webElementsList = driver.findElements(By.xpath("//a[@class='forum_header_link']"));
+		assertNotEmptyCollection(webElementsList);
+		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
+	}
+
 
 	/**
 	 * Method return application context path
@@ -93,16 +125,6 @@ public class JCommuneSeleniumTest {
 	 */
 	public static String getApplicationContextPath() {
 		return contextPath;
-	}
-
-	/**
-	 * This method checks that link for logout present, than click on it
-	 * Method  used static link because in selenium exist bag  MoveTargetOutOfBoundsError
-	 *
-	 * @author erik
-	 */
-	public void logOut(String appUrl) {
-		driver.get(appUrl + "logout");
 	}
 
 }

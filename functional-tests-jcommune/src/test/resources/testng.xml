@@ -31,9 +31,15 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
+            <class name="org.jtalks.tests.jcommune.tests.topic.JC13CreateTopic">
+                <methods>
+                    <exclude name="createTopicTest"/>
+                </methods>
+            </class>
         </classes>
         <packages>
             <package name="org.jtalks.tests.jcommune.tests.signup"/>
+            <package name="org.jtalks.tests.jcommune.tests.topic"/>
         </packages>
     </test>
 </suite>
