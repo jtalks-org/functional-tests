@@ -12,6 +12,7 @@ import static org.testng.Assert.assertEquals;
 
 /**
  * @autor masyan
+ * @autor erik
  */
 public class JC18CancelButtonOnDeleteAnswerWindow {
 

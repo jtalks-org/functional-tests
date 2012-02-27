@@ -13,6 +13,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * This functional test covers test case JC2
  *
  * @autor masyan
+ * @autor erik
  */
 public class JC2SignUpWithoutEnterData {
 

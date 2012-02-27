@@ -14,6 +14,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * This functional test covers test case JC3
  *
  * @autor masyan
+ * @autor erik
  */
 public class JC3UsernameValidationWithNotValidData {
 

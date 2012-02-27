@@ -13,6 +13,7 @@ import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
 
 /**
  * @autor masyan
+ * @autor erik
  */
 public class JC16BackButtonOnCreateAnswerPage {
 

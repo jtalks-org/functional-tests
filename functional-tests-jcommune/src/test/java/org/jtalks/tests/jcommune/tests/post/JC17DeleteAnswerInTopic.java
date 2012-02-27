@@ -13,6 +13,7 @@ import static org.testng.Assert.*;
 
 /**
  * @autor masyan
+ * @autor erik
  */
 public class JC17DeleteAnswerInTopic {
 

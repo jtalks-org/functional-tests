@@ -62,7 +62,7 @@ public class Exsistence {
 	}
 
 	/**
-	 * The method checks that the element does not exist
+	 * The method checks that the element does exist
 	 *
 	 * @param id Element id
 	 */

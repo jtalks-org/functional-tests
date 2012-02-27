@@ -15,6 +15,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * This functional test covers test case JC10
  *
  * @autor masyan
+ * @autor erik
  */
 public class JC10CofirmPassValidationWithValidData {
 

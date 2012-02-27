@@ -13,6 +13,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * This functional test covers test case JC11
  *
  * @autor masyan
+ * @autor erik
  */
 public class JC11UniqueUsername {
 	String existUsername;

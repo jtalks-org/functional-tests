@@ -15,6 +15,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
  * This functional test covers test case JC1
  *
  * @autor masyan
+ * @autor erik
  */
 public class JC1CheckingValidRegistration {
 	String appUrl;
