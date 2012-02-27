@@ -135,6 +135,22 @@ public class JCommuneSeleniumTest {
 	}
 
 	/**
+	 * Method create post. Used for create test data. Not checked elements for post create.
+	 */
+	public static void createAnswerForTest(String answer) {
+		//step 1
+		driver.findElement(
+				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/posts/new')]"))
+				.click();
+
+		//step 2
+		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")),
+				answer);
+		driver.findElement(By.id("post")).click();
+
+	}
+
+	/**
 	 * Method return application context path
 	 *
 	 * @return String. Application context
