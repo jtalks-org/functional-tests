@@ -34,7 +34,7 @@ public class JCommuneSeleniumTest {
 
 	public Connection dbConnection;
 
-	public static String contextPath = "/test-jcommune";
+	public static final String contextPath = "/test-jcommune";
 
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
