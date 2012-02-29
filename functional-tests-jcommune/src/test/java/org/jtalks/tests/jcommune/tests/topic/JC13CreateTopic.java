@@ -1,6 +1,6 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.openqa.selenium.By;
+import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -10,6 +10,7 @@ import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
+import static org.jtalks.tests.jcommune.pages.TopicPage.*;
 
 /**
  * @autor masyan
@@ -19,6 +20,7 @@ public class JC13CreateTopic {
 
 	String subject = StringHelp.getRandomString(20);
 	String message = StringHelp.getRandomString(20);
+	TopicPage topicPage;
 
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -26,6 +28,8 @@ public class JC13CreateTopic {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
+		topicPage = new TopicPage();
+		topicPage.init(driver);
 	}
 
 	@AfterMethod
@@ -37,25 +41,18 @@ public class JC13CreateTopic {
 	@Test
 	public void createTopicTest() {
 		//first step
-		driver.findElement(
-				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]"))
-				.click();
-		Assert.assertTrue(driver.findElement(By.id("subject")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("tbMsg")).isDisplayed());
+		topicPage.getNewButton().click();
+
+		Assert.assertTrue(topicPage.getSubjectField().isDisplayed());
+		Assert.assertTrue(topicPage.getMessageField().isDisplayed());
 
 		//second step
-		driver.findElement(By.id("subject")).sendKeys(subject);
-		driver.findElement(By.id("tbMsg")).sendKeys(message);
-		driver.findElement(By.id("post")).click();
-		Assert.assertEquals(
-				driver.findElement(By.xpath("//a[contains(@class,'heading')]")).getText(),
-				subject);
-		System.out.println(driver.findElement(
-				By.xpath("//div[contains(@class, 'forum_message_cell_text')]"))
-				.getText());
-		assertContainsInString(driver.findElement(
-				By.xpath("//div[contains(@class, 'forum_message_cell_text')]"))
-				.getText(), message);
+		topicPage.getSubjectField().sendKeys(subject);
+		topicPage.getMessageField().sendKeys(message);
+		topicPage.getPostButton().click();
+		Assert.assertEquals(topicPage.getTopicMessage().getText(), subject);
+
+		assertContainsInString(topicPage.getTopicMessage().getText(), message);
 	}
 
 }

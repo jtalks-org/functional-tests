@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
+import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
@@ -22,6 +23,7 @@ public class JC14BackButtonOnCreateTopicPage {
 
 	String subject = StringHelp.getRandomString(20);
 	String message = StringHelp.getRandomString(20);
+	TopicPage topicPage;
 
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -29,6 +31,8 @@ public class JC14BackButtonOnCreateTopicPage {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
+		topicPage = new TopicPage();
+		topicPage.init(driver);
 	}
 
 	@AfterMethod
@@ -40,18 +44,15 @@ public class JC14BackButtonOnCreateTopicPage {
 	@Test
 	public void clickBackButtonOnCreateTopicPageTest() {
 		//first step
-		driver.findElement(
-				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]"))
-				.click();
-		Assert.assertTrue(driver.findElement(By.id("subject")).isDisplayed());
-		Assert.assertTrue(driver.findElement(By.id("tbMsg")).isDisplayed());
+		topicPage.getNewButton().click();
+		Assert.assertTrue(topicPage.getSubjectField().isDisplayed());
+		Assert.assertTrue(topicPage.getMessageField().isDisplayed());
 
 		//second step
-		driver.findElement(By.id("subject")).sendKeys(subject);
-		driver.findElement(By.id("tbMsg")).sendKeys(message);
-		driver.findElement(By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/branches')]")).click();
+		topicPage.getSubjectField().sendKeys(subject);
+		topicPage.getMessageField().sendKeys(message);
+		topicPage.getBackButton().click();
 
-		List<WebElement> list = driver.findElements(By.xpath("//ul[@class='forum_table']/li//a[@class='forum_link']"));
-		assertNotExistElementOnViewPresent(list, subject);
+		assertNotExistElementOnViewPresent(topicPage.getTopicsList(), subject);
 	}
 }
