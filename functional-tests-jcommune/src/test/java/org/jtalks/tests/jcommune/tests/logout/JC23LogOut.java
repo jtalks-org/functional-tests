@@ -1,6 +1,8 @@
 package org.jtalks.tests.jcommune.tests.logout;
 
+import org.jtalks.tests.jcommune.pages.LogOutPage;
 import org.openqa.selenium.By;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -15,19 +17,23 @@ import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
  */
 public class JC23LogOut {
 
+	LogOutPage logOutPage;
+
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password);
+		logOutPage = new LogOutPage();
+		logOutPage.init(driver);
 	}
 
 	@Test
 	public void logOutTest() {
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/logout']")).click();
+		logOutPage.getLogOutButton().click();
 
-		assertNotExistBySelector(driver, "//a[@href='" + getApplicationContextPath() + "/logout']");
-		assertNotExistBySelector(driver, "//a[@class='currentusername']");
+		assertNotExistBySelector(driver, logOutPage.logOutButtonSel);
+		assertNotExistBySelector(driver, logOutPage.currentUsernameLinkSel);
 
 	}
 
