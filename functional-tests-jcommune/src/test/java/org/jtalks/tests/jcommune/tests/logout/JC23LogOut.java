@@ -1,15 +1,12 @@
 package org.jtalks.tests.jcommune.tests.logout;
 
 import org.jtalks.tests.jcommune.pages.LogOutPage;
-import org.openqa.selenium.By;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicationContextPath;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
 
 /**
