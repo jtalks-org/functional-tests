@@ -18,30 +18,44 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
  */
 public class TopicPage implements Page {
 
+	public static final String newButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/new')]";
 
-	@FindBy(xpath = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/new')]")
+	public static final String subjectFieldSel = "subject";
+
+	public static final String messageFieldSel = "tbMsg";
+
+	public static final String postButtonSel = "post";
+
+	public static final String topicSubjectSel = "//a[contains(@class,'heading')]";
+
+	public static final String topicMessageSel = "//div[contains(@class, 'forum_message_cell_text')]";
+
+	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/branches')]";
+
+	public static final String topicsListSel = "//ul[@class='forum_table']/li//a[@class='forum_link']";
+
+	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
 
-	@FindBy(id = "subject")
+	@FindBy(id = subjectFieldSel)
 	private WebElement subjectField;
 
-	@FindBy(id = "tbMsg")
+	@FindBy(id = messageFieldSel)
 	private WebElement messageField;
 
-	@FindBy(id = "post")
+	@FindBy(id = postButtonSel)
 	private WebElement postButton;
 
-	@FindBy(xpath = "//a[contains(@class,'heading')]")
+	@FindBy(xpath = topicSubjectSel)
 	private WebElement topicSubject;
 
-	@FindBy(xpath = "//div[contains(@class, 'forum_message_cell_text')]")
+	@FindBy(xpath = topicMessageSel)
 	private WebElement topicMessage;
 
-
-	@FindBy(xpath = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/branches')]")
+	@FindBy(xpath = backButtonSel)
 	private WebElement backButton;
 
-	@FindBy(xpath = "//ul[@class='forum_table']/li//a[@class='forum_link']")
+	@FindBy(xpath = topicsListSel)
 	private List<WebElement> topicsList;
 
 
