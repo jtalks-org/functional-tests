@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.tests.post;
 
+import org.jtalks.tests.jcommune.pages.PostPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -18,6 +19,8 @@ public class JC18CancelButtonOnDeleteAnswerWindow {
 
 	String answer = StringHelp.getRandomString(20);
 
+	PostPage postPage;
+
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
@@ -26,6 +29,8 @@ public class JC18CancelButtonOnDeleteAnswerWindow {
 		clickOnRandomBranch();
 		createTopicForTest();
 		createAnswerForTest(this.answer);
+		postPage = new PostPage();
+		postPage.init(driver);
 	}
 
 	@AfterMethod
@@ -37,14 +42,11 @@ public class JC18CancelButtonOnDeleteAnswerWindow {
 	@Test
 	public void cancelButtonOnDeleteAnswerWindowTest() {
 		//step 1
-		driver.findElement(
-				By.xpath("//li[@class='forum_row'][last()]//a[@class='button delete']"))
-				.click();
+		postPage.getDeleteButtonNearLastPost().click();
 		driver.findElement(By.id("jqi_state0_buttonCancel")).click();
 
 		//step2
-		String lastMessageText = driver.findElement(
-				By.xpath("//li[@class='forum_row'][last()]//div[@class='forum_message_cell_text']")).getText();
+		String lastMessageText = postPage.getLastPostMessage().getText();
 
 		assertEquals(lastMessageText, this.answer);
 
