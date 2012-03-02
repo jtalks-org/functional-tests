@@ -1,12 +1,13 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.openqa.selenium.By;
-import org.testng.Assert;
+import org.jtalks.tests.jcommune.pages.PostPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
+
+import static org.testng.Assert.*;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
@@ -17,6 +18,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 public class JC15AddAnswerToTopic {
 
 	String answer = StringHelp.getRandomString(20);
+	PostPage postPage;
 
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -25,6 +27,8 @@ public class JC15AddAnswerToTopic {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
+		postPage = new PostPage();
+		postPage.init(driver);
 	}
 
 	@AfterMethod
@@ -36,19 +40,13 @@ public class JC15AddAnswerToTopic {
 	@Test
 	public void addAnswerToTopicTest() {
 		//step 1
-		driver.findElement(
-				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/posts/new')]"))
-				.click();
-		Assert.assertTrue(driver.findElement(By.id("tbMsg")).isDisplayed());
+		postPage.getNewButton().click();
+		assertTrue(postPage.getMessageField().isDisplayed());
 
 		//step 2
-		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")),
-				answer);
-		driver.findElement(By.id("post")).click();
-		Assert.assertEquals(
-				driver.findElement(
-						By.xpath("//li[@class='forum_row'][last()]//div[@class='forum_message_cell_text']"))
-						.getText(), answer);
+		StringHelp.setLongTextValue(driver, postPage.getMessageField(), answer);
+		postPage.getPostButton().click();
+		assertEquals(postPage.getLastPostMessage().getText(), answer);
 	}
 
 
