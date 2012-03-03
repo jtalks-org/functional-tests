@@ -16,7 +16,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
 /**
  * @autor masyan
  */
-public class TopicPage implements Page {
+public class TopicPage {
 
 	public static final String newButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/new')]";
 
@@ -59,7 +59,7 @@ public class TopicPage implements Page {
 	private List<WebElement> topicsList;
 
 
-	public void init(WebDriver driver) {
+	public TopicPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 	}
 

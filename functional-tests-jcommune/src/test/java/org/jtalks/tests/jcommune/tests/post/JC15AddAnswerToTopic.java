@@ -27,8 +27,7 @@ public class JC15AddAnswerToTopic {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
-		postPage = new PostPage();
-		postPage.init(driver);
+		postPage = new PostPage(driver);
 	}
 
 	@AfterMethod

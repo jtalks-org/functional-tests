@@ -13,7 +13,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
 /**
  * @autor masyan
  */
-public class LogOutPage implements Page {
+public class LogOutPage {
 
 	public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/logout']";
 
@@ -25,7 +25,7 @@ public class LogOutPage implements Page {
 	@FindBy(xpath = currentUsernameLinkSel)
 	private WebElement currentUsernameLink;
 
-	public void init(WebDriver driver) {
+	public LogOutPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 	}
 

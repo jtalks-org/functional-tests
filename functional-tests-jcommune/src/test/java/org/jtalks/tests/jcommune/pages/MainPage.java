@@ -15,19 +15,19 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
  * Time: 13:44
  * To change this template use File | Settings | File Templates.
  */
-public class MainPage implements Page{
+public class MainPage {
 
-    private static final String loginLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/login']";
+	private static final String loginLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/login']";
 
-    @FindBy(xpath = loginLinkSel)
-    private  WebElement loginLink;
+	@FindBy(xpath = loginLinkSel)
+	private WebElement loginLink;
 
-    public WebElement getLoginLink() {
-        return loginLink;
-    }
+	public WebElement getLoginLink() {
+		return loginLink;
+	}
 
-    public void init(WebDriver driver) {
-        PageFactory.initElements(driver, this);
-    }
+	public MainPage(WebDriver driver) {
+		PageFactory.initElements(driver, this);
+	}
 
 }

@@ -31,8 +31,7 @@ public class JC14BackButtonOnCreateTopicPage {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
-		topicPage = new TopicPage();
-		topicPage.init(driver);
+		topicPage = new TopicPage(driver);
 	}
 
 	@AfterMethod

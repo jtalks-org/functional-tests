@@ -21,8 +21,7 @@ public class JC23LogOut {
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password);
-		logOutPage = new LogOutPage();
-		logOutPage.init(driver);
+		logOutPage = new LogOutPage(driver);
 	}
 
 	@Test

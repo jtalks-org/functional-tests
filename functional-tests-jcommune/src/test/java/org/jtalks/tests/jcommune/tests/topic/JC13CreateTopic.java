@@ -28,8 +28,7 @@ public class JC13CreateTopic {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
-		topicPage = new TopicPage();
-		topicPage.init(driver);
+		topicPage = new TopicPage(driver);
 	}
 
 	@AfterMethod

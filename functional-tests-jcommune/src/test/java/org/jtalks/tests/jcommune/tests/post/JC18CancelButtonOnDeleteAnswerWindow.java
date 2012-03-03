@@ -29,8 +29,7 @@ public class JC18CancelButtonOnDeleteAnswerWindow {
 		clickOnRandomBranch();
 		createTopicForTest();
 		createAnswerForTest(this.answer);
-		postPage = new PostPage();
-		postPage.init(driver);
+		postPage = new PostPage(driver);
 	}
 
 	@AfterMethod

@@ -56,7 +56,7 @@ public class PostPage {
 	private WebElement deleteConfirmCancelButton;
 
 
-	public void init(WebDriver driver) {
+	public PostPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
 	}
 
