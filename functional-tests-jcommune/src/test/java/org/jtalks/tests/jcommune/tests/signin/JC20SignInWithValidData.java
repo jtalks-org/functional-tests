@@ -27,10 +27,8 @@ public class JC20SignInWithValidData {
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
-        logInPage = new LogInPage();
-        logInPage.init(driver);
-        mainPage = new MainPage();
-        mainPage.init(driver);
+        logInPage = new LogInPage(driver);
+        mainPage = new MainPage(driver);
 
 		this.username = username;
 		this.password = password;
