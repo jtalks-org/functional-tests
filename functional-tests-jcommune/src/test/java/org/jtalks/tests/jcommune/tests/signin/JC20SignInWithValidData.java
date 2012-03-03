@@ -1,5 +1,7 @@
 package org.jtalks.tests.jcommune.tests.signin;
 
+import org.jtalks.tests.jcommune.pages.LogInPage;
+import org.jtalks.tests.jcommune.pages.MainPage;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -18,11 +20,18 @@ import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
 public class JC20SignInWithValidData {
 	String username;
 	String password;
+    LogInPage logInPage;
+    MainPage mainPage;
 
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
+        logInPage = new LogInPage();
+        logInPage.init(driver);
+        mainPage = new MainPage();
+        mainPage.init(driver);
+
 		this.username = username;
 		this.password = password;
 	}
@@ -36,13 +45,13 @@ public class JC20SignInWithValidData {
 	@Test
 	public void signInWithValidDataTest() {
 		//step 1
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/login']")).click();
+        mainPage.getLoginLink().click();
 		assertExistById(driver, "form");
 
 		//step 2
-		driver.findElement(By.id("j_username")).sendKeys(username);
-		driver.findElement(By.id("j_password")).sendKeys(password);
-		driver.findElement(By.xpath("//input[@type='submit']")).click();
+        logInPage.getUsernameField().sendKeys(username);
+        logInPage.getPasswordField().sendKeys(password);
+        logInPage.getSubmitButton().click();
 		Assert.assertEquals(driver.findElement(By.xpath("//a[@class='currentusername']")).getText(), this.username);
 	}
 }
