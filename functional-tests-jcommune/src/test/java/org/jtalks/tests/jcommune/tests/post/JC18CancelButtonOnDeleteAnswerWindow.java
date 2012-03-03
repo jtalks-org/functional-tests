@@ -44,7 +44,6 @@ public class JC18CancelButtonOnDeleteAnswerWindow {
 		//step 1
 		postPage.getDeleteButtonNearLastPost().click();
 		postPage.getDeleteConfirmCancelButton().click();
-
 		//step2
 		String lastMessageText = postPage.getLastPostMessage().getText();
 
