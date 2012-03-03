@@ -43,7 +43,7 @@ public class JC18CancelButtonOnDeleteAnswerWindow {
 	public void cancelButtonOnDeleteAnswerWindowTest() {
 		//step 1
 		postPage.getDeleteButtonNearLastPost().click();
-		driver.findElement(By.id("jqi_state0_buttonCancel")).click();
+		postPage.getDeleteConfirmCancelButton().click();
 
 		//step2
 		String lastMessageText = postPage.getLastPostMessage().getText();
