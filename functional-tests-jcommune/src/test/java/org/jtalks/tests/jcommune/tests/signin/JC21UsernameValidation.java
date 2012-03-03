@@ -1,5 +1,7 @@
 package org.jtalks.tests.jcommune.tests.signin;
 
+import org.jtalks.tests.jcommune.pages.LogInPage;
+import org.jtalks.tests.jcommune.pages.MainPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -15,7 +17,8 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
  * @autor erik
  */
 public class JC21UsernameValidation {
-
+    MainPage mainPage;
+    LogInPage logInPage;
 	@DataProvider(name = "notValidUsername")
 	public Object[][] notValidUsername() {
 		String notValidUsername = "noValidUsername";
@@ -29,13 +32,15 @@ public class JC21UsernameValidation {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/login']")).click();
+        mainPage = new MainPage(driver);
+        logInPage = new LogInPage(driver);
+		mainPage.getLoginLink().click();
 	}
 
 	@Test(dataProvider = "notValidUsername")
 	public void usernameValidationTest(String username) {
-		driver.findElement(By.id("j_username")).sendKeys(username);
-		driver.findElement(By.xpath("//input[@type='submit']")).click();
+		logInPage.getUsernameField().sendKeys(username);
+		logInPage.getSubmitButton().click();
 		assertExistBySelector(driver, "//span[@class='error']");
 	}
 }
