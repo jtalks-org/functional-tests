@@ -1,5 +1,7 @@
 package org.jtalks.tests.jcommune.tests.signin;
 
+import org.jtalks.tests.jcommune.pages.LogInPage;
+import org.jtalks.tests.jcommune.pages.MainPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -16,6 +18,9 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
  */
 public class JC22PasswordValidation {
 
+    MainPage mainPage;
+    LogInPage logInPage;
+
 	@DataProvider(name = "notValidPassword")
 	public Object[][] notValidPassword() {
 		String notValidPassword = "novalidpassword";
@@ -31,13 +36,15 @@ public class JC22PasswordValidation {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/login']")).click();
+        mainPage = new MainPage(driver);
+        logInPage = new LogInPage(driver);
+        mainPage.getLoginLink().click();
 	}
 
 	@Test(dataProvider = "notValidPassword")
 	public void passwordValidationTest(String password) {
-		driver.findElement(By.id("j_password")).sendKeys(password);
-		driver.findElement(By.xpath("//input[@type='submit']")).click();
+		logInPage.getPasswordField().sendKeys(password);
+		logInPage.getSubmitButton().click();
 		assertExistBySelector(driver, "//span[@class='error']");
 	}
 }
