@@ -40,11 +40,11 @@
         </classes>
         <packages>
             <package name="org.jtalks.tests.jcommune.tests.signup"/>
-            <!--<package name="org.jtalks.tests.jcommune.tests.topic"/>-->
-            <!--<package name="org.jtalks.tests.jcommune.tests.signin"/>-->
+            <package name="org.jtalks.tests.jcommune.tests.topic"/>
+            <package name="org.jtalks.tests.jcommune.tests.signin"/>
             <package name="org.jtalks.tests.jcommune.tests.logout"/>
             <!--TODO uncomment after install X server to server -->
-            <package name="org.jtalks.tests.jcommune.tests.post"/>
+            <!--<package name="org.jtalks.tests.jcommune.tests.post"/>-->
         </packages>
     </test>
 </suite>
