@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
+import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -17,6 +18,8 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * @autor erik
  */
 public class JC3UsernameValidationWithNotValidData {
+
+	SignUpPage signUpPage;
 
 	@DataProvider(name = "notValidUsername")
 	public Object[][] notValidUsername() {
@@ -39,15 +42,16 @@ public class JC3UsernameValidationWithNotValidData {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
+		signUpPage = new SignUpPage(driver);
+		signUpPage.getSignUpButton().click();
 	}
 
 
 	@Test(dataProvider = "notValidUsername")
 	public void usernameValidationWithNotValidDataTest(String username) {
-		driver.findElement(By.id("username")).clear();
-		driver.findElement(By.id("username")).sendKeys(username);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertExistById(driver, "username.errors");
+		signUpPage.getUsernameField().clear();
+		signUpPage.getUsernameField().sendKeys(username);
+		signUpPage.getSubmitButton().click();
+		assertExistById(driver, signUpPage.usernameErrorMessageSel);
 	}
 }

@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
+import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -17,16 +18,19 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  */
 public class JC2SignUpWithoutEnterData {
 
+	SignUpPage signUpPage;
+
 	@BeforeMethod
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
+		signUpPage = new SignUpPage(driver);
+		signUpPage.getSignUpButton().click();
 	}
 
 	@Test
 	public void registrationWithEmptyDataTest() {
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertExistById(driver, "username.errors");
+		signUpPage.getSubmitButton().click();
+		assertExistById(driver, signUpPage.usernameErrorMessageSel);
 	}
 }

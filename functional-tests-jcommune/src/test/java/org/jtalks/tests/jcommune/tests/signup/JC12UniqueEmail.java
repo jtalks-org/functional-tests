@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -21,20 +22,23 @@ public class JC12UniqueEmail {
 
 	String existEmail;
 
+	SignUpPage signUpPage;
+
 	@BeforeMethod
 	@Parameters({"app-url", "uEmail"})
 	public void setupCase(String appUrl, String email) {
 		this.existEmail = email;
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
+		signUpPage = new SignUpPage(driver);
+		signUpPage.getSignUpButton().click();
 	}
 
 	@Test
 	public void emailUniqueValidationTest() {
-		driver.findElement(By.id("email")).clear();
-		driver.findElement(By.id("email")).sendKeys(this.existEmail);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertExistById(driver, "email.errors");
+		signUpPage.getEmailField().clear();
+		signUpPage.getEmailField().sendKeys(this.existEmail);
+		signUpPage.getSubmitButton().click();
+		assertExistById(driver, signUpPage.emailErrorMessageSel);
 	}
 
 

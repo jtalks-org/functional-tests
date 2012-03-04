@@ -1,6 +1,8 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.pages.SignUpPage;
+import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -19,6 +21,8 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  */
 public class JC10CofirmPassValidationWithValidData {
 
+	SignUpPage signUpPage;
+
 	@DataProvider(name = "validConfirmPassword")
 	public Object[][] validConfirmPassword() {
 		String validPassword = StringHelp.getRandomString(10);
@@ -31,19 +35,20 @@ public class JC10CofirmPassValidationWithValidData {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
+		signUpPage = new SignUpPage(driver);
+		signUpPage.getSignUpButton().click();
 	}
 
 	@Test(dataProvider = "validConfirmPassword")
 	public void confirmPasswordValidationWithValidDataTest(String pass, String confirm) {
-		driver.findElement(By.id("password")).clear();
-		driver.findElement(By.id("password")).sendKeys(pass);
+		signUpPage.getPasswordField().clear();
+		signUpPage.getPasswordField().sendKeys(pass);
 
-		driver.findElement(By.id("passwordConfirm")).clear();
-		driver.findElement(By.id("passwordConfirm")).sendKeys(confirm);
+		signUpPage.getPasswordConfirmField().clear();
+		signUpPage.getPasswordConfirmField().sendKeys(confirm);
 
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertNotExistById(driver, "passwordConfirm.errors");
+		signUpPage.getSubmitButton().click();
+		assertNotExistById(driver, signUpPage.passwordConfirmErrorMessageSel);
 	}
 
 

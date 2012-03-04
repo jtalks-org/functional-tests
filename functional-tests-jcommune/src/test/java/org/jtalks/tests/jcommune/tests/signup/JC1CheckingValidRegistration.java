@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
+import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -20,6 +21,8 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicati
 public class JC1CheckingValidRegistration {
 	String appUrl;
 
+	SignUpPage signUpPage;
+
 	@DataProvider(name = "validRegistration")
 	public Object[][] validRegistration() {
 		String validUsername = StringHelp.getRandomString(10);
@@ -35,16 +38,17 @@ public class JC1CheckingValidRegistration {
 	public void setupCase(String appUrl) {
 		this.appUrl = appUrl;
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
+		signUpPage = new SignUpPage(driver);
+		signUpPage.getSignUpButton().click();
 	}
 
 	@Test(dataProvider = "validRegistration")
 	public void validRegistrationTest(String username, String email, String pass, String confirmPass) {
-		driver.findElement(By.id("username")).sendKeys(username);
-		driver.findElement(By.id("email")).sendKeys(email);
-		driver.findElement(By.id("password")).sendKeys(pass);
-		driver.findElement(By.id("passwordConfirm")).sendKeys(confirmPass);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
+		signUpPage.getUsernameField().sendKeys(username);
+		signUpPage.getEmailField().sendKeys(email);
+		signUpPage.getPasswordField().sendKeys(pass);
+		signUpPage.getPasswordConfirmField().sendKeys(confirmPass);
+		signUpPage.getSubmitButton().click();
 		assertEquals(driver.getCurrentUrl(), appUrl);
 	}
 }

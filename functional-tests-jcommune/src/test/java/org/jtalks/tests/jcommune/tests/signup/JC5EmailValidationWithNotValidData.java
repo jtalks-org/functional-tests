@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -19,6 +20,8 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  */
 public class JC5EmailValidationWithNotValidData {
 
+	SignUpPage signUpPage;
+
 	@DataProvider(name = "notValidEmail")
 	public Object[][] notValidEmail() {
 		String notValidEmail = StringHelp.getRandomString(6);
@@ -32,14 +35,15 @@ public class JC5EmailValidationWithNotValidData {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
+		signUpPage = new SignUpPage(driver);
+		signUpPage.getSignUpButton().click();
 	}
 
 	@Test(dataProvider = "notValidEmail")
 	public void emailValidationWithNotValidDataTest(String email) {
-		driver.findElement(By.id("email")).clear();
-		driver.findElement(By.id("email")).sendKeys(email);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertExistById(driver, "email.errors");
+		signUpPage.getEmailField().clear();
+		signUpPage.getEmailField().sendKeys(email);
+		signUpPage.getSubmitButton().click();
+		assertExistById(driver, signUpPage.emailErrorMessageSel);
 	}
 }

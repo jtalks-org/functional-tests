@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -18,6 +19,8 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * @autor erik
  */
 public class JC8PasswordValidationWithValidData {
+
+	SignUpPage signUpPage;
 
 	@DataProvider(name = "validPassword")
 	public Object[][] validPassword() {
@@ -37,14 +40,15 @@ public class JC8PasswordValidationWithValidData {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		driver.findElement(By.xpath("//a[@href='" + getApplicationContextPath() + "/user/new']")).click();
+		signUpPage = new SignUpPage(driver);
+		signUpPage.getSignUpButton().click();
 	}
 
 	@Test(dataProvider = "validPassword")
 	public void passwordValidationWithValidDataTest(String pass) {
-		driver.findElement(By.id("password")).clear();
-		driver.findElement(By.id("password")).sendKeys(pass);
-		driver.findElement(By.xpath("//button[@type='submit']")).click();
-		assertNotExistById(driver, "password.errors");
+		signUpPage.getPasswordField().clear();
+		signUpPage.getPasswordField().sendKeys(pass);
+		signUpPage.getSubmitButton().click();
+		assertNotExistById(driver, signUpPage.passwordErrorMessageSel);
 	}
 }
