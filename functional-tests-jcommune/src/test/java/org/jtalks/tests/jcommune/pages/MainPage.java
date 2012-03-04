@@ -19,12 +19,23 @@ public class MainPage {
 
 	private static final String loginLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/login']";
 
+	public static final String currentUsernameLinkSel = "//a[@class='currentusername']";
+
 	@FindBy(xpath = loginLinkSel)
 	private WebElement loginLink;
+
+	@FindBy(xpath = currentUsernameLinkSel)
+	private WebElement currentUsernameLink;
+
 
 	public WebElement getLoginLink() {
 		return loginLink;
 	}
+
+	public WebElement getCurrentUsernameLink() {
+		return currentUsernameLink;
+	}
+
 
 	public MainPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);

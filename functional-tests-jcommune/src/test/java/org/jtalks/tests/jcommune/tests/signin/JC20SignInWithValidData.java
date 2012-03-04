@@ -44,12 +44,12 @@ public class JC20SignInWithValidData {
 	public void signInWithValidDataTest() {
 		//step 1
 		mainPage.getLoginLink().click();
-		assertExistById(driver, "form");
+		assertExistById(driver, sigInPage.signInFormSel);
 
 		//step 2
 		sigInPage.getUsernameField().sendKeys(username);
 		sigInPage.getPasswordField().sendKeys(password);
 		sigInPage.getSubmitButton().click();
-		Assert.assertEquals(driver.findElement(By.xpath("//a[@class='currentusername']")).getText(), this.username);
+		Assert.assertEquals(mainPage.getCurrentUsernameLink().getText(), this.username);
 	}
 }

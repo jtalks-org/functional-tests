@@ -17,13 +17,9 @@ public class LogOutPage {
 
 	public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/logout']";
 
-	public static final String currentUsernameLinkSel = "//a[@class='currentusername']";
-
 	@FindBy(xpath = logOutButtonSel)
 	private WebElement logOutButton;
 
-	@FindBy(xpath = currentUsernameLinkSel)
-	private WebElement currentUsernameLink;
 
 	public LogOutPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -34,7 +30,4 @@ public class LogOutPage {
 		return logOutButton;
 	}
 
-	public WebElement getCurrentUsernameLink() {
-		return currentUsernameLink;
-	}
 }

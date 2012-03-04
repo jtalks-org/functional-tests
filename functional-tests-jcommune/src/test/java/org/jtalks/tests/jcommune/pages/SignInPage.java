@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.pages;
 
+import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,21 +15,40 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class SignInPage {
 
-	@FindBy(id = "j_username")
+	public static final String usernameFieldSel = "j_username";
+
+	public static final String passwordFieldSel = "j_password";
+
+	public static final String submitButtonSel = "//input[@class='button']";
+
+	public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
+
+	public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.contextPath + "/password/restore']";
+
+	public static final String signInFormSel = "form";
+
+	public static final String errorMessageSel = "//span[@class='error']";
+
+	@FindBy(id = usernameFieldSel)
 	WebElement usernameField;
 
-	@FindBy(id = "j_password")
+	@FindBy(id = passwordFieldSel)
 	WebElement passwordField;
 
-	@FindBy(xpath = "//input[@class='button']")
+	@FindBy(xpath = submitButtonSel)
 	WebElement submitButton;
 
-	@FindBy(xpath = "//input[@name='_spring_security_remember_me']")
+	@FindBy(xpath = rememberMeCheckBoxSel)
 	WebElement rememberMeCheckBox;
 
-	@FindBy(xpath = "//div[@class='form_controls']/a[@href='/test-jcommune/password/restore']")
+	@FindBy(xpath = restorePasswordLinkSel)
 	WebElement restorePasswordLink;
 
+	@FindBy(id = signInFormSel)
+	WebElement signInForm;
+
+	@FindBy(xpath = errorMessageSel)
+	WebElement errorMessage;
 
 	public SignInPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -52,5 +72,13 @@ public class SignInPage {
 
 	public WebElement getRestorePasswordLink() {
 		return restorePasswordLink;
+	}
+
+	public WebElement getSignInForm() {
+		return signInForm;
+	}
+
+	public WebElement getErrorMessage() {
+		return errorMessage;
 	}
 }

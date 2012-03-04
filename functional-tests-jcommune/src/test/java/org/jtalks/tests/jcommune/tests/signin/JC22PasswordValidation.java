@@ -45,6 +45,6 @@ public class JC22PasswordValidation {
 	public void passwordValidationTest(String password) {
 		signInPage.getPasswordField().sendKeys(password);
 		signInPage.getSubmitButton().click();
-		assertExistBySelector(driver, "//span[@class='error']");
+		assertExistBySelector(driver, signInPage.errorMessageSel);
 	}
 }

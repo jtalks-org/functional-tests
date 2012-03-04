@@ -41,6 +41,6 @@ public class JC21UsernameValidation {
 	public void usernameValidationTest(String username) {
 		signInPage.getUsernameField().sendKeys(username);
 		signInPage.getSubmitButton().click();
-		assertExistBySelector(driver, "//span[@class='error']");
+		assertExistBySelector(driver, signInPage.errorMessageSel);
 	}
 }
