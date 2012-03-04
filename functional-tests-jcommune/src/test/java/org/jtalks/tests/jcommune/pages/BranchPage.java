@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 /**
  * Created by IntelliJ IDEA.
  * User: erik
@@ -15,9 +17,13 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class BranchPage{
     public static final String newTopicButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/topics/new')]";
+	public static final String branchListSel = "//a[@class='forum_link']";
 
     @FindBy (xpath = newTopicButtonSel)
     WebElement newTopicButton;
+
+	@FindBy(xpath = branchListSel)
+	private List<WebElement> branchList;
 
     public BranchPage(WebDriver driver){
         PageFactory.initElements(driver, this);
@@ -26,4 +32,9 @@ public class BranchPage{
     public WebElement getNewTopicButton() {
         return newTopicButton;
     }
+
+	public List<WebElement> getBranchList() {
+		return branchList;
+	}
+
 }
