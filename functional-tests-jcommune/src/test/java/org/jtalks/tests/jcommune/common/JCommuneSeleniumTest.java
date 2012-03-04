@@ -1,5 +1,13 @@
 package org.jtalks.tests.jcommune.common;
 
+import org.jtalks.tests.jcommune.pages.BranchPage;
+import org.jtalks.tests.jcommune.pages.LogOutPage;
+import org.jtalks.tests.jcommune.pages.MainPage;
+import org.jtalks.tests.jcommune.pages.PostPage;
+import org.jtalks.tests.jcommune.pages.SectionPage;
+import org.jtalks.tests.jcommune.pages.SignInPage;
+import org.jtalks.tests.jcommune.pages.SignUpPage;
+import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -36,6 +44,22 @@ public class JCommuneSeleniumTest {
 
 	public static final String contextPath = "/test-jcommune";
 
+
+	//Pages for common methods
+	static MainPage mainPage;
+
+	static SignInPage signInPage;
+
+	static TopicPage topicPage;
+
+	static PostPage postPage;
+
+	static SectionPage sectionPage;
+
+	static BranchPage branchPage;
+
+	static LogOutPage logOutPage;
+
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
 	 * All values are stored in tesng.xml file.
@@ -54,6 +78,14 @@ public class JCommuneSeleniumTest {
 //		driver = new FirefoxDriver();
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
 		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
+
+		mainPage = new MainPage(driver);
+		signInPage = new SignInPage(driver);
+		topicPage = new TopicPage(driver);
+		postPage = new PostPage(driver);
+		sectionPage = new SectionPage(driver);
+		branchPage = new BranchPage(driver);
+		logOutPage = new LogOutPage(driver);
 	}
 
 	/**
@@ -81,10 +113,10 @@ public class JCommuneSeleniumTest {
 	 * @author erik
 	 */
 	public static void signIn(String username, String password) {
-		driver.findElement(By.xpath("//a[@href='" + contextPath + "/login']")).click();
-		driver.findElement(By.id("j_username")).sendKeys(username);
-		driver.findElement(By.id("j_password")).sendKeys(password);
-		driver.findElement(By.xpath("//input[@type='submit']")).click();
+		mainPage.getLoginLink().click();
+		signInPage.getUsernameField().sendKeys(username);
+		signInPage.getPasswordField().sendKeys(password);
+		signInPage.getSubmitButton().click();
 	}
 
 
@@ -95,14 +127,14 @@ public class JCommuneSeleniumTest {
 	 * @author erik
 	 */
 	public static void logOut(String appUrl) {
-		driver.get(appUrl + "logout");
+		logOutPage.getLogOutButton().click();
 	}
 
 	/**
 	 * Method  select random branch (if exists) and open it
 	 */
 	public static void clickOnRandomBranch() {
-		List<WebElement> webElementsList = driver.findElements(By.xpath("//a[@class='forum_link']"));
+		List<WebElement> webElementsList = branchPage.getBranchList();
 		assertNotEmptyCollection(webElementsList);
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
 	}
@@ -112,7 +144,7 @@ public class JCommuneSeleniumTest {
 	 * Method select random section (if exists) and open it
 	 */
 	public static void clickOnRandomSection() {
-		List<WebElement> webElementsList = driver.findElements(By.xpath("//a[@class='forum_header_link']"));
+		List<WebElement> webElementsList = sectionPage.getSectionList();
 		assertNotEmptyCollection(webElementsList);
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
 	}
@@ -125,12 +157,10 @@ public class JCommuneSeleniumTest {
 		String subject = StringHelp.getRandomString(20);
 		String message = StringHelp.getRandomString(20);
 
-		driver.findElement(
-				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/topics/new')]"))
-				.click();
-		driver.findElement(By.id("subject")).sendKeys(subject);
-		driver.findElement(By.id("tbMsg")).sendKeys(message);
-		driver.findElement(By.id("post")).click();
+		topicPage.getNewButton().click();
+		topicPage.getSubjectField().sendKeys(subject);
+		topicPage.getMessageField().sendKeys(message);
+		topicPage.getPostButton().click();
 	}
 
 	/**
@@ -138,14 +168,11 @@ public class JCommuneSeleniumTest {
 	 */
 	public static void createAnswerForTest(String answer) {
 		//step 1
-		driver.findElement(
-				By.xpath("//a[contains(@href, '" + getApplicationContextPath() + "/posts/new')]"))
-				.click();
+		postPage.getNewButton().click();
 
 		//step 2
-		StringHelp.setLongTextValue(driver, driver.findElement(By.id("tbMsg")),
-				answer);
-		driver.findElement(By.id("post")).click();
+		StringHelp.setLongTextValue(driver, postPage.getMessageField(), answer);
+		postPage.getPostButton().click();
 
 	}
 
