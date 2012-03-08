@@ -35,6 +35,8 @@ public class TopicPage {
 
 	public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
 
+	public static final String backButtonOnEditFormSel = "back";
+
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -65,6 +67,9 @@ public class TopicPage {
 
 	@FindBy(xpath = bodyErrorMessageSel)
 	WebElement bodyErrorMessage;
+
+	@FindBy(id = backButtonOnEditFormSel)
+	WebElement backButtonOnEditForm;
 
 
 	public TopicPage(WebDriver driver) {
@@ -110,5 +115,9 @@ public class TopicPage {
 
 	public WebElement getBodyErrorMessage() {
 		return bodyErrorMessage;
+	}
+
+	public WebElement getBackButtonOnEditForm() {
+		return backButtonOnEditForm;
 	}
 }
