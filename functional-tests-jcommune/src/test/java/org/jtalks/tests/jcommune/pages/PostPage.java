@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.List;
-
 
 /**
  * @autor masyan
@@ -29,6 +27,8 @@ public class PostPage {
 	public static final String deleteConfirmOkButtonSel = "jqi_state0_buttonOk";
 
 	public static final String deleteConfirmCancelButtonSel = "jqi_state0_buttonCancel";
+
+	public static final String postErrorMessageSel = "bodyText.errors";
 
 
 	@FindBy(xpath = newButtonSel)
@@ -55,6 +55,8 @@ public class PostPage {
 	@FindBy(id = deleteConfirmCancelButtonSel)
 	private WebElement deleteConfirmCancelButton;
 
+	@FindBy(id = postErrorMessageSel)
+	private WebElement postErrorMessage;
 
 	public PostPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -92,5 +94,9 @@ public class PostPage {
 
 	public WebElement getDeleteConfirmCancelButton() {
 		return deleteConfirmCancelButton;
+	}
+
+	public WebElement getPostErrorMessage() {
+		return postErrorMessage;
 	}
 }
