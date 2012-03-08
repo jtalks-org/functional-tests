@@ -1,17 +1,8 @@
 package org.jtalks.tests.jcommune.common;
 
-import org.jtalks.tests.jcommune.pages.BranchPage;
-import org.jtalks.tests.jcommune.pages.LogOutPage;
-import org.jtalks.tests.jcommune.pages.MainPage;
-import org.jtalks.tests.jcommune.pages.PostPage;
-import org.jtalks.tests.jcommune.pages.SectionPage;
-import org.jtalks.tests.jcommune.pages.SignInPage;
-import org.jtalks.tests.jcommune.pages.SignUpPage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
-import org.openqa.selenium.By;
+import org.jtalks.tests.jcommune.pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -27,7 +18,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
+import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
 
 /**
  * Parent class for Tests. Contains common methods

@@ -4,13 +4,11 @@ package org.jtalks.tests.jcommune.pages;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicationContextPath;
 
 
 /**
@@ -33,6 +31,10 @@ public class TopicPage {
 	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/branches')]";
 
 	public static final String topicsListSel = "//ul[@class='forum_table']/li//a[@class='forum_link']";
+
+    public static final String subjectErrorMessageSel = "//span[@class='error' and @id='subject']";
+
+    public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -57,6 +59,13 @@ public class TopicPage {
 
 	@FindBy(xpath = topicsListSel)
 	private List<WebElement> topicsList;
+
+    @FindBy(xpath = subjectErrorMessageSel)
+    WebElement subjectErrorMessage;
+
+    @FindBy(xpath = bodyErrorMessageSel)
+    WebElement bodyErrorMessage;
+
 
 
 	public TopicPage(WebDriver driver) {
@@ -96,4 +105,11 @@ public class TopicPage {
 		return topicsList;
 	}
 
+    public WebElement getSubjectErrorMessage() {
+        return subjectErrorMessage;
+    }
+
+    public WebElement getBodyErrorMessage() {
+        return bodyErrorMessage;
+    }
 }

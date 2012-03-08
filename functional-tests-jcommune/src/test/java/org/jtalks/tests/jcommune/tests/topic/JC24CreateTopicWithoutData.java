@@ -1,16 +1,13 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.jtalks.tests.jcommune.pages.BranchPage;
-import org.jtalks.tests.jcommune.pages.TopicCreationPage;
+import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
 
 
 /**
@@ -18,8 +15,8 @@ import static org.jtalks.tests.jcommune.Assert.Exsistence.*;
  * User: erik
  */
 public class JC24CreateTopicWithoutData {
-    BranchPage branchPage;
-    TopicCreationPage topicCreationPage;
+
+    TopicPage topicPage;
 
     @BeforeMethod
     @Parameters({"app-url", "uUsername", "uPassword"})
@@ -27,8 +24,7 @@ public class JC24CreateTopicWithoutData {
         driver.get(appUrl);
         signIn(username, password);
         clickOnRandomBranch();
-        branchPage = new BranchPage(driver);
-        topicCreationPage = new TopicCreationPage(driver);
+        topicPage = new TopicPage(driver);
     }
 
     @AfterMethod
@@ -39,9 +35,9 @@ public class JC24CreateTopicWithoutData {
     
     @Test
     public void createTopicWithoutData() throws InterruptedException {
-        branchPage.getNewTopicButton().click();
-        topicCreationPage.getPostButton().click();
-        assertExistBySelector(driver, TopicCreationPage.subjectErrorMessageSel);
-        assertExistBySelector(driver, TopicCreationPage.bodyErrorMessageSel);
+        topicPage.getNewButton().click();
+        topicPage.getPostButton().click();
+        assertExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+        assertExistBySelector(driver, TopicPage.bodyErrorMessageSel);
     }
 }
