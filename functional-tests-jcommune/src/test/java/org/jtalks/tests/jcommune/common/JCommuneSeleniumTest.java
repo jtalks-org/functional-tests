@@ -1,6 +1,12 @@
 package org.jtalks.tests.jcommune.common;
 
-import org.jtalks.tests.jcommune.pages.*;
+import org.jtalks.tests.jcommune.pages.BranchPage;
+import org.jtalks.tests.jcommune.pages.LogOutPage;
+import org.jtalks.tests.jcommune.pages.MainPage;
+import org.jtalks.tests.jcommune.pages.PostPage;
+import org.jtalks.tests.jcommune.pages.SectionPage;
+import org.jtalks.tests.jcommune.pages.SignInPage;
+import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -136,6 +142,15 @@ public class JCommuneSeleniumTest {
 	 */
 	public static void clickOnRandomSection() {
 		List<WebElement> webElementsList = sectionPage.getSectionList();
+		assertNotEmptyCollection(webElementsList);
+		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
+	}
+
+	/**
+	 * Method select random topic (if exists) and open it
+	 */
+	public static void clickOnRandomTopic() {
+		List<WebElement> webElementsList = topicPage.getTopicsList();
 		assertNotEmptyCollection(webElementsList);
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
 	}

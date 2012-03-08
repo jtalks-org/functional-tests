@@ -31,20 +31,13 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
-            <!--TODO delete exlude classes after install X server to server -->
-            <class name="org.jtalks.tests.jcommune.tests.topic.JC13CreateTopic">
-                <methods>
-                    <exclude name="createTopicTest"/>
-                </methods>
-            </class>
         </classes>
         <packages>
             <package name="org.jtalks.tests.jcommune.tests.signup"/>
             <package name="org.jtalks.tests.jcommune.tests.topic"/>
             <package name="org.jtalks.tests.jcommune.tests.signin"/>
             <package name="org.jtalks.tests.jcommune.tests.logout"/>
-            <!--TODO uncomment after install X server to server -->
-            <!--<package name="org.jtalks.tests.jcommune.tests.post"/>-->
+            <package name="org.jtalks.tests.jcommune.tests.post"/>
         </packages>
     </test>
 </suite>
