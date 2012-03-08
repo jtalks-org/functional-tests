@@ -29,7 +29,7 @@ public class JC40EditTopicWithNotValidMessage {
 		String shortMsg = StringHelp.getRandomString(1);
 		String startSpMsg = " " + StringHelp.getRandomString(1);
 		String endSpMsg = StringHelp.getRandomString(1) + " ";
-		String longMsg = StringHelp.getRandomString(20001);
+		String longMsg = StringHelp.getRandomString(20000);
 		return new Object[][]{
 				{shortMsg},
 				{startSpMsg},

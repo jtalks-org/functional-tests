@@ -28,7 +28,7 @@ public class JC39EditTopicWithValidMessage {
 	@DataProvider(name = "validMessage")
 	public Object[][] validMessage() {
 		String validMessage = StringHelp.getRandomString(10);
-		String maxMessage = StringHelp.getRandomString(20000);
+		String maxMessage = StringHelp.getRandomString(19999);
 
 		return new Object[][]{
 				{validMessage},
