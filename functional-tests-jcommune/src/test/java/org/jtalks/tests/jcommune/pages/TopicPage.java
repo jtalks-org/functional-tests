@@ -36,6 +36,8 @@ public class TopicPage {
 
     public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
 
+    public static final String tittleSel = "//h2[contains(@class,'heading')]";
+
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
 
@@ -65,6 +67,9 @@ public class TopicPage {
 
     @FindBy(xpath = bodyErrorMessageSel)
     WebElement bodyErrorMessage;
+
+    @FindBy (xpath = tittleSel)
+    WebElement tittle;
 
 
 
@@ -111,5 +116,9 @@ public class TopicPage {
 
     public WebElement getBodyErrorMessage() {
         return bodyErrorMessage;
+    }
+
+    public WebElement getTittle() {
+        return tittle;
     }
 }
