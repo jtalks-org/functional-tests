@@ -10,7 +10,6 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 
-
 /**
  * @autor masyan
  */
@@ -24,7 +23,7 @@ public class TopicPage {
 
 	public static final String postButtonSel = "post";
 
-	public static final String topicSubjectSel = "//a[contains(@class,'heading')]";
+	public static final String topicSubjectSel = "//h2[contains(@class,'heading')]";
 
 	public static final String topicMessageSel = "//div[contains(@class, 'forum_message_cell_text')]";
 
@@ -32,11 +31,10 @@ public class TopicPage {
 
 	public static final String topicsListSel = "//ul[@class='forum_table']/li//a[@class='forum_link']";
 
-    public static final String subjectErrorMessageSel = "//span[@class='error' and @id='subject']";
+	public static final String subjectErrorMessageSel = "//span[@class='error' and @id='subject']";
 
-    public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
+	public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
 
-    public static final String tittleSel = "//h2[contains(@class,'heading')]";
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -62,15 +60,11 @@ public class TopicPage {
 	@FindBy(xpath = topicsListSel)
 	private List<WebElement> topicsList;
 
-    @FindBy(xpath = subjectErrorMessageSel)
-    WebElement subjectErrorMessage;
+	@FindBy(xpath = subjectErrorMessageSel)
+	WebElement subjectErrorMessage;
 
-    @FindBy(xpath = bodyErrorMessageSel)
-    WebElement bodyErrorMessage;
-
-    @FindBy (xpath = tittleSel)
-    WebElement tittle;
-
+	@FindBy(xpath = bodyErrorMessageSel)
+	WebElement bodyErrorMessage;
 
 
 	public TopicPage(WebDriver driver) {
@@ -110,15 +104,11 @@ public class TopicPage {
 		return topicsList;
 	}
 
-    public WebElement getSubjectErrorMessage() {
-        return subjectErrorMessage;
-    }
+	public WebElement getSubjectErrorMessage() {
+		return subjectErrorMessage;
+	}
 
-    public WebElement getBodyErrorMessage() {
-        return bodyErrorMessage;
-    }
-
-    public WebElement getTittle() {
-        return tittle;
-    }
+	public WebElement getBodyErrorMessage() {
+		return bodyErrorMessage;
+	}
 }

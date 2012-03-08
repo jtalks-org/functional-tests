@@ -10,7 +10,10 @@ import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistBySelector;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
  * author: erik
@@ -18,56 +21,55 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * Time: 12:06
  */
 public class JC26CreateTopicValidateMessage {
-    TopicPage topicPage;
-    String validTitle = "new topic";
-    String shortMessage = "ms";
-    String longTopicMessage = StringHelp.getRandomString(20001);
-    String validTopicMessage = StringHelp.getRandomString(19999);
+	TopicPage topicPage;
+	String validTitle = "new topic";
+	String shortMessage = "ms";
+	String longTopicMessage = StringHelp.getRandomString(20001);
+	String validTopicMessage = StringHelp.getRandomString(19999);
 
 
-    @BeforeMethod
-    @Parameters({"app-url", "uUsername", "uPassword"})
-    public void setupCase(String appUrl, String username, String password) {
-        driver.get(appUrl);
-        signIn(username, password);
-        clickOnRandomBranch();
-        topicPage = new TopicPage(driver);
-    }
+	@BeforeMethod
+	@Parameters({"app-url", "uUsername", "uPassword"})
+	public void setupCase(String appUrl, String username, String password) {
+		driver.get(appUrl);
+		signIn(username, password);
+		clickOnRandomBranch();
+		topicPage = new TopicPage(driver);
+	}
 
-    @AfterMethod
-    @Parameters({"app-url"})
-    public void destroy(String appUrl) {
-        logOut(appUrl);
-    }
-    
-    @Test
-    public void testValidateMassage(){
-        topicPage.getNewButton().click();
-        topicPage.getSubjectField().sendKeys(validTitle);
-        topicPage.getPostButton().click();
+	@AfterMethod
+	@Parameters({"app-url"})
+	public void destroy(String appUrl) {
+		logOut(appUrl);
+	}
 
-        assertNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+	@Test
+	public void testValidateMassage() {
+		topicPage.getNewButton().click();
+		topicPage.getSubjectField().sendKeys(validTitle);
+		topicPage.getPostButton().click();
 
-        topicPage.getMessageField().sendKeys(shortMessage);
-        topicPage.getPostButton().click();
+		assertNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
 
-        assertExistBySelector(driver, TopicPage.bodyErrorMessageSel);
-        Assert.assertTrue(topicPage.getMessageField().getText().equals(shortMessage));
+		topicPage.getMessageField().sendKeys(shortMessage);
+		topicPage.getPostButton().click();
 
-        topicPage.getMessageField().clear();
-        StringHelp.setLongTextValue(driver, topicPage.getMessageField(), longTopicMessage);
-        topicPage.getPostButton().click();
+		assertExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+		Assert.assertTrue(topicPage.getMessageField().getText().equals(shortMessage));
 
-        assertExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+		topicPage.getMessageField().clear();
+		StringHelp.setLongTextValue(driver, topicPage.getMessageField(), longTopicMessage);
+		topicPage.getPostButton().click();
 
-        topicPage.getMessageField().clear();
-        StringHelp.setLongTextValue(driver, topicPage.getMessageField(), validTopicMessage);
-        topicPage.getPostButton().click();
+		assertExistBySelector(driver, TopicPage.bodyErrorMessageSel);
 
-        Assert.assertEquals(topicPage.getTittle().getText(), validTitle);
-        Assert.assertEquals(topicPage.getTopicMessage().getText(), validTopicMessage);
-    }
+		topicPage.getMessageField().clear();
+		StringHelp.setLongTextValue(driver, topicPage.getMessageField(), validTopicMessage);
+		topicPage.getPostButton().click();
 
+		Assert.assertEquals(topicPage.getTopicSubject().getText(), validTitle);
+		Assert.assertEquals(topicPage.getTopicMessage().getText(), validTopicMessage);
+	}
 
 
 }

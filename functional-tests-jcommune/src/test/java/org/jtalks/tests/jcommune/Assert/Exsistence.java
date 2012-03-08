@@ -109,6 +109,16 @@ public class Exsistence {
 	}
 
 	/**
+	 * @param str  String in which the pattern is searched
+	 * @param find Searched pattern
+	 */
+	public static void assertNotContainsInString(String str, String find) {
+		if (str.contains(find)) {
+			fail("String contains the search pattern");
+		}
+	}
+
+	/**
 	 * this method return true when in list presents the desired text
 	 *
 	 * @param list The list of webelements

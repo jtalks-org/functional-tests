@@ -77,7 +77,7 @@ public class PostPage {
 	private List<WebElement> editPostButton;
 
 	@FindBy(xpath = editTopicButtonSel)
-	private List<WebElement> editTopicButton;
+	private WebElement editTopicButton;
 
 
 	public PostPage(WebDriver driver) {
@@ -134,7 +134,7 @@ public class PostPage {
 		return editPostButton;
 	}
 
-	public List<WebElement> getEditTopicButton() {
+	public WebElement getEditTopicButton() {
 		return editTopicButton;
 	}
 }
