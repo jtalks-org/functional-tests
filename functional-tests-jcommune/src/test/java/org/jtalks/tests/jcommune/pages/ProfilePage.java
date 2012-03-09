@@ -19,6 +19,18 @@ public class ProfilePage {
 
 	public static final String profileLinkFromTopicPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users') and @class='username']";
 
+    public static final String editProfileButtonSel = "//a[contains(@href,'"+JCommuneSeleniumTest.contextPath+"/users/edit') and @class='button']";
+
+    public static final String emailEditFieldIdSel = "email";
+
+    public static final String saveEditButtonIdSel = "saveChanges";
+
+    public static final String emailErrorMessageIdSel = "email.errors";
+    
+    public static final String emailSel = "//ul[@id='stylized']/li[4]/span";
+    
+    @FindBy (xpath = emailSel)
+    private WebElement email;
 
 	@FindBy(xpath = currentUserLinkSel)
 	private WebElement currentUserLink;
@@ -31,6 +43,15 @@ public class ProfilePage {
 
 	@FindBy(xpath = profileLinkFromTopicPageSel)
 	private WebElement profileLinkFromTopicPage;
+
+    @FindBy (xpath = editProfileButtonSel)
+    private  WebElement editProfileButton;
+
+    @FindBy (id = emailEditFieldIdSel)
+    private WebElement emailEditField;
+
+    @FindBy (id = saveEditButtonIdSel)
+    private WebElement saveEditButton;
 
 	public ProfilePage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -52,4 +73,20 @@ public class ProfilePage {
 	public WebElement getProfileLinkFromTopicPage() {
 		return profileLinkFromTopicPage;
 	}
+
+    public WebElement getEditProfileButton() {
+        return editProfileButton;
+    }
+
+    public WebElement getEmailEditField() {
+        return emailEditField;
+    }
+
+    public WebElement getSaveEditButton() {
+        return saveEditButton;
+    }
+
+    public WebElement getEmail() {
+        return email;
+    }
 }
