@@ -37,6 +37,15 @@ public class ProfilePage {
 
     public static final String errorCurrentUserPasswordMessageIdSel = "currentUserPassword.errors";
 
+    public static final String errorNewUserPasswordMessageIdSel = "newUserPassword.errors";
+
+    public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
+
+    @FindBy(id = errorNewUserPasswordConfirmMessageIdSel)
+    private WebElement errorNewUserPasswordConfirmMessage;
+
+    @FindBy(id = errorNewUserPasswordMessageIdSel)
+    private WebElement errorNewUserPasswordMessage;
 
     @FindBy(id = errorCurrentUserPasswordMessageIdSel)
     private WebElement errorCurrentUserPasswordMessage;
@@ -125,5 +134,13 @@ public class ProfilePage {
 
     public WebElement getErrorCurrentUserPasswordMessage() {
         return errorCurrentUserPasswordMessage;
+    }
+
+    public WebElement getErrorNewUserPasswordMessage() {
+        return errorNewUserPasswordMessage;
+    }
+
+    public WebElement getErrorNewUserPasswordConfirmMessage() {
+        return errorNewUserPasswordConfirmMessage;
     }
 }
