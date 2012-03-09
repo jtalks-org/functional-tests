@@ -41,7 +41,7 @@ public class JC49PermanentPostLinkForDeletedPost {
 	}
 
 	@Test
-	public void permanentPostLinkTest() {
+	public void permanentPostLinkForDeletedPostTest() {
 
 		postPage.getLinkButtonNearLastPost().click();
 
