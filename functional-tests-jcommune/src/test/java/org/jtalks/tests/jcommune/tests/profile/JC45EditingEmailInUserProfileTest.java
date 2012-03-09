@@ -41,17 +41,17 @@ public class JC45EditingEmailInUserProfileTest {
     public void testEditEmail(){
         profilePage.getEmailEditField().clear();
         profilePage.getSaveEditButton().click();
-        assertExistById(driver, ProfilePage.emailErrorMessageIdSel);
+        assertExistById(driver, ProfilePage.errorEmailMessageIdSel);
 
         profilePage.getEmailEditField().clear();
         profilePage.getEmailEditField().sendKeys(incorrectFormattedMail);
         profilePage.getSaveEditButton().click();
-        assertExistById(driver, ProfilePage.emailErrorMessageIdSel);
+        assertExistById(driver, ProfilePage.errorEmailMessageIdSel);
 
         profilePage.getEmailEditField().clear();
         profilePage.getEmailEditField().sendKeys(existEmail);
         profilePage.getSaveEditButton().click();
-        assertExistById(driver, ProfilePage.emailErrorMessageIdSel);
+        assertExistById(driver, ProfilePage.errorEmailMessageIdSel);
 
         profilePage.getEmailEditField().clear();
         profilePage.getEmailEditField().sendKeys(uniqEmail);

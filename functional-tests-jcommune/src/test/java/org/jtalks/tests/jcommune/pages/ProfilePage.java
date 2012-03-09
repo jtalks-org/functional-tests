@@ -25,10 +25,31 @@ public class ProfilePage {
 
     public static final String saveEditButtonIdSel = "saveChanges";
 
-    public static final String emailErrorMessageIdSel = "email.errors";
+    public static final String errorEmailMessageIdSel = "email.errors";
     
     public static final String emailSel = "//ul[@id='stylized']/li[4]/span";
-    
+
+    public static final String currentPasswordFieldIdSel = "currentUserPassword";
+
+    public static final String newPasswordFieldIdSel = "newUserPassword";
+
+    public static final String confirmNewPasswordFieldIdSel = "newUserPasswordConfirm";
+
+    public static final String errorCurrentUserPasswordMessageIdSel = "currentUserPassword.errors";
+
+
+    @FindBy(id = errorCurrentUserPasswordMessageIdSel)
+    private WebElement errorCurrentUserPasswordMessage;
+
+    @FindBy(id = currentPasswordFieldIdSel)
+    private WebElement currentPasswordField;
+
+    @FindBy(id = newPasswordFieldIdSel)
+    private WebElement newPasswordField;
+
+    @FindBy(id = confirmNewPasswordFieldIdSel)
+    private WebElement confirmNewPasswordField;
+
     @FindBy (xpath = emailSel)
     private WebElement email;
 
@@ -88,5 +109,21 @@ public class ProfilePage {
 
     public WebElement getEmail() {
         return email;
+    }
+
+    public WebElement getCurrentPasswordField() {
+        return currentPasswordField;
+    }
+
+    public WebElement getNewPasswordField() {
+        return newPasswordField;
+    }
+
+    public WebElement getConfirmNewPasswordField() {
+        return confirmNewPasswordField;
+    }
+
+    public WebElement getErrorCurrentUserPasswordMessage() {
+        return errorCurrentUserPasswordMessage;
     }
 }
