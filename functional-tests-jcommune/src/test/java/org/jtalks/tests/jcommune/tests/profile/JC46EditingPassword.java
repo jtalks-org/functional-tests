@@ -15,7 +15,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * Date: 09.03.12
  * Time: 13:56
  */
-public class JC46EditingPasswordValidation {
+public class JC46EditingPassword {
 
     ProfilePage profilePage;
     String currentPassword;
@@ -50,7 +50,7 @@ public class JC46EditingPasswordValidation {
     }
 
     @Test
-    public void testEditEmail(){
+    public void testEditEmail() {
         profilePage.getNewPasswordField().sendKeys(newPassword);
         profilePage.getConfirmNewPasswordField().sendKeys(newPassword);
         profilePage.getSaveEditButton().click();
