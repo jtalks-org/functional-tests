@@ -38,6 +38,7 @@
             <package name="org.jtalks.tests.jcommune.tests.signin"/>
             <package name="org.jtalks.tests.jcommune.tests.logout"/>
             <package name="org.jtalks.tests.jcommune.tests.post"/>
+            <package name="org.jtalks.tests.jcommune.tests.profile"/>
         </packages>
     </test>
 </suite>

@@ -3,6 +3,7 @@ package org.jtalks.tests.jcommune.common;
 import org.jtalks.tests.jcommune.pages.BranchPage;
 import org.jtalks.tests.jcommune.pages.LogOutPage;
 import org.jtalks.tests.jcommune.pages.MainPage;
+import org.jtalks.tests.jcommune.pages.PMPage;
 import org.jtalks.tests.jcommune.pages.PostPage;
 import org.jtalks.tests.jcommune.pages.SectionPage;
 import org.jtalks.tests.jcommune.pages.SignInPage;
@@ -57,6 +58,9 @@ public class JCommuneSeleniumTest {
 
 	static LogOutPage logOutPage;
 
+	static PMPage pmPage;
+
+
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
 	 * All values are stored in tesng.xml file.
@@ -83,6 +87,7 @@ public class JCommuneSeleniumTest {
 		sectionPage = new SectionPage(driver);
 		branchPage = new BranchPage(driver);
 		logOutPage = new LogOutPage(driver);
+		pmPage = new PMPage(driver);
 	}
 
 	/**
@@ -180,6 +185,18 @@ public class JCommuneSeleniumTest {
 		StringHelp.setLongTextValue(driver, postPage.getMessageField(), answer);
 		postPage.getPostButton().click();
 
+	}
+
+	/**
+	 * Method send private message.    Message sended from current user.
+	 */
+	public static void sendPrivateMessageForTest(String to, String subject, String msg) {
+		pmPage.getPmInboxLink().click();
+		pmPage.getPmNewMessageLink().click();
+		pmPage.getToField().sendKeys(to);
+		pmPage.getTitleField().sendKeys(subject);
+		pmPage.getMessageField().sendKeys(msg);
+		pmPage.getSendButton().click();
 	}
 
 	/**
