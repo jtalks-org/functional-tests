@@ -134,4 +134,25 @@ public class Exsistence {
 		}
 	}
 
+	/**
+	 * this method return true when in list presents  exist this text
+	 *
+	 * @param list The list of webelements
+	 * @param text the desired text
+	 * @return
+	 */
+	public static void assertExistElementOnViewPresent(List<WebElement> list, String text) {
+		boolean exist = false;
+		for (WebElement webElement : list) {
+			String t = webElement.getText();
+			if (t.equals(text)) {
+				exist = true;
+				return;
+			}
+		}
+		if (!exist) {
+			fail("WebElement with text '" + text + "' not exist on view");
+		}
+	}
+
 }

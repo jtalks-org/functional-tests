@@ -26,6 +26,8 @@ public class PostPage {
 
 	public static final String deleteButtonNearLastPostSel = "//li[@class='forum_row'][last()]//a[@class='button delete']";
 
+	public static final String linkButtonNearLastPostSel = "//li[@class='forum_row'][last()]//a[@class='button postLink']";
+
 	public static final String deleteTopicButtonSel = "//li[@class='forum_row']//a[@class='button delete']";
 
 	public static final String deleteConfirmOkButtonSel = "jqi_state0_buttonOk";
@@ -36,9 +38,13 @@ public class PostPage {
 
 	public static final String postsListSel = "//li[@class='forum_row']";
 
+	public static final String postsMessagesSel = "//div[@class='forum_message_cell_text']";
+
 	public static final String editPostButtonSel = "//a[@class='button' and contains(@href, 'posts') and contains(@href, 'edit')]";
 
 	public static final String editTopicButtonSel = "//a[@class='button' and contains(@href, 'topics') and contains(@href, 'edit')]";
+
+	public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -58,6 +64,9 @@ public class PostPage {
 	@FindBy(xpath = deleteButtonNearLastPostSel)
 	private WebElement deleteButtonNearLastPost;
 
+	@FindBy(xpath = linkButtonNearLastPostSel)
+	private WebElement linkButtonNearLastPost;
+
 	@FindBy(id = deleteConfirmOkButtonSel)
 	private WebElement deleteConfirmOkButton;
 
@@ -70,14 +79,20 @@ public class PostPage {
 	@FindBy(xpath = postsListSel)
 	private List<WebElement> postsList;
 
+	@FindBy(xpath = postsMessagesSel)
+	private List<WebElement> postsMessages;
+
 	@FindBy(xpath = deleteTopicButtonSel)
-	private List<WebElement> deleteTopicButton;
+	private WebElement deleteTopicButton;
 
 	@FindBy(xpath = editPostButtonSel)
-	private List<WebElement> editPostButton;
+	private WebElement editPostButton;
 
 	@FindBy(xpath = editTopicButtonSel)
 	private WebElement editTopicButton;
+
+	@FindBy(xpath = permanentUrlToPostSel)
+	private WebElement permanentUrlToPost;
 
 
 	public PostPage(WebDriver driver) {
@@ -110,6 +125,10 @@ public class PostPage {
 		return deleteButtonNearLastPost;
 	}
 
+	public WebElement getLinkButtonNearLastPost() {
+		return linkButtonNearLastPost;
+	}
+
 	public WebElement getDeleteConfirmOkButton() {
 		return deleteConfirmOkButton;
 	}
@@ -126,15 +145,23 @@ public class PostPage {
 		return postsList;
 	}
 
-	public List<WebElement> getDeleteTopicButton() {
+	public List<WebElement> getPostsMessages() {
+		return postsMessages;
+	}
+
+	public WebElement getDeleteTopicButton() {
 		return deleteTopicButton;
 	}
 
-	public List<WebElement> getEditPostButton() {
+	public WebElement getEditPostButton() {
 		return editPostButton;
 	}
 
 	public WebElement getEditTopicButton() {
 		return editTopicButton;
+	}
+
+	public WebElement getPermanentUrlToPost() {
+		return permanentUrlToPost;
 	}
 }

@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicationContextPath;
-
 /**
  * Created by IntelliJ IDEA.
  * User: erik
@@ -21,13 +19,22 @@ public class MainPage {
 
 	public static final String currentUsernameLinkSel = "//a[@class='currentusername']";
 
+	public static final String errorPageSel = "//span[@class='error_errorpage']";
+
 	@FindBy(xpath = loginLinkSel)
 	private WebElement loginLink;
 
 	@FindBy(xpath = currentUsernameLinkSel)
 	private WebElement currentUsernameLink;
 
+	@FindBy(xpath = errorPageSel)
+	private WebElement errorPage;
 
+	public MainPage(WebDriver driver) {
+		PageFactory.initElements(driver, this);
+	}
+
+	//Getters
 	public WebElement getLoginLink() {
 		return loginLink;
 	}
@@ -36,9 +43,7 @@ public class MainPage {
 		return currentUsernameLink;
 	}
 
-
-	public MainPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
+	public WebElement getErrorPage() {
+		return errorPage;
 	}
-
 }
