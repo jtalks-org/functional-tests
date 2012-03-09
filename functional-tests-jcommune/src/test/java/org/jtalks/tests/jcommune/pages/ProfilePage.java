@@ -41,6 +41,11 @@ public class ProfilePage {
 
     public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
 
+    public static final String backButtonSel = "//a[contains(@href, '"+JCommuneSeleniumTest.contextPath+"/users/') and @class='button']";
+
+    @FindBy(xpath = backButtonSel)
+    private WebElement backButton;
+
     @FindBy(id = errorNewUserPasswordConfirmMessageIdSel)
     private WebElement errorNewUserPasswordConfirmMessage;
 
@@ -142,5 +147,9 @@ public class ProfilePage {
 
     public WebElement getErrorNewUserPasswordConfirmMessage() {
         return errorNewUserPasswordConfirmMessage;
+    }
+
+    public WebElement getBackButton() {
+        return backButton;
     }
 }
