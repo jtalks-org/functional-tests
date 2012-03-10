@@ -33,7 +33,7 @@
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
             <class name="org.jtalks.tests.jcommune.tests.profile.JC46EditingPassword">
                 <methods>
-                    <exclude name="testEditEmail" />
+                    <exclude name="testEditEmail"/>
                 </methods>
             </class>
         </classes>
@@ -44,6 +44,7 @@
             <package name="org.jtalks.tests.jcommune.tests.logout"/>
             <package name="org.jtalks.tests.jcommune.tests.post"/>
             <package name="org.jtalks.tests.jcommune.tests.profile"/>
+            <package name="org.jtalks.tests.jcommune.tests.section"/>
         </packages>
     </test>
 </suite>
