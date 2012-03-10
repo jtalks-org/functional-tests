@@ -21,6 +21,10 @@ public class MainPage {
 
 	public static final String errorPageSel = "//span[@class='error_errorpage']";
 
+	public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumbs']//a[@href='" + JCommuneSeleniumTest.contextPath + "/sections']";
+
+	public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "']";
+
 	@FindBy(xpath = loginLinkSel)
 	private WebElement loginLink;
 
@@ -29,6 +33,12 @@ public class MainPage {
 
 	@FindBy(xpath = errorPageSel)
 	private WebElement errorPage;
+
+	@FindBy(xpath = breadCrumbsForumLinkSel)
+	private WebElement breadCrumbsForumLink;
+
+	@FindBy(xpath = iconLinkToMainPageSel)
+	private WebElement iconLinkToMainPage;
 
 	public MainPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -45,5 +55,13 @@ public class MainPage {
 
 	public WebElement getErrorPage() {
 		return errorPage;
+	}
+
+	public WebElement getBreadCrumbsForumLink() {
+		return breadCrumbsForumLink;
+	}
+
+	public WebElement getIconLinkToMainPage() {
+		return iconLinkToMainPage;
 	}
 }

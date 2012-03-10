@@ -45,6 +45,8 @@
             <package name="org.jtalks.tests.jcommune.tests.post"/>
             <package name="org.jtalks.tests.jcommune.tests.profile"/>
             <package name="org.jtalks.tests.jcommune.tests.section"/>
+            <package name="org.jtalks.tests.jcommune.tests.main"/>
+            <package name="org.jtalks.tests.jcommune.tests.branch"/>
         </packages>
     </test>
 </suite>

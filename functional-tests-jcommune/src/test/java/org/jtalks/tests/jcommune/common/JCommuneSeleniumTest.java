@@ -134,11 +134,15 @@ public class JCommuneSeleniumTest {
 
 	/**
 	 * Method  select random branch (if exists) and open it
+	 *
+	 * @return Selected branch
 	 */
-	public static void clickOnRandomBranch() {
+	public static WebElement clickOnRandomBranch() {
 		List<WebElement> webElementsList = branchPage.getBranchList();
 		assertNotEmptyCollection(webElementsList);
-		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
+		WebElement branch = CollectionHelp.getRandomWebElementFromCollection(webElementsList);
+		branch.click();
+		return branch;
 	}
 
 
