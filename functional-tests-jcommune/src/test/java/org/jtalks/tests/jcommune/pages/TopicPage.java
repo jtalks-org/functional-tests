@@ -37,6 +37,8 @@ public class TopicPage {
 
 	public static final String backButtonOnEditFormSel = "back";
 
+	public static final String topicLinksFromDateInLastColumnSel = "//div[@class='forum_last_message']/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/topics/')]";
+
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -70,6 +72,9 @@ public class TopicPage {
 
 	@FindBy(id = backButtonOnEditFormSel)
 	WebElement backButtonOnEditForm;
+
+	@FindBy(xpath = topicLinksFromDateInLastColumnSel)
+	List<WebElement> topicLinksFromDateInLastColumn;
 
 
 	public TopicPage(WebDriver driver) {
@@ -119,5 +124,9 @@ public class TopicPage {
 
 	public WebElement getBackButtonOnEditForm() {
 		return backButtonOnEditForm;
+	}
+
+	public List<WebElement> getTopicLinksFromDateInLastColumn() {
+		return topicLinksFromDateInLastColumn;
 	}
 }

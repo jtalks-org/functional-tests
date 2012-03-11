@@ -31,23 +31,24 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
+            <class name="org.jtalks.tests.jcommune.tests.post.JC50PermanentPostLinkForDeletedTopic"/>
             <class name="org.jtalks.tests.jcommune.tests.profile.JC46EditingPassword">
                 <methods>
                     <exclude name="testEditEmail"/>
                 </methods>
             </class>
         </classes>
-        <packages>
-            <package name="org.jtalks.tests.jcommune.tests.signup"/>
-            <package name="org.jtalks.tests.jcommune.tests.topic"/>
-            <package name="org.jtalks.tests.jcommune.tests.signin"/>
-            <package name="org.jtalks.tests.jcommune.tests.logout"/>
-            <package name="org.jtalks.tests.jcommune.tests.post"/>
-            <package name="org.jtalks.tests.jcommune.tests.profile"/>
-            <package name="org.jtalks.tests.jcommune.tests.section"/>
-            <package name="org.jtalks.tests.jcommune.tests.main"/>
-            <package name="org.jtalks.tests.jcommune.tests.branch"/>
-        </packages>
+        <!--<packages>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.signup"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.topic"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.signin"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.logout"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.post"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.profile"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.section"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.main"/>-->
+        <!--<package name="org.jtalks.tests.jcommune.tests.branch"/>-->
+        <!--</packages>-->
     </test>
 </suite>
 

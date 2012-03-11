@@ -46,6 +46,14 @@ public class PostPage {
 
 	public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
+	public static final String lastPostLinksFromBranchSel = "//div[@class='forum_last_message']/a[contains(@href," +
+			"'" + JCommuneSeleniumTest.contextPath + "/posts/')]";
+
+	public static final String lastPostLinksFromTopicSel = "//div[@class='forum_last_message']/a[contains(@href," +
+			"'" + JCommuneSeleniumTest.contextPath + "/posts/')]";
+
+	//public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
+
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
 
@@ -93,6 +101,12 @@ public class PostPage {
 
 	@FindBy(xpath = permanentUrlToPostSel)
 	private WebElement permanentUrlToPost;
+
+	@FindBy(xpath = lastPostLinksFromBranchSel)
+	private List<WebElement> lastPostLinksFromBranch;
+
+	@FindBy(xpath = lastPostLinksFromTopicSel)
+	private List<WebElement> lastPostLinksFromTopic;
 
 
 	public PostPage(WebDriver driver) {
@@ -163,5 +177,13 @@ public class PostPage {
 
 	public WebElement getPermanentUrlToPost() {
 		return permanentUrlToPost;
+	}
+
+	public List<WebElement> getLastPostLinksFromBranch() {
+		return lastPostLinksFromBranch;
+	}
+
+	public List<WebElement> getLastPostLinksFromTopic() {
+		return lastPostLinksFromTopic;
 	}
 }
