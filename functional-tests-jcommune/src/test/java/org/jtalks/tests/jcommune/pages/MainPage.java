@@ -25,6 +25,8 @@ public class MainPage {
 
 	public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "']";
 
+	public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/topics/recent']";
+
 	@FindBy(xpath = loginLinkSel)
 	private WebElement loginLink;
 
@@ -39,6 +41,9 @@ public class MainPage {
 
 	@FindBy(xpath = iconLinkToMainPageSel)
 	private WebElement iconLinkToMainPage;
+
+	@FindBy(xpath = recentActivityLinkSel)
+	private WebElement recentActivityLink;
 
 	public MainPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -63,5 +68,9 @@ public class MainPage {
 
 	public WebElement getIconLinkToMainPage() {
 		return iconLinkToMainPage;
+	}
+
+	public WebElement getRecentActivityLink() {
+		return recentActivityLink;
 	}
 }

@@ -39,6 +39,8 @@ public class TopicPage {
 
 	public static final String topicLinksFromDateInLastColumnSel = "//div[@class='forum_last_message']/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/topics/')]";
 
+	public static final String topicLinksFromRecentActivitySel = "//ul[@class='forum_table']//a[@class='forum_link break_word']";
+
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -75,6 +77,9 @@ public class TopicPage {
 
 	@FindBy(xpath = topicLinksFromDateInLastColumnSel)
 	List<WebElement> topicLinksFromDateInLastColumn;
+
+	@FindBy(xpath = topicLinksFromRecentActivitySel)
+	List<WebElement> topicLinksFromRecentActivity;
 
 
 	public TopicPage(WebDriver driver) {
@@ -128,5 +133,9 @@ public class TopicPage {
 
 	public List<WebElement> getTopicLinksFromDateInLastColumn() {
 		return topicLinksFromDateInLastColumn;
+	}
+
+	public List<WebElement> getTopicLinksFromRecentActivity() {
+		return topicLinksFromRecentActivity;
 	}
 }
