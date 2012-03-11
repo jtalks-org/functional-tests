@@ -31,11 +31,6 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
-            <class name="org.jtalks.tests.jcommune.tests.profile.JC46EditingPassword">
-                <methods>
-                    <exclude name="testEditEmail"/>
-                </methods>
-            </class>
         </classes>
         <packages>
             <package name="org.jtalks.tests.jcommune.tests.signup"/>

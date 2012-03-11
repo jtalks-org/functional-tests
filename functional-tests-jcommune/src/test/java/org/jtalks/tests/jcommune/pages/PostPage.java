@@ -52,6 +52,12 @@ public class PostPage {
 	public static final String lastPostLinksFromTopicSel = "//div[@class='forum_last_message']/a[contains(@href," +
 			"'" + JCommuneSeleniumTest.contextPath + "/posts/')]";
 
+	public static final String pagesButtonsSel = "page";
+
+	public static final String showAllButtonSel = "//a[@href='?pagingEnabled=false']";
+
+	public static final String showPagesButtonSel = "//a[@href='?pagingEnabled=true']";
+
 	//public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
 	@FindBy(xpath = newButtonSel)
@@ -107,6 +113,15 @@ public class PostPage {
 
 	@FindBy(xpath = lastPostLinksFromTopicSel)
 	private List<WebElement> lastPostLinksFromTopic;
+
+	@FindBy(className = pagesButtonsSel)
+	private List<WebElement> pagesButtons;
+
+	@FindBy(xpath = showAllButtonSel)
+	private WebElement showAllButton;
+
+	@FindBy(xpath = showPagesButtonSel)
+	private WebElement showPagesButton;
 
 
 	public PostPage(WebDriver driver) {
@@ -185,5 +200,17 @@ public class PostPage {
 
 	public List<WebElement> getLastPostLinksFromTopic() {
 		return lastPostLinksFromTopic;
+	}
+
+	public List<WebElement> getPagesButtons() {
+		return pagesButtons;
+	}
+
+	public WebElement getShowAllButton() {
+		return showAllButton;
+	}
+
+	public WebElement getShowPagesButton() {
+		return showPagesButton;
 	}
 }

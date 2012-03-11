@@ -10,15 +10,17 @@ import org.jtalks.tests.jcommune.pages.SignInPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import utils.CollectionHelp;
 import utils.DBHelp;
+import utils.SeleniumConfig;
 import utils.StringHelp;
 
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -71,10 +73,10 @@ public class JCommuneSeleniumTest {
 	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
 					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail) throws Exception {
-//		driver = new RemoteWebDriver(
-//				new URL(selServerURL),
-//				SeleniumConfig.getBrowserDriver(selDriverType));
-		driver = new FirefoxDriver();
+		driver = new RemoteWebDriver(
+				new URL(selServerURL),
+				SeleniumConfig.getBrowserDriver(selDriverType));
+//		driver = new FirefoxDriver();
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
 		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
 
