@@ -10,7 +10,6 @@ import org.jtalks.tests.jcommune.pages.SignInPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -25,6 +24,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
 
@@ -78,6 +78,9 @@ public class JCommuneSeleniumTest {
 				new URL(selServerURL),
 				SeleniumConfig.getBrowserDriver(selDriverType));
 //		driver = new FirefoxDriver();
+
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
 		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
 

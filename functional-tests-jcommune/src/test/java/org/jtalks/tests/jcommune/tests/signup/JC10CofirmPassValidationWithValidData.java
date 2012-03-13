@@ -1,9 +1,6 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.jtalks.tests.jcommune.pages.SignUpPage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
@@ -11,7 +8,7 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistById;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 
 /**
  * This functional test covers test case JC10
@@ -40,7 +37,7 @@ public class JC10CofirmPassValidationWithValidData {
 	}
 
 	@Test(dataProvider = "validConfirmPassword")
-	public void confirmPasswordValidationWithValidDataTest(String pass, String confirm) {
+	public void confirmPasswordValidationWithValidDataTest(String pass, String confirm) throws InterruptedException {
 		signUpPage.getPasswordField().clear();
 		signUpPage.getPasswordField().sendKeys(pass);
 

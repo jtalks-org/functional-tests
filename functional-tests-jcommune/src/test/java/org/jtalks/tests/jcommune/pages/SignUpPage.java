@@ -33,7 +33,7 @@ public class SignUpPage {
 	public static final String emailErrorMessageSel = "email.errors";
 
 
-	public static final String submitButtonSel = "//button[@type='submit']";
+	public static final String submitButtonSel = "jqi_state0_buttonOK";
 
 
 	@FindBy(xpath = signUpButtonSel)
@@ -63,7 +63,7 @@ public class SignUpPage {
 	@FindBy(id = emailErrorMessageSel)
 	WebElement emailErrorMessage;
 
-	@FindBy(xpath = submitButtonSel)
+	@FindBy(id = submitButtonSel)
 	WebElement submitButton;
 
 
