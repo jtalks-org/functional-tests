@@ -41,6 +41,8 @@ public class TopicPage {
 
 	public static final String topicLinksFromRecentActivitySel = "//ul[@class='forum_table']//a[@class='forum_link break_word']";
 
+	public static final String amountsOfViewTopicsSel = "//div[@class='forum_clicks']";
+
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -81,6 +83,8 @@ public class TopicPage {
 	@FindBy(xpath = topicLinksFromRecentActivitySel)
 	List<WebElement> topicLinksFromRecentActivity;
 
+	@FindBy(xpath = amountsOfViewTopicsSel)
+	List<WebElement> amountsOfViewTopics;
 
 	public TopicPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -137,5 +141,9 @@ public class TopicPage {
 
 	public List<WebElement> getTopicLinksFromRecentActivity() {
 		return topicLinksFromRecentActivity;
+	}
+
+	public List<WebElement> getAmountsOfViewTopics() {
+		return amountsOfViewTopics;
 	}
 }

@@ -10,6 +10,7 @@ import org.jtalks.tests.jcommune.pages.SignInPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
