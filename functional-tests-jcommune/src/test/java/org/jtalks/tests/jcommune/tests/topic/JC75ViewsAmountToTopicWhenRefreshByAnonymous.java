@@ -14,13 +14,9 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Created by IntelliJ IDEA.
- * User: masyan
- * Date: 13.03.12
- * Time: 16:07
- * To change this template use File | Settings | File Templates.
+ * @autor masyan
  */
-public class JC73ViewsAmountToTopicWhenClickByAnonymous {
+public class JC75ViewsAmountToTopicWhenRefreshByAnonymous {
 	TopicPage topicPage;
 
 	@BeforeMethod
@@ -38,16 +34,19 @@ public class JC73ViewsAmountToTopicWhenClickByAnonymous {
 	}
 
 	@Test
-	public void viewsAmountToTopicWhenClickByAnonymousTest() {
+	public void viewsAmountToTopicWhenRefreshByAnonymousTest() {
 		//amount views for first topic
 		int amountBefore = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
 		CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicsList()).click();
 
+		driver.navigate().refresh();
+
 		topicPage.getBackButton().click();
 
 		int amountAfter = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
-		assertEquals(amountBefore + 1, amountAfter);
+		assertEquals(amountBefore + 2, amountAfter);
 	}
+
 }

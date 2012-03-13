@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
 import org.jtalks.tests.jcommune.pages.TopicPage;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -14,13 +15,9 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Created by IntelliJ IDEA.
- * User: masyan
- * Date: 13.03.12
- * Time: 16:07
- * To change this template use File | Settings | File Templates.
+ * @autor masyan
  */
-public class JC73ViewsAmountToTopicWhenClickByAnonymous {
+public class JC76ViewsAmountToTopicWhenRefreshByUser {
 	TopicPage topicPage;
 
 	@BeforeMethod
@@ -32,22 +29,27 @@ public class JC73ViewsAmountToTopicWhenClickByAnonymous {
 		clickOnRandomBranch();
 		createTopicForTest();
 		topicPage.getBackButton().click();
-		String url = driver.getCurrentUrl();
+	}
+
+	@AfterMethod
+	@Parameters({"app-url"})
+	public void destroy(String appUrl) {
 		logOut(appUrl);
-		driver.get(url);
 	}
 
 	@Test
-	public void viewsAmountToTopicWhenClickByAnonymousTest() {
+	public void viewsAmountToTopicWhenRefreshByUserTest() {
 		//amount views for first topic
 		int amountBefore = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
 		CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicsList()).click();
 
+		driver.navigate().refresh();
+
 		topicPage.getBackButton().click();
 
 		int amountAfter = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
-		assertEquals(amountBefore + 1, amountAfter);
+		assertEquals(amountBefore + 2, amountAfter);
 	}
 }
