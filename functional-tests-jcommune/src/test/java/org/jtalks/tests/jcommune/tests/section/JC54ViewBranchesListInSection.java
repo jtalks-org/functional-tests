@@ -18,7 +18,7 @@ public class JC54ViewBranchesListInSection {
 	SectionPage sectionPage;
 	BranchPage branchPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

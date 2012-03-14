@@ -29,7 +29,7 @@ public class ProfilePage {
 
 	public static final String errorEmailMessageIdSel = "email.errors";
 
-	public static final String emailSel = "//ul[@id='stylized']/li[4]/span";
+	public static final String emailSel = "//ul[@id='stylized']/li[5]/span";
 
 	public static final String currentPasswordFieldIdSel = "currentUserPassword";
 

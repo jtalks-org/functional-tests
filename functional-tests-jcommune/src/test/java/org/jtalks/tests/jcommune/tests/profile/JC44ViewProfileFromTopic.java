@@ -21,7 +21,7 @@ public class JC44ViewProfileFromTopic {
 	ProfilePage profilePage;
 
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -31,7 +31,7 @@ public class JC44ViewProfileFromTopic {
 		profilePage = new ProfilePage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

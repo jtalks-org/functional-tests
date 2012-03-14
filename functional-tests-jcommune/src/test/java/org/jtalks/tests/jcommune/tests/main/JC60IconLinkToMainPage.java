@@ -18,7 +18,7 @@ public class JC60IconLinkToMainPage {
 	MainPage mainPage;
 	SectionPage sectionPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

@@ -23,7 +23,7 @@ public class JC70ViewTopicFromRecentActivity {
 
 	String createdTopicTitle;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);

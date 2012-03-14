@@ -18,7 +18,7 @@ public class JC58BreadCrumbsGoToBranch {
 	BranchPage branchPage;
 	TopicPage topicPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

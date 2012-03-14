@@ -8,7 +8,9 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
  * author: erik
@@ -16,33 +18,33 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * Time: 20:54
  */
 public class JC53ChangeEmailWithoutSaving {
-    ProfilePage profilePage;
-    String currentEmail;
-    String uniqEmail;
+	ProfilePage profilePage;
+	String currentEmail;
+	String uniqEmail;
 
-    @BeforeMethod
-    @Parameters({"app-url", "uUsername", "uPassword"})
-    public void setupCase(String appUrl, String username, String password) {
-        driver.get(appUrl);
-        signIn(username, password);
-        profilePage = new ProfilePage(driver);
-        profilePage.getCurrentUserLink().click();
-        uniqEmail = StringHelp.getRandomEmail();
-        currentEmail = profilePage.getEmail().getText();
-        profilePage.getEditProfileButton().click();
-    }
+	@BeforeMethod(alwaysRun = true)
+	@Parameters({"app-url", "uUsername", "uPassword"})
+	public void setupCase(String appUrl, String username, String password) {
+		driver.get(appUrl);
+		signIn(username, password);
+		profilePage = new ProfilePage(driver);
+		profilePage.getCurrentUserLink().click();
+		uniqEmail = StringHelp.getRandomEmail();
+		currentEmail = profilePage.getEmail().getText();
+		profilePage.getEditProfileButton().click();
+	}
 
-    @AfterMethod
-    @Parameters({"app-url"})
-    public void destroy(String appUrl) {
-        logOut(appUrl);
-    }
+	@AfterMethod(alwaysRun = true)
+	@Parameters({"app-url"})
+	public void destroy(String appUrl) {
+		logOut(appUrl);
+	}
 
-    @Test
-    public void testEmptyEmail() {
-        profilePage.getEmailEditField().clear();
-        profilePage.getEmailEditField().sendKeys(uniqEmail);
-        profilePage.getBackButton().click();
-        Assert.assertEquals(profilePage.getEmail().getText(), currentEmail);
-    }
+	@Test
+	public void testEmptyEmail() {
+		profilePage.getEmailEditField().clear();
+		profilePage.getEmailEditField().sendKeys(uniqEmail);
+		profilePage.getBackButton().click();
+		Assert.assertEquals(profilePage.getEmail().getText(), currentEmail);
+	}
 }

@@ -15,7 +15,7 @@ public class JC28SecurityAnonymousToBranch {
 
 	BranchPage branchPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

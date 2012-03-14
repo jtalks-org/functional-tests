@@ -1,8 +1,7 @@
 package org.jtalks.tests.jcommune.tests.signin;
 
-import org.jtalks.tests.jcommune.pages.SignInPage;
 import org.jtalks.tests.jcommune.pages.MainPage;
-import org.openqa.selenium.By;
+import org.jtalks.tests.jcommune.pages.SignInPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
@@ -10,7 +9,6 @@ import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.getApplicationContextPath;
 
 /**
  * @autor masyan
@@ -32,7 +30,7 @@ public class JC22PasswordValidation {
 		};
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

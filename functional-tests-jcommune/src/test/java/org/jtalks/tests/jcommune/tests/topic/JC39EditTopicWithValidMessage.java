@@ -28,7 +28,7 @@ public class JC39EditTopicWithValidMessage {
 	@DataProvider(name = "validMessage")
 	public Object[][] validMessage() {
 		String validMessage = StringHelp.getRandomString(10);
-		String maxMessage = StringHelp.getRandomString(19999);
+		String maxMessage = StringHelp.getRandomString(20000);
 
 		return new Object[][]{
 				{validMessage},
@@ -36,7 +36,7 @@ public class JC39EditTopicWithValidMessage {
 		};
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -48,7 +48,7 @@ public class JC39EditTopicWithValidMessage {
 		postPage.getEditTopicButton().click();
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

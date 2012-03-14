@@ -20,7 +20,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 public class JC30SecurityAnonymousToPost {
 	PostPage postPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

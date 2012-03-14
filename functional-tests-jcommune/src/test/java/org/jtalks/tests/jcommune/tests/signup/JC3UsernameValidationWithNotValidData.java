@@ -1,7 +1,6 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
 import org.jtalks.tests.jcommune.pages.SignUpPage;
-import org.openqa.selenium.By;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
@@ -9,7 +8,7 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 
 /**
  * This functional test covers test case JC3
@@ -38,7 +37,7 @@ public class JC3UsernameValidationWithNotValidData {
 		};
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

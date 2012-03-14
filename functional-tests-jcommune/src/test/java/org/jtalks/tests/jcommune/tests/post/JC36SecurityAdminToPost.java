@@ -27,7 +27,7 @@ public class JC36SecurityAdminToPost {
 
 	String urlTopic;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "aUsername", "aPassword", "uUsername2", "uPassword2"})
 	public void setupCase(String appUrl, String username, String password, String username2, String password2) {
 		driver.get(appUrl);
@@ -47,7 +47,7 @@ public class JC36SecurityAdminToPost {
 		postPage = new PostPage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

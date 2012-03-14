@@ -18,7 +18,7 @@ public class JC34SecurityAdminToBranch {
 
 	BranchPage branchPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "aUsername", "aPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -26,7 +26,7 @@ public class JC34SecurityAdminToBranch {
 		branchPage = new BranchPage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

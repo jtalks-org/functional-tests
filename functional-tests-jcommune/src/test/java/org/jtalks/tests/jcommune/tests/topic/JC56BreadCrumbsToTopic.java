@@ -20,7 +20,7 @@ public class JC56BreadCrumbsToTopic {
 	MainPage mainPage;
 	BranchPage branchPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

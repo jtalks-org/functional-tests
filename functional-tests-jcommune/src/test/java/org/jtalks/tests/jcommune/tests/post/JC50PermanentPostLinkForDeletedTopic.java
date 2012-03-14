@@ -24,7 +24,7 @@ public class JC50PermanentPostLinkForDeletedTopic {
 	MainPage mainPage;
 	String post;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -37,7 +37,7 @@ public class JC50PermanentPostLinkForDeletedTopic {
 		mainPage = new MainPage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

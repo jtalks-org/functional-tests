@@ -20,7 +20,7 @@ public class JC29SecurityAnonymousToTopic {
 
 	TopicPage topicPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

@@ -25,7 +25,7 @@ public class JC67LastMessageLinkFromBranch {
 	String message;
 
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -41,7 +41,7 @@ public class JC67LastMessageLinkFromBranch {
 		driver.get(appUrl);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

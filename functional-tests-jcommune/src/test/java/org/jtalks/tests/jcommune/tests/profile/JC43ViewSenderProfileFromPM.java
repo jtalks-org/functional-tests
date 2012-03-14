@@ -23,7 +23,7 @@ public class JC43ViewSenderProfileFromPM {
 	PMPage pmPage;
 
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword", "uUsername2", "uPassword2"})
 	public void setupCase(String appUrl, String username, String password, String username2, String password2) {
 		driver.get(appUrl);
@@ -35,7 +35,7 @@ public class JC43ViewSenderProfileFromPM {
 		pmPage = new PMPage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

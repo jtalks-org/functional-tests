@@ -28,7 +28,7 @@ public class JC33SecurityRegisteredUserToPost {
 
 	String urlTopic;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword", "uUsername2", "uPassword2"})
 	public void setupCase(String appUrl, String username, String password, String username2, String password2) {
 		driver.get(appUrl);
@@ -48,7 +48,7 @@ public class JC33SecurityRegisteredUserToPost {
 		postPage = new PostPage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

@@ -24,7 +24,7 @@ public class JC61TopicPositionWithoutSaveChanges {
 	PostPage postPage;
 	String editedSubject;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -42,7 +42,7 @@ public class JC61TopicPositionWithoutSaveChanges {
 
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

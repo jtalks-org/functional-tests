@@ -20,7 +20,7 @@ import static org.testng.Assert.assertEquals;
 public class JC74ViewsAmountToTopicWhenClickByUser {
 	TopicPage topicPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -31,7 +31,7 @@ public class JC74ViewsAmountToTopicWhenClickByUser {
 		topicPage.getBackButton().click();
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

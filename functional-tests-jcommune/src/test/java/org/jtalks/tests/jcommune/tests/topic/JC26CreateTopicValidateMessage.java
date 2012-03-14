@@ -23,9 +23,9 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 public class JC26CreateTopicValidateMessage {
 	TopicPage topicPage;
 	String validTitle = "new topic";
-	String shortMessage = "ms";
+	String shortMessage = "m";
 	String longTopicMessage = StringHelp.getRandomString(20001);
-	String validTopicMessage = StringHelp.getRandomString(19999);
+	String validTopicMessage = StringHelp.getRandomString(20000);
 
 
 	@BeforeMethod

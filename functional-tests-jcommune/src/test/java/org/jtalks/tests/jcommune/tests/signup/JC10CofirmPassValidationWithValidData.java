@@ -28,7 +28,7 @@ public class JC10CofirmPassValidationWithValidData {
 		};
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);

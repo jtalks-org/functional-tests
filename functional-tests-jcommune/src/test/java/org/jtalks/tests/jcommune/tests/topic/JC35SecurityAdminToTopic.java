@@ -23,7 +23,7 @@ public class JC35SecurityAdminToTopic {
 
 	TopicPage topicPage;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "aUsername", "aPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -32,7 +32,7 @@ public class JC35SecurityAdminToTopic {
 		topicPage = new TopicPage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

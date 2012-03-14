@@ -29,7 +29,7 @@ public class JC40EditTopicWithNotValidMessage {
 		String shortMsg = StringHelp.getRandomString(1);
 		String startSpMsg = " " + StringHelp.getRandomString(1);
 		String endSpMsg = StringHelp.getRandomString(1) + " ";
-		String longMsg = StringHelp.getRandomString(20000);
+		String longMsg = StringHelp.getRandomString(20001);
 		return new Object[][]{
 				{shortMsg},
 				{startSpMsg},
@@ -39,7 +39,7 @@ public class JC40EditTopicWithNotValidMessage {
 		};
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
@@ -51,7 +51,7 @@ public class JC40EditTopicWithNotValidMessage {
 		postPage.getEditTopicButton().click();
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);

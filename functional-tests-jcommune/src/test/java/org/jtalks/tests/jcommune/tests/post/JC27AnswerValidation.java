@@ -24,10 +24,10 @@ public class JC27AnswerValidation {
 
 	@DataProvider(name = "notValidAnswer")
 	public Object[][] notValidAnswer() {
-		String shortString = StringHelp.getRandomString(2);
+		String shortString = StringHelp.getRandomString(1);
 		String longString = StringHelp.getRandomString(20001);
-		String spaceBegin = " " + StringHelp.getRandomString(2);
-		String spaceEnd = StringHelp.getRandomString(2) + " ";
+		String spaceBegin = " " + StringHelp.getRandomString(1);
+		String spaceEnd = StringHelp.getRandomString(1) + " ";
 
 		return new Object[][]{
 				{shortString},
