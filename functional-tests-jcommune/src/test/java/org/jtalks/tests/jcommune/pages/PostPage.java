@@ -58,6 +58,8 @@ public class PostPage {
 
 	public static final String showPagesButtonSel = "//a[@href='?pagingEnabled=true']";
 
+	public static final String signatureTextSel = "//div[@class='signature']//span";
+
 	//public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
 	@FindBy(xpath = newButtonSel)
@@ -122,6 +124,9 @@ public class PostPage {
 
 	@FindBy(xpath = showPagesButtonSel)
 	private WebElement showPagesButton;
+
+	@FindBy(xpath = signatureTextSel)
+	private WebElement signatureText;
 
 
 	public PostPage(WebDriver driver) {
@@ -212,5 +217,9 @@ public class PostPage {
 
 	public WebElement getShowPagesButton() {
 		return showPagesButton;
+	}
+
+	public WebElement getSignatureText() {
+		return signatureText;
 	}
 }

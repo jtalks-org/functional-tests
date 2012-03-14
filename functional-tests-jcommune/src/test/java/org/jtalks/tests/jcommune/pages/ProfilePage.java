@@ -19,6 +19,8 @@ public class ProfilePage {
 
 	public static final String profileLinkFromTopicPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users') and @class='username']";
 
+	public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
+
 	public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @class='button']";
 
 	public static final String emailEditFieldIdSel = "email";
@@ -44,6 +46,10 @@ public class ProfilePage {
 	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/users/') and @class='button']";
 
 	public static final String profileLinkFromLastColumnSel = "//a[@class = 'last_message_user']";
+
+	public static final String signatureFieldSel = "signature";
+
+	public static final String signatureTextSel = "//span[@class='signature']";
 
 	@FindBy(xpath = backButtonSel)
 	private WebElement backButton;
@@ -81,6 +87,9 @@ public class ProfilePage {
 	@FindBy(xpath = profileLinkFromTopicPageSel)
 	private WebElement profileLinkFromTopicPage;
 
+	@FindBy(xpath = profileLinkFromMainPageSel)
+	private WebElement profileLinkFromMainPage;
+
 	@FindBy(xpath = editProfileButtonSel)
 	private WebElement editProfileButton;
 
@@ -92,6 +101,12 @@ public class ProfilePage {
 
 	@FindBy(xpath = profileLinkFromLastColumnSel)
 	private WebElement profileLinkFromLastColumn;
+
+	@FindBy(id = signatureFieldSel)
+	private WebElement signatureField;
+
+	@FindBy(xpath = signatureTextSel)
+	private WebElement signatureText;
 
 	public ProfilePage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -112,6 +127,10 @@ public class ProfilePage {
 
 	public WebElement getProfileLinkFromTopicPage() {
 		return profileLinkFromTopicPage;
+	}
+
+	public WebElement getProfileLinkFromMainPage() {
+		return profileLinkFromMainPage;
 	}
 
 	public WebElement getEditProfileButton() {
@@ -160,5 +179,13 @@ public class ProfilePage {
 
 	public WebElement getProfileLinkFromLastColumn() {
 		return profileLinkFromLastColumn;
+	}
+
+	public WebElement getSignatureField() {
+		return signatureField;
+	}
+
+	public WebElement getSignatureText() {
+		return signatureText;
 	}
 }
