@@ -10,7 +10,6 @@ import org.jtalks.tests.jcommune.pages.SignInPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -44,6 +43,10 @@ public class JCommuneSeleniumTest {
 
 	public static final String contextPath = "/test-jcommune";
 
+	public static String selServerURL;
+
+	public static String selDriverType;
+
 
 	//Pages for common methods
 	static MainPage mainPage;
@@ -75,24 +78,17 @@ public class JCommuneSeleniumTest {
 	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
 					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail) throws Exception {
-		driver = new RemoteWebDriver(
-				new URL(selServerURL),
-				SeleniumConfig.getBrowserDriver(selDriverType));
-//		driver = new FirefoxDriver();
 
-		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+		this.selDriverType = selDriverType;
+
+		this.selServerURL = selServerURL;
+
+		recreateDriver(false);
 
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
 		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
 
-		mainPage = new MainPage(driver);
-		signInPage = new SignInPage(driver);
-		topicPage = new TopicPage(driver);
-		postPage = new PostPage(driver);
-		sectionPage = new SectionPage(driver);
-		branchPage = new BranchPage(driver);
-		logOutPage = new LogOutPage(driver);
-		pmPage = new PMPage(driver);
+		createPages();
 	}
 
 	/**
@@ -110,7 +106,6 @@ public class JCommuneSeleniumTest {
 			}
 		}
 	}
-
 
 	/**
 	 * This method does the authentication
@@ -215,6 +210,46 @@ public class JCommuneSeleniumTest {
 	 */
 	public static String getApplicationContextPath() {
 		return contextPath;
+	}
+
+
+	/**
+	 * Method remove and create driver. Need to clean sessions variable
+	 */
+	public static void recreateDriver(boolean exist) {
+		if (exist) {
+			driver.close();
+		}
+
+
+		try {
+			driver = new RemoteWebDriver(
+					new URL(selServerURL),
+					SeleniumConfig.getBrowserDriver(selDriverType));
+//			driver = new FirefoxDriver();
+
+			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
+			createPages();
+		}
+		catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * Method creates page for work methods of this class
+	 */
+	public static void createPages() {
+		mainPage = new MainPage(driver);
+		signInPage = new SignInPage(driver);
+		topicPage = new TopicPage(driver);
+		postPage = new PostPage(driver);
+		sectionPage = new SectionPage(driver);
+		branchPage = new BranchPage(driver);
+		logOutPage = new LogOutPage(driver);
+		pmPage = new PMPage(driver);
 	}
 
 }

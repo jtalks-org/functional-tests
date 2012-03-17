@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune.tests.profile;
 
 import org.jtalks.tests.jcommune.pages.ProfilePage;
 import org.jtalks.tests.jcommune.pages.SignInPage;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -11,6 +12,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRando
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.recreateDriver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
@@ -32,6 +34,11 @@ public class JC64ViewProfileFromLastColumnByAnonymous {
 		driver.get(url);
 		profilePage = new ProfilePage(driver);
 		signInPage = new SignInPage(driver);
+	}
+
+	@AfterMethod(alwaysRun = true)
+	public void destroy() {
+		recreateDriver(true);
 	}
 
 

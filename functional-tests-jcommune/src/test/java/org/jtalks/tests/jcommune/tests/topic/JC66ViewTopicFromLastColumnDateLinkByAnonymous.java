@@ -6,6 +6,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
+import java.io.IOException;
+
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -22,7 +24,7 @@ public class JC66ViewTopicFromLastColumnDateLinkByAnonymous {
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
+	public void setupCase(String appUrl, String username, String password) throws IOException {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
@@ -31,8 +33,6 @@ public class JC66ViewTopicFromLastColumnDateLinkByAnonymous {
 		logOut(appUrl);
 		driver.get(url);
 		topicPage = new TopicPage(driver);
-		topicPage.getBackButton().click();
-
 	}
 
 	@Test

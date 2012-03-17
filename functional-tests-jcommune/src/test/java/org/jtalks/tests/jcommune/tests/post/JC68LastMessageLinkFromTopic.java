@@ -49,7 +49,7 @@ public class JC68LastMessageLinkFromTopic {
 	}
 
 	@Test
-	public void lastMessageLinkFromBranchTest() {
+	public void lastMessageLinkFromTopicTest() {
 		CollectionHelp.getFirstWebElementFromCollection(postPage.getLastPostLinksFromTopic()).click();
 
 		assertExistElementOnViewPresent(postPage.getPostsMessages(), message);
