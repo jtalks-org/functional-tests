@@ -42,6 +42,7 @@
             <package name="org.jtalks.tests.jcommune.tests.section"/>
             <package name="org.jtalks.tests.jcommune.tests.main"/>
             <package name="org.jtalks.tests.jcommune.tests.branch"/>
+            <package name="org.jtalks.tests.jcommune.tests.pm"/>
         </packages>
     </test>
 </suite>

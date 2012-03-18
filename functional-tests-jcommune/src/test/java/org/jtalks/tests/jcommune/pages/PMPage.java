@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 /**
  * @autor masyan
  */
@@ -24,6 +26,14 @@ public class PMPage {
 	public static final String messageFieldSel = "tbMsg";
 
 	public static final String sendButtonSel = "post";
+
+	public static final String pmSubjectLinksSel = "//table[@class='messages']//td[@class='title']//a";
+
+	public static final String recipientErrorMessageSel = "recipient.errors";
+
+	public static final String subjectErrorMessageSel = "title.errors";
+
+	public static final String bodyMsgErrorMessageSel = "body.errors";
 
 
 	@FindBy(xpath = pmInboxLinkSel)
@@ -46,6 +56,18 @@ public class PMPage {
 
 	@FindBy(id = sendButtonSel)
 	private WebElement sendButton;
+
+	@FindBy(xpath = pmSubjectLinksSel)
+	private List<WebElement> pmSubjectLinks;
+
+	@FindBy(id = recipientErrorMessageSel)
+	private WebElement recipientErrorMessage;
+
+	@FindBy(id = subjectErrorMessageSel)
+	private WebElement subjectErrorMessage;
+
+	@FindBy(id = bodyMsgErrorMessageSel)
+	private WebElement bodyMsgErrorMessage;
 
 
 	public PMPage(WebDriver driver) {
@@ -79,5 +101,21 @@ public class PMPage {
 
 	public WebElement getSendButton() {
 		return sendButton;
+	}
+
+	public List<WebElement> getPmSubjectLinks() {
+		return pmSubjectLinks;
+	}
+
+	public WebElement getRecipientErrorMessage() {
+		return recipientErrorMessage;
+	}
+
+	public WebElement getSubjectErrorMessage() {
+		return subjectErrorMessage;
+	}
+
+	public WebElement getBodyMsgErrorMessage() {
+		return bodyMsgErrorMessage;
 	}
 }
