@@ -35,6 +35,17 @@ public class PMPage {
 
 	public static final String bodyMsgErrorMessageSel = "body.errors";
 
+	public static final String replyButtonSel = "//input[@class='button' and @value='Reply']";
+
+	public static final String quoteButtonSel = "//input[@class='button' and @value='Quote']";
+
+	public static final String saveButtonSel = "save_pm";
+
+	public static final String draftMessageTitlesSel = "//tr[@class='mess read']//td[@class='title']//a";
+
+	public static final String draftMessageEditButtonsSel = "//tr[@class='mess read']//td//a[contains(@href,'edit')]";
+
+	public static final String pmHeadingOutboxSel = "//a[text()='Outbox' and @href='#' and @class='heading']";
 
 	@FindBy(xpath = pmInboxLinkSel)
 	private WebElement pmInboxLink;
@@ -68,6 +79,24 @@ public class PMPage {
 
 	@FindBy(id = bodyMsgErrorMessageSel)
 	private WebElement bodyMsgErrorMessage;
+
+	@FindBy(xpath = replyButtonSel)
+	private WebElement replyButton;
+
+	@FindBy(xpath = quoteButtonSel)
+	private WebElement quoteButton;
+
+	@FindBy(id = saveButtonSel)
+	private WebElement saveButton;
+
+	@FindBy(xpath = draftMessageTitlesSel)
+	private List<WebElement> draftMessageTitles;
+
+	@FindBy(xpath = draftMessageEditButtonsSel)
+	private List<WebElement> draftMessageEditButtons;
+
+	@FindBy(xpath = pmHeadingOutboxSel)
+	private WebElement pmHeadingOutbox;
 
 
 	public PMPage(WebDriver driver) {
@@ -117,5 +146,29 @@ public class PMPage {
 
 	public WebElement getBodyMsgErrorMessage() {
 		return bodyMsgErrorMessage;
+	}
+
+	public WebElement getReplyButton() {
+		return replyButton;
+	}
+
+	public WebElement getQuoteButton() {
+		return quoteButton;
+	}
+
+	public WebElement getSaveButton() {
+		return saveButton;
+	}
+
+	public List<WebElement> getDraftMessageTitles() {
+		return draftMessageTitles;
+	}
+
+	public List<WebElement> getDraftMessageEditButtons() {
+		return draftMessageEditButtons;
+	}
+
+	public WebElement getPmHeadingOutbox() {
+		return pmHeadingOutbox;
 	}
 }
