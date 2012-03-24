@@ -8,7 +8,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
