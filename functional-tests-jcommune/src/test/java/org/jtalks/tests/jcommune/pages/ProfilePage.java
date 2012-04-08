@@ -43,7 +43,7 @@ public class ProfilePage {
 
 	public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
 
-	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/users/') and @class='button']";
+	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/user') and @class='button']";
 
 	public static final String profileLinkFromLastColumnSel = "//a[@class = 'last_message_user']";
 
