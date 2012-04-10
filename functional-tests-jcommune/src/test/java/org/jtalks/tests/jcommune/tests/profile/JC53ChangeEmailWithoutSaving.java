@@ -18,34 +18,35 @@ import static org.testng.Assert.assertEquals;
  * Time: 20:54
  */
 public class JC53ChangeEmailWithoutSaving {
-	ProfilePage profilePage;
-	String currentEmail;
-	String uniqEmail;
+	//TODO uncomment after X servers will be installed
+//	ProfilePage profilePage;
+//	String currentEmail;
+//	String uniqEmail;
+//
+//	@BeforeMethod(alwaysRun = true)
+//	@Parameters({"app-url", "uUsername", "uPassword"})
+//	public void setupCase(String appUrl, String username, String password) {
+//		driver.get(appUrl);
+//		signIn(username, password);
+//		profilePage = new ProfilePage(driver);
+//		profilePage.getCurrentUserLink().click();
+//		uniqEmail = StringHelp.getRandomEmail();
+//		currentEmail = profilePage.getEmail().getText();
+//		profilePage.getEditProfileButton().click();
+//	}
+//
+//	@AfterMethod(alwaysRun = true)
+//	@Parameters({"app-url"})
+//	public void destroy(String appUrl) {
+//		logOut(appUrl);
+//	}
+//
+//	@Test
+//	public void testEmptyEmail() {
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		profilePage = new ProfilePage(driver);
-		profilePage.getCurrentUserLink().click();
-		uniqEmail = StringHelp.getRandomEmail();
-		currentEmail = profilePage.getEmail().getText();
-		profilePage.getEditProfileButton().click();
-	}
-
-	@AfterMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
-	}
-
-	@Test
-	public void testEmptyEmail() {
-		//TODO uncomment after X servers will be installed
 //		profilePage.getEmailEditField().clear();
 //		profilePage.getEmailEditField().sendKeys(uniqEmail);
 //		profilePage.getBackButton().click();
 //		assertEquals(profilePage.getEmail().getText(), currentEmail);
-	}
+//	}
 }

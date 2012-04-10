@@ -17,31 +17,31 @@ import static org.testng.Assert.assertEquals;
  * Time: 20:34
  */
 public class JC52ChangeEmailToEmptyTest {
-	ProfilePage profilePage;
-	String currentEmail;
+	//TODO uncomment after X servers will be installed
+//	ProfilePage profilePage;
+//	String currentEmail;
+//
+//	@BeforeMethod(alwaysRun = true)
+//	@Parameters({"app-url", "uUsername", "uPassword"})
+//	public void setupCase(String appUrl, String username, String password) {
+//		driver.get(appUrl);
+//		signIn(username, password);
+//		profilePage = new ProfilePage(driver);
+//		profilePage.getCurrentUserLink().click();
+//		currentEmail = profilePage.getEmail().getText();
+//		profilePage.getEditProfileButton().click();
+//	}
+//
+//	@AfterMethod(alwaysRun = true)
+//	@Parameters({"app-url"})
+//	public void destroy(String appUrl) {
+//		logOut(appUrl);
+//	}
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		profilePage = new ProfilePage(driver);
-		profilePage.getCurrentUserLink().click();
-		currentEmail = profilePage.getEmail().getText();
-		profilePage.getEditProfileButton().click();
-	}
-
-	@AfterMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
-	}
-
-	@Test
-	public void testEmptyEmail() {
-		//TODO uncomment after X servers will be installed
+//	@Test
+//	public void testEmptyEmail() {
 //		profilePage.getEmailEditField().clear();
 //		profilePage.getBackButton().click();
 //		assertEquals(profilePage.getEmail().getText(), currentEmail);
-	}
+//	}
 }
