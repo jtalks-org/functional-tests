@@ -21,7 +21,6 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
  * @autor masyan
  */
 public class JC38EditTopicWithNotValidTitle {
-
 	TopicPage topicPage;
 	PostPage postPage;
 
@@ -54,10 +53,12 @@ public class JC38EditTopicWithNotValidTitle {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test(dataProvider = "notValidTitle")
 	public void editTopicWithNotValidTitleTest(String title) {
+
 		topicPage.getSubjectField().clear();
 		topicPage.getSubjectField().sendKeys(title);
 		topicPage.getPostButton().click();

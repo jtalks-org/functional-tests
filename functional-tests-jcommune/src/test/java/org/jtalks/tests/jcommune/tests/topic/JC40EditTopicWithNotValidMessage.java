@@ -55,10 +55,12 @@ public class JC40EditTopicWithNotValidMessage {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test(dataProvider = "notValidMessage")
 	public void editTopicWithNotValidMessageTest(String msg) {
+
 		topicPage.getMessageField().clear();
 		StringHelp.setLongTextValue(driver, topicPage.getMessageField(), msg);
 		topicPage.getPostButton().click();

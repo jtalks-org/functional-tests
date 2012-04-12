@@ -27,6 +27,17 @@ public class MainPage {
 
 	public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/topics/recent']";
 
+	public static final String messagesCountSel = "messages count";
+
+	public static final String usersCountSel = "users count";
+
+	public static final String usersOnlineCountSel = "visitors count";
+
+	public static final String registeredUsersOnlineCountSel = "registered users count";
+
+	public static final String guestsUsersOnlineCountSel = "guests count";
+
+
 	@FindBy(xpath = loginLinkSel)
 	private WebElement loginLink;
 
@@ -44,6 +55,22 @@ public class MainPage {
 
 	@FindBy(xpath = recentActivityLinkSel)
 	private WebElement recentActivityLink;
+
+	@FindBy(id = messagesCountSel)
+	private WebElement messagesCount;
+
+	@FindBy(id = usersCountSel)
+	private WebElement usersCount;
+
+	@FindBy(id = usersOnlineCountSel)
+	private WebElement usersOnlineCount;
+
+	@FindBy(id = registeredUsersOnlineCountSel)
+	private WebElement registeredUsersOnlineCount;
+
+	@FindBy(id = guestsUsersOnlineCountSel)
+	private WebElement guestsUsersOnlineCount;
+
 
 	public MainPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -72,5 +99,25 @@ public class MainPage {
 
 	public WebElement getRecentActivityLink() {
 		return recentActivityLink;
+	}
+
+	public WebElement getMessagesCount() {
+		return messagesCount;
+	}
+
+	public WebElement getUsersCount() {
+		return usersCount;
+	}
+
+	public WebElement getUsersOnlineCount() {
+		return usersOnlineCount;
+	}
+
+	public WebElement getRegisteredUsersOnlineCount() {
+		return registeredUsersOnlineCount;
+	}
+
+	public WebElement getGuestsUsersOnlineCount() {
+		return guestsUsersOnlineCount;
 	}
 }

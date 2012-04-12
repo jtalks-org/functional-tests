@@ -39,6 +39,7 @@ public class JC39EditTopicWithValidMessage {
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
+
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
@@ -52,10 +53,12 @@ public class JC39EditTopicWithValidMessage {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test(dataProvider = "validMessage")
 	public void editTopicWithValidMessageTest(String msg) {
+
 		topicPage.getMessageField().clear();
 		StringHelp.setLongTextValue(driver, topicPage.getMessageField(), msg);
 		topicPage.getPostButton().click();

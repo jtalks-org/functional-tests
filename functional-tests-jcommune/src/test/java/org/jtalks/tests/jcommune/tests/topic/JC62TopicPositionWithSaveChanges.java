@@ -50,6 +50,7 @@ public class JC62TopicPositionWithSaveChanges {
 
 	@Test
 	public void topicPositionWithSaveChangesTest() {
+
 		//first step
 		editedSubject = topicPage.getTopicSubject().getText();
 		postPage.getEditTopicButton().click();

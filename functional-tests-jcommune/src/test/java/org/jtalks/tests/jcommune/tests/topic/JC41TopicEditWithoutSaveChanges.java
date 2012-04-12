@@ -40,10 +40,12 @@ public class JC41TopicEditWithoutSaveChanges {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test
 	public void editTopicWithoutSaveChangesTest() {
+
 		String validTitle = StringHelp.getRandomString(10);
 		String validMessage = StringHelp.getRandomString(10);
 		topicPage.getSubjectField().clear();

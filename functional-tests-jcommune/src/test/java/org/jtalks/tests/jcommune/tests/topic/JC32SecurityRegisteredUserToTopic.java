@@ -12,6 +12,7 @@ import java.util.List;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
@@ -28,6 +29,9 @@ public class JC32SecurityRegisteredUserToTopic {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
+		String branch = driver.getCurrentUrl();
+		createTopicForTest();
+		driver.get(branch);
 		topicPage = new TopicPage(driver);
 	}
 
@@ -35,10 +39,12 @@ public class JC32SecurityRegisteredUserToTopic {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test
 	public void securityRegisteredUserToBranchTest() {
+
 		//view the topics list
 		List<WebElement> topics = topicPage.getTopicsList();
 		assertNotEmptyCollection(topics);

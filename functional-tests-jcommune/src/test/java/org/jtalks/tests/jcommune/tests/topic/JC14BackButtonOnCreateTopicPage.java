@@ -19,7 +19,6 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
  * @autor erik
  */
 public class JC14BackButtonOnCreateTopicPage {
-
 	String subject = StringHelp.getRandomString(20);
 	String message = StringHelp.getRandomString(20);
 	TopicPage topicPage;

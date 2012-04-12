@@ -39,10 +39,12 @@ public class JC37EditTopicWithValidTitle {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test
 	public void editTopicWithValidTitleTest() {
+
 		String newTitle = StringHelp.getRandomString(10);
 		topicPage.getSubjectField().clear();
 		topicPage.getSubjectField().sendKeys(newTitle);

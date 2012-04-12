@@ -39,6 +39,7 @@ public class JC73ViewsAmountToTopicWhenClickByAnonymous {
 
 	@Test
 	public void viewsAmountToTopicWhenClickByAnonymousTest() {
+
 		//amount views for first topic
 		int amountBefore = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
@@ -49,5 +50,6 @@ public class JC73ViewsAmountToTopicWhenClickByAnonymous {
 		int amountAfter = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
 		assertEquals(amountBefore + 1, amountAfter);
+
 	}
 }

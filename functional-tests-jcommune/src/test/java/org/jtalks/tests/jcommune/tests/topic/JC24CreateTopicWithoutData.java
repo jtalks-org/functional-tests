@@ -18,7 +18,6 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
  * User: erik
  */
 public class JC24CreateTopicWithoutData {
-
 	TopicPage topicPage;
 
 	@BeforeMethod(alwaysRun = true)

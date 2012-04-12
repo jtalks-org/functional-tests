@@ -35,9 +35,11 @@ public class JC66ViewTopicFromLastColumnDateLinkByAnonymous {
 
 	@Test
 	public void viewTopicFromLastColumnDateLinkByAnonymousTest() {
+
 		String titleTopic = CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicsList()).getText();
 		CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicLinksFromDateInLastColumn()).click();
 
 		assertEquals(topicPage.getTopicSubject().getText(), titleTopic);
+
 	}
 }

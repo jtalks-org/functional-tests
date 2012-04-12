@@ -11,7 +11,10 @@ import java.util.List;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
  * @autor masyan
@@ -21,15 +24,21 @@ public class JC29SecurityAnonymousToTopic {
 	TopicPage topicPage;
 
 	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void setupCase(String appUrl) {
+	@Parameters({"app-url", "uUsername", "uPassword"})
+	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
+		signIn(username, password);
 		clickOnRandomBranch();
+		String branch = driver.getCurrentUrl();
+		createTopicForTest();
+		logOut(appUrl);
+		driver.get(branch);
 		topicPage = new TopicPage(driver);
 	}
 
 	@Test
 	public void securityAnonymousToBranchTest() {
+
 		//view the topics list
 		List<WebElement> topics = topicPage.getTopicsList();
 		assertNotEmptyCollection(topics);

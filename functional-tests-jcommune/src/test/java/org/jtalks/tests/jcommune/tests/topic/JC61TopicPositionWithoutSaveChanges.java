@@ -46,10 +46,12 @@ public class JC61TopicPositionWithoutSaveChanges {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test
 	public void topicPositionWithoutSaveChangesTest() {
+
 		//first step
 		editedSubject = topicPage.getTopicSubject().getText();
 		postPage.getEditTopicButton().click();

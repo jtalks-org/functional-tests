@@ -35,10 +35,12 @@ public class JC76ViewsAmountToTopicWhenRefreshByUser {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test
 	public void viewsAmountToTopicWhenRefreshByUserTest() {
+
 		//amount views for first topic
 		int amountBefore = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 

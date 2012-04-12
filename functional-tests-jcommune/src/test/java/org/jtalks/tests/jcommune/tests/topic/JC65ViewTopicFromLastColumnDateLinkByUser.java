@@ -21,7 +21,6 @@ public class JC65ViewTopicFromLastColumnDateLinkByUser {
 
 	TopicPage topicPage;
 
-
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
@@ -38,10 +37,12 @@ public class JC65ViewTopicFromLastColumnDateLinkByUser {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test
 	public void viewProfileFromLastColumnInByUserTest() {
+
 		String titleTopic = CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicsList()).getText();
 		CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicLinksFromDateInLastColumn()).click();
 

@@ -2,12 +2,19 @@ package org.jtalks.tests.jcommune.tests.topic;
 
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistBySelector;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 
 /**
@@ -16,16 +23,16 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * Time: 12:06
  */
 public class JC26CreateTopicValidateMessageWithValidData {
-    TopicPage topicPage;
+	TopicPage topicPage;
 
-    @DataProvider (name = "validTopic")
-    public Object[][] validTopic(){
-        String validTitle = "new topic";
-        String validTopicMessage = StringHelp.getRandomString(20000);
-        return new Object[][]{
-                {validTitle, validTopicMessage}
-        };
-    }
+	@DataProvider(name = "validTopic")
+	public Object[][] validTopic() {
+		String validTitle = "new topic";
+		String validTopicMessage = StringHelp.getRandomString(20000);
+		return new Object[][]{
+				{validTitle, validTopicMessage}
+		};
+	}
 
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -34,6 +41,7 @@ public class JC26CreateTopicValidateMessageWithValidData {
 		signIn(username, password);
 		clickOnRandomBranch();
 		topicPage = new TopicPage(driver);
+
 	}
 
 	@AfterMethod

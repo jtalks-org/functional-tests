@@ -40,8 +40,10 @@ public class JC70ViewTopicFromRecentActivity {
 
 	@Test
 	public void recentActivityTest() {
+
 		CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicLinksFromRecentActivity()).click();
 
 		assertEquals(topicPage.getTopicSubject().getText(), createdTopicTitle);
+
 	}
 }

@@ -35,10 +35,12 @@ public class JC74ViewsAmountToTopicWhenClickByUser {
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
+
 	}
 
 	@Test
 	public void viewsAmountToTopicWhenClickByUserTest() {
+
 		//amount views for first topic
 		int amountBefore = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
@@ -49,5 +51,6 @@ public class JC74ViewsAmountToTopicWhenClickByUser {
 		int amountAfter = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
 		assertEquals(amountBefore + 1, amountAfter);
+
 	}
 }

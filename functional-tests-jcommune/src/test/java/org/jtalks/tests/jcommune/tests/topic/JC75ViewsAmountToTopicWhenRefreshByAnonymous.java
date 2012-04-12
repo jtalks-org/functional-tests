@@ -35,6 +35,7 @@ public class JC75ViewsAmountToTopicWhenRefreshByAnonymous {
 
 	@Test
 	public void viewsAmountToTopicWhenRefreshByAnonymousTest() {
+
 		//amount views for first topic
 		int amountBefore = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
@@ -47,6 +48,7 @@ public class JC75ViewsAmountToTopicWhenRefreshByAnonymous {
 		int amountAfter = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 
 		assertEquals(amountBefore + 2, amountAfter);
+
 	}
 
 }

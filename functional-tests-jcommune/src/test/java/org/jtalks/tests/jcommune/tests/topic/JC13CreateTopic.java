@@ -19,9 +19,8 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
  * @autor erik
  */
 public class JC13CreateTopic {
-
 	String subject = StringHelp.getRandomString(20);
-	String message = StringHelp.getRandomString(20);
+	String message = StringHelp.getRandomString(21);
 	TopicPage topicPage;
 
 	@BeforeMethod(alwaysRun = true)
@@ -51,7 +50,7 @@ public class JC13CreateTopic {
 		topicPage.getSubjectField().sendKeys(subject);
 		topicPage.getMessageField().sendKeys(message);
 		topicPage.getPostButton().click();
-		Assert.assertEquals(topicPage.getTopicMessage().getText(), subject);
+		Assert.assertEquals(topicPage.getTopicSubject().getText(), subject);
 
 		assertContainsInString(topicPage.getTopicMessage().getText(), message);
 	}
