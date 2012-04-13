@@ -38,7 +38,7 @@ public class JC61TopicPositionWithoutSaveChanges {
 		createTopicForTest();
 		topicPage.getBackButton().click();
 
-		CollectionHelp.getLastWebElementFromCollection(topicPage.getTopicsList()).click();
+		CollectionHelp.getWebElementFromCollectionByIndex(topicPage.getTopicsList(), 2).click();
 
 	}
 
@@ -51,7 +51,6 @@ public class JC61TopicPositionWithoutSaveChanges {
 
 	@Test
 	public void topicPositionWithoutSaveChangesTest() {
-
 		//first step
 		editedSubject = topicPage.getTopicSubject().getText();
 		postPage.getEditTopicButton().click();
@@ -63,5 +62,6 @@ public class JC61TopicPositionWithoutSaveChanges {
 		//second step
 		CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicsList()).click();
 		assertNotEquals(topicPage.getTopicSubject().getText(), editedSubject);
+
 	}
 }

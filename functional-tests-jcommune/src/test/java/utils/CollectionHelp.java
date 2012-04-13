@@ -54,4 +54,18 @@ public class CollectionHelp {
 		return elements.get(0);
 	}
 
+	/**
+	 * Method returns first WebElement from collection by index
+	 *
+	 * @param elements it is  collection contains WebElements
+	 * @param index	of element. Index start by 1
+	 * @return first element from collection
+	 */
+	public static WebElement getWebElementFromCollectionByIndex(List<WebElement> elements, int index) {
+		if (elements.size() < index) {
+			return null;
+		}
+		return elements.get(index - 1);
+	}
+
 }

@@ -38,7 +38,7 @@ public class JC62TopicPositionWithSaveChanges {
 		createTopicForTest();
 		topicPage.getBackButton().click();
 
-		CollectionHelp.getLastWebElementFromCollection(topicPage.getTopicsList()).click();
+		CollectionHelp.getWebElementFromCollectionByIndex(topicPage.getTopicsList(), 2).click();
 
 	}
 
@@ -50,7 +50,6 @@ public class JC62TopicPositionWithSaveChanges {
 
 	@Test
 	public void topicPositionWithSaveChangesTest() {
-
 		//first step
 		editedSubject = topicPage.getTopicSubject().getText();
 		postPage.getEditTopicButton().click();
