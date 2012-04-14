@@ -8,10 +8,7 @@ import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
 import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistBySelector;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * author: erik
@@ -19,41 +16,37 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
  * Time: 11:43
  */
 public class JC25CreatingTopicValidateTitle {
-	TopicPage topicPage;
-	String shortTitle = "mssg";
-	String validTitle = "new topic";
+    TopicPage topicPage;
+    String shortTitle = "mssg";
+    String validTitle = "new topic";
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		clickOnRandomBranch();
-		topicPage = new TopicPage(driver);
-	}
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"app-url", "uUsername", "uPassword"})
+    public void setupCase(String appUrl, String username, String password) {
+        driver.get(appUrl);
+        signIn(username, password);
+        clickOnRandomBranch();
+        topicPage = new TopicPage(driver);
+    }
 
-	@AfterMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
-	}
+    @AfterMethod(alwaysRun = true)
+    @Parameters({"app-url"})
+    public void destroy(String appUrl) {
+        logOut(appUrl);
+    }
 
-	@Test
-	public void testValidateTitle() {
-		topicPage.getNewButton().click();
-		topicPage.getSubjectField().sendKeys(shortTitle);
-		topicPage.getPostButton().click();
+    @Test
+    public void testValidateTitle() {
+        topicPage.getNewButton().click();
+        topicPage.getSubjectField().sendKeys(shortTitle);
+        topicPage.getPostButton().click();
 
-		assertExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+        assertExistBySelector(driver, TopicPage.subjectErrorMessageSel);
 
-		topicPage.getSubjectField().clear();
-		topicPage.getSubjectField().sendKeys(validTitle);
-		topicPage.getPostButton().click();
+        topicPage.getSubjectField().clear();
+        topicPage.getSubjectField().sendKeys(validTitle);
+        topicPage.getPostButton().click();
 
-		assertNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
-
-
-	}
-
-
+        assertNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+    }
 }
