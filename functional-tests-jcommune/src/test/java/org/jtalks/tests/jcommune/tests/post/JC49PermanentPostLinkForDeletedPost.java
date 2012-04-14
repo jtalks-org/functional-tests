@@ -1,25 +1,24 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistElementOnViewPresent;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistElementOnViewPresent;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswerForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC49PermanentPostLinkForDeletedPost {
-	PostPage postPage;
 	String post;
 
 	@BeforeMethod(alwaysRun = true)
@@ -31,7 +30,6 @@ public class JC49PermanentPostLinkForDeletedPost {
 		clickOnRandomBranch();
 		createTopicForTest();
 		createAnswerForTest(post);
-		postPage = new PostPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -54,6 +52,6 @@ public class JC49PermanentPostLinkForDeletedPost {
 
 		driver.get(url);
 
-		assertNotExistElementOnViewPresent(postPage.getPostsMessages(), post);
+		assertionNotExistElementOnViewPresent(postPage.getPostsMessages(), post);
 	}
 }

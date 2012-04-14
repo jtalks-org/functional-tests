@@ -6,19 +6,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
-
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 
 /**
  * Created by IntelliJ IDEA.
  * User: erik
  */
 public class JC24CreateTopicWithoutData {
-	TopicPage topicPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -26,7 +25,6 @@ public class JC24CreateTopicWithoutData {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
-		topicPage = new TopicPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -39,7 +37,7 @@ public class JC24CreateTopicWithoutData {
 	public void createTopicWithoutData() throws InterruptedException {
 		topicPage.getNewButton().click();
 		topicPage.getPostButton().click();
-		assertExistBySelector(driver, TopicPage.subjectErrorMessageSel);
-		assertExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+		assertionExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+		assertionExistBySelector(driver, TopicPage.bodyErrorMessageSel);
 	}
 }

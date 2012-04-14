@@ -1,26 +1,24 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswerForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC72PagingShowPagesButton {
-	PostPage postPage;
-
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -35,7 +33,6 @@ public class JC72PagingShowPagesButton {
 		createAnswerForTest(StringHelp.getRandomString(10));
 		createAnswerForTest(StringHelp.getRandomString(10));
 		createAnswerForTest(StringHelp.getRandomString(10));
-		postPage = new PostPage(driver);
 		postPage.getShowAllButton().click();
 
 	}
@@ -49,6 +46,6 @@ public class JC72PagingShowPagesButton {
 	@Test
 	public void pagingShowAllButtonTest() {
 		postPage.getShowPagesButton().click();
-		assertNotEmptyCollection(postPage.getPagesButtons());
+		assertionNotEmptyCollection(postPage.getPagesButtons());
 	}
 }

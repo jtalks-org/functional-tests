@@ -1,30 +1,27 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
 /**
  * This functional test covers test case JC11
  *
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC11UniqueUsername {
 	String existUsername;
-
-	SignUpPage signUpPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername"})
 	public void setupCase(String appUrl, String username) {
 		this.existUsername = username;
 		driver.get(appUrl);
-		signUpPage = new SignUpPage(driver);
 		signUpPage.getSignUpButton().click();
 	}
 
@@ -33,6 +30,6 @@ public class JC11UniqueUsername {
 		signUpPage.getUsernameField().clear();
 		signUpPage.getUsernameField().sendKeys(this.existUsername);
 		signUpPage.getSubmitButton().click();
-		assertExistById(driver, signUpPage.usernameErrorMessageSel);
+		assertionExistById(driver, signUpPage.usernameErrorMessageSel);
 	}
 }

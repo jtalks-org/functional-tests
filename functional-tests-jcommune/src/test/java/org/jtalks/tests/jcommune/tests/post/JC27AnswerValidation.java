@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -8,19 +7,18 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC27AnswerValidation {
-
-	PostPage postPage;
 
 	@DataProvider(name = "notValidAnswer")
 	public Object[][] notValidAnswer() {
@@ -44,7 +42,6 @@ public class JC27AnswerValidation {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
-		postPage = new PostPage(driver);
 	}
 
 	@AfterMethod
@@ -63,6 +60,6 @@ public class JC27AnswerValidation {
 		//used setLongTextValue because data contains very long string
 		StringHelp.setLongTextValue(driver, postPage.getMessageField(), msg);
 		postPage.getPostButton().click();
-		assertExistById(driver, postPage.postErrorMessageSel);
+		assertionExistById(driver, postPage.postErrorMessageSel);
 	}
 }

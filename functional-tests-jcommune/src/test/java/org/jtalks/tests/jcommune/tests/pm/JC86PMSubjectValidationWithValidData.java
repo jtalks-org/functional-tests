@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.pm;
 
-import org.jtalks.tests.jcommune.pages.PMPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -8,16 +7,16 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.pmPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC86PMSubjectValidationWithValidData {
-	PMPage pmPage;
 
 	@DataProvider(name = "validSubject")
 	public Object[][] validSubject() {
@@ -35,7 +34,6 @@ public class JC86PMSubjectValidationWithValidData {
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password);
-		pmPage = new PMPage(driver);
 		pmPage.getPmInboxLink().click();
 		pmPage.getPmNewMessageLink().click();
 	}
@@ -50,6 +48,6 @@ public class JC86PMSubjectValidationWithValidData {
 	public void pmSubjectValidationWithValidDataTest(String subject) {
 		pmPage.getTitleField().sendKeys(subject);
 		pmPage.getSendButton().click();
-		assertNotExistById(driver, pmPage.subjectErrorMessageSel);
+		assertionNotExistById(driver, pmPage.subjectErrorMessageSel);
 	}
 }

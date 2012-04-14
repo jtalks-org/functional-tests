@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.pm;
 
-import org.jtalks.tests.jcommune.pages.PMPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -10,14 +9,14 @@ import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.pmPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 import static org.testng.Assert.assertEquals;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC82SendPrivateMessage {
-	PMPage pmPage;
 	String username;
 	String password;
 	String username2;
@@ -29,7 +28,6 @@ public class JC82SendPrivateMessage {
 	public void setupCase(String appUrl, String username, String password, String username2, String password2) {
 		driver.get(appUrl);
 		signIn(username, password);
-		pmPage = new PMPage(driver);
 		this.username = username;
 		this.password = password;
 		this.username2 = username2;

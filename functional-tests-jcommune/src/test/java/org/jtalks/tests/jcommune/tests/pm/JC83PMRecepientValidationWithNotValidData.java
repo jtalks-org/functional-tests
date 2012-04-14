@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.pm;
 
-import org.jtalks.tests.jcommune.pages.PMPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -8,17 +7,17 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.pmPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC83PMRecepientValidationWithNotValidData {
-	PMPage pmPage;
 
 	@DataProvider(name = "notValidRecipient")
 	public Object[][] notValidRecepient() {
@@ -36,7 +35,6 @@ public class JC83PMRecepientValidationWithNotValidData {
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password);
-		pmPage = new PMPage(driver);
 		pmPage.getPmInboxLink().click();
 		pmPage.getPmNewMessageLink().click();
 	}
@@ -51,6 +49,6 @@ public class JC83PMRecepientValidationWithNotValidData {
 	public void pmRecepientValidationWithNotValidDataTest(String recipient) {
 		pmPage.getToField().sendKeys(recipient);
 		pmPage.getSendButton().click();
-		assertExistById(driver, pmPage.recipientErrorMessageSel);
+		assertionExistById(driver, pmPage.recipientErrorMessageSel);
 	}
 }

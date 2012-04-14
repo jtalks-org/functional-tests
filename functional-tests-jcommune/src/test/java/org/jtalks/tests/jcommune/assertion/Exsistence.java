@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune.Assert;
+package org.jtalks.tests.jcommune.assertion;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -12,7 +12,7 @@ import static org.testng.Assert.fail;
 /**
  * The class contains a check for the existence of elements
  *
- * @autor masyan
+ * @author masyan
  */
 public class Exsistence {
 
@@ -21,7 +21,7 @@ public class Exsistence {
 	 *
 	 * @param selector Selector to find element
 	 */
-	public static void assertNotExistBySelector(WebDriver driver, String selector) {
+	public static void assertionNotExistBySelector(WebDriver driver, String selector) {
 		try {
 			driver.findElement(By.xpath(selector));
 			//if exist then fail
@@ -36,7 +36,7 @@ public class Exsistence {
 	 *
 	 * @param selector Selector to find element
 	 */
-	public static void assertExistBySelector(WebDriver driver, String selector) {
+	public static void assertionExistBySelector(WebDriver driver, String selector) {
 		try {
 			driver.findElement(By.xpath(selector));
 		}
@@ -51,7 +51,7 @@ public class Exsistence {
 	 *
 	 * @param id Element id
 	 */
-	public static void assertNotExistById(WebDriver driver, String id) {
+	public static void assertionNotExistById(WebDriver driver, String id) {
 		try {
 			driver.findElement(By.id(id));
 			//if exist then fail
@@ -66,7 +66,7 @@ public class Exsistence {
 	 *
 	 * @param id Element id
 	 */
-	public static void assertExistById(WebDriver driver, String id) {
+	public static void assertionExistById(WebDriver driver, String id) {
 		try {
 			driver.findElement(By.id(id));
 		}
@@ -81,7 +81,7 @@ public class Exsistence {
 	 *
 	 * @param webElementsList collection which should contains elements
 	 */
-	public static void assertNotEmptyCollection(List<WebElement> webElementsList) {
+	public static void assertionNotEmptyCollection(List<WebElement> webElementsList) {
 		if (webElementsList.size() == 0) {
 			fail("Elements collection is empty");
 		}
@@ -92,7 +92,7 @@ public class Exsistence {
 	 *
 	 * @param webElementsList collection which should not contains elements
 	 */
-	public static void assertEmptyCollection(List<WebElement> webElementsList) {
+	public static void assertionEmptyCollection(List<WebElement> webElementsList) {
 		if (webElementsList.size() != 0) {
 			fail("Collection is not empty");
 		}
@@ -102,7 +102,7 @@ public class Exsistence {
 	 * @param str  String in which the pattern is searched
 	 * @param find Searched pattern
 	 */
-	public static void assertContainsInString(String str, String find) {
+	public static void assertionContainsInString(String str, String find) {
 		if (!str.contains(find)) {
 			fail("String does not contain the search pattern");
 		}
@@ -112,7 +112,7 @@ public class Exsistence {
 	 * @param str  String in which the pattern is searched
 	 * @param find Searched pattern
 	 */
-	public static void assertNotContainsInString(String str, String find) {
+	public static void assertionNotContainsInString(String str, String find) {
 		if (str.contains(find)) {
 			fail("String contains the search pattern");
 		}
@@ -125,7 +125,7 @@ public class Exsistence {
 	 * @param text the desired text
 	 * @return
 	 */
-	public static void assertNotExistElementOnViewPresent(List<WebElement> list, String text) {
+	public static void assertionNotExistElementOnViewPresent(List<WebElement> list, String text) {
 		for (WebElement webElement : list) {
 			String t = webElement.getText();
 			if (t.equals(text)) {
@@ -141,7 +141,7 @@ public class Exsistence {
 	 * @param text the desired text
 	 * @return
 	 */
-	public static void assertExistElementOnViewPresent(List<WebElement> list, String text) {
+	public static void assertionExistElementOnViewPresent(List<WebElement> list, String text) {
 		boolean exist = false;
 		for (WebElement webElement : list) {
 			String t = webElement.getText();

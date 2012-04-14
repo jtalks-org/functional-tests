@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class TopicPage {
 

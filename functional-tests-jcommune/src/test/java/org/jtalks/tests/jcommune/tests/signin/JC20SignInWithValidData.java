@@ -1,34 +1,29 @@
 package org.jtalks.tests.jcommune.tests.signin;
 
-import org.jtalks.tests.jcommune.pages.MainPage;
-import org.jtalks.tests.jcommune.pages.SignInPage;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.mainPage;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signInPage;
+import static org.testng.Assert.assertEquals;
 
 /**
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC20SignInWithValidData {
 	String username;
 	String password;
-	SignInPage sigInPage;
-	MainPage mainPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
-		sigInPage = new SignInPage(driver);
-		mainPage = new MainPage(driver);
 
 		this.username = username;
 		this.password = password;
@@ -44,12 +39,12 @@ public class JC20SignInWithValidData {
 	public void signInWithValidDataTest() {
 		//step 1
 		mainPage.getLoginLink().click();
-		assertExistById(driver, sigInPage.signInFormSel);
+		assertionExistById(driver, signInPage.signInFormSel);
 
 		//step 2
-		sigInPage.getUsernameField().sendKeys(username);
-		sigInPage.getPasswordField().sendKeys(password);
-		sigInPage.getSubmitButton().click();
-		Assert.assertEquals(mainPage.getCurrentUsernameLink().getText(), this.username);
+		signInPage.getUsernameField().sendKeys(username);
+		signInPage.getPasswordField().sendKeys(password);
+		signInPage.getSubmitButton().click();
+		assertEquals(mainPage.getCurrentUsernameLink().getText(), this.username);
 	}
 }

@@ -1,31 +1,28 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
 /**
  * This functional test covers test case JC12
  *
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC12UniqueEmail {
 
 	String existEmail;
-
-	SignUpPage signUpPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uEmail"})
 	public void setupCase(String appUrl, String email) {
 		this.existEmail = email;
 		driver.get(appUrl);
-		signUpPage = new SignUpPage(driver);
 		signUpPage.getSignUpButton().click();
 	}
 
@@ -34,7 +31,7 @@ public class JC12UniqueEmail {
 		signUpPage.getEmailField().clear();
 		signUpPage.getEmailField().sendKeys(this.existEmail);
 		signUpPage.getSubmitButton().click();
-		assertExistById(driver, signUpPage.emailErrorMessageSel);
+		assertionExistById(driver, signUpPage.emailErrorMessageSel);
 	}
 
 

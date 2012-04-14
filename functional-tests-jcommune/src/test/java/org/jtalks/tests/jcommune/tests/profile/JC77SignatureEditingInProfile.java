@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.profile;
 
-import org.jtalks.tests.jcommune.pages.ProfilePage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -9,6 +8,7 @@ import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 import static org.testng.Assert.assertEquals;
 
@@ -17,14 +17,12 @@ import static org.testng.Assert.assertEquals;
  */
 public class JC77SignatureEditingInProfile {
 
-	ProfilePage profilePage;
 
 	@BeforeMethod
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password);
-		profilePage = new ProfilePage(driver);
 		profilePage.getProfileLinkFromMainPage().click();
 		profilePage.getEditProfileButton().click();
 	}

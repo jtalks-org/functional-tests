@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
@@ -8,18 +7,17 @@ import org.testng.annotations.Test;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 import static org.testng.Assert.assertEquals;
 
 /**
  * This functional test covers test case JC1
  *
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC1CheckingValidRegistration {
 	String appUrl;
-
-	SignUpPage signUpPage;
 
 	@DataProvider(name = "validRegistration")
 	public Object[][] validRegistration() {
@@ -36,7 +34,6 @@ public class JC1CheckingValidRegistration {
 	public void setupCase(String appUrl) {
 		this.appUrl = appUrl;
 		driver.get(appUrl);
-		signUpPage = new SignUpPage(driver);
 		signUpPage.getSignUpButton().click();
 	}
 

@@ -1,24 +1,22 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
 /**
  * This functional test covers test case JC10
  *
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC10CofirmPassValidationWithValidData {
-
-	SignUpPage signUpPage;
 
 	@DataProvider(name = "validConfirmPassword")
 	public Object[][] validConfirmPassword() {
@@ -32,7 +30,6 @@ public class JC10CofirmPassValidationWithValidData {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		signUpPage = new SignUpPage(driver);
 		signUpPage.getSignUpButton().click();
 	}
 
@@ -45,7 +42,7 @@ public class JC10CofirmPassValidationWithValidData {
 		signUpPage.getPasswordConfirmField().sendKeys(confirm);
 
 		signUpPage.getSubmitButton().click();
-		assertNotExistById(driver, signUpPage.passwordConfirmErrorMessageSel);
+		assertionNotExistById(driver, signUpPage.passwordConfirmErrorMessageSel);
 	}
 
 

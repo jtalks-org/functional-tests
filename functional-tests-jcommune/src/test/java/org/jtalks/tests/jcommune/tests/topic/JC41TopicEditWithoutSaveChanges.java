@@ -1,28 +1,25 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotContainsInString;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotContainsInString;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 import static org.testng.Assert.assertNotEquals;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC41TopicEditWithoutSaveChanges {
-
-	TopicPage topicPage;
-	PostPage postPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -31,8 +28,6 @@ public class JC41TopicEditWithoutSaveChanges {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
-		topicPage = new TopicPage(driver);
-		postPage = new PostPage(driver);
 		postPage.getEditTopicButton().click();
 	}
 
@@ -56,6 +51,6 @@ public class JC41TopicEditWithoutSaveChanges {
 
 		assertNotEquals(topicPage.getTopicSubject().getText(), validTitle);
 
-		assertNotContainsInString(topicPage.getTopicMessage().getText(), validMessage);
+		assertionNotContainsInString(topicPage.getTopicMessage().getText(), validMessage);
 	}
 }

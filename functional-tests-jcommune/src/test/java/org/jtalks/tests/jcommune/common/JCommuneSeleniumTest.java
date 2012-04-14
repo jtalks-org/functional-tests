@@ -5,12 +5,13 @@ import org.jtalks.tests.jcommune.pages.LogOutPage;
 import org.jtalks.tests.jcommune.pages.MainPage;
 import org.jtalks.tests.jcommune.pages.PMPage;
 import org.jtalks.tests.jcommune.pages.PostPage;
+import org.jtalks.tests.jcommune.pages.ProfilePage;
 import org.jtalks.tests.jcommune.pages.SectionPage;
 import org.jtalks.tests.jcommune.pages.SignInPage;
+import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -27,7 +28,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
 
 /**
  * Parent class for Tests. Contains common methods
@@ -38,7 +39,10 @@ public class JCommuneSeleniumTest {
 	/**
 	 * Object for work with Remote Selenium Server
 	 */
-	public static WebDriver driver;
+	public static WebDriver driver = null;
+
+	//Second driver, if need two browsers
+	public static WebDriver driver2 = null;
 
 	public Connection dbConnection;
 
@@ -50,21 +54,25 @@ public class JCommuneSeleniumTest {
 
 
 	//Pages for common methods
-	static MainPage mainPage;
+	public static MainPage mainPage;
 
-	static SignInPage signInPage;
+	public static SignInPage signInPage;
 
-	static TopicPage topicPage;
+	public static SignUpPage signUpPage;
 
-	static PostPage postPage;
+	public static TopicPage topicPage;
 
-	static SectionPage sectionPage;
+	public static PostPage postPage;
 
-	static BranchPage branchPage;
+	public static SectionPage sectionPage;
 
-	static LogOutPage logOutPage;
+	public static BranchPage branchPage;
 
-	static PMPage pmPage;
+	public static LogOutPage logOutPage;
+
+	public static PMPage pmPage;
+
+	public static ProfilePage profilePage;
 
 
 	/**
@@ -122,6 +130,24 @@ public class JCommuneSeleniumTest {
 		signInPage.getSubmitButton().click();
 	}
 
+	/**
+	 * This method does the authentication
+	 *
+	 * @param username
+	 * @param password
+	 * @author masyan
+	 */
+	public static void signInByAnotherDriver(String username, String password) {
+		if (driver2 != null) {
+			MainPage mainPage = new MainPage(driver2);
+			SignInPage signInPage = new SignInPage(driver2);
+			mainPage.getLoginLink().click();
+			signInPage.getUsernameField().sendKeys(username);
+			signInPage.getPasswordField().sendKeys(password);
+			signInPage.getSubmitButton().click();
+		}
+	}
+
 
 	/**
 	 * This method checks that link for logout present, than click on it
@@ -134,13 +160,26 @@ public class JCommuneSeleniumTest {
 	}
 
 	/**
+	 * This method checks that link for logout present, than click on it
+	 * Method  used static link because in selenium exist bag  MoveTargetOutOfBoundsError
+	 *
+	 * @author masyan
+	 */
+	public static void logOutByAnotherDriver() {
+		if (driver2 != null) {
+			LogOutPage logOutPage = new LogOutPage(driver2);
+			logOutPage.getLogOutButton().click();
+		}
+	}
+
+	/**
 	 * Method  select random branch (if exists) and open it
 	 *
 	 * @return Selected branch
 	 */
 	public static WebElement clickOnRandomBranch() {
 		List<WebElement> webElementsList = branchPage.getBranchList();
-		assertNotEmptyCollection(webElementsList);
+		assertionNotEmptyCollection(webElementsList);
 		WebElement branch = CollectionHelp.getRandomWebElementFromCollection(webElementsList);
 		branch.click();
 		return branch;
@@ -152,7 +191,7 @@ public class JCommuneSeleniumTest {
 	 */
 	public static void clickOnRandomSection() {
 		List<WebElement> webElementsList = sectionPage.getSectionList();
-		assertNotEmptyCollection(webElementsList);
+		assertionNotEmptyCollection(webElementsList);
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
 	}
 
@@ -161,7 +200,7 @@ public class JCommuneSeleniumTest {
 	 */
 	public static void clickOnRandomTopic() {
 		List<WebElement> webElementsList = topicPage.getTopicsList();
-		assertNotEmptyCollection(webElementsList);
+		assertionNotEmptyCollection(webElementsList);
 		CollectionHelp.getRandomWebElementFromCollection(webElementsList).click();
 	}
 
@@ -229,7 +268,7 @@ public class JCommuneSeleniumTest {
 					SeleniumConfig.getBrowserDriver(selDriverType));
 //			driver = new FirefoxDriver();
 
-			driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 			createPages();
 		}
@@ -240,17 +279,36 @@ public class JCommuneSeleniumTest {
 	}
 
 	/**
+	 * Method create second driver
+	 */
+	public static void createSecondDriver() {
+		try {
+			driver2 = new RemoteWebDriver(
+					new URL(selServerURL),
+					SeleniumConfig.getBrowserDriver(selDriverType));
+//			driver2 = new FirefoxDriver();
+			driver2.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+
+		}
+		catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
 	 * Method creates page for work methods of this class
 	 */
 	public static void createPages() {
 		mainPage = new MainPage(driver);
 		signInPage = new SignInPage(driver);
+		signUpPage = new SignUpPage(driver);
 		topicPage = new TopicPage(driver);
 		postPage = new PostPage(driver);
 		sectionPage = new SectionPage(driver);
 		branchPage = new BranchPage(driver);
 		logOutPage = new LogOutPage(driver);
 		pmPage = new PMPage(driver);
+		profilePage = new ProfilePage(driver);
 	}
 
 }

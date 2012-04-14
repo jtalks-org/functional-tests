@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -12,18 +11,18 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswer
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 import static org.testng.Assert.assertEquals;
 
 /**
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC18CancelButtonOnDeleteAnswerWindow {
 
 	String answer = StringHelp.getRandomString(20);
 
-	PostPage postPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -33,7 +32,6 @@ public class JC18CancelButtonOnDeleteAnswerWindow {
 		clickOnRandomBranch();
 		createTopicForTest();
 		createAnswerForTest(this.answer);
-		postPage = new PostPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)

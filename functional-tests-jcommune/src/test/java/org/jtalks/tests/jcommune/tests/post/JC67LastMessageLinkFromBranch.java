@@ -1,27 +1,24 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.BranchPage;
-import org.jtalks.tests.jcommune.pages.PostPage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistElementOnViewPresent;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistElementOnViewPresent;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.branchPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC67LastMessageLinkFromBranch {
-	TopicPage topicPage;
-	BranchPage branchPage;
-	PostPage postPage;
 	String message;
 
 
@@ -29,9 +26,6 @@ public class JC67LastMessageLinkFromBranch {
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
-		topicPage = new TopicPage(driver);
-		postPage = new PostPage(driver);
-		branchPage = new BranchPage(driver);
 
 		signIn(username, password);
 		CollectionHelp.getFirstWebElementFromCollection(branchPage.getBranchList()).click();
@@ -51,6 +45,6 @@ public class JC67LastMessageLinkFromBranch {
 	public void lastMessageLinkFromBranchTest() {
 		CollectionHelp.getFirstWebElementFromCollection(postPage.getLastPostLinksFromBranch()).click();
 
-		assertExistElementOnViewPresent(postPage.getPostsMessages(), message);
+		assertionExistElementOnViewPresent(postPage.getPostsMessages(), message);
 	}
 }

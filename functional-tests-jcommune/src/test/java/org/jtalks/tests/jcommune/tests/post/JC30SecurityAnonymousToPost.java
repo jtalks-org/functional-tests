@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -8,20 +7,20 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomTopic;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC30SecurityAnonymousToPost {
-	PostPage postPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -34,28 +33,27 @@ public class JC30SecurityAnonymousToPost {
 		logOut(appUrl);
 		driver.get(branch);
 		clickOnRandomTopic();
-		postPage = new PostPage(driver);
 	}
 
 	@Test
 	public void securityAnonymousToPostTest() {
 		//view the posts list
 		List<WebElement> posts = postPage.getPostsList();
-		assertNotEmptyCollection(posts);
+		assertionNotEmptyCollection(posts);
 
 		//create post
-		assertNotExistBySelector(driver, postPage.newButtonSel);
+		assertionNotExistBySelector(driver, postPage.newButtonSel);
 
 		//delete topic (anonymous haven't topic which created by him)
-		assertNotExistBySelector(driver, postPage.deleteTopicButtonSel);
+		assertionNotExistBySelector(driver, postPage.deleteTopicButtonSel);
 
 		//delete post (anonymous haven't post which created by him)
-		assertNotExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
+		assertionNotExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
 
 		//edit topic
-		assertNotExistBySelector(driver, postPage.editTopicButtonSel);
+		assertionNotExistBySelector(driver, postPage.editTopicButtonSel);
 
 		//edit post
-		assertNotExistBySelector(driver, postPage.editPostButtonSel);
+		assertionNotExistBySelector(driver, postPage.editPostButtonSel);
 	}
 }

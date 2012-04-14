@@ -1,27 +1,24 @@
 package org.jtalks.tests.jcommune.tests.profile;
 
 
-import org.jtalks.tests.jcommune.pages.PMPage;
-import org.jtalks.tests.jcommune.pages.ProfilePage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.pmPage;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.sendPrivateMessageForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC43ViewSenderProfileFromPM {
-	ProfilePage profilePage;
-	PMPage pmPage;
-
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword", "uUsername2", "uPassword2"})
@@ -31,8 +28,6 @@ public class JC43ViewSenderProfileFromPM {
 		sendPrivateMessageForTest(username, StringHelp.getRandomString(10), StringHelp.getRandomString(10));
 		logOut(appUrl);
 		signIn(username, password);
-		profilePage = new ProfilePage(driver);
-		pmPage = new PMPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -46,6 +41,6 @@ public class JC43ViewSenderProfileFromPM {
 		pmPage.getPmInboxLink().click();
 		profilePage.getProfileLinkFromPMInpoxPage().click();
 
-		assertExistById(driver, profilePage.userDetailsFormSel);
+		assertionExistById(driver, profilePage.userDetailsFormSel);
 	}
 }

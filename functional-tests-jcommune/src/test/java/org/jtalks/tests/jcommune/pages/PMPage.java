@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class PMPage {
 

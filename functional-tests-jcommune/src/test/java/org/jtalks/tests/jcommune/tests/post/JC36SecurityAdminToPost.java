@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -10,20 +9,20 @@ import utils.StringHelp;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswerForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC36SecurityAdminToPost {
-	PostPage postPage;
 
 	String urlTopic;
 
@@ -44,7 +43,6 @@ public class JC36SecurityAdminToPost {
 		//create topic by User1
 		createTopicForTest();
 		createAnswerForTest(StringHelp.getRandomString(10));
-		postPage = new PostPage(driver);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -57,36 +55,36 @@ public class JC36SecurityAdminToPost {
 	public void securityAdminToPostTest() {
 		//view the posts list
 		List<WebElement> posts = postPage.getPostsList();
-		assertNotEmptyCollection(posts);
+		assertionNotEmptyCollection(posts);
 
 		//create post
-		assertExistBySelector(driver, postPage.newButtonSel);
+		assertionExistBySelector(driver, postPage.newButtonSel);
 
 
 		//delete topic (user is owner this topic)
-		assertExistBySelector(driver, postPage.deleteTopicButtonSel);
+		assertionExistBySelector(driver, postPage.deleteTopicButtonSel);
 
 		//delete post (user is owner this post)
-		assertExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
+		assertionExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
 
 		//edit topic (user is owner this topic)
-		assertExistBySelector(driver, postPage.editTopicButtonSel);
+		assertionExistBySelector(driver, postPage.editTopicButtonSel);
 
 		//edit post (user is owner this post)
-		assertExistBySelector(driver, postPage.editPostButtonSel);
+		assertionExistBySelector(driver, postPage.editPostButtonSel);
 
 		driver.get(urlTopic);
 
 		//delete topic (user is't owner this topic)
-		assertExistBySelector(driver, postPage.deleteTopicButtonSel);
+		assertionExistBySelector(driver, postPage.deleteTopicButtonSel);
 
 		//delete post (user is't owner this post)
-		assertExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
+		assertionExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
 
 		//edit topic (user is't owner this topic)
-		assertExistBySelector(driver, postPage.editTopicButtonSel);
+		assertionExistBySelector(driver, postPage.editTopicButtonSel);
 
 		//edit post (user is't owner this post)
-		assertExistBySelector(driver, postPage.editPostButtonSel);
+		assertionExistBySelector(driver, postPage.editPostButtonSel);
 	}
 }

@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -8,20 +7,19 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotEmptyCollection;
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC29SecurityAnonymousToTopic {
-
-	TopicPage topicPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -33,7 +31,6 @@ public class JC29SecurityAnonymousToTopic {
 		createTopicForTest();
 		logOut(appUrl);
 		driver.get(branch);
-		topicPage = new TopicPage(driver);
 	}
 
 	@Test
@@ -41,10 +38,10 @@ public class JC29SecurityAnonymousToTopic {
 
 		//view the topics list
 		List<WebElement> topics = topicPage.getTopicsList();
-		assertNotEmptyCollection(topics);
+		assertionNotEmptyCollection(topics);
 
 		//create topic
-		assertNotExistBySelector(driver, topicPage.newButtonSel);
+		assertionNotExistBySelector(driver, topicPage.newButtonSel);
 
 	}
 

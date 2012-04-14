@@ -1,7 +1,5 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -12,16 +10,15 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRando
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 import static org.testng.Assert.assertEquals;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC37EditTopicWithValidTitle {
-
-	TopicPage topicPage;
-	PostPage postPage;
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -30,8 +27,6 @@ public class JC37EditTopicWithValidTitle {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
-		topicPage = new TopicPage(driver);
-		postPage = new PostPage(driver);
 		postPage.getEditTopicButton().click();
 	}
 

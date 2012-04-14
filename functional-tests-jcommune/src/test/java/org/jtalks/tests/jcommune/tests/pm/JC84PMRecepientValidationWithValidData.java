@@ -1,21 +1,20 @@
 package org.jtalks.tests.jcommune.tests.pm;
 
-import org.jtalks.tests.jcommune.pages.PMPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.pmPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC84PMRecepientValidationWithValidData {
-	PMPage pmPage;
 	String username2;
 
 	@BeforeMethod(alwaysRun = true)
@@ -24,7 +23,6 @@ public class JC84PMRecepientValidationWithValidData {
 		driver.get(appUrl);
 		signIn(username, password);
 		this.username2 = username2;
-		pmPage = new PMPage(driver);
 		pmPage.getPmInboxLink().click();
 		pmPage.getPmNewMessageLink().click();
 	}
@@ -39,6 +37,6 @@ public class JC84PMRecepientValidationWithValidData {
 	public void pmRecepientValidationWithValidDataTest() {
 		pmPage.getToField().sendKeys(this.username2);
 		pmPage.getSendButton().click();
-		assertNotExistById(driver, pmPage.recipientErrorMessageSel);
+		assertionNotExistById(driver, pmPage.recipientErrorMessageSel);
 	}
 }

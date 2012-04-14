@@ -1,13 +1,12 @@
 package org.jtalks.tests.jcommune.tests.profile;
 
 /**
- * author: erik
+ * @author: erik
  * Date: 09.03.12
  * Time: 20:24
  */
 public class JC51ChangeEmailInUserProfileTest {
 
-//	ProfilePage profilePage;
 //	String uniqEmail;
 //	String currentEmail;
 //
@@ -19,7 +18,6 @@ public class JC51ChangeEmailInUserProfileTest {
 //		uniqEmail = StringHelp.getRandomEmail();
 //		currentEmail = uEmail;
 //		signIn(username, password);
-//		profilePage = new ProfilePage(driver);
 //		profilePage.getCurrentUserLink().click();
 //		profilePage.getEditProfileButton().click();
 //	}
@@ -40,6 +38,6 @@ public class JC51ChangeEmailInUserProfileTest {
 //		profilePage.getEmailEditField().clear();
 //		profilePage.getEmailEditField().sendKeys(uniqEmail);
 //		profilePage.getSaveEditButton().click();
-//		Assert.assertEquals(profilePage.getEmail().getText(), uniqEmail);
+//		assertion.assertEquals(profilePage.getEmail().getText(), uniqEmail);
 //	}
 }

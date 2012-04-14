@@ -1,24 +1,23 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
 /**
  * This functional test covers test case JC3
  *
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC3UsernameValidationWithNotValidData {
 
-	SignUpPage signUpPage;
 
 	@DataProvider(name = "notValidUsername")
 	public Object[][] notValidUsername() {
@@ -41,7 +40,6 @@ public class JC3UsernameValidationWithNotValidData {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		signUpPage = new SignUpPage(driver);
 		signUpPage.getSignUpButton().click();
 	}
 
@@ -51,6 +49,6 @@ public class JC3UsernameValidationWithNotValidData {
 		signUpPage.getUsernameField().clear();
 		signUpPage.getUsernameField().sendKeys(username);
 		signUpPage.getSubmitButton().click();
-		assertExistById(driver, signUpPage.usernameErrorMessageSel);
+		assertionExistById(driver, signUpPage.usernameErrorMessageSel);
 	}
 }

@@ -1,24 +1,22 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
-import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistById;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
 /**
  * This functional test covers test case JC6
  *
- * @autor masyan
- * @autor erik
+ * @author masyan
+ * @author erik
  */
 public class JC6EmailValidationWithValidData {
-
-	SignUpPage signUpPage;
 
 	@DataProvider(name = "validEmail")
 	public Object[][] validEmail() {
@@ -32,7 +30,6 @@ public class JC6EmailValidationWithValidData {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-		signUpPage = new SignUpPage(driver);
 		signUpPage.getSignUpButton().click();
 	}
 
@@ -42,6 +39,6 @@ public class JC6EmailValidationWithValidData {
 		signUpPage.getEmailField().clear();
 		signUpPage.getEmailField().sendKeys(email);
 		signUpPage.getSubmitButton().click();
-		assertNotExistById(driver, signUpPage.emailErrorMessageSel);
+		assertionNotExistById(driver, signUpPage.emailErrorMessageSel);
 	}
 }

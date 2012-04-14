@@ -1,7 +1,5 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -9,21 +7,20 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertContainsInString;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionContainsInString;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC39EditTopicWithValidMessage {
-
-	TopicPage topicPage;
-	PostPage postPage;
 
 	@DataProvider(name = "validMessage")
 	public Object[][] validMessage() {
@@ -44,8 +41,6 @@ public class JC39EditTopicWithValidMessage {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
-		topicPage = new TopicPage(driver);
-		postPage = new PostPage(driver);
 		postPage.getEditTopicButton().click();
 	}
 
@@ -63,8 +58,8 @@ public class JC39EditTopicWithValidMessage {
 		StringHelp.setLongTextValue(driver, topicPage.getMessageField(), msg);
 		topicPage.getPostButton().click();
 
-		assertContainsInString(topicPage.getTopicMessage().getText(), msg);
+		assertionContainsInString(topicPage.getTopicMessage().getText(), msg);
 
-		assertContainsInString(topicPage.getTopicMessage().getText(), "edited");
+		assertionContainsInString(topicPage.getTopicMessage().getText(), "edited");
 	}
 }

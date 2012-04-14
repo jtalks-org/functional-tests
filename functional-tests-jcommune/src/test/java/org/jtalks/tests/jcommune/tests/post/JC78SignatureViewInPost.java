@@ -1,34 +1,26 @@
 package org.jtalks.tests.jcommune.tests.post;
 
-import org.jtalks.tests.jcommune.pages.PostPage;
-import org.jtalks.tests.jcommune.pages.ProfilePage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.By;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import utils.CollectionHelp;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 import static org.testng.Assert.assertEquals;
 
 /**
- * Created by IntelliJ IDEA.
- * User: masyan
- * Date: 14.03.12
- * Time: 10:40
- * To change this template use File | Settings | File Templates.
+ * @author masyan
  */
 public class JC78SignatureViewInPost {
-	ProfilePage profilePage;
-	TopicPage topicPage;
-	PostPage postPage;
 	String signature;
 
 	@BeforeMethod
@@ -36,9 +28,6 @@ public class JC78SignatureViewInPost {
 	public void setupCase(String appUrl, String username, String password) {
 		driver.get(appUrl);
 		signIn(username, password);
-		profilePage = new ProfilePage(driver);
-		topicPage = new TopicPage(driver);
-		postPage = new PostPage(driver);
 
 		//set signature
 		profilePage.getProfileLinkFromMainPage().click();

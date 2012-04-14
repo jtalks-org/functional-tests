@@ -1,7 +1,6 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
 import org.jtalks.tests.jcommune.pages.TopicPage;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
@@ -9,21 +8,22 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertExistBySelector;
-import static org.jtalks.tests.jcommune.Assert.Exsistence.assertNotExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
+import static org.testng.Assert.assertEquals;
 
 
 /**
- * author: erik
- * Date: 08.03.12
- * Time: 12:06
+ * @author erik
+ *         Date: 08.03.12
+ *         Time: 12:06
  */
 public class JC26CreateTopicValidateMessageWithValidData {
-	TopicPage topicPage;
 
 	@DataProvider(name = "validTopic")
 	public Object[][] validTopic() {
@@ -40,7 +40,6 @@ public class JC26CreateTopicValidateMessageWithValidData {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
-		topicPage = new TopicPage(driver);
 
 	}
 
@@ -56,15 +55,15 @@ public class JC26CreateTopicValidateMessageWithValidData {
 		topicPage.getSubjectField().sendKeys(validTitle);
 		topicPage.getPostButton().click();
 
-		assertNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
-		assertExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+		assertionNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+		assertionExistBySelector(driver, TopicPage.bodyErrorMessageSel);
 
 		topicPage.getMessageField().clear();
 		StringHelp.setLongTextValue(driver, topicPage.getMessageField(), validTopicMessage);
 		topicPage.getPostButton().click();
 
-		Assert.assertEquals(topicPage.getTopicSubject().getText(), validTitle);
-		Assert.assertEquals(topicPage.getTopicMessage().getText(), validTopicMessage);
+		assertEquals(topicPage.getTopicSubject().getText(), validTitle);
+		assertEquals(topicPage.getTopicMessage().getText(), validTopicMessage);
 	}
 
 }

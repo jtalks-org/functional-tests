@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -11,14 +10,13 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicF
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 import static org.testng.Assert.assertEquals;
 
 /**
- * @autor masyan
+ * @author masyan
  */
 public class JC66ViewTopicFromLastColumnDateLinkByAnonymous {
-	TopicPage topicPage;
-
 
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
@@ -30,7 +28,6 @@ public class JC66ViewTopicFromLastColumnDateLinkByAnonymous {
 		createTopicForTest();
 		logOut(appUrl);
 		driver.get(url);
-		topicPage = new TopicPage(driver);
 	}
 
 	@Test
