@@ -11,181 +11,197 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class ProfilePage {
 
-	public static final String currentUserLinkSel = "//a[@class='currentusername']";
+    public static final String currentUserLinkSel = "//a[@class='currentusername']";
 
-	public static final String userDetailsFormSel = "userdetails";
+    public static final String userDetailsFormSel = "userdetails";
 
-	public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
+    public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
 
-	public static final String profileLinkFromTopicPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users') and @class='username']";
+    public static final String profileLinkFromTopicPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users') and @class='username']";
 
-	public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
+    public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
-	public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @class='button']";
+    public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @class='button']";
 
-	public static final String emailEditFieldIdSel = "email";
+    public static final String emailEditFieldIdSel = "email";
 
-	public static final String saveEditButtonIdSel = "saveChanges";
+    public static final String saveEditButtonIdSel = "saveChanges";
 
-	public static final String errorEmailMessageIdSel = "email.errors";
+    public static final String errorEmailMessageIdSel = "email.errors";
 
-	public static final String emailSel = "//ul[@id='stylized']/li[5]/span";
+    public static final String emailSel = "//ul[@id='stylized']/li[5]/span";
 
-	public static final String currentPasswordFieldIdSel = "currentUserPassword";
+    public static final String currentPasswordFieldIdSel = "currentUserPassword";
 
-	public static final String newPasswordFieldIdSel = "newUserPassword";
+    public static final String newPasswordFieldIdSel = "newUserPassword";
 
-	public static final String confirmNewPasswordFieldIdSel = "newUserPasswordConfirm";
+    public static final String confirmNewPasswordFieldIdSel = "newUserPasswordConfirm";
 
-	public static final String errorCurrentUserPasswordMessageIdSel = "currentUserPassword.errors";
+    public static final String errorCurrentUserPasswordMessageIdSel = "currentUserPassword.errors";
 
-	public static final String errorNewUserPasswordMessageIdSel = "newUserPassword.errors";
+    public static final String errorNewUserPasswordMessageIdSel = "newUserPassword.errors";
 
-	public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
+    public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
 
-	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/user') and @class='button']";
+    public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/user') and @class='button']";
 
-	public static final String profileLinkFromLastColumnSel = "//a[@class = 'last_message_user']";
+    public static final String profileLinkFromLastColumnSel = "//a[@class = 'last_message_user']";
 
-	public static final String signatureFieldSel = "signature";
+    public static final String signatureFieldSel = "signature";
 
-	public static final String signatureTextSel = "//span[@class='signature']";
+    public static final String signatureTextSel = "//span[@class='signature']";
 
-	@FindBy(xpath = backButtonSel)
-	private WebElement backButton;
+    public static final String postListButtonSel = "//a[contains(@href, 'postList') and @class='button']";
 
-	@FindBy(id = errorNewUserPasswordConfirmMessageIdSel)
-	private WebElement errorNewUserPasswordConfirmMessage;
+    public static final String emptyMessageInPosListSel = "//span[@class='empty' and contains(text(), *)]";
 
-	@FindBy(id = errorNewUserPasswordMessageIdSel)
-	private WebElement errorNewUserPasswordMessage;
+    @FindBy(xpath = emptyMessageInPosListSel)
+    private WebElement emptyMessageInPosList;
 
-	@FindBy(id = errorCurrentUserPasswordMessageIdSel)
-	private WebElement errorCurrentUserPasswordMessage;
+    @FindBy(xpath = postListButtonSel)
+    private WebElement postListButton;
 
-	@FindBy(id = currentPasswordFieldIdSel)
-	private WebElement currentPasswordField;
+    @FindBy(xpath = backButtonSel)
+    private WebElement backButton;
 
-	@FindBy(id = newPasswordFieldIdSel)
-	private WebElement newPasswordField;
+    @FindBy(id = errorNewUserPasswordConfirmMessageIdSel)
+    private WebElement errorNewUserPasswordConfirmMessage;
 
-	@FindBy(id = confirmNewPasswordFieldIdSel)
-	private WebElement confirmNewPasswordField;
+    @FindBy(id = errorNewUserPasswordMessageIdSel)
+    private WebElement errorNewUserPasswordMessage;
 
-	@FindBy(xpath = emailSel)
-	private WebElement email;
+    @FindBy(id = errorCurrentUserPasswordMessageIdSel)
+    private WebElement errorCurrentUserPasswordMessage;
 
-	@FindBy(xpath = currentUserLinkSel)
-	private WebElement currentUserLink;
+    @FindBy(id = currentPasswordFieldIdSel)
+    private WebElement currentPasswordField;
 
-	@FindBy(id = userDetailsFormSel)
-	private WebElement userDetailsForm;
+    @FindBy(id = newPasswordFieldIdSel)
+    private WebElement newPasswordField;
 
-	@FindBy(xpath = profileLinkFromPMInpoxPageSel)
-	private WebElement profileLinkFromPMInpoxPage;
+    @FindBy(id = confirmNewPasswordFieldIdSel)
+    private WebElement confirmNewPasswordField;
 
-	@FindBy(xpath = profileLinkFromTopicPageSel)
-	private WebElement profileLinkFromTopicPage;
+    @FindBy(xpath = emailSel)
+    private WebElement email;
 
-	@FindBy(xpath = profileLinkFromMainPageSel)
-	private WebElement profileLinkFromMainPage;
+    @FindBy(xpath = currentUserLinkSel)
+    private WebElement currentUserLink;
 
-	@FindBy(xpath = editProfileButtonSel)
-	private WebElement editProfileButton;
+    @FindBy(id = userDetailsFormSel)
+    private WebElement userDetailsForm;
 
-	@FindBy(id = emailEditFieldIdSel)
-	private WebElement emailEditField;
+    @FindBy(xpath = profileLinkFromPMInpoxPageSel)
+    private WebElement profileLinkFromPMInpoxPage;
 
-	@FindBy(id = saveEditButtonIdSel)
-	private WebElement saveEditButton;
+    @FindBy(xpath = profileLinkFromTopicPageSel)
+    private WebElement profileLinkFromTopicPage;
 
-	@FindBy(xpath = profileLinkFromLastColumnSel)
-	private WebElement profileLinkFromLastColumn;
+    @FindBy(xpath = profileLinkFromMainPageSel)
+    private WebElement profileLinkFromMainPage;
 
-	@FindBy(id = signatureFieldSel)
-	private WebElement signatureField;
+    @FindBy(xpath = editProfileButtonSel)
+    private WebElement editProfileButton;
 
-	@FindBy(xpath = signatureTextSel)
-	private WebElement signatureText;
+    @FindBy(id = emailEditFieldIdSel)
+    private WebElement emailEditField;
 
-	public ProfilePage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    @FindBy(id = saveEditButtonIdSel)
+    private WebElement saveEditButton;
 
-	//Getters
-	public WebElement getCurrentUserLink() {
-		return currentUserLink;
-	}
+    @FindBy(xpath = profileLinkFromLastColumnSel)
+    private WebElement profileLinkFromLastColumn;
 
-	public WebElement getUserDetailsForm() {
-		return userDetailsForm;
-	}
+    @FindBy(id = signatureFieldSel)
+    private WebElement signatureField;
 
-	public WebElement getProfileLinkFromPMInpoxPage() {
-		return profileLinkFromPMInpoxPage;
-	}
+    @FindBy(xpath = signatureTextSel)
+    private WebElement signatureText;
 
-	public WebElement getProfileLinkFromTopicPage() {
-		return profileLinkFromTopicPage;
-	}
+    public ProfilePage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
 
-	public WebElement getProfileLinkFromMainPage() {
-		return profileLinkFromMainPage;
-	}
+    //Getters
 
-	public WebElement getEditProfileButton() {
-		return editProfileButton;
-	}
 
-	public WebElement getEmailEditField() {
-		return emailEditField;
-	}
+    public WebElement getPostListButton() {
+        return postListButton;
+    }
 
-	public WebElement getSaveEditButton() {
-		return saveEditButton;
-	}
+    public WebElement getCurrentUserLink() {
+        return currentUserLink;
+    }
 
-	public WebElement getEmail() {
-		return email;
-	}
+    public WebElement getUserDetailsForm() {
+        return userDetailsForm;
+    }
 
-	public WebElement getCurrentPasswordField() {
-		return currentPasswordField;
-	}
+    public WebElement getProfileLinkFromPMInpoxPage() {
+        return profileLinkFromPMInpoxPage;
+    }
 
-	public WebElement getNewPasswordField() {
-		return newPasswordField;
-	}
+    public WebElement getProfileLinkFromTopicPage() {
+        return profileLinkFromTopicPage;
+    }
 
-	public WebElement getConfirmNewPasswordField() {
-		return confirmNewPasswordField;
-	}
+    public WebElement getProfileLinkFromMainPage() {
+        return profileLinkFromMainPage;
+    }
 
-	public WebElement getErrorCurrentUserPasswordMessage() {
-		return errorCurrentUserPasswordMessage;
-	}
+    public WebElement getEditProfileButton() {
+        return editProfileButton;
+    }
 
-	public WebElement getErrorNewUserPasswordMessage() {
-		return errorNewUserPasswordMessage;
-	}
+    public WebElement getEmailEditField() {
+        return emailEditField;
+    }
 
-	public WebElement getErrorNewUserPasswordConfirmMessage() {
-		return errorNewUserPasswordConfirmMessage;
-	}
+    public WebElement getSaveEditButton() {
+        return saveEditButton;
+    }
 
-	public WebElement getBackButton() {
-		return backButton;
-	}
+    public WebElement getEmail() {
+        return email;
+    }
 
-	public WebElement getProfileLinkFromLastColumn() {
-		return profileLinkFromLastColumn;
-	}
+    public WebElement getCurrentPasswordField() {
+        return currentPasswordField;
+    }
 
-	public WebElement getSignatureField() {
-		return signatureField;
-	}
+    public WebElement getNewPasswordField() {
+        return newPasswordField;
+    }
 
-	public WebElement getSignatureText() {
-		return signatureText;
-	}
+    public WebElement getConfirmNewPasswordField() {
+        return confirmNewPasswordField;
+    }
+
+    public WebElement getErrorCurrentUserPasswordMessage() {
+        return errorCurrentUserPasswordMessage;
+    }
+
+    public WebElement getErrorNewUserPasswordMessage() {
+        return errorNewUserPasswordMessage;
+    }
+
+    public WebElement getErrorNewUserPasswordConfirmMessage() {
+        return errorNewUserPasswordConfirmMessage;
+    }
+
+    public WebElement getBackButton() {
+        return backButton;
+    }
+
+    public WebElement getProfileLinkFromLastColumn() {
+        return profileLinkFromLastColumn;
+    }
+
+    public WebElement getSignatureField() {
+        return signatureField;
+    }
+
+    public WebElement getSignatureText() {
+        return signatureText;
+    }
 }
