@@ -23,6 +23,10 @@
     <parameter name="uUsername2" value="testSel2"/>
     <parameter name="uPassword2" value="testSel2"/>
     <parameter name="uEmail2" value="testSel2@jtalks.org"/>
+    <parameter name="uUsername3" value="testSel3"/>
+    <parameter name="uPassword3" value="testSel3"/>
+    <parameter name="uEmail3" value="testSel3@jtalks.org"/>
+
     <!--Admin user-->
     <parameter name="aUsername" value="adminSel"/>
     <parameter name="aPassword" value="adminSel"/>
