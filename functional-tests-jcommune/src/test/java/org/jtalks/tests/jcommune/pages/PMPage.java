@@ -43,7 +43,9 @@ public class PMPage {
 
 	public static final String draftMessageTitlesSel = "//tr[@class='mess read']//td[@class='title']//a";
 
-	public static final String draftMessageEditButtonsSel = "//tr[@class='mess read']//td//a[contains(@href,'edit')]";
+	public static final String draftMessageEditButtonSel = "editCheckedPM";
+
+	public static final String draftMessageCheckboxesSel = "//input[@class='checker']";
 
 	public static final String pmHeadingOutboxSel = "//a[text()='Outbox' and @href='#' and @class='heading']";
 
@@ -92,11 +94,14 @@ public class PMPage {
 	@FindBy(xpath = draftMessageTitlesSel)
 	private List<WebElement> draftMessageTitles;
 
-	@FindBy(xpath = draftMessageEditButtonsSel)
-	private List<WebElement> draftMessageEditButtons;
+	@FindBy(id = draftMessageEditButtonSel)
+	private WebElement draftMessageEditButton;
 
 	@FindBy(xpath = pmHeadingOutboxSel)
 	private WebElement pmHeadingOutbox;
+
+	@FindBy(xpath = draftMessageCheckboxesSel)
+	private List<WebElement> draftMessageCheckboxes;
 
 
 	public PMPage(WebDriver driver) {
@@ -164,11 +169,16 @@ public class PMPage {
 		return draftMessageTitles;
 	}
 
-	public List<WebElement> getDraftMessageEditButtons() {
-		return draftMessageEditButtons;
+	public WebElement getDraftMessageEditButton() {
+		return draftMessageEditButton;
 	}
 
 	public WebElement getPmHeadingOutbox() {
 		return pmHeadingOutbox;
 	}
+
+	public List<WebElement> getDraftMessageCheckboxes() {
+		return draftMessageCheckboxes;
+	}
+
 }

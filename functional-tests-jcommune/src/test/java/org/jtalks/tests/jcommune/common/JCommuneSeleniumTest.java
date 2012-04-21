@@ -12,6 +12,7 @@ import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -74,6 +75,16 @@ public class JCommuneSeleniumTest {
 
 	public static ProfilePage profilePage;
 
+	// Constants to logger
+	public static final String beforeTestLog = "Setup test";
+
+	public static final String runTestLog = "Run test";
+
+	public static final String afterTestLog = "Destroy test";
+
+	public static final String elNotFoundLog = "Element not found";
+
+	public static final String elementsNotFoundLog = "Elements not found";
 
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
@@ -266,7 +277,7 @@ public class JCommuneSeleniumTest {
 			driver = new RemoteWebDriver(
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
-//			driver = new FirefoxDriver();
+			driver = new FirefoxDriver();
 
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -287,7 +298,7 @@ public class JCommuneSeleniumTest {
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
 //			driver2 = new FirefoxDriver();
-			driver2.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+			driver2.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		}
 		catch (MalformedURLException e) {

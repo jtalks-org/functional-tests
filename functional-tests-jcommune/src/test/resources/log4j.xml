@@ -46,21 +46,20 @@
         </layout>
     </appender>
 
-    <!-- Loggers -->
+    <!--Loggers -->
     <logger name="org.jtalks">
         <level value="DEBUG"/>
         <appender-ref ref="APPLICATION"/>
     </logger>
 
-    <logger name="org.springframework" additivity="false">
-        <level value="INFO"/>
-        <appender-ref ref="CONSOLE"/>
+    <logger name="error">
+        <level value="ERROR"/>
+        <appender-ref ref="APPLICATION"/>
     </logger>
-
-    <logger name="org.hibernate" additivity="false">
-        <level value="WARN"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
+    <!--<logger name="org.hibernate" additivity="false">-->
+    <!--<level value="WARN"/>-->
+    <!--<appender-ref ref="CONSOLE"/>-->
+    <!--</logger>-->
 
     <root>
         <priority value="INFO"/>

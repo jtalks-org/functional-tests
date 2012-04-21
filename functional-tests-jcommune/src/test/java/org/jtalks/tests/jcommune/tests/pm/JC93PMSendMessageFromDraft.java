@@ -43,7 +43,8 @@ public class JC93PMSendMessageFromDraft {
 
 	@Test
 	public void pmSendMessageFromDraftTest() {
-		CollectionHelp.getFirstWebElementFromCollection(pmPage.getDraftMessageEditButtons()).click();
+		CollectionHelp.getFirstWebElementFromCollection(pmPage.getDraftMessageCheckboxes()).click();
+		pmPage.getDraftMessageEditButton().click();
 		pmPage.getSendButton().click();
 		assertionExistBySelector(driver, pmPage.pmHeadingOutboxSel);
 	}

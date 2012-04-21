@@ -38,7 +38,7 @@ public class Exsistence {
 	 */
 	public static void assertionExistBySelector(WebDriver driver, String selector) {
 		try {
-			driver.findElement(By.xpath(selector));
+			WebElement f = driver.findElement(By.xpath(selector));
 		}
 		catch (NoSuchElementException e) {
 			//if not exist then fail
