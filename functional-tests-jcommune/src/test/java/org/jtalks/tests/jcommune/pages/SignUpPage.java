@@ -35,6 +35,8 @@ public class SignUpPage {
 
 	public static final String submitButtonSel = "jqi_state0_buttonOK";
 
+	public static final String okButtonOnInfoWindowSel = "jqi_state0_buttonOk";
+
 
 	@FindBy(xpath = signUpButtonSel)
 	WebElement signUpButton;
@@ -65,6 +67,9 @@ public class SignUpPage {
 
 	@FindBy(id = submitButtonSel)
 	WebElement submitButton;
+
+	@FindBy(id = okButtonOnInfoWindowSel)
+	WebElement okButtonOnInfoWindow;
 
 
 	public SignUpPage(WebDriver driver) {
@@ -110,5 +115,9 @@ public class SignUpPage {
 
 	public WebElement getSubmitButton() {
 		return submitButton;
+	}
+
+	public WebElement getOkButtonOnInfoWindow() {
+		return okButtonOnInfoWindow;
 	}
 }

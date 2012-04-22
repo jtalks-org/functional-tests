@@ -12,6 +12,7 @@ import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -276,7 +277,7 @@ public class JCommuneSeleniumTest {
 			driver = new RemoteWebDriver(
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
-			//	driver = new FirefoxDriver();
+			driver = new FirefoxDriver();
 
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -303,6 +304,21 @@ public class JCommuneSeleniumTest {
 		catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	/*
+	*New user registration
+	 */
+	public static void registerNewUser(String username, String email, String pass) {
+		signUpPage.getSignUpButton().click();
+		signUpPage.getUsernameField().sendKeys(username);
+		signUpPage.getEmailField().sendKeys(email);
+		signUpPage.getPasswordField().sendKeys(pass);
+		signUpPage.getPasswordConfirmField().sendKeys(pass);
+		signUpPage.getSubmitButton().click();
+		//ok button on information window
+		signUpPage.getOkButtonOnInfoWindow().click();
 	}
 
 	/**
