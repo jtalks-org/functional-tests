@@ -12,7 +12,6 @@ import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -277,7 +276,7 @@ public class JCommuneSeleniumTest {
 			driver = new RemoteWebDriver(
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
-			driver = new FirefoxDriver();
+			//driver = new FirefoxDriver();
 
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
