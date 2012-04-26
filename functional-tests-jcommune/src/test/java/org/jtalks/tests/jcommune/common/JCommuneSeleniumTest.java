@@ -20,6 +20,8 @@ import utils.CollectionHelp;
 import utils.DBHelp;
 import utils.SeleniumConfig;
 import utils.StringHelp;
+import utils.mail.Mail;
+import utils.mail.MailHelp;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -85,24 +87,31 @@ public class JCommuneSeleniumTest {
 
 	public static final String elementsNotFoundLog = "Elements not found";
 
+	//Mail implementation
+	public static Mail mailServer;
+
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
 	 * All values are stored in tesng.xml file.
 	 *
 	 * @param selServerURL  Selenium server URL
 	 * @param selDriverType Selenium driver type
+	 * @param mail          Mail server tpe
 	 * @throws MalformedURLException
 	 */
 	@BeforeSuite(alwaysRun = true)
-	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2", "uEmail2", "aUsername", "aEmail"})
+	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2",
+			"uEmail2", "aUsername", "aEmail", "mail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
-					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail) throws Exception {
+					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail, String mail) throws Exception {
 
 		this.selDriverType = selDriverType;
 
 		this.selServerURL = selServerURL;
 
 		recreateDriver(false);
+
+		mailServer = MailHelp.getMailImpl(mail);
 
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
 		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
@@ -276,7 +285,7 @@ public class JCommuneSeleniumTest {
 			driver = new RemoteWebDriver(
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
-			//driver = new FirefoxDriver();
+			//	driver = new FirefoxDriver();
 
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
