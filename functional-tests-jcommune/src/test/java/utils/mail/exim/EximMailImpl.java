@@ -8,13 +8,13 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 /**
  * @autor masyan
  */
-public class MailImpl implements Mail {
+public class EximMailImpl implements Mail {
 
 	EximPage page;
 
 	String serverUrl = "http://mail.jtalks.org/webmail";
 
-	public MailImpl() {
+	public EximMailImpl() {
 		page = new EximPage(driver);
 	}
 

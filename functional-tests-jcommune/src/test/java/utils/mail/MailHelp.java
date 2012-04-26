@@ -1,7 +1,7 @@
 package utils.mail;
 
 import org.apache.commons.lang.ArrayUtils;
-import utils.mail.exim.MailImpl;
+import utils.mail.exim.EximMailImpl;
 
 /**
  * Class contains parametrs of the mail server
@@ -25,9 +25,9 @@ public class MailHelp {
 
 		switch (typeInd) {
 			case 0:
-				return new MailImpl();
+				return new EximMailImpl();
 			default:
-				return new MailImpl();
+				return new EximMailImpl();
 		}
 	}
 }
