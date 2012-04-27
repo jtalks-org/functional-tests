@@ -9,6 +9,9 @@
 
     <!--CONTEXT PATH sets in common file-->
 
+    <!--Mail server-->
+    <parameter name="mail" value="exim"/>
+
     <!--Database params-->
     <parameter name="db-url" value="jdbc:mysql://176.9.66.108/test_jtalks"/>
     <parameter name="db-driver" value="com.mysql.jdbc.Driver"/>
