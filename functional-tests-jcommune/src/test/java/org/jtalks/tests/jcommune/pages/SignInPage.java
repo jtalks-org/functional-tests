@@ -29,6 +29,12 @@ public class SignInPage {
 
 	public static final String errorMessageSel = "//span[@class='error']";
 
+	public static final String emailFieldToRestoreSel = "email";
+
+	public static final String sendButtonToRestoreSel = "//button[@type='submit']";
+
+	public static final String notValidEmailErrorMessageSel = "email.errors";
+
 	@FindBy(id = usernameFieldSel)
 	WebElement usernameField;
 
@@ -49,6 +55,15 @@ public class SignInPage {
 
 	@FindBy(xpath = errorMessageSel)
 	WebElement errorMessage;
+
+	@FindBy(id = emailFieldToRestoreSel)
+	WebElement emailFieldToRestore;
+
+	@FindBy(xpath = sendButtonToRestoreSel)
+	WebElement sendButtonToRestore;
+
+	@FindBy(id = notValidEmailErrorMessageSel)
+	WebElement notValidEmailErrorMessage;
 
 	public SignInPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -80,5 +95,17 @@ public class SignInPage {
 
 	public WebElement getErrorMessage() {
 		return errorMessage;
+	}
+
+	public WebElement getEmailFieldToRestore() {
+		return emailFieldToRestore;
+	}
+
+	public WebElement getSendButtonToRestore() {
+		return sendButtonToRestore;
+	}
+
+	public WebElement getNotValidEmailErrorMessage() {
+		return notValidEmailErrorMessage;
 	}
 }

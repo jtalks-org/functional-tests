@@ -18,4 +18,11 @@ public interface Mail {
 	public String getMailServerUrl();
 
 	public void goToMailServer();
+
+	public void openFirstMessage();
+
+	public String getTextOfMessage();
+
+	//return new password from message/ Used for recovery password
+	public String getPasswdFromMessage();
 }

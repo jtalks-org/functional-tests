@@ -1,6 +1,8 @@
 package utils.mail.exim;
 
 import org.jtalks.tests.jcommune.pages.mail.EximPage;
+import org.openqa.selenium.WebElement;
+import utils.CollectionHelp;
 import utils.mail.Mail;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -30,5 +32,20 @@ public class EximMailImpl implements Mail {
 
 	public void goToMailServer() {
 		driver.get(this.serverUrl);
+	}
+
+	public void openFirstMessage() {
+		WebElement firstMsg = CollectionHelp.getFirstWebElementFromCollection(page.getListMessages());
+		//double click
+		firstMsg.click();
+		firstMsg.click();
+	}
+
+	public String getTextOfMessage() {
+		return page.getTextOfMessage().getText();
+	}
+
+	public String getPasswdFromMessage() {
+		return page.getPasswdFromRecoveryMsg().getText();
 	}
 }

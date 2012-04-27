@@ -12,6 +12,7 @@ import org.jtalks.tests.jcommune.pages.SignUpPage;
 import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -101,9 +102,10 @@ public class JCommuneSeleniumTest {
 	 */
 	@BeforeSuite(alwaysRun = true)
 	@Parameters({"selenium-server-url", "selenium-driver-type", "db-url", "db-driver", "db-username", "db-password", "uUsername", "uEmail", "uUsername2",
-			"uEmail2", "aUsername", "aEmail", "mail"})
+			"uEmail2", "aUsername", "aEmail", "uUsername4", "uEmail4", "mail"})
 	public void init(String selServerURL, String selDriverType, String dbURL, String dbDriver, String username, String password, String uUsername,
-					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail, String mail) throws Exception {
+					 String uEmail, String uUsername2, String uEmail2, String aUsername, String aEmail, String uUsername4, String uEmail4,
+					 String mail) throws Exception {
 
 		this.selDriverType = selDriverType;
 
@@ -114,7 +116,7 @@ public class JCommuneSeleniumTest {
 		mailServer = MailHelp.getMailImpl(mail);
 
 		dbConnection = DBHelp.getConnection(dbURL, dbDriver, username, password);
-		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail));
+		DBHelp.setForumUsers(dbConnection, DBHelp.getUsersFromConfigFile(uUsername, uEmail, uUsername2, uEmail2, aUsername, aEmail, uUsername4, uEmail4));
 
 		createPages();
 	}
@@ -285,7 +287,7 @@ public class JCommuneSeleniumTest {
 			driver = new RemoteWebDriver(
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
-			//	driver = new FirefoxDriver();
+			driver = new FirefoxDriver();
 
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
