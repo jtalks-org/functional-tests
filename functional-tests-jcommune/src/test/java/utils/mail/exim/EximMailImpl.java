@@ -1,8 +1,10 @@
 package utils.mail.exim;
 
 import org.jtalks.tests.jcommune.pages.mail.EximPage;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import utils.CollectionHelp;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.mail.Mail;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -35,7 +37,16 @@ public class EximMailImpl implements Mail {
 	}
 
 	public void openFirstMessage() {
-		WebElement firstMsg = CollectionHelp.getFirstWebElementFromCollection(page.getListMessages());
+
+		(new WebDriverWait(driver, 20)).until(new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver d) {
+				page.getRefreshMailsButton().click();
+				return page.getFirstUnreadMessage().isDisplayed();
+			}
+		});
+
+
+		WebElement firstMsg = page.getFirstUnreadMessage();
 		//double click
 		firstMsg.click();
 		firstMsg.click();

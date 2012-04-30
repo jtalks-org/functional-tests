@@ -24,6 +24,10 @@ public class EximPage {
 
 	public static final String passwdFromRecoveryMsgSel = "password";
 
+	public static final String firstUnreadMessageSel = "//tr[contains(@class,'unread')]//td[@class='subject']/a";
+
+	public static final String refreshMailsButtonSel = "rcmbtn116";
+
 	@FindBy(id = loginFieldSel)
 	private WebElement loginField;
 
@@ -41,6 +45,12 @@ public class EximPage {
 
 	@FindBy(id = passwdFromRecoveryMsgSel)
 	private WebElement passwdFromRecoveryMsg;
+
+	@FindBy(xpath = firstUnreadMessageSel)
+	private WebElement firstUnreadMessage;
+
+	@FindBy(id = refreshMailsButtonSel)
+	private WebElement refreshMailsButton;
 
 
 	public EximPage(WebDriver driver) {
@@ -71,5 +81,13 @@ public class EximPage {
 
 	public WebElement getPasswdFromRecoveryMsg() {
 		return passwdFromRecoveryMsg;
+	}
+
+	public WebElement getFirstUnreadMessage() {
+		return firstUnreadMessage;
+	}
+
+	public WebElement getRefreshMailsButton() {
+		return refreshMailsButton;
 	}
 }
