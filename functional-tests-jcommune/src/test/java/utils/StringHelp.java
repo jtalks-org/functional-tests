@@ -58,7 +58,7 @@ public class StringHelp {
 	 */
 	public static String getRandomEmail() {
 		String eMail = "";
-		eMail += getRandomString(8) + "@testdomen.tdc";
+		eMail += getRandomString(12) + "@jtalks.org";
 		return eMail;
 	}
 
@@ -97,7 +97,7 @@ public class StringHelp {
 	/**
 	 * Method return url without host
 	 *
-	 * @param fullUrl	 Full url
+	 * @param fullUrl     Full url
 	 * @param contextPath Context path it is first part after host
 	 * @return Url without
 	 */

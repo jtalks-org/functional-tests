@@ -58,7 +58,7 @@ public class CollectionHelp {
 	 * Method returns first WebElement from collection by index
 	 *
 	 * @param elements it is  collection contains WebElements
-	 * @param index	of element. Index start by 1
+	 * @param index    of element. Index start by 1
 	 * @return first element from collection
 	 */
 	public static WebElement getWebElementFromCollectionByIndex(List<WebElement> elements, int index) {
@@ -66,6 +66,24 @@ public class CollectionHelp {
 			return null;
 		}
 		return elements.get(index - 1);
+	}
+
+	/**
+	 * Method  find text in collection
+	 *
+	 * @param elements Collection to find
+	 * @param text     Value which will fin in collection
+	 * @return true if  text found in collection, else false
+	 */
+	public static boolean containsTextInCollection(List<WebElement> elements, String text) {
+		boolean result = false;
+		for (WebElement element : elements) {
+			if (element.getText().equals(text)) {
+				result = true;
+				break;
+			}
+		}
+		return result;
 	}
 
 }

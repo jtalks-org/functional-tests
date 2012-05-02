@@ -1,5 +1,7 @@
 package utils.mail;
 
+import org.openqa.selenium.WebElement;
+
 /**
  * Iterface to mail server
  *
@@ -25,4 +27,7 @@ public interface Mail {
 
 	//return new password from message/ Used for recovery password
 	public String getPasswdFromMessage();
+
+	//for activation
+	public WebElement getFirstLinkInMessageText();
 }

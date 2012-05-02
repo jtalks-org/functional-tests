@@ -59,4 +59,8 @@ public class EximMailImpl implements Mail {
 	public String getPasswdFromMessage() {
 		return page.getPasswdFromRecoveryMsg().getText();
 	}
+
+	public WebElement getFirstLinkInMessageText() {
+		return page.getLinkFromTextOfMessage();
+	}
 }

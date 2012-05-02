@@ -36,6 +36,11 @@
     <parameter name="uEmail4" value="tochanges@jtalks.org"/>
     <parameter name="pEmail4" value="tochanges"/>
 
+    <!--Public emails-->
+    <parameter name="publicemail" value="public@jtalks.org"/>
+    <parameter name="publicpass" value="public"/>
+
+
     <!--Admin user-->
     <parameter name="aUsername" value="adminSel"/>
     <parameter name="aPassword" value="adminSel"/>

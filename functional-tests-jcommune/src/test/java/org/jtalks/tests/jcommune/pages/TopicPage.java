@@ -43,6 +43,8 @@ public class TopicPage {
 
 	public static final String amountsOfViewTopicsSel = "//div[@class='forum_clicks']";
 
+	public static final String whoBrowsingTopicSel = "//div[@class='forum_misc_info']/a";
+
 
 	@FindBy(xpath = newButtonSel)
 	private WebElement newButton;
@@ -85,6 +87,9 @@ public class TopicPage {
 
 	@FindBy(xpath = amountsOfViewTopicsSel)
 	List<WebElement> amountsOfViewTopics;
+
+	@FindBy(xpath = whoBrowsingTopicSel)
+	List<WebElement> whoBrowsingTopic;
 
 	public TopicPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -145,5 +150,9 @@ public class TopicPage {
 
 	public List<WebElement> getAmountsOfViewTopics() {
 		return amountsOfViewTopics;
+	}
+
+	public List<WebElement> getWhoBrowsingTopic() {
+		return whoBrowsingTopic;
 	}
 }

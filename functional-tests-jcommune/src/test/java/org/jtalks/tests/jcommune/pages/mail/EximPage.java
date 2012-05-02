@@ -28,6 +28,8 @@ public class EximPage {
 
 	public static final String refreshMailsButtonSel = "rcmbtn116";
 
+	public static final String linkFromTextOfMessageSel = "//div[@class='rcmBody']//a";
+
 	@FindBy(id = loginFieldSel)
 	private WebElement loginField;
 
@@ -51,6 +53,9 @@ public class EximPage {
 
 	@FindBy(id = refreshMailsButtonSel)
 	private WebElement refreshMailsButton;
+
+	@FindBy(xpath = linkFromTextOfMessageSel)
+	private WebElement linkFromTextOfMessage;
 
 
 	public EximPage(WebDriver driver) {
@@ -89,5 +94,9 @@ public class EximPage {
 
 	public WebElement getRefreshMailsButton() {
 		return refreshMailsButton;
+	}
+
+	public WebElement getLinkFromTextOfMessage() {
+		return linkFromTextOfMessage;
 	}
 }

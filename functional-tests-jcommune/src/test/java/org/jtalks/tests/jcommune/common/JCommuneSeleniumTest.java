@@ -286,7 +286,7 @@ public class JCommuneSeleniumTest {
 			driver = new RemoteWebDriver(
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
-			//driver = new FirefoxDriver();
+//			driver = new FirefoxDriver();
 
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
