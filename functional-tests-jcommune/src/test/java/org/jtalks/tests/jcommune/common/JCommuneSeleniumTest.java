@@ -13,6 +13,8 @@ import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
@@ -148,6 +150,12 @@ public class JCommuneSeleniumTest {
 		signInPage.getUsernameField().sendKeys(username);
 		signInPage.getPasswordField().sendKeys(password);
 		signInPage.getSubmitButton().click();
+		//wait until usern is logining
+		(new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+			public Boolean apply(WebDriver d) {
+				return mainPage.getCurrentUsernameLink().isDisplayed();
+			}
+		});
 	}
 
 	/**
@@ -159,12 +167,18 @@ public class JCommuneSeleniumTest {
 	 */
 	public static void signInByAnotherDriver(String username, String password) {
 		if (driver2 != null) {
-			MainPage mainPage = new MainPage(driver2);
+			final MainPage mainPage = new MainPage(driver2);
 			SignInPage signInPage = new SignInPage(driver2);
 			mainPage.getLoginLink().click();
 			signInPage.getUsernameField().sendKeys(username);
 			signInPage.getPasswordField().sendKeys(password);
 			signInPage.getSubmitButton().click();
+			//wait until usern is logining
+			(new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+				public Boolean apply(WebDriver d) {
+					return mainPage.getCurrentUsernameLink().isDisplayed();
+				}
+			});
 		}
 	}
 

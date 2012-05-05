@@ -19,7 +19,7 @@ public class SignInPage {
 
 	public static final String passwordFieldSel = "j_password";
 
-	public static final String submitButtonSel = "//input[@class='button']";
+	public static final String submitButtonSel = "jqi_state0_buttonOK";
 
 	public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
 
@@ -41,7 +41,7 @@ public class SignInPage {
 	@FindBy(id = passwordFieldSel)
 	WebElement passwordField;
 
-	@FindBy(xpath = submitButtonSel)
+	@FindBy(id = submitButtonSel)
 	WebElement submitButton;
 
 	@FindBy(xpath = rememberMeCheckBoxSel)
