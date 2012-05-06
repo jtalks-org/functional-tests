@@ -49,6 +49,8 @@ public class PMPage {
 
 	public static final String pmHeadingOutboxSel = "//a[text()='Outbox' and @href='#' and @class='heading']";
 
+	public static final String recepientsListSel = "//table[@class='messages']//td//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
+
 	@FindBy(xpath = pmInboxLinkSel)
 	private WebElement pmInboxLink;
 
@@ -102,6 +104,9 @@ public class PMPage {
 
 	@FindBy(xpath = draftMessageCheckboxesSel)
 	private List<WebElement> draftMessageCheckboxes;
+
+	@FindBy(xpath = recepientsListSel)
+	private List<WebElement> recepientsList;
 
 
 	public PMPage(WebDriver driver) {
@@ -181,4 +186,7 @@ public class PMPage {
 		return draftMessageCheckboxes;
 	}
 
+	public List<WebElement> getRecepientsList() {
+		return recepientsList;
+	}
 }

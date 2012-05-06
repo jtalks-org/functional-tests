@@ -62,6 +62,8 @@ public class PostPage {
 
 	public static final String signatureTextSel = "//div[@class='signature']//span";
 
+	public static final String authorsOfPostsListSel = "//a[@class='username']";
+
 	//public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
 	@FindBy(xpath = lastPostAuthorSel)
@@ -132,6 +134,9 @@ public class PostPage {
 
 	@FindBy(xpath = signatureTextSel)
 	private WebElement signatureText;
+
+	@FindBy(xpath = authorsOfPostsListSel)
+	private List<WebElement> authorsOfPostsList;
 
 
 	public PostPage(WebDriver driver) {
@@ -232,5 +237,9 @@ public class PostPage {
 
 	public WebElement getSignatureText() {
 		return signatureText;
+	}
+
+	public List<WebElement> getAuthorsOfPostsList() {
+		return authorsOfPostsList;
 	}
 }
