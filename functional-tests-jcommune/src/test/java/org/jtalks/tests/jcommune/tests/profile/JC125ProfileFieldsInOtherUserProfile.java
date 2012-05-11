@@ -6,16 +6,16 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
 /**
- * @author masyan
+ * @autor masyan
  */
-public class JC42ViewProfileFromCurrentUsernameLink {
-
+public class JC125ProfileFieldsInOtherUserProfile {
 	@BeforeMethod(alwaysRun = true)
 	@Parameters({"app-url", "uUsername", "uPassword"})
 	public void setupCase(String appUrl, String username, String password) {
@@ -30,20 +30,22 @@ public class JC42ViewProfileFromCurrentUsernameLink {
 	}
 
 	@Test
-	public void ViewProfileFromCurrentUsernameLinkTest() {
-		profilePage.getCurrentUserLink().click();
+	@Parameters({"uUsername2"})
+	public void ViewProfileFromCurrentUsernameLinkTest(String usernameSecond) {
+		driver.get(driver.getCurrentUrl() + "/users/" + usernameSecond);
 
 		assertionExistBySelector(driver, profilePage.usernameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.firstNameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.lastNameTableFieldSel);
-		assertionExistBySelector(driver, profilePage.emailTableFieldSel);
-		assertionExistBySelector(driver, profilePage.languageTableFieldSel);
-		assertionExistBySelector(driver, profilePage.pageSizeTableFieldSel);
-		assertionExistBySelector(driver, profilePage.signatureTableFieldSel);
 		assertionExistBySelector(driver, profilePage.locationTableFieldSel);
 		assertionExistBySelector(driver, profilePage.lastLoginTableFieldSel);
 		assertionExistBySelector(driver, profilePage.registrationDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.avatarDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.postCountDateTableFieldSel);
+
+		assertionNotExistBySelector(driver, profilePage.emailTableFieldSel);
+		assertionNotExistBySelector(driver, profilePage.languageTableFieldSel);
+		assertionNotExistBySelector(driver, profilePage.pageSizeTableFieldSel);
+		assertionNotExistBySelector(driver, profilePage.signatureTableFieldSel);
 	}
 }

@@ -57,6 +57,31 @@ public class ProfilePage {
 
 	public static final String newPrivateMessageButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/new')]";
 
+	public static final String usernameTableFieldSel = "//li[@class='forum_row']//label[text()='Username']";
+
+	public static final String firstNameTableFieldSel = "//li[@class='forum_row']//label[text()='First name']";
+
+	public static final String lastNameTableFieldSel = "//li[@class='forum_row']//label[text()='Last name']";
+
+	public static final String emailTableFieldSel = "//li[@class='forum_row']//label[text()='Email']";
+
+	public static final String languageTableFieldSel = "//li[@class='forum_row']//label[text()='Language']";
+
+	public static final String pageSizeTableFieldSel = "//li[@class='forum_row']//label[text()='Page size']";
+
+	public static final String signatureTableFieldSel = "//li[@class='forum_row']//label[text()='Your signature']";
+
+	public static final String locationTableFieldSel = "//li[@class='forum_row']//label[text()='Location']";
+
+	public static final String lastLoginTableFieldSel = "//li[@class='forum_row']//label[text()='Last login']";
+
+	public static final String registrationDateTableFieldSel = "//li[@class='forum_row']//label[text()='Registration date']";
+
+	public static final String avatarDateTableFieldSel = "//li[@class='forum_row']//label[text()='Avatar']";
+
+	public static final String postCountDateTableFieldSel = "//li[@class='forum_row']//label[text()='Post count']";
+
+
 	@FindBy(xpath = emptyMessageInPosListSel)
 	private WebElement emptyMessageInPosList;
 
@@ -122,6 +147,42 @@ public class ProfilePage {
 
 	@FindBy(xpath = newPrivateMessageButtonSel)
 	private WebElement newPrivateMessageButton;
+
+	@FindBy(xpath = usernameTableFieldSel)
+	private WebElement usernameTableField;
+
+	@FindBy(xpath = firstNameTableFieldSel)
+	private WebElement firstNameTableField;
+
+	@FindBy(xpath = lastNameTableFieldSel)
+	private WebElement lastNameTableField;
+
+	@FindBy(xpath = emailTableFieldSel)
+	private WebElement emailTableField;
+
+	@FindBy(xpath = languageTableFieldSel)
+	private WebElement languageTableField;
+
+	@FindBy(xpath = pageSizeTableFieldSel)
+	private WebElement pageSizeTableField;
+
+	@FindBy(xpath = signatureTableFieldSel)
+	private WebElement signatureTableField;
+
+	@FindBy(xpath = locationTableFieldSel)
+	private WebElement locationTableField;
+
+	@FindBy(xpath = lastLoginTableFieldSel)
+	private WebElement lastLoginTableField;
+
+	@FindBy(xpath = registrationDateTableFieldSel)
+	private WebElement registrationDateTableField;
+
+	@FindBy(xpath = avatarDateTableFieldSel)
+	private WebElement avatarDateTableField;
+
+	@FindBy(xpath = postCountDateTableFieldSel)
+	private WebElement postCountDateTableField;
 
 	public ProfilePage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -212,5 +273,57 @@ public class ProfilePage {
 
 	public WebElement getNewPrivateMessageButton() {
 		return newPrivateMessageButton;
+	}
+
+	public WebElement getEmptyMessageInPosList() {
+		return emptyMessageInPosList;
+	}
+
+	public WebElement getUsernameTableField() {
+		return usernameTableField;
+	}
+
+	public WebElement getFirstNameTableField() {
+		return firstNameTableField;
+	}
+
+	public WebElement getLastNameTableField() {
+		return lastNameTableField;
+	}
+
+	public WebElement getEmailTableField() {
+		return emailTableField;
+	}
+
+	public WebElement getLanguageTableField() {
+		return languageTableField;
+	}
+
+	public WebElement getPageSizeTableField() {
+		return pageSizeTableField;
+	}
+
+	public WebElement getSignatureTableField() {
+		return signatureTableField;
+	}
+
+	public WebElement getLocationTableField() {
+		return locationTableField;
+	}
+
+	public WebElement getLastLoginTableField() {
+		return lastLoginTableField;
+	}
+
+	public WebElement getRegistrationDateTableField() {
+		return registrationDateTableField;
+	}
+
+	public WebElement getAvatarDateTableField() {
+		return avatarDateTableField;
+	}
+
+	public WebElement getPostCountDateTableField() {
+		return postCountDateTableField;
 	}
 }
