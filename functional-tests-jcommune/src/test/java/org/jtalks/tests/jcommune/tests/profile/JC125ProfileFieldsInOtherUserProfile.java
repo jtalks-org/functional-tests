@@ -42,10 +42,10 @@ public class JC125ProfileFieldsInOtherUserProfile {
 		assertionExistBySelector(driver, profilePage.registrationDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.avatarDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.postCountDateTableFieldSel);
+		assertionExistBySelector(driver, profilePage.signatureTableFieldSel);
 
 		assertionNotExistBySelector(driver, profilePage.emailTableFieldSel);
 		assertionNotExistBySelector(driver, profilePage.languageTableFieldSel);
 		assertionNotExistBySelector(driver, profilePage.pageSizeTableFieldSel);
-		assertionNotExistBySelector(driver, profilePage.signatureTableFieldSel);
 	}
 }
