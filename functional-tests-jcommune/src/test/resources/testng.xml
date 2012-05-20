@@ -23,16 +23,14 @@
     <parameter name="uUsername" value="testSel"/>
     <parameter name="uPassword" value="testSel"/>
     <parameter name="uEmail" value="testsel@jtalks.org"/>
-    <parameter name="pEmail" value="testsel"/>
     <parameter name="uUsername2" value="testSel2"/>
     <parameter name="uPassword2" value="testSel2"/>
     <parameter name="uEmail2" value="testsel2@jtalks.org"/>
-    <parameter name="pEmail2" value="testsel2"/>
     <parameter name="uUsername3" value="testSel3"/>
     <parameter name="uPassword3" value="testSel3"/>
     <parameter name="uEmail3" value="testSel3@jtalks.org"/>
-    <parameter name="uUsername4" value="random"/>
-    <parameter name="uPassword4" value="random"/>
+    <parameter name="uUsername4" value="tochanges"/>
+    <parameter name="uPassword4" value="tochanges"/>
     <parameter name="uEmail4" value="tochanges@jtalks.org"/>
     <parameter name="pEmail4" value="tochanges"/>
 

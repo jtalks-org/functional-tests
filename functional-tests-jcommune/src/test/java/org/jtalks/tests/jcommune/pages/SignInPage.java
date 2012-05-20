@@ -35,6 +35,9 @@ public class SignInPage {
 
 	public static final String notValidEmailErrorMessageSel = "email.errors";
 
+	public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
+
+
 	@FindBy(id = usernameFieldSel)
 	WebElement usernameField;
 
@@ -64,6 +67,9 @@ public class SignInPage {
 
 	@FindBy(id = notValidEmailErrorMessageSel)
 	WebElement notValidEmailErrorMessage;
+
+	@FindBy(xpath = closeSignInWindowButtonSel)
+	WebElement closeSignInWindowButton;
 
 	public SignInPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -107,5 +113,9 @@ public class SignInPage {
 
 	public WebElement getNotValidEmailErrorMessage() {
 		return notValidEmailErrorMessage;
+	}
+
+	public WebElement getCloseSignInWindowButton() {
+		return closeSignInWindowButton;
 	}
 }

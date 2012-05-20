@@ -81,6 +81,8 @@ public class ProfilePage {
 
 	public static final String postCountDateTableFieldSel = "//li[@class='forum_row']//label[text()='Post count']";
 
+	public static final String pageSizeFieldSel = "pageSize";
+
 
 	@FindBy(xpath = emptyMessageInPosListSel)
 	private WebElement emptyMessageInPosList;
@@ -183,6 +185,9 @@ public class ProfilePage {
 
 	@FindBy(xpath = postCountDateTableFieldSel)
 	private WebElement postCountDateTableField;
+
+	@FindBy(id = pageSizeFieldSel)
+	private WebElement pageSizeField;
 
 	public ProfilePage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -325,5 +330,9 @@ public class ProfilePage {
 
 	public WebElement getPostCountDateTableField() {
 		return postCountDateTableField;
+	}
+
+	public WebElement getPageSizeField() {
+		return pageSizeField;
 	}
 }
