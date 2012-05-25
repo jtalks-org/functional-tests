@@ -19,7 +19,7 @@ public class MainPage {
 
 	public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumbs']//a[@href='" + JCommuneSeleniumTest.contextPath + "/sections']";
 
-	public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "']";
+	public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/']";
 
 	public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/topics/recent']";
 
