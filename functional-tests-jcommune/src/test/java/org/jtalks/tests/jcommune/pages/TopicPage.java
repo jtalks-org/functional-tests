@@ -15,144 +15,152 @@ import java.util.List;
  */
 public class TopicPage {
 
-	public static final String newButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/new')]";
+    public static final String newButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/new')]";
 
-	public static final String subjectFieldSel = "subject";
+    public static final String subjectFieldSel = "subject";
 
-	public static final String messageFieldSel = "tbMsg";
+    public static final String messageFieldSel = "tbMsg";
 
-	public static final String postButtonSel = "post";
+    public static final String postButtonSel = "post";
 
-	public static final String topicSubjectSel = "//h2[contains(@class,'heading')]";
+    public static final String topicSubjectSel = "//h2[contains(@class,'heading')]";
 
-	public static final String topicMessageSel = "//div[contains(@class, 'forum_message_cell_text')]";
+    public static final String topicMessageSel = "//div[contains(@class, 'forum_message_cell_text')]";
 
-	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/branches')]";
+    public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/branches')]";
 
-	public static final String topicsListSel = "//ul[@class='forum_table']/li//a[@class='forum_link']";
+    public static final String topicsListSel = "//ul[@class='forum_table']/li//a[@class='forum_link']";
 
-	public static final String subjectErrorMessageSel = "//span[@class='error' and @id='subject']";
+    public static final String subjectErrorMessageSel = "//span[@class='error' and @id='subject']";
 
-	public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
+    public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
 
-	public static final String backButtonOnEditFormSel = "back";
+    public static final String backButtonOnEditFormSel = "back";
 
-	public static final String topicLinksFromDateInLastColumnSel = "//div[@class='forum_last_message']/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/topics/')]";
+    public static final String topicLinksFromDateInLastColumnSel = "//div[@class='forum_last_message']/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/topics/')]";
 
-	public static final String topicLinksFromRecentActivitySel = "//ul[@class='forum_table']//a[@class='forum_link break_word']";
+    public static final String topicLinksFromRecentActivitySel = "//ul[@class='forum_table']//a[@class='forum_link break_word']";
 
-	public static final String amountsOfViewTopicsSel = "//div[@class='forum_clicks']";
+    public static final String amountsOfViewTopicsSel = "//div[@class='forum_clicks']";
 
-	public static final String whoBrowsingTopicSel = "//div[@class='forum_misc_info']/a";
+    public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user' and not(@class='currentusername')]";
 
+    public static final String whoBrowsingTopicSel = "//div[@class='forum_misc_info']/a";
 
-	@FindBy(xpath = newButtonSel)
-	private WebElement newButton;
+    @FindBy(xpath = profileLinkSel)
+    private WebElement profileLink;
 
-	@FindBy(id = subjectFieldSel)
-	private WebElement subjectField;
+    @FindBy(xpath = newButtonSel)
+    private WebElement newButton;
 
-	@FindBy(id = messageFieldSel)
-	private WebElement messageField;
+    @FindBy(id = subjectFieldSel)
+    private WebElement subjectField;
 
-	@FindBy(id = postButtonSel)
-	private WebElement postButton;
+    @FindBy(id = messageFieldSel)
+    private WebElement messageField;
 
-	@FindBy(xpath = topicSubjectSel)
-	private WebElement topicSubject;
+    @FindBy(id = postButtonSel)
+    private WebElement postButton;
 
-	@FindBy(xpath = topicMessageSel)
-	private WebElement topicMessage;
+    @FindBy(xpath = topicSubjectSel)
+    private WebElement topicSubject;
 
-	@FindBy(xpath = backButtonSel)
-	private WebElement backButton;
+    @FindBy(xpath = topicMessageSel)
+    private WebElement topicMessage;
 
-	@FindBy(xpath = topicsListSel)
-	private List<WebElement> topicsList;
+    @FindBy(xpath = backButtonSel)
+    private WebElement backButton;
 
-	@FindBy(xpath = subjectErrorMessageSel)
-	WebElement subjectErrorMessage;
+    @FindBy(xpath = topicsListSel)
+    private List<WebElement> topicsList;
 
-	@FindBy(xpath = bodyErrorMessageSel)
-	WebElement bodyErrorMessage;
+    @FindBy(xpath = subjectErrorMessageSel)
+    WebElement subjectErrorMessage;
 
-	@FindBy(id = backButtonOnEditFormSel)
-	WebElement backButtonOnEditForm;
+    @FindBy(xpath = bodyErrorMessageSel)
+    WebElement bodyErrorMessage;
 
-	@FindBy(xpath = topicLinksFromDateInLastColumnSel)
-	List<WebElement> topicLinksFromDateInLastColumn;
+    @FindBy(id = backButtonOnEditFormSel)
+    WebElement backButtonOnEditForm;
 
-	@FindBy(xpath = topicLinksFromRecentActivitySel)
-	List<WebElement> topicLinksFromRecentActivity;
+    @FindBy(xpath = topicLinksFromDateInLastColumnSel)
+    List<WebElement> topicLinksFromDateInLastColumn;
 
-	@FindBy(xpath = amountsOfViewTopicsSel)
-	List<WebElement> amountsOfViewTopics;
+    @FindBy(xpath = topicLinksFromRecentActivitySel)
+    List<WebElement> topicLinksFromRecentActivity;
 
-	@FindBy(xpath = whoBrowsingTopicSel)
-	List<WebElement> whoBrowsingTopic;
+    @FindBy(xpath = amountsOfViewTopicsSel)
+    List<WebElement> amountsOfViewTopics;
 
-	public TopicPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    @FindBy(xpath = whoBrowsingTopicSel)
+    List<WebElement> whoBrowsingTopic;
 
-	//Getters
-	public WebElement getNewButton() {
-		return newButton;
-	}
+    public TopicPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
 
-	public WebElement getSubjectField() {
-		return subjectField;
-	}
+    //Getters
+    public WebElement getNewButton() {
+        return newButton;
+    }
 
-	public WebElement getMessageField() {
-		return messageField;
-	}
+    public WebElement getSubjectField() {
+        return subjectField;
+    }
 
-	public WebElement getPostButton() {
-		return postButton;
-	}
+    public WebElement getMessageField() {
+        return messageField;
+    }
 
-	public WebElement getTopicSubject() {
-		return topicSubject;
-	}
+    public WebElement getPostButton() {
+        return postButton;
+    }
 
-	public WebElement getTopicMessage() {
-		return topicMessage;
-	}
+    public WebElement getTopicSubject() {
+        return topicSubject;
+    }
 
-	public WebElement getBackButton() {
-		return backButton;
-	}
+    public WebElement getTopicMessage() {
+        return topicMessage;
+    }
 
-	public List<WebElement> getTopicsList() {
-		return topicsList;
-	}
+    public WebElement getBackButton() {
+        return backButton;
+    }
 
-	public WebElement getSubjectErrorMessage() {
-		return subjectErrorMessage;
-	}
+    public List<WebElement> getTopicsList() {
+        return topicsList;
+    }
 
-	public WebElement getBodyErrorMessage() {
-		return bodyErrorMessage;
-	}
+    public WebElement getSubjectErrorMessage() {
+        return subjectErrorMessage;
+    }
 
-	public WebElement getBackButtonOnEditForm() {
-		return backButtonOnEditForm;
-	}
+    public WebElement getBodyErrorMessage() {
+        return bodyErrorMessage;
+    }
 
-	public List<WebElement> getTopicLinksFromDateInLastColumn() {
-		return topicLinksFromDateInLastColumn;
-	}
+    public WebElement getBackButtonOnEditForm() {
+        return backButtonOnEditForm;
+    }
 
-	public List<WebElement> getTopicLinksFromRecentActivity() {
-		return topicLinksFromRecentActivity;
-	}
+    public List<WebElement> getTopicLinksFromDateInLastColumn() {
+        return topicLinksFromDateInLastColumn;
+    }
 
-	public List<WebElement> getAmountsOfViewTopics() {
-		return amountsOfViewTopics;
-	}
+    public List<WebElement> getTopicLinksFromRecentActivity() {
+        return topicLinksFromRecentActivity;
+    }
 
-	public List<WebElement> getWhoBrowsingTopic() {
-		return whoBrowsingTopic;
-	}
+    public List<WebElement> getAmountsOfViewTopics() {
+        return amountsOfViewTopics;
+    }
+
+    public List<WebElement> getWhoBrowsingTopic() {
+        return whoBrowsingTopic;
+    }
+
+    public WebElement getProfileLink() {
+        return profileLink;
+    }
 }
