@@ -37,6 +37,8 @@ public class SignUpPage {
 
 	public static final String okButtonOnInfoWindowSel = "jqi_state0_buttonOk";
 
+	public static final String captchaFieldSel = "captcha";
+
 
 	@FindBy(xpath = signUpButtonSel)
 	WebElement signUpButton;
@@ -70,6 +72,9 @@ public class SignUpPage {
 
 	@FindBy(id = okButtonOnInfoWindowSel)
 	WebElement okButtonOnInfoWindow;
+
+	@FindBy(id = captchaFieldSel)
+	WebElement captchaField;
 
 
 	public SignUpPage(WebDriver driver) {
@@ -119,5 +124,9 @@ public class SignUpPage {
 
 	public WebElement getOkButtonOnInfoWindow() {
 		return okButtonOnInfoWindow;
+	}
+
+	public WebElement getCaptchaField() {
+		return captchaField;
 	}
 }

@@ -58,6 +58,11 @@ public class JCommuneSeleniumTest {
 
 	public static String selDriverType;
 
+	/*
+	* instance to test configured it.
+	 */
+	public static String validCaptchaValue = "0000";
+
 
 	//Pages for common methods
 	public static MainPage mainPage;
@@ -164,13 +169,8 @@ public class JCommuneSeleniumTest {
 			else {
 				//registration user
 				signInPage.getCloseSignInWindowButton().click();
-				signUpPage.getSignUpButton().click();
-				signUpPage.getUsernameField().sendKeys(user[0]);
-				signUpPage.getEmailField().sendKeys(user[1]);
-				signUpPage.getPasswordField().sendKeys(user[2]);
-				signUpPage.getPasswordConfirmField().sendKeys(user[2]);
-				signUpPage.getSubmitButton().click();
-				signUpPage.getOkButtonOnInfoWindow().click();
+
+				registerNewUser(user[0], user[1], user[2]);
 
 				mailServer.goToMailServer();
 				//user with name "random" used in recovery password test. He have real email
@@ -406,6 +406,7 @@ public class JCommuneSeleniumTest {
 		signUpPage.getEmailField().sendKeys(email);
 		signUpPage.getPasswordField().sendKeys(pass);
 		signUpPage.getPasswordConfirmField().sendKeys(pass);
+		signUpPage.getCaptchaField().sendKeys(validCaptchaValue);
 		signUpPage.getSubmitButton().click();
 		//ok button on information window
 		signUpPage.getOkButtonOnInfoWindow().click();
