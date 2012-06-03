@@ -15,11 +15,11 @@ public class JC119PaginationForUnregisteredUser {
     @Parameters({"app-url"})
     public void setUp(String appUrl) {
         driver.get(appUrl);
+        clickOnRandomBranch();
     }
 
     @Test
-    public void testPagination() {
-        clickOnRandomBranch();
+    public void paginationTest() {
         if (topicPage.getTopicsList().size() != 50) {
             Assert.fail("Count of topics not equals 50");
         }

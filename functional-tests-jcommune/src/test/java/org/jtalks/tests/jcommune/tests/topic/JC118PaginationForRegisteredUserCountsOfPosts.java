@@ -62,7 +62,7 @@ public class JC118PaginationForRegisteredUserCountsOfPosts {
     }
 
     @Test
-    public void testPagination() {
+    public void paginationTest() {
         driver.get(topicLink);
         if (postPage.getPostsMessages().size() != 5) {
             Assert.fail("Post page contains count of posts that not equals 5");
