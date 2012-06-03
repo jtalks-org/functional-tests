@@ -47,6 +47,11 @@ public class TopicPage {
 
     public static final String whoBrowsingTopicSel = "//div[@class='forum_misc_info']/a";
 
+    public static final String topicsButtonsSel = "page";
+
+    @FindBy(className = topicsButtonsSel)
+    private List<WebElement> topicsButtons;
+
     @FindBy(xpath = profileLinkSel)
     private WebElement profileLink;
 
@@ -162,5 +167,9 @@ public class TopicPage {
 
     public WebElement getProfileLink() {
         return profileLink;
+    }
+
+    public List<WebElement> getTopicsButtons() {
+        return topicsButtons;
     }
 }
