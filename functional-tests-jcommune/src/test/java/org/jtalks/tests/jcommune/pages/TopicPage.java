@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class TopicPage {
 
-    public static final String newButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/new')]";
+    public static final String newButtonSel = "new-topic-btn";
 
     public static final String subjectFieldSel = "subject";
 
@@ -23,23 +23,23 @@ public class TopicPage {
 
     public static final String postButtonSel = "post";
 
-    public static final String topicSubjectSel = "//h2[contains(@class,'heading')]";
+    public static final String topicSubjectSel = "//div[@id='branch-header']/h3";
 
-    public static final String topicMessageSel = "//div[contains(@class, 'forum_message_cell_text')]";
+    public static final String topicMessageSel = "//div[@class = 'post']/table/tbody/tr/td[@class='post-content-td']/div";
 
     public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/branches')]";
 
-    public static final String topicsListSel = "//ul[@class='forum_table']/li//a[@class='forum_link']";
+    public static final String topicsListSel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/')]";
 
-    public static final String subjectErrorMessageSel = "//span[@class='error' and @id='subject']";
+    public static final String subjectErrorMessageSel = "//span[@id='subject']";
 
-    public static final String bodyErrorMessageSel = "//span[@class='error' and @id='bodyText.errors']";
+    public static final String bodyErrorMessageSel = "//span[@id='bodyText.errors']";
 
-    public static final String backButtonOnEditFormSel = "back";
+    public static final String backButtonOnEditFormSel = "//a[class='back-btn']";
 
-    public static final String topicLinksFromDateInLastColumnSel = "//div[@class='forum_last_message']/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/topics/')]";
+    public static final String topicLinksFromDateInLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
 
-    public static final String topicLinksFromRecentActivitySel = "//ul[@class='forum_table']//a[@class='forum_link break_word']";
+    public static final String topicLinksFromRecentActivitySel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/')]";
 
     public static final String amountsOfViewTopicsSel = "//div[@class='forum_clicks']";
 
@@ -47,15 +47,15 @@ public class TopicPage {
 
     public static final String whoBrowsingTopicSel = "//div[@class='forum_misc_info']/a";
 
-    public static final String topicsButtonsSel = "page";
+    public static final String topicsButtonsSel = "//div[@class='pagination pull-right forum-pagination']/ul/li/a";
 
-    @FindBy(className = topicsButtonsSel)
+    @FindBy(xpath = topicsButtonsSel)
     private List<WebElement> topicsButtons;
 
     @FindBy(xpath = profileLinkSel)
     private WebElement profileLink;
 
-    @FindBy(xpath = newButtonSel)
+    @FindBy(id = newButtonSel)
     private WebElement newButton;
 
     @FindBy(id = subjectFieldSel)
@@ -85,7 +85,7 @@ public class TopicPage {
     @FindBy(xpath = bodyErrorMessageSel)
     WebElement bodyErrorMessage;
 
-    @FindBy(id = backButtonOnEditFormSel)
+    @FindBy(xpath = backButtonOnEditFormSel)
     WebElement backButtonOnEditForm;
 
     @FindBy(xpath = topicLinksFromDateInLastColumnSel)

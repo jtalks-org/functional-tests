@@ -16,26 +16,35 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class BranchPage {
-	public static final String branchListSel = "//a[@class='forum_link']";
+    public static final String branchListSel = "//tbody/tr/td/a[@class='branch-title']";
 
-	public static final String breadCrumbsBranchLinkSel = "//ul[@class='breadcrumbs']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/branches/')]";
+    public static final String branchListFromSectionPageSel = "//tbody/tr/td/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/branches/')]";
 
-	@FindBy(xpath = branchListSel)
-	private List<WebElement> branchList;
+    public static final String breadCrumbsBranchLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/branches/')]";
 
-	@FindBy(xpath = breadCrumbsBranchLinkSel)
-	private WebElement breadCrumbsBranchLink;
+    @FindBy(xpath = branchListSel)
+    private List<WebElement> branchList;
 
-	public BranchPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    @FindBy(xpath = breadCrumbsBranchLinkSel)
+    private WebElement breadCrumbsBranchLink;
 
-	//Getters
-	public List<WebElement> getBranchList() {
-		return branchList;
-	}
+    @FindBy(xpath = branchListFromSectionPageSel)
+    private List<WebElement> branchListFromSectionPage;
 
-	public WebElement getBreadCrumbsBranchLink() {
-		return breadCrumbsBranchLink;
-	}
+    public BranchPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
+
+    //Getters
+    public List<WebElement> getBranchList() {
+        return branchList;
+    }
+
+    public WebElement getBreadCrumbsBranchLink() {
+        return breadCrumbsBranchLink;
+    }
+
+    public List<WebElement> getBranchListFromSectionPage() {
+        return branchListFromSectionPage;
+    }
 }
