@@ -6,6 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.branchPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -26,7 +27,7 @@ public class JC76ViewsAmountToTopicWhenRefreshByUser {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
-		topicPage.getBackButton().click();
+		branchPage.getBreadCrumbsBranchLink().click();
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -46,7 +47,7 @@ public class JC76ViewsAmountToTopicWhenRefreshByUser {
 
 		driver.navigate().refresh();
 
-		topicPage.getBackButton().click();
+		branchPage.getBreadCrumbsBranchLink().click();
 
 		int amountAfter = new Integer(CollectionHelp.getFirstWebElementFromCollection(topicPage.getAmountsOfViewTopics()).getText()).intValue();
 

@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class ProfilePage {
 
-	public static final String currentUserLinkSel = "//a[@class='currentusername']";
+	public static final String currentUserLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
 	public static final String userDetailsFormSel = "userdetails";
 
@@ -45,41 +45,39 @@ public class ProfilePage {
 
 	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/user') and @class='button']";
 
-	public static final String profileLinkFromLastColumnSel = "//a[@class = 'last_message_user']";
+	public static final String profileLinkFromLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/p/a";
 
 	public static final String signatureFieldSel = "signature";
 
 	public static final String signatureTextSel = "//span[@class='signature']";
 
-	public static final String postListButtonSel = "//a[contains(@href, 'postList') and @class='button']";
+	public static final String postListButtonSel = "//a[@class='btn btn-mini pull-right user-profile-buttons-posts']";
 
-	public static final String emptyMessageInPosListSel = "//span[@class='empty' and contains(text(), *)]";
+	public static final String emptyMessageInPosListSel = "//div[@class='post']//td[contains(text(), 'There are no posts yet')]";
 
 	public static final String newPrivateMessageButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/new')]";
 
-	public static final String usernameTableFieldSel = "//li[@class='forum_row']//label[text()='Username']";
+	public static final String usernameTableFieldSel = "//h2[@class='pull-right user-profile-username']";
 
-	public static final String firstNameTableFieldSel = "//li[@class='forum_row']//label[text()='First name']";
+	public static final String firstNameTableFieldSel = "//label[contains(text(),'First name')]";
 
-	public static final String lastNameTableFieldSel = "//li[@class='forum_row']//label[text()='Last name']";
+	public static final String lastNameTableFieldSel = "//label[contains(text(),'Last name')]";
 
-	public static final String emailTableFieldSel = "//li[@class='forum_row']//label[text()='Email']";
+	public static final String emailTableFieldSel = "//label[contains(text(),'Email')]";
 
-	public static final String languageTableFieldSel = "//li[@class='forum_row']//label[text()='Language']";
+	public static final String languageTableFieldSel = "//label[contains(text(),'Language')]";
 
-	public static final String pageSizeTableFieldSel = "//li[@class='forum_row']//label[text()='Page size']";
+	public static final String pageSizeTableFieldSel = "//label[contains(text(),'Page size')]";
 
-	public static final String signatureTableFieldSel = "//li[@class='forum_row']//label[text()='Your signature']";
+	public static final String signatureTableFieldSel = "//label[contains(text(),'Your signature')]";
 
-	public static final String locationTableFieldSel = "//li[@class='forum_row']//label[text()='Location']";
+	public static final String locationTableFieldSel = "//label[contains(text(),'Location')]";
 
-	public static final String lastLoginTableFieldSel = "//li[@class='forum_row']//label[text()='Last login']";
+	public static final String lastLoginTableFieldSel = "//label[contains(text(),'Last login')]";
 
-	public static final String registrationDateTableFieldSel = "//li[@class='forum_row']//label[text()='Registration date']";
+	public static final String registrationDateTableFieldSel = "//label[contains(text(),'Registration date')]";
 
-	public static final String avatarDateTableFieldSel = "//li[@class='forum_row']//label[text()='Avatar']";
-
-	public static final String postCountDateTableFieldSel = "//li[@class='forum_row']//label[text()='Post count']";
+	public static final String postCountDateTableFieldSel = "//label[contains(text(),'Post count')]";
 
 	public static final String pageSizeFieldSel = "pageSize";
 
@@ -179,9 +177,6 @@ public class ProfilePage {
 
 	@FindBy(xpath = registrationDateTableFieldSel)
 	private WebElement registrationDateTableField;
-
-	@FindBy(xpath = avatarDateTableFieldSel)
-	private WebElement avatarDateTableField;
 
 	@FindBy(xpath = postCountDateTableFieldSel)
 	private WebElement postCountDateTableField;
@@ -322,10 +317,6 @@ public class ProfilePage {
 
 	public WebElement getRegistrationDateTableField() {
 		return registrationDateTableField;
-	}
-
-	public WebElement getAvatarDateTableField() {
-		return avatarDateTableField;
 	}
 
 	public WebElement getPostCountDateTableField() {

@@ -60,7 +60,7 @@ public class PostPage {
 
 	public static final String signatureTextSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div[@align='left']";
 
-	public static final String authorsOfPostsListSel = "//a[@class='username']";
+	public static final String authorsOfPostsListSel = "//div[@class='post']/table/tbody/tr/td[@class='userinfo']/div/a[@class='post-userinfo-username']";
 
 	@FindBy(xpath = lastPostAuthorSel)
 	private WebElement lastPostAuthor;

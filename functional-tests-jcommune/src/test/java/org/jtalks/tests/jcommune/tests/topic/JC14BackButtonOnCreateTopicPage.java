@@ -46,7 +46,7 @@ public class JC14BackButtonOnCreateTopicPage {
 		//second step
 		topicPage.getSubjectField().sendKeys(subject);
 		topicPage.getMessageField().sendKeys(message);
-		topicPage.getBackButton().click();
+		topicPage.getBackButtonOnEditForm().click();
 
 		assertionNotExistElementOnViewPresent(topicPage.getTopicsList(), subject);
 	}

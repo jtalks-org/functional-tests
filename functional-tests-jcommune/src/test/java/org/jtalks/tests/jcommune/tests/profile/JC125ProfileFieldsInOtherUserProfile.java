@@ -34,13 +34,11 @@ public class JC125ProfileFieldsInOtherUserProfile {
 	public void ViewProfileFromCurrentUsernameLinkTest(String usernameSecond) {
 		driver.get(driver.getCurrentUrl() + "/users/" + usernameSecond);
 
-		assertionExistBySelector(driver, profilePage.usernameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.firstNameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.lastNameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.locationTableFieldSel);
 		assertionExistBySelector(driver, profilePage.lastLoginTableFieldSel);
 		assertionExistBySelector(driver, profilePage.registrationDateTableFieldSel);
-		assertionExistBySelector(driver, profilePage.avatarDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.postCountDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.signatureTableFieldSel);
 

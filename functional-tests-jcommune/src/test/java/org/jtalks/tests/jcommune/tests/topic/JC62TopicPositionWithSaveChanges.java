@@ -7,6 +7,7 @@ import org.testng.annotations.Test;
 import utils.CollectionHelp;
 import utils.StringHelp;
 
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.branchPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -30,9 +31,9 @@ public class JC62TopicPositionWithSaveChanges {
 		clickOnRandomBranch();
 		//create 2 topics
 		createTopicForTest();
-		topicPage.getBackButton().click();
+		branchPage.getBreadCrumbsBranchLink().click();
 		createTopicForTest();
-		topicPage.getBackButton().click();
+		branchPage.getBreadCrumbsBranchLink().click();
 
 		CollectionHelp.getWebElementFromCollectionByIndex(topicPage.getTopicsList(), 2).click();
 
@@ -52,7 +53,7 @@ public class JC62TopicPositionWithSaveChanges {
 		topicPage.getMessageField().clear();
 		topicPage.getMessageField().sendKeys(StringHelp.getRandomString(10));
 		topicPage.getPostButton().click();
-		topicPage.getBackButton().click();
+		branchPage.getBreadCrumbsBranchLink().click();
 
 		//second step
 		CollectionHelp.getFirstWebElementFromCollection(topicPage.getTopicsList()).click();

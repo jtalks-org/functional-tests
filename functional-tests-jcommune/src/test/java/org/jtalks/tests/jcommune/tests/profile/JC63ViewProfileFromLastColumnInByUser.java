@@ -6,13 +6,13 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.branchPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 
 /**
  * @author masyan
@@ -26,7 +26,7 @@ public class JC63ViewProfileFromLastColumnInByUser {
 		signIn(username, password);
 		clickOnRandomBranch();
 		createTopicForTest();
-		topicPage.getBackButton().click();
+		branchPage.getBreadCrumbsBranchLink().click();
 
 	}
 

@@ -49,7 +49,7 @@ public class PMPage {
 
 	public static final String pmHeadingOutboxSel = "//a[text()='Outbox' and @href='#' and @class='heading']";
 
-	public static final String recepientsListSel = "//table[@class='messages']//td//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
+	public static final String recepientsListSel = "//td[@class='pm_user_to_from']/a";
 
 	@FindBy(xpath = pmInboxLinkSel)
 	private WebElement pmInboxLink;
