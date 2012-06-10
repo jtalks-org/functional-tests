@@ -1,12 +1,15 @@
 package org.jtalks.tests.jcommune.tests.post;
 
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionEmptyCollection;
+import java.util.ArrayList;
+
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionContainsStringInList;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswerForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
@@ -45,6 +48,13 @@ public class JC71PagingShowAllButton {
 	@Test
 	public void pagingShowAllButtonTest() {
 		postPage.getShowAllButton().click();
-		assertionEmptyCollection(postPage.getPagesButtons());
+		for (WebElement el : postPage.getPagesButtons()) {
+			ArrayList list = new ArrayList<String>();
+			list.add("Show pages");
+			list.add("Next topic");
+			assertionContainsStringInList(list, el.getText());
+		}
 	}
+
+
 }

@@ -17,11 +17,11 @@ public class ProfilePage {
 
 	public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
 
-	public static final String profileLinkFromTopicPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users') and @class='username']";
+	public static final String profileLinkFromTopicPageSel = "//div[@class='post']//td[@class='userinfo']/div/a[@class='post-userinfo-username']";
 
 	public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
-	public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @class='button']";
+	public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @type='submit']";
 
 	public static final String emailEditFieldIdSel = "email";
 

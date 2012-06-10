@@ -155,4 +155,17 @@ public class Exsistence {
 		}
 	}
 
+	/**
+	 * this method return true when collection contains element
+	 *
+	 * @param list The list of String
+	 * @param text the desired text
+	 * @return
+	 */
+	public static void assertionContainsStringInList(List<String> list, String text) {
+		if (!list.contains(text)) {
+			fail("Element with text '" + text + "' not contained in list");
+		}
+	}
+
 }
