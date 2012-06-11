@@ -287,7 +287,7 @@ public class JCommuneSeleniumTest {
 	 * @return Selected branch
 	 */
 	public static WebElement clickOnRandomBranchFromSectionPage() {
-		List<WebElement> webElementsList = branchPage.getBranchListFromSectionPage();
+		List<WebElement> webElementsList = branchPage.getBranchList();
 		assertionNotEmptyCollection(webElementsList);
 		WebElement branch = CollectionHelp.getRandomWebElementFromCollection(webElementsList);
 		branch.click();

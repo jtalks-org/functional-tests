@@ -27,7 +27,7 @@ public class PMPage {
 
 	public static final String sendButtonSel = "post";
 
-	public static final String pmSubjectLinksSel = "//table[@class='messages']//td[@class='title']//a";
+	public static final String pmSubjectLinksSel = "//td/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/pm/')]";
 
 	public static final String recipientErrorMessageSel = "recipient.errors";
 
@@ -35,19 +35,19 @@ public class PMPage {
 
 	public static final String bodyMsgErrorMessageSel = "body.errors";
 
-	public static final String replyButtonSel = "//input[@class='button' and @value='Reply']";
+	public static final String replyButtonSel = "//a[@class='btn btn-primary' and contains(@href,'" + JCommuneSeleniumTest.contextPath + "/reply/')]";
 
-	public static final String quoteButtonSel = "//input[@class='button' and @value='Quote']";
+	public static final String quoteButtonSel = "//a[@class='btn' and contains(@href,'" + JCommuneSeleniumTest.contextPath + "/quote/')]";
 
 	public static final String saveButtonSel = "save_pm";
 
-	public static final String draftMessageTitlesSel = "//tr[@class='mess read']//td[@class='title']//a";
+	public static final String draftMessageTitlesSel = "//td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/')]";
 
 	public static final String draftMessageEditButtonSel = "editCheckedPM";
 
 	public static final String draftMessageCheckboxesSel = "//input[@class='checker']";
 
-	public static final String pmHeadingOutboxSel = "//a[text()='Outbox' and @href='#' and @class='heading']";
+	public static final String pmHeadingOutboxSel = "//li[@id='outbox_link' and @class='active']";
 
 	public static final String recepientsListSel = "//td[@class='pm_user_to_from']/a";
 

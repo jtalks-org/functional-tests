@@ -43,7 +43,7 @@ public class JC92PMSavesNewMessage {
 		pmPage.getTitleField().sendKeys(title);
 		pmPage.getMessageField().sendKeys(message);
 		pmPage.getSaveButton().click();
-
+		System.out.println(driver.getCurrentUrl());
 		String titleInDraft = CollectionHelp.getFirstWebElementFromCollection(pmPage.getDraftMessageTitles()).getText();
 		assertEquals(title, titleInDraft, "Not correct value in Subject field should be '" + title + "' actual='" + titleInDraft + "'");
 	}
