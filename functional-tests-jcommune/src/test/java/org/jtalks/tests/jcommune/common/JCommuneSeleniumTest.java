@@ -213,7 +213,7 @@ public class JCommuneSeleniumTest {
 			return false;
 		}
 		catch (NoSuchElementException ex) {
-			return (new WebDriverWait(driver, 10)).until(new ExpectedCondition<Boolean>() {
+			return (new WebDriverWait(driver, 2)).until(new ExpectedCondition<Boolean>() {
 				public Boolean apply(WebDriver d) {
 					return mainPage.getCurrentUsernameLink().isDisplayed();
 				}
@@ -237,7 +237,7 @@ public class JCommuneSeleniumTest {
 			signInPage.getPasswordField().sendKeys(password);
 			signInPage.getSubmitButton().click();
 			//wait until usern is logining
-			(new WebDriverWait(driver2, 10)).until(new ExpectedCondition<Boolean>() {
+			(new WebDriverWait(driver2, 2)).until(new ExpectedCondition<Boolean>() {
 				public Boolean apply(WebDriver d) {
 					return mainPage.getCurrentUsernameLink().isDisplayed();
 				}

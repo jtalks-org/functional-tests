@@ -40,7 +40,7 @@ public class PostPage {
 
 	public static final String postsListSel = "//div[@class='post']";
 
-	public static final String postsMessagesSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div";
+	public static final String postsMessagesSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div[@align != 'center']";
 
 	public static final String editPostButtonSel = "//a[@id='edit_button' and contains(@href, 'posts')]";
 

@@ -36,7 +36,7 @@ public class JC45EditingEmailInUserProfileWithValidData {
 		profilePage.getEmailEditField().clear();
 		profilePage.getEmailEditField().sendKeys(uniqEmail);
 		profilePage.getSaveEditButton().click();
-		assertEquals(profilePage.getEmail().getText(), uniqEmail);
+		assertEquals(profilePage.getEmail().getAttribute("value"), uniqEmail);
 	}
 
 	@AfterMethod(alwaysRun = true)

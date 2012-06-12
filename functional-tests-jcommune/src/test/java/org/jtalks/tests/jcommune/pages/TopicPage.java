@@ -33,13 +33,13 @@ public class TopicPage {
 
 	public static final String bodyErrorMessageSel = "//span[@id='bodyText.errors']";
 
-	public static final String backButtonOnEditFormSel = "//a[class='back-btn']";
+	public static final String backButtonOnEditFormSel = "//a[@class='back-btn']";
 
 	public static final String topicLinksFromDateInLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
 
 	public static final String topicLinksFromRecentActivitySel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/')]";
 
-	public static final String amountsOfViewTopicsSel = "//div[@class='forum_clicks']";
+	public static final String amountsOfViewTopicsSel = "//span[@class='test-views']";
 
 	public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user' and not(@class='currentusername')]";
 

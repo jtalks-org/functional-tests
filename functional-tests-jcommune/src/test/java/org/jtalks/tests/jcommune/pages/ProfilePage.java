@@ -29,7 +29,7 @@ public class ProfilePage {
 
 	public static final String errorEmailMessageIdSel = "email.errors";
 
-	public static final String emailSel = "//ul[@id='stylized']/li[5]/span";
+	public static final String emailSel = "//input[contains(@class,'test-mail')]";
 
 	public static final String currentPasswordFieldIdSel = "currentUserPassword";
 
@@ -49,7 +49,7 @@ public class ProfilePage {
 
 	public static final String signatureFieldSel = "signature";
 
-	public static final String signatureTextSel = "//span[@class='signature']";
+	public static final String signatureTextSel = "//input[contains(@class,'test-signature')]";
 
 	public static final String postListButtonSel = "//a[@class='btn btn-mini pull-right user-profile-buttons-posts']";
 

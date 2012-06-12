@@ -40,7 +40,7 @@ public class JC77SignatureEditingInProfile {
 		profilePage.getSignatureField().sendKeys(newSign);
 		profilePage.getSaveEditButton().click();
 
-		assertEquals(profilePage.getSignatureText().getText(), newSign);
+		assertEquals(profilePage.getSignatureText().getAttribute("value"), newSign);
 	}
 
 }
