@@ -5,6 +5,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistById;
@@ -22,7 +23,6 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 public class JC47NewPasswordValidation {
 
 	String currentPassword;
-	String tooShortPassword;
 	String tooLongPassword;
 	String newPassword;
 
@@ -31,9 +31,8 @@ public class JC47NewPasswordValidation {
 	public void setupCase(String appUrl, String username, String password) {
 
 		currentPassword = password;
-		tooLongPassword = "passgreaterthan20chaw";
-		tooShortPassword = "new";
-		newPassword = "new4";
+		tooLongPassword = StringHelp.getRandomString(51);
+		newPassword = "1";
 
 		driver.get(appUrl);
 		signIn(username, password);
@@ -49,12 +48,6 @@ public class JC47NewPasswordValidation {
 
 	@Test
 	public void newPasswordValidationTest() {
-		profilePage.getNewPasswordField().sendKeys(tooShortPassword);
-		profilePage.getSaveEditButton().click();
-		assertionExistById(driver, ProfilePage.errorNewUserPasswordMessageIdSel);
-		assertionExistById(driver, ProfilePage.errorNewUserPasswordConfirmMessageIdSel);
-
-
 		profilePage.getNewPasswordField().clear();
 		profilePage.getNewPasswordField().sendKeys(tooLongPassword);
 		profilePage.getSaveEditButton().click();

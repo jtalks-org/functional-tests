@@ -21,18 +21,12 @@ public class JC3UsernameValidationWithNotValidData {
 
 	@DataProvider(name = "notValidUsername")
 	public Object[][] notValidUsername() {
-		String shortUsername = StringHelp.getRandomString(1);
 		String longUsername = StringHelp.getRandomString(26);
-		String startOfBS = " " + StringHelp.getRandomString(1);
-		String endOfBS = StringHelp.getRandomString(1) + " ";
-		String onlyBS = "  ";
+		String startOfBS = " ";
 
 		return new Object[][]{
-				{shortUsername},
 				{longUsername},
-				{startOfBS},
-				{endOfBS},
-				{onlyBS},
+				{startOfBS}
 		};
 	}
 

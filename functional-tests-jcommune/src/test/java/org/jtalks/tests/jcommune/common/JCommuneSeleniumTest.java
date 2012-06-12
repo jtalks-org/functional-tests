@@ -95,6 +95,9 @@ public class JCommuneSeleniumTest {
 	//Mail implementation
 	public static Mail mailServer;
 
+
+	public static int timeout = 10;
+
 	/**
 	 * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server.
 	 * All values are stored in tesng.xml file.
@@ -213,7 +216,7 @@ public class JCommuneSeleniumTest {
 			return false;
 		}
 		catch (NoSuchElementException ex) {
-			return (new WebDriverWait(driver, 2)).until(new ExpectedCondition<Boolean>() {
+			return (new WebDriverWait(driver, timeout)).until(new ExpectedCondition<Boolean>() {
 				public Boolean apply(WebDriver d) {
 					return mainPage.getCurrentUsernameLink().isDisplayed();
 				}
@@ -237,7 +240,7 @@ public class JCommuneSeleniumTest {
 			signInPage.getPasswordField().sendKeys(password);
 			signInPage.getSubmitButton().click();
 			//wait until usern is logining
-			(new WebDriverWait(driver2, 2)).until(new ExpectedCondition<Boolean>() {
+			(new WebDriverWait(driver2, timeout)).until(new ExpectedCondition<Boolean>() {
 				public Boolean apply(WebDriver d) {
 					return mainPage.getCurrentUsernameLink().isDisplayed();
 				}
@@ -377,7 +380,7 @@ public class JCommuneSeleniumTest {
 					SeleniumConfig.getBrowserDriver(selDriverType));
 //			driver = new FirefoxDriver();
 
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 
 			createPages();
 		}
@@ -396,7 +399,7 @@ public class JCommuneSeleniumTest {
 					new URL(selServerURL),
 					SeleniumConfig.getBrowserDriver(selDriverType));
 //			driver2 = new FirefoxDriver();
-			driver2.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver2.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 
 		}
 		catch (MalformedURLException e) {
