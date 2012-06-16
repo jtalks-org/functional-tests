@@ -6,6 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 /**
  * @author masyan
  */
@@ -80,6 +82,8 @@ public class ProfilePage {
 	public static final String postCountDateTableFieldSel = "//label[contains(text(),'Post count')]";
 
 	public static final String pageSizeFieldSel = "pageSize";
+
+	public static final String pmLinksFromLastColumnSel = "//td[@class='latest-by']/p/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/')]";
 
 
 	@FindBy(xpath = emptyMessageInPosListSel)
@@ -183,6 +187,9 @@ public class ProfilePage {
 
 	@FindBy(id = pageSizeFieldSel)
 	private WebElement pageSizeField;
+
+	@FindBy(xpath = pmLinksFromLastColumnSel)
+	private List<WebElement> pmLinksFromLastColumn;
 
 	public ProfilePage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -325,5 +332,9 @@ public class ProfilePage {
 
 	public WebElement getPageSizeField() {
 		return pageSizeField;
+	}
+
+	public List<WebElement> getPmLinksFromLastColumn() {
+		return pmLinksFromLastColumn;
 	}
 }

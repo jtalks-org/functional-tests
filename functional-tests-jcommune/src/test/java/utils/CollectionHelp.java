@@ -86,4 +86,22 @@ public class CollectionHelp {
 		return result;
 	}
 
+	/**
+	 * Method  find element by value in collection
+	 *
+	 * @param elements Collection to find
+	 * @param value    Value to find
+	 * @return element if was found and return null else
+	 */
+	public static WebElement findWebElementByValueInCollection(List<WebElement> elements, String value) {
+		WebElement result = null;
+		for (WebElement element : elements) {
+			if (element.getText().equals(value)) {
+				result = element;
+				break;
+			}
+		}
+		return result;
+	}
+
 }
