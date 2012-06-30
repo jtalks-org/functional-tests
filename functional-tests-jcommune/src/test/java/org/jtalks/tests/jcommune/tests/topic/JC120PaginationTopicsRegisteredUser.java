@@ -9,7 +9,11 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
 
 
 /**
@@ -20,8 +24,8 @@ public class JC120PaginationTopicsRegisteredUser {
     @BeforeMethod
     @Parameters({"app-url", "uUsername", "uPassword"})
     public void setUp(String appUrl, String username, String password) {
-        signIn(username, password);
         driver.get(appUrl);
+        signIn(username, password);
         clickOnRandomBranch();
     }
 
