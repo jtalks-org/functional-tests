@@ -19,8 +19,6 @@ public class ProfilePage {
 
     public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
 
-    public static final String profileLinkFromTopicPageSel = "//div[@class='post']//td[@class='userinfo']/div/a[@class='post-userinfo-username']";
-
     public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
     public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @type='submit']";
@@ -125,9 +123,6 @@ public class ProfilePage {
     @FindBy(xpath = profileLinkFromPMInpoxPageSel)
     private WebElement profileLinkFromPMInpoxPage;
 
-    @FindBy(xpath = profileLinkFromTopicPageSel)
-    private WebElement profileLinkFromTopicPage;
-
     @FindBy(xpath = profileLinkFromMainPageSel)
     private WebElement profileLinkFromMainPage;
 
@@ -212,10 +207,6 @@ public class ProfilePage {
 
     public WebElement getProfileLinkFromPMInpoxPage() {
         return profileLinkFromPMInpoxPage;
-    }
-
-    public WebElement getProfileLinkFromTopicPage() {
-        return profileLinkFromTopicPage;
     }
 
     public WebElement getProfileLinkFromMainPage() {
