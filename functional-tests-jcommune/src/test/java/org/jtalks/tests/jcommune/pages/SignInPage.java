@@ -21,6 +21,8 @@ public class SignInPage {
 
     public static final String submitButtonSel = "jqi_state0_buttonOK";
 
+    public static final String submitButtonAfterRegistrationSel = "//input[@type='submit']";
+
     public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
 
     public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.contextPath + "/password/restore']";
@@ -46,6 +48,9 @@ public class SignInPage {
 
     @FindBy(id = submitButtonSel)
     WebElement submitButton;
+
+    @FindBy(xpath = submitButtonAfterRegistrationSel)
+    WebElement submitButtonAfterRegistration;
 
     @FindBy(xpath = rememberMeCheckBoxSel)
     WebElement rememberMeCheckBox;
@@ -85,6 +90,10 @@ public class SignInPage {
 
     public WebElement getSubmitButton() {
         return submitButton;
+    }
+
+    public WebElement getSubmitButtonAfterRegistration() {
+        return submitButtonAfterRegistration;
     }
 
     public WebElement getRememberMeCheckBox() {
