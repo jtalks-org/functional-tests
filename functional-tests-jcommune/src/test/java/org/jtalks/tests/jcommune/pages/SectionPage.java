@@ -13,27 +13,27 @@ import java.util.List;
  */
 public class SectionPage {
 
-	public static final String sectionListSel = "//a[@class='forum_header_link']";
+    public static final String sectionListSel = "//h3/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/sections/')]";
 
-	public static final String breadCrumbsSectionLinkSel = "//ul[@class='breadcrumbs']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/sections/')]";
+    public static final String breadCrumbsSectionLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/sections/')]";
 
-	@FindBy(xpath = sectionListSel)
-	private List<WebElement> sectionList;
+    @FindBy(xpath = sectionListSel)
+    private List<WebElement> sectionList;
 
-	@FindBy(xpath = breadCrumbsSectionLinkSel)
-	private WebElement breadCrumbsSectionLink;
+    @FindBy(xpath = breadCrumbsSectionLinkSel)
+    private WebElement breadCrumbsSectionLink;
 
 
-	public SectionPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    public SectionPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
 
-	//Getters
-	public List<WebElement> getSectionList() {
-		return sectionList;
-	}
+    //Getters
+    public List<WebElement> getSectionList() {
+        return sectionList;
+    }
 
-	public WebElement getBreadCrumbsSectionLink() {
-		return breadCrumbsSectionLink;
-	}
+    public WebElement getBreadCrumbsSectionLink() {
+        return breadCrumbsSectionLink;
+    }
 }

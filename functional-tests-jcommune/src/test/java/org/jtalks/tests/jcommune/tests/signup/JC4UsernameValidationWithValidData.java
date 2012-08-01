@@ -24,9 +24,8 @@ public class JC4UsernameValidationWithValidData {
 		String username = StringHelp.getRandomString(10);
 		String usernameWithBS = StringHelp.getRandomString(2) + " " + StringHelp.getRandomString(4);
 		String usernameLong = StringHelp.getRandomString(25);
-		String usernameShortByBSStart = " " + StringHelp.getRandomString(2);
-		String usernameShortByBSEnd = StringHelp.getRandomString(2) + " ";
-		String usernameShortByBSMid = StringHelp.getRandomString(1) + " " + StringHelp.getRandomString(1);
+		String usernameShortByBSStart = " " + StringHelp.getRandomString(1);
+		String usernameShortByBSEnd = StringHelp.getRandomString(1) + " ";
 
 		return new Object[][]{
 				{username},

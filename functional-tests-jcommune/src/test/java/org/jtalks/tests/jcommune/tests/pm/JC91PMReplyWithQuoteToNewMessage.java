@@ -57,7 +57,7 @@ public class JC91PMReplyWithQuoteToNewMessage {
 		//check title
 		assertEquals(subjectFieldText, "Re: " + title, "Not correct value in Subject field should be '" + "Re: " + title + "' actual='" + subjectFieldText + "'");
 		//check message
-		String messageWithQuote = "[quote=\"" + fromUser + "\"]" + title + "[/quote]";
+		String messageWithQuote = "[quote=\"" + fromUser + "\"]" + message + "[/quote]";
 		assertEquals(messageFieldText, messageWithQuote, "Not correct value in Subject field should be '" + messageWithQuote + "' actual='" + messageFieldText + "'");
 	}
 }

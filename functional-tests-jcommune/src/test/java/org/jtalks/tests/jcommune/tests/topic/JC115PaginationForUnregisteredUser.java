@@ -1,12 +1,11 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.openqa.selenium.By;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import utils.CollectionHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 
@@ -22,11 +21,11 @@ public class JC115PaginationForUnregisteredUser {
         driver.get(appUrl);
         signIn(userName, password);
         clickOnRandomSection();
-        clickOnRandomBranch();
+        clickOnRandomBranchFromSectionPage();
         createTopicForTest();
         topicUrl = driver.getCurrentUrl();
 
-        createPostsForTest(50, 250);
+        createPostsForTest(50, 10);
         logOut(appUrl);
 
     }
@@ -35,8 +34,9 @@ public class JC115PaginationForUnregisteredUser {
     public void testPagination() {
         driver.get(topicUrl);
         Assert.assertEquals(postPage.getPostsList().size(), 50);
-        assertionExistBySelector(driver, "//*[@class='page']");
-        driver.findElement(By.xpath("//a[@class='page' and contains(text(), '2')]")).click();
+
+        CollectionHelp.getWebElementFromCollectionByIndex(postPage.getPagesButtons(), 2).click();
+
         Assert.assertTrue(postPage.getPostsList().size() > 0);
     }
 }

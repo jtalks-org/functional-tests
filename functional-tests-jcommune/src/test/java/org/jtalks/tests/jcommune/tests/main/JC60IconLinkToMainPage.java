@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomTopic;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
@@ -25,11 +24,10 @@ public class JC60IconLinkToMainPage {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomBranch();
-		String branch = driver.getCurrentUrl();
 		createTopicForTest();
+		String topicUrl = driver.getCurrentUrl();
 		logOut(appUrl);
-		driver.get(branch);
-		clickOnRandomTopic();
+		driver.get(topicUrl);
 	}
 
 	@Test

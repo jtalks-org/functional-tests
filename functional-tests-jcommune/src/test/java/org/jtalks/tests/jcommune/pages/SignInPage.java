@@ -15,107 +15,116 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class SignInPage {
 
-	public static final String usernameFieldSel = "j_username";
+    public static final String usernameFieldSel = "j_username";
 
-	public static final String passwordFieldSel = "j_password";
+    public static final String passwordFieldSel = "j_password";
 
-	public static final String submitButtonSel = "jqi_state0_buttonOK";
+    public static final String submitButtonSel = "jqi_state0_buttonOK";
 
-	public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
+    public static final String submitButtonAfterRegistrationSel = "//input[@type='submit']";
 
-	public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.contextPath + "/password/restore']";
+    public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
 
-	public static final String signInFormSel = "form";
+    public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.contextPath + "/password/restore']";
 
-	public static final String errorMessageSel = "//span[@class='error']";
+    public static final String signInFormSel = "form";
 
-	public static final String emailFieldToRestoreSel = "email";
+    public static final String errorMessageSel = "//span[@class='help-inline']";
 
-	public static final String sendButtonToRestoreSel = "//button[@type='submit']";
+    public static final String emailFieldToRestoreSel = "email";
 
-	public static final String notValidEmailErrorMessageSel = "email.errors";
+    public static final String sendButtonToRestoreSel = "//button[@type='submit']";
 
-	public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
+    public static final String notValidEmailErrorMessageSel = "email.errors";
+
+    public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
 
 
-	@FindBy(id = usernameFieldSel)
-	WebElement usernameField;
+    @FindBy(id = usernameFieldSel)
+    WebElement usernameField;
 
-	@FindBy(id = passwordFieldSel)
-	WebElement passwordField;
+    @FindBy(id = passwordFieldSel)
+    WebElement passwordField;
 
-	@FindBy(id = submitButtonSel)
-	WebElement submitButton;
+    @FindBy(id = submitButtonSel)
+    WebElement submitButton;
 
-	@FindBy(xpath = rememberMeCheckBoxSel)
-	WebElement rememberMeCheckBox;
+    @FindBy(xpath = submitButtonAfterRegistrationSel)
+    WebElement submitButtonAfterRegistration;
 
-	@FindBy(xpath = restorePasswordLinkSel)
-	WebElement restorePasswordLink;
+    @FindBy(xpath = rememberMeCheckBoxSel)
+    WebElement rememberMeCheckBox;
 
-	@FindBy(id = signInFormSel)
-	WebElement signInForm;
+    @FindBy(xpath = restorePasswordLinkSel)
+    WebElement restorePasswordLink;
 
-	@FindBy(xpath = errorMessageSel)
-	WebElement errorMessage;
+    @FindBy(id = signInFormSel)
+    WebElement signInForm;
 
-	@FindBy(id = emailFieldToRestoreSel)
-	WebElement emailFieldToRestore;
+    @FindBy(xpath = errorMessageSel)
+    WebElement errorMessage;
 
-	@FindBy(xpath = sendButtonToRestoreSel)
-	WebElement sendButtonToRestore;
+    @FindBy(id = emailFieldToRestoreSel)
+    WebElement emailFieldToRestore;
 
-	@FindBy(id = notValidEmailErrorMessageSel)
-	WebElement notValidEmailErrorMessage;
+    @FindBy(xpath = sendButtonToRestoreSel)
+    WebElement sendButtonToRestore;
 
-	@FindBy(xpath = closeSignInWindowButtonSel)
-	WebElement closeSignInWindowButton;
+    @FindBy(id = notValidEmailErrorMessageSel)
+    WebElement notValidEmailErrorMessage;
 
-	public SignInPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    @FindBy(xpath = closeSignInWindowButtonSel)
+    WebElement closeSignInWindowButton;
 
-	public WebElement getUsernameField() {
-		return usernameField;
-	}
+    public SignInPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
 
-	public WebElement getPasswordField() {
-		return passwordField;
-	}
+    public WebElement getUsernameField() {
+        return usernameField;
+    }
 
-	public WebElement getSubmitButton() {
-		return submitButton;
-	}
+    public WebElement getPasswordField() {
+        return passwordField;
+    }
 
-	public WebElement getRememberMeCheckBox() {
-		return rememberMeCheckBox;
-	}
+    public WebElement getSubmitButton() {
+        return submitButton;
+    }
 
-	public WebElement getRestorePasswordLink() {
-		return restorePasswordLink;
-	}
+    public WebElement getSubmitButtonAfterRegistration() {
+        return submitButtonAfterRegistration;
+    }
 
-	public WebElement getSignInForm() {
-		return signInForm;
-	}
+    public WebElement getRememberMeCheckBox() {
+        return rememberMeCheckBox;
+    }
 
-	public WebElement getErrorMessage() {
-		return errorMessage;
-	}
+    public WebElement getRestorePasswordLink() {
+        return restorePasswordLink;
+    }
 
-	public WebElement getEmailFieldToRestore() {
-		return emailFieldToRestore;
-	}
+    public WebElement getSignInForm() {
+        return signInForm;
+    }
 
-	public WebElement getSendButtonToRestore() {
-		return sendButtonToRestore;
-	}
+    public WebElement getErrorMessage() {
+        return errorMessage;
+    }
 
-	public WebElement getNotValidEmailErrorMessage() {
-		return notValidEmailErrorMessage;
-	}
+    public WebElement getEmailFieldToRestore() {
+        return emailFieldToRestore;
+    }
 
-	public WebElement getCloseSignInWindowButton() {
-		return closeSignInWindowButton;
-	}
+    public WebElement getSendButtonToRestore() {
+        return sendButtonToRestore;
+    }
+
+    public WebElement getNotValidEmailErrorMessage() {
+        return notValidEmailErrorMessage;
+    }
+
+    public WebElement getCloseSignInWindowButton() {
+        return closeSignInWindowButton;
+    }
 }

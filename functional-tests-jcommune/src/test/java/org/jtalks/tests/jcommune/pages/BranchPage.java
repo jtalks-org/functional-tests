@@ -16,9 +16,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class BranchPage {
-	public static final String branchListSel = "//a[@class='forum_link']";
+	public static final String branchListSel = "//tbody/tr/td/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/branches/')]";
 
-	public static final String breadCrumbsBranchLinkSel = "//ul[@class='breadcrumbs']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/branches/')]";
+	public static final String breadCrumbsBranchLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/branches/')]";
 
 	@FindBy(xpath = branchListSel)
 	private List<WebElement> branchList;

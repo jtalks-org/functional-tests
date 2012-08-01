@@ -8,48 +8,43 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * @author masyan
  */
 public class JC35SecurityAdminToTopic {
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "aUsername", "aPassword"})
-	public void setupCase(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		clickOnRandomBranch();
-		String branch = driver.getCurrentUrl();
-		createTopicForTest();
-		driver.get(branch);
-	}
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"app-url", "aUsername", "aPassword"})
+    public void setupCase(String appUrl, String username, String password) {
+        driver.get(appUrl);
+        signIn(username, password);
+        clickOnRandomBranch();
+        String branch = driver.getCurrentUrl();
+        createTopicForTest();
+        driver.get(branch);
+    }
 
-	@AfterMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
+    @AfterMethod(alwaysRun = true)
+    @Parameters({"app-url"})
+    public void destroy(String appUrl) {
+        logOut(appUrl);
 
-	}
+    }
 
-	@Test
-	public void securityAdminToBranchTest() {
+    @Test
+    public void securityAdminToBranchTest() {
 
-		//view the topics list
-		List<WebElement> topics = topicPage.getTopicsList();
-		assertionNotEmptyCollection(topics);
+        //view the topics list
+        List<WebElement> topics = topicPage.getTopicsList();
+        assertionNotEmptyCollection(topics);
 
-		//create topic
-		assertionExistBySelector(driver, topicPage.newButtonSel);
+        //create topic
+        assertionExistById(driver, topicPage.newButtonSel);
 
-	}
+    }
 
 }

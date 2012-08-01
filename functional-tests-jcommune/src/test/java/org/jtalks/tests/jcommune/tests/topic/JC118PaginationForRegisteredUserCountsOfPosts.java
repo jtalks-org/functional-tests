@@ -16,11 +16,12 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
 
-
 /**
  * author: erik
  */
-public class JC117PaginationForRegisteredUser {
+public class JC118PaginationForRegisteredUserCountsOfPosts {
+	Boolean wasValueChanged = false;
+	String value;
 	String topicLink;
 
 	@BeforeMethod
@@ -42,15 +43,16 @@ public class JC117PaginationForRegisteredUser {
 	}
 
 	@Test
-	public void testPagination() {
+	public void paginationTest() {
 		driver.get(topicLink);
-
 		if (postPage.getPostsList().size() != 5) {
 			Assert.fail("Post page contains count of posts that not equals 5");
 		}
+
 		CollectionHelp.getWebElementFromCollectionByIndex(postPage.getPagesButtons(), 2).click();
 		if (postPage.getPostsList().size() != 1) {
 			Assert.fail("Post page contains count of posts that not equals 1");
 		}
 	}
+
 }

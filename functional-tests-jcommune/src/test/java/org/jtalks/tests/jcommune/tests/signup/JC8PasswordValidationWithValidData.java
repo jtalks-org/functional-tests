@@ -22,13 +22,13 @@ public class JC8PasswordValidationWithValidData {
 	public Object[][] validPassword() {
 		String validPassword = StringHelp.getRandomString(10);
 		String validPasswordWithBS = StringHelp.getRandomString(10) + " " + StringHelp.getRandomString(2);
-		String validLongPass = StringHelp.getRandomString(20);
-		String validPasswordWithBSInMiddle = StringHelp.getRandomString(2) + " " + StringHelp.getRandomString(1);
+		String validLongPass = StringHelp.getRandomString(50);
+		String validShortPass = StringHelp.getRandomString(1);
 		return new Object[][]{
 				{validPassword},
 				{validPasswordWithBS},
 				{validLongPass},
-				{validPasswordWithBSInMiddle}
+				{validShortPass}
 		};
 	}
 

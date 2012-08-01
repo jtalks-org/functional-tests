@@ -20,12 +20,10 @@ public class JC7PasswordValidationWithNotValidData {
 
 	@DataProvider(name = "notValidPassword")
 	public Object[][] notValidPassword() {
-		String shortPassword = StringHelp.getRandomString(2);
-		String longPassword = StringHelp.getRandomString(21);
+		String longPassword = StringHelp.getRandomString(51);
 		String emptyPassword = "";
 
 		return new Object[][]{
-				{shortPassword},
 				{longPassword},
 				{emptyPassword}
 		};

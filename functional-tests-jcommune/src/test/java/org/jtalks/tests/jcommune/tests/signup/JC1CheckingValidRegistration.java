@@ -8,6 +8,7 @@ import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.validCaptchaValue;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -43,6 +44,7 @@ public class JC1CheckingValidRegistration {
 		signUpPage.getEmailField().sendKeys(email);
 		signUpPage.getPasswordField().sendKeys(pass);
 		signUpPage.getPasswordConfirmField().sendKeys(confirmPass);
+		signUpPage.getCaptchaField().sendKeys(validCaptchaValue);
 		signUpPage.getSubmitButton().click();
 		assertEquals(driver.getCurrentUrl(), appUrl);
 	}

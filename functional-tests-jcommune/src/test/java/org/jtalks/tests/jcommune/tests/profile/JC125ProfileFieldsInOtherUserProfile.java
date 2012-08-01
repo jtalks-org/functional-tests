@@ -4,9 +4,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import utils.CollectionHelp;
 
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
@@ -17,9 +20,13 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
  */
 public class JC125ProfileFieldsInOtherUserProfile {
 	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
+	@Parameters({"app-url", "uUsername", "uPassword", "uUsername2", "uPassword2"})
+	public void setupCase(String appUrl, String username, String password, String username2, String password2) {
 		driver.get(appUrl);
+		signIn(username2, password2);
+		clickOnRandomBranch();
+		createTopicForTest();
+		logOut(appUrl);
 		signIn(username, password);
 	}
 
@@ -31,16 +38,14 @@ public class JC125ProfileFieldsInOtherUserProfile {
 
 	@Test
 	@Parameters({"uUsername2"})
-	public void ViewProfileFromCurrentUsernameLinkTest(String usernameSecond) {
-		driver.get(driver.getCurrentUrl() + "/users/" + usernameSecond);
+	public void viewProfileFromCurrentUsernameLinkTest(String usernameSecond) {
+		CollectionHelp.findWebElementByValueInCollection(profilePage.getPmLinksFromLastColumn(), usernameSecond).click();
 
-		assertionExistBySelector(driver, profilePage.usernameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.firstNameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.lastNameTableFieldSel);
 		assertionExistBySelector(driver, profilePage.locationTableFieldSel);
 		assertionExistBySelector(driver, profilePage.lastLoginTableFieldSel);
 		assertionExistBySelector(driver, profilePage.registrationDateTableFieldSel);
-		assertionExistBySelector(driver, profilePage.avatarDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.postCountDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.signatureTableFieldSel);
 

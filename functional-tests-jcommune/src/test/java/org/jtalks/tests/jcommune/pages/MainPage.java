@@ -11,119 +11,130 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class MainPage {
 
-	private static final String loginLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/login']";
+    private static final String loginLinkSel = "signin";
 
-	public static final String currentUsernameLinkSel = "//a[@class='currentusername']";
+    public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/logout']";
 
-	public static final String errorPageSel = "//span[@class='error_errorpage']";
+    public static final String currentUsernameLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
-	public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumbs']//a[@href='" + JCommuneSeleniumTest.contextPath + "/sections']";
+    public static final String errorPageSel = "//span[@class='error_errorpage']";
 
-	public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "']";
+    public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumTest.contextPath + "/sections']";
 
-	public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/topics/recent']";
+    public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/']";
 
-	public static final String messagesCountSel = "messages count";
+    public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/topics/recent']";
 
-	public static final String usersCountSel = "users count";
+    public static final String messagesCountSel = "//span[@class='test-messages']";
 
-	public static final String usersOnlineCountSel = "visitors count";
+    public static final String usersCountSel = "//span[@class='test-registered-users']";
 
-	public static final String registeredUsersOnlineCountSel = "registered users count";
+    public static final String usersOnlineCountSel = "//span[@class='test-visitors-total']";
 
-	public static final String guestsUsersOnlineCountSel = "guests count";
+    public static final String registeredUsersOnlineCountSel = "//span[@class='test-visitors-registered']";
 
-	public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user' and not(@class='currentusername')]";
+    public static final String guestsUsersOnlineCountSel = "//span[@class='test-visitors-guests']";
 
-	@FindBy(xpath = profileLinkSel)
-	private WebElement profileLink;
-
-	@FindBy(xpath = loginLinkSel)
-	private WebElement loginLink;
-
-	@FindBy(xpath = currentUsernameLinkSel)
-	private WebElement currentUsernameLink;
-
-	@FindBy(xpath = errorPageSel)
-	private WebElement errorPage;
-
-	@FindBy(xpath = breadCrumbsForumLinkSel)
-	private WebElement breadCrumbsForumLink;
-
-	@FindBy(xpath = iconLinkToMainPageSel)
-	private WebElement iconLinkToMainPage;
-
-	@FindBy(xpath = recentActivityLinkSel)
-	private WebElement recentActivityLink;
-
-	@FindBy(id = messagesCountSel)
-	private WebElement messagesCount;
-
-	@FindBy(id = usersCountSel)
-	private WebElement usersCount;
-
-	@FindBy(id = usersOnlineCountSel)
-	private WebElement usersOnlineCount;
-
-	@FindBy(id = registeredUsersOnlineCountSel)
-	private WebElement registeredUsersOnlineCount;
-
-	@FindBy(id = guestsUsersOnlineCountSel)
-	private WebElement guestsUsersOnlineCount;
+    public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user' and not(@class='currentusername')]";
 
 
-	public MainPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    @FindBy(xpath = profileLinkSel)
+    private WebElement profileLink;
 
-	//Getters
+    @FindBy(xpath = logOutButtonSel)
+    private WebElement logOutButton;
 
 
-	public WebElement getProfileLink() {
-		return profileLink;
-	}
+    @FindBy(id = loginLinkSel)
+    private WebElement loginLink;
 
-	public WebElement getLoginLink() {
-		return loginLink;
-	}
+    @FindBy(xpath = currentUsernameLinkSel)
+    private WebElement currentUsernameLink;
 
-	public WebElement getCurrentUsernameLink() {
-		return currentUsernameLink;
-	}
+    @FindBy(xpath = errorPageSel)
+    private WebElement errorPage;
 
-	public WebElement getErrorPage() {
-		return errorPage;
-	}
+    @FindBy(xpath = breadCrumbsForumLinkSel)
+    private WebElement breadCrumbsForumLink;
 
-	public WebElement getBreadCrumbsForumLink() {
-		return breadCrumbsForumLink;
-	}
+    @FindBy(xpath = iconLinkToMainPageSel)
+    private WebElement iconLinkToMainPage;
 
-	public WebElement getIconLinkToMainPage() {
-		return iconLinkToMainPage;
-	}
+    @FindBy(xpath = recentActivityLinkSel)
+    private WebElement recentActivityLink;
 
-	public WebElement getRecentActivityLink() {
-		return recentActivityLink;
-	}
+    @FindBy(xpath = messagesCountSel)
+    private WebElement messagesCount;
 
-	public WebElement getMessagesCount() {
-		return messagesCount;
-	}
+    @FindBy(xpath = usersCountSel)
+    private WebElement usersCount;
 
-	public WebElement getUsersCount() {
-		return usersCount;
-	}
+    @FindBy(xpath = usersOnlineCountSel)
+    private WebElement usersOnlineCount;
 
-	public WebElement getUsersOnlineCount() {
-		return usersOnlineCount;
-	}
+    @FindBy(xpath = registeredUsersOnlineCountSel)
+    private WebElement registeredUsersOnlineCount;
 
-	public WebElement getRegisteredUsersOnlineCount() {
-		return registeredUsersOnlineCount;
-	}
+    @FindBy(xpath = guestsUsersOnlineCountSel)
+    private WebElement guestsUsersOnlineCount;
 
-	public WebElement getGuestsUsersOnlineCount() {
-		return guestsUsersOnlineCount;
-	}
+
+    public MainPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
+
+    //Getters
+
+
+    public WebElement getProfileLink() {
+        return profileLink;
+    }
+
+    public WebElement getLoginLink() {
+        return loginLink;
+    }
+
+    public WebElement getLogOutButton() {
+        return logOutButton;
+    }
+
+    public WebElement getCurrentUsernameLink() {
+        return currentUsernameLink;
+    }
+
+    public WebElement getErrorPage() {
+        return errorPage;
+    }
+
+    public WebElement getBreadCrumbsForumLink() {
+        return breadCrumbsForumLink;
+    }
+
+    public WebElement getIconLinkToMainPage() {
+        return iconLinkToMainPage;
+    }
+
+    public WebElement getRecentActivityLink() {
+        return recentActivityLink;
+    }
+
+    public WebElement getMessagesCount() {
+        return messagesCount;
+    }
+
+    public WebElement getUsersCount() {
+        return usersCount;
+    }
+
+    public WebElement getUsersOnlineCount() {
+        return usersOnlineCount;
+    }
+
+    public WebElement getRegisteredUsersOnlineCount() {
+        return registeredUsersOnlineCount;
+    }
+
+    public WebElement getGuestsUsersOnlineCount() {
+        return guestsUsersOnlineCount;
+    }
 }

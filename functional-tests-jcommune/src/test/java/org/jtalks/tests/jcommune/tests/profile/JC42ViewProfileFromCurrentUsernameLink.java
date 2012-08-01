@@ -43,7 +43,6 @@ public class JC42ViewProfileFromCurrentUsernameLink {
 		assertionExistBySelector(driver, profilePage.locationTableFieldSel);
 		assertionExistBySelector(driver, profilePage.lastLoginTableFieldSel);
 		assertionExistBySelector(driver, profilePage.registrationDateTableFieldSel);
-		assertionExistBySelector(driver, profilePage.avatarDateTableFieldSel);
 		assertionExistBySelector(driver, profilePage.postCountDateTableFieldSel);
 	}
 }
