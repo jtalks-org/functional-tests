@@ -10,13 +10,7 @@ import utils.StringHelp;
 import java.util.ArrayList;
 
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionContainsStringInList;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswerForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 
 /**
@@ -33,8 +27,8 @@ public class JC71PagingShowAllButton {
 		createTopicForTest();
 		createAnswerForTest(StringHelp.getRandomString(10));
 		createAnswerForTest(StringHelp.getRandomString(10));
-		createAnswerForTest(StringHelp.getRandomString(10));
-		createAnswerForTest(StringHelp.getRandomString(10));
+        createAnswerForTest(StringHelp.getRandomString(10));
+        createAnswerForTest(StringHelp.getRandomString(10));
 		createAnswerForTest(StringHelp.getRandomString(10));
 		createAnswerForTest(StringHelp.getRandomString(10));
 	}
@@ -46,13 +40,16 @@ public class JC71PagingShowAllButton {
 	}
 
 	@Test
+    // This test doesn't pass with firefox driver. There are difference between return values of
+    // postPage.getPagesButtons method. getPagesButtons returns 4 buttons independently: 1, 2, Show pages, Next topic.
+    // I can't fixed it (pvolkov), but I fixed test for HtmlUnit.
 	public void pagingShowAllButtonTest() {
 		postPage.getShowAllButton().click();
-		for (WebElement el : postPage.getPagesButtons()) {
+        for (WebElement el : postPage.getPagesButtons()) {
 			ArrayList list = new ArrayList<String>();
-			list.add("Show pages");
-			list.add("Next topic");
-			assertionContainsStringInList(list, el.getText());
+            // el.getText() returns "Show pages Next topic" in right case, but "1 2 Show all Next topic" in wrong case.
+			list.add("Show pages Next topic");
+                assertionContainsStringInList(list, el.getText());
 		}
 	}
 

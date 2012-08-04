@@ -52,9 +52,9 @@ public class PostPage {
 
 	public static final String lastPostLinksFromTopicSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
 
-	public static final String pagesButtonsSel = "//div[@class='pagination pull-right forum-pagination']/ul/li/a";
+	public static final String pagesButtonsSel = "//div[2]/div[2]/div[2]/div";
 
-	public static final String showAllButtonSel = "//a[@href='?pagingEnabled=false']";
+	public static final String showAllButtonSel = "//a[contains(@href, '?pagingEnabled=false')]";
 
 	public static final String showPagesButtonSel = "//a[@href='?pagingEnabled=true']";
 
