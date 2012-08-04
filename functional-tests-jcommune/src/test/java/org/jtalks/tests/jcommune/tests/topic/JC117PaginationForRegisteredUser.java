@@ -48,7 +48,9 @@ public class JC117PaginationForRegisteredUser {
 		if (postPage.getPostsList().size() != 5) {
 			Assert.fail("Post page contains count of posts that not equals 5");
 		}
-		CollectionHelp.getWebElementFromCollectionByIndex(postPage.getPagesButtons(), 2).click();
+        // postPage.getPagesButtons() works wrong. One returns not a collection of buttons.
+//		CollectionHelp.getWebElementFromCollectionByIndex(postPage.getPagesButtons(), 2).click();
+        postPage.getSecondTopicPageButton().click();
 		if (postPage.getPostsList().size() != 1) {
 			Assert.fail("Post page contains count of posts that not equals 1");
 		}

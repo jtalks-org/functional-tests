@@ -52,7 +52,9 @@ public class PostPage {
 
 	public static final String lastPostLinksFromTopicSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
 
-	public static final String pagesButtonsSel = "//div[2]/div[2]/div[2]/div";
+	public static final String pagesButtonsSel = "/html/body/div[2]/div[2]/div[2]/div";
+
+    public static final String secondTopicPageButtonSel = "//div[2]/div/ul/li[2]/a";
 
 	public static final String showAllButtonSel = "//a[contains(@href, '?pagingEnabled=false')]";
 
@@ -119,8 +121,12 @@ public class PostPage {
 	@FindBy(xpath = lastPostLinksFromTopicSel)
 	private List<WebElement> lastPostLinksFromTopic;
 
+//    TODO getPagesButtons() works wrong. One returns not a collection of buttons. (JC117 and other)
 	@FindBy(xpath = pagesButtonsSel)
 	private List<WebElement> pagesButtons;
+
+    @FindBy(xpath = secondTopicPageButtonSel)
+    private WebElement secondTopicPageButton;
 
 	@FindBy(xpath = showAllButtonSel)
 	private WebElement showAllButton;
@@ -225,6 +231,10 @@ public class PostPage {
 
 	public WebElement getShowAllButton() {
 		return showAllButton;
+	}
+    //Pagination
+    public WebElement getSecondTopicPageButton() {
+		return secondTopicPageButton;
 	}
 
 	public WebElement getShowPagesButton() {
