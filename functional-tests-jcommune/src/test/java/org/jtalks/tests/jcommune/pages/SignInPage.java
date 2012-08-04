@@ -31,11 +31,11 @@ public class SignInPage {
 
     public static final String errorMessageSel = "//span[@class='help-inline']";
 
-    public static final String emailFieldToRestoreSel = "email";
+    public static final String emailFieldToRestoreSel = "userEmail";
 
     public static final String sendButtonToRestoreSel = "//button[@type='submit']";
 
-    public static final String notValidEmailErrorMessageSel = "email.errors";
+    public static final String notValidEmailErrorMessageSel = "userEmail.errors";
 
     public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
 
