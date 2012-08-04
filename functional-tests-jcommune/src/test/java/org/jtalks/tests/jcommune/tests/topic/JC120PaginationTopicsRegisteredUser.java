@@ -40,7 +40,7 @@ public class JC120PaginationTopicsRegisteredUser {
         List<WebElement> topicsButtons = topicPage.getTopicsButtons();
 
         if (topicPage.getTopicsList().size() != 5) {
-            Assert.fail("Topic's count doesn't equal 5");
+            Assert.fail("Topic's count doesn't equal 5. But " + topicPage.getTopicsList().size());
         }
 
         if (topicsButtons.size() == 0) {
@@ -50,7 +50,7 @@ public class JC120PaginationTopicsRegisteredUser {
         topicsButtons.get(1).click();
 
         if (topicPage.getTopicsList().size() != 5) {
-            Assert.fail("Topic's count doesn't equal 5");
+            Assert.fail("Topic's count doesn't equal 5. But " + topicPage.getTopicsList().size());
         }
     }
 }
