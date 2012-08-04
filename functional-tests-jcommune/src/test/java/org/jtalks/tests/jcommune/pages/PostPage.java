@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class PostPage {
 
-	public static final String newButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/posts/new')]";
+	public static final String newButtonSel = "(//a[@id='new-topic-btn'])[2]";
 
 	public static final String messageFieldSel = "tbMsg";
 
