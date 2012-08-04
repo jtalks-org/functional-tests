@@ -39,7 +39,7 @@ public class PMPage {
 
     public static final String quoteButtonSel = "//a[@class='btn' and contains(@href,'" + JCommuneSeleniumTest.contextPath + "/quote/')]";
 
-    public static final String saveButtonSel = "save_pm";
+    public static final String saveButtonSel = "savePM";
 
     public static final String draftMessageTitlesSel = "//td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/')]";
 
