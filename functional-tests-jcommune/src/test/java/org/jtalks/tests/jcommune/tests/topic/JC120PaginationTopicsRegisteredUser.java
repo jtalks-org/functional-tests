@@ -65,7 +65,7 @@ public class JC120PaginationTopicsRegisteredUser {
     }
 
     @Test
-    public void paginationButtonsShouldBePresentOnSecond(){
+    public void paginationButtonsShouldBePresentOnSecondPage(){
         topicPage.getButtonTopicsPageLink(2).click();
         Assert.assertNotEquals(topicPage.getTopicsButtons().size(), 0);
     }
