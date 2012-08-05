@@ -1,10 +1,13 @@
 package org.jtalks.tests.jcommune.pages;
 
+import junit.framework.Assert;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+import sun.rmi.runtime.NewThreadAction;
 
 import java.util.List;
 
@@ -67,7 +70,7 @@ public class ProfilePage {
 
     public static final String languageTableFieldSel = "//label[contains(text(),'Language')]";
 
-    public static final String pageSizeTableFieldSel = "//label[contains(text(),'Page size')]";
+    public static final String pageSizeTableFieldSel = "//div[6]/div/label";
 
     public static final String signatureTableFieldSel = "//label[contains(text(),'Your signature')]";
 
@@ -328,4 +331,15 @@ public class ProfilePage {
     public List<WebElement> getPmLinksFromLastColumn() {
         return pmLinksFromLastColumn;
     }
+
+
+
+
+    //setters
+
+    public void selectPageSizeByValue (int num) {
+        String sNum = Integer.toString(num);
+        new Select(getPageSizeField()).selectByValue(sNum);
+    }
+
 }

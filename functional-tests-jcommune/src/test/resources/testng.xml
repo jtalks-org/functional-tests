@@ -18,6 +18,10 @@
     <parameter name="db-username" value="selenium"/>
     <parameter name="db-password" value="selenium_KjY4"/>
 
+    <!-- Jcommune default settings -->
+    <parameter name="pageSizeForUnregisteredUser" value="50"/>
+    <parameter name="pageSizeDefaultForRegisteredUser" value="5"/>
+
     <!--Registered users-->
     <!--simlpe users-->
     <parameter name="uUsername" value="testSel"/>
@@ -47,18 +51,23 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
+            <class name="org.jtalks.tests.jcommune.tests.topic.JC117PaginationForRegisteredUser"/>
+            <class name="org.jtalks.tests.jcommune.tests.topic.JC118PaginationForRegisteredUserCountsOfPosts"/>
+            <class name="org.jtalks.tests.jcommune.tests.topic.JC115PaginationForUnregisteredUser"/>
+            <class name="org.jtalks.tests.jcommune.tests.topic.JC119PaginationForUnregisteredUser"/>
+            <class name="org.jtalks.tests.jcommune.tests.topic.JC120PaginationTopicsRegisteredUser"/>
         </classes>
         <packages>
-            <package name="org.jtalks.tests.jcommune.tests.signup"/>
-            <package name="org.jtalks.tests.jcommune.tests.topic"/>
-            <package name="org.jtalks.tests.jcommune.tests.signin"/>
-            <package name="org.jtalks.tests.jcommune.tests.logout"/>
-            <package name="org.jtalks.tests.jcommune.tests.post"/>
-            <package name="org.jtalks.tests.jcommune.tests.profile"/>
-            <package name="org.jtalks.tests.jcommune.tests.section"/>
-            <package name="org.jtalks.tests.jcommune.tests.main"/>
-            <package name="org.jtalks.tests.jcommune.tests.branch"/>
-            <package name="org.jtalks.tests.jcommune.tests.pm"/>
+            <!--<package name="org.jtalks.tests.jcommune.tests.signup"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.topic"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.signin"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.logout"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.post"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.profile"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.section"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.main"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.branch"/>-->
+            <!--<package name="org.jtalks.tests.jcommune.tests.pm"/>-->
         </packages>
     </test>
 </suite>

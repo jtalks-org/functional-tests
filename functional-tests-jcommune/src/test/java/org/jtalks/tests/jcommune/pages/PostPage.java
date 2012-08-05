@@ -53,8 +53,6 @@ public class PostPage {
 
     public static final String pagesButtonsSel = "//div[contains(@class, 'pull-right forum-pagination')]//li/a";
 
-    public static final String secondTopicPageButtonSel = "//div[2]/div/ul/li[2]/a";
-
     public static final String showAllButtonSel = "//a[contains(@href, '?pagingEnabled=false')]";
 
     public static final String showPagesButtonSel = "//a[@href='?pagingEnabled=true']";
@@ -120,12 +118,8 @@ public class PostPage {
     @FindBy(xpath = lastPostLinksFromTopicSel)
     private List<WebElement> lastPostLinksFromTopic;
 
-    //    TODO getPagesButtons() works wrong. One returns not a collection of buttons. (JC117 and other)
     @FindBy(xpath = pagesButtonsSel)
     private List<WebElement> pagesButtons;
-
-    @FindBy(xpath = secondTopicPageButtonSel)
-    private WebElement secondTopicPageButton;
 
     @FindBy(xpath = showAllButtonSel)
     private WebElement showAllButton;
@@ -232,9 +226,13 @@ public class PostPage {
         return showAllButton;
     }
 
-    //Pagination
-    public WebElement getSecondTopicPageButton() {
-        return secondTopicPageButton;
+    /**
+    Returns the page link button object in pagination region
+     @param pageNum - page number is needed to return
+     */
+    public WebElement getPageLinkButton(int pageNum) {
+        WebElement pageLinkButton = pagesButtons.get(pageNum - 1);
+        return pageLinkButton;
     }
 
     public WebElement getShowPagesButton() {

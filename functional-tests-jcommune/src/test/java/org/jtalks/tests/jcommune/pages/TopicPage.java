@@ -163,4 +163,7 @@ public class TopicPage {
 	public List<WebElement> getTopicsButtons() {
 		return topicsButtons;
 	}
+    public WebElement getButtonTopicsPageLink(int pageNum) {
+        return topicsButtons.get( pageNum -1 );
+    }
 }

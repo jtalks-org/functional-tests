@@ -1,20 +1,12 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.SkipException;
+import org.testng.annotations.*;
 import utils.CollectionHelp;
 
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranchFromSectionPage;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomSection;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createPostsForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
 
 
 /**
@@ -22,10 +14,10 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
  */
 public class JC117PaginationForRegisteredUser {
 	String topicLink;
-
-	@BeforeMethod
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setUp(String appUrl, String username, String password) {
+    int postsPageSize;
+	@BeforeClass
+	@Parameters({"app-url", "uUsername", "uPassword", "pageSizeDefaultForRegisteredUser"})
+	public void setUp(String appUrl, String username, String password, int pageSizeDefault) {
 		driver.get(appUrl);
 		signIn(username, password);
 		clickOnRandomSection();
@@ -33,26 +25,40 @@ public class JC117PaginationForRegisteredUser {
 		createTopicForTest();
 		topicLink = driver.getCurrentUrl();
 		createPostsForTest(5, 50);
+        profilePage.getCurrentUserLink().click();
+        if (!profilePage.getPageSizeTableField().getText().equals(Integer.toString(pageSizeDefault))){
+            profilePage.getEditProfileButton().click();
+            profilePage.selectPageSizeByValue(pageSizeDefault);
+            profilePage.getSaveEditButton().click();
+            if (!profilePage.getPageSizeTableField().getText().equals(Integer.toString(pageSizeDefault))){
+                throw new SkipException("Unable to set page size. Page size for user is " +
+                        profilePage.getPageSizeTableField().getText());
+            }
+
+        };
 	}
 
-	@AfterMethod
+	@AfterClass
 	@Parameters({"app-url", "uUsername"})
 	public void back(String appUrl, String username) {
 		logOut(appUrl);
 	}
 
-	@Test
-	public void testPagination() {
-		driver.get(topicLink);
+    @BeforeMethod
+        public void navigateToFirstTopicPage(){
+        driver.get(topicLink);
+    }
 
-		if (postPage.getPostsList().size() != 5) {
-			Assert.fail("Post page contains count of posts that not equals 5");
-		}
-        // postPage.getPagesButtons() works wrong. One returns not a collection of buttons.
-//		CollectionHelp.getWebElementFromCollectionByIndex(postPage.getPagesButtons(), 2).click();
-        postPage.getSecondTopicPageButton().click();
-		if (postPage.getPostsList().size() != 1) {
-			Assert.fail("Post page contains count of posts that not equals 1");
-		}
-	}
+	@Test
+    public void postsCountShouldBeFiveOnFirstTopicPage() {
+        postsPageSize = postPage.getPostsList().size();
+        Assert.assertEquals(postsPageSize, 5);
+    }
+
+    @Test
+    public  void postsCountShouldBeOneOnSecondTopicPage() {
+    postPage.getPageLinkButton(2).click();
+    postsPageSize = postPage.getPostsList().size();
+    Assert.assertEquals(postsPageSize, 1);
+    }
 }
