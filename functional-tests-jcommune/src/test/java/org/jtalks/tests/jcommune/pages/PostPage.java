@@ -1,6 +1,5 @@
 package org.jtalks.tests.jcommune.pages;
 
-import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,238 +13,239 @@ import java.util.List;
  */
 public class PostPage {
 
-	public static final String newButtonSel = "(//a[@id='new-topic-btn'])[2]";
+    public static final String newButtonSel = "(//a[@id='new-topic-btn'])[2]";
 
-	public static final String messageFieldSel = "tbMsg";
+    public static final String messageFieldSel = "tbMsg";
 
-	public static final String postButtonSel = "post";
+    public static final String postButtonSel = "post";
 
-	public static final String lastPostMessageSel = "//div[@class='post'][last()]/table/tbody/tr/td[@class='post-content-td']/div";
+    public static final String lastPostMessageSel = "//div[@class='post'][last()]/table/tbody/tr/td[@class='post-content-td']/div";
 
-	public static final String lastPostAuthorSel = "//li[@class='forum_row'][last()]/div[@class='forum_userinfo']/a[@class='username']";
+    public static final String lastPostAuthorSel = "//li[@class='forum_row'][last()]/div[@class='forum_userinfo']/a[@class='username']";
 
-	public static final String backButtonSel = "//a[@class='back-btn']";
+    public static final String backButtonSel = "//a[@class='back-btn']";
 
-	public static final String deleteButtonNearLastPostSel = "//div[@class='post'][last()]//a[@class='btn btn-mini btn-danger delete']";
+    public static final String deleteButtonNearLastPostSel = "//div[@class='post'][last()]//a[@class='btn btn-mini btn-danger delete']";
 
-	public static final String linkButtonNearLastPostSel = "//div[@class='post'][last()]//a[@class='btn btn-mini postLink']";
+    public static final String linkButtonNearLastPostSel = "//div[@class='post'][last()]//a[@class='btn btn-mini postLink']";
 
-	public static final String deleteTopicButtonSel = "//div[@class='post']//a[@class='btn btn-mini btn-danger delete']";
+    public static final String deleteTopicButtonSel = "//div[@class='post']//a[@class='btn btn-mini btn-danger delete']";
 
-	public static final String deleteConfirmOkButtonSel = "jqi_state0_buttonOk";
+    public static final String deleteConfirmOkButtonSel = "jqi_state0_buttonOk";
 
-	public static final String deleteConfirmCancelButtonSel = "jqi_state0_buttonCancel";
+    public static final String deleteConfirmCancelButtonSel = "jqi_state0_buttonCancel";
 
-	public static final String postErrorMessageSel = "bodyText.errors";
+    public static final String postErrorMessageSel = "bodyText.errors";
 
-	public static final String postsListSel = "//div[@class='post']";
+    public static final String postsListSel = "//div[@class='post']";
 
-	public static final String postsMessagesSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div";
+    public static final String postsMessagesSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div";
 
-	public static final String editPostButtonSel = "//a[@id='edit_button' and contains(@href, 'posts')]";
+    public static final String editPostButtonSel = "//a[@id='edit_button' and contains(@href, 'posts')]";
 
-	public static final String editTopicButtonSel = "//a[@id='edit_button' and contains(@href, 'topics')]";
+    public static final String editTopicButtonSel = "//a[@id='edit_button' and contains(@href, 'topics')]";
 
-	public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
+    public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
-	public static final String lastPostLinksFromBranchSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
+    public static final String lastPostLinksFromBranchSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
 
-	public static final String lastPostLinksFromTopicSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
+    public static final String lastPostLinksFromTopicSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
 
-	public static final String pagesButtonsSel = "/html/body/div[2]/div[2]/div[2]/div";
+    public static final String pagesButtonsSel = "//div[contains(@class, 'pull-right forum-pagination')]//li/a";
 
     public static final String secondTopicPageButtonSel = "//div[2]/div/ul/li[2]/a";
 
-	public static final String showAllButtonSel = "//a[contains(@href, '?pagingEnabled=false')]";
+    public static final String showAllButtonSel = "//a[contains(@href, '?pagingEnabled=false')]";
 
-	public static final String showPagesButtonSel = "//a[@href='?pagingEnabled=true']";
+    public static final String showPagesButtonSel = "//a[@href='?pagingEnabled=true']";
 
-	public static final String signatureTextSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div[@align='left']";
+    public static final String signatureTextSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div[@align='left']";
 
-	public static final String authorsOfPostsListSel = "//div[@class='post']/table/tbody/tr/td[@class='userinfo']/div/a[@class='post-userinfo-username']";
+    public static final String authorsOfPostsListSel = "//div[@class='post']/table/tbody/tr/td[@class='userinfo']/div/a[@class='post-userinfo-username']";
 
-	@FindBy(xpath = lastPostAuthorSel)
-	private WebElement lastPostAuthor;
+    @FindBy(xpath = lastPostAuthorSel)
+    private WebElement lastPostAuthor;
 
-	@FindBy(xpath = newButtonSel)
-	private WebElement newButton;
+    @FindBy(xpath = newButtonSel)
+    private WebElement newButton;
 
-	@FindBy(id = messageFieldSel)
-	private WebElement messageField;
+    @FindBy(id = messageFieldSel)
+    private WebElement messageField;
 
-	@FindBy(id = postButtonSel)
-	private WebElement postButton;
+    @FindBy(id = postButtonSel)
+    private WebElement postButton;
 
-	@FindBy(xpath = lastPostMessageSel)
-	private WebElement lastPostMessage;
+    @FindBy(xpath = lastPostMessageSel)
+    private WebElement lastPostMessage;
 
-	@FindBy(xpath = backButtonSel)
-	private WebElement backButton;
+    @FindBy(xpath = backButtonSel)
+    private WebElement backButton;
 
-	@FindBy(xpath = deleteButtonNearLastPostSel)
-	private WebElement deleteButtonNearLastPost;
+    @FindBy(xpath = deleteButtonNearLastPostSel)
+    private WebElement deleteButtonNearLastPost;
 
-	@FindBy(xpath = linkButtonNearLastPostSel)
-	private WebElement linkButtonNearLastPost;
+    @FindBy(xpath = linkButtonNearLastPostSel)
+    private WebElement linkButtonNearLastPost;
 
-	@FindBy(id = deleteConfirmOkButtonSel)
-	private WebElement deleteConfirmOkButton;
+    @FindBy(id = deleteConfirmOkButtonSel)
+    private WebElement deleteConfirmOkButton;
 
-	@FindBy(id = deleteConfirmCancelButtonSel)
-	private WebElement deleteConfirmCancelButton;
+    @FindBy(id = deleteConfirmCancelButtonSel)
+    private WebElement deleteConfirmCancelButton;
 
-	@FindBy(id = postErrorMessageSel)
-	private WebElement postErrorMessage;
+    @FindBy(id = postErrorMessageSel)
+    private WebElement postErrorMessage;
 
-	@FindBy(xpath = postsListSel)
-	private List<WebElement> postsList;
+    @FindBy(xpath = postsListSel)
+    private List<WebElement> postsList;
 
-	@FindBy(xpath = postsMessagesSel)
-	private List<WebElement> postsMessages;
+    @FindBy(xpath = postsMessagesSel)
+    private List<WebElement> postsMessages;
 
-	@FindBy(xpath = deleteTopicButtonSel)
-	private WebElement deleteTopicButton;
+    @FindBy(xpath = deleteTopicButtonSel)
+    private WebElement deleteTopicButton;
 
-	@FindBy(xpath = editPostButtonSel)
-	private WebElement editPostButton;
+    @FindBy(xpath = editPostButtonSel)
+    private WebElement editPostButton;
 
-	@FindBy(xpath = editTopicButtonSel)
-	private WebElement editTopicButton;
+    @FindBy(xpath = editTopicButtonSel)
+    private WebElement editTopicButton;
 
-	@FindBy(xpath = permanentUrlToPostSel)
-	private WebElement permanentUrlToPost;
+    @FindBy(xpath = permanentUrlToPostSel)
+    private WebElement permanentUrlToPost;
 
-	@FindBy(xpath = lastPostLinksFromBranchSel)
-	private List<WebElement> lastPostLinksFromBranch;
+    @FindBy(xpath = lastPostLinksFromBranchSel)
+    private List<WebElement> lastPostLinksFromBranch;
 
-	@FindBy(xpath = lastPostLinksFromTopicSel)
-	private List<WebElement> lastPostLinksFromTopic;
+    @FindBy(xpath = lastPostLinksFromTopicSel)
+    private List<WebElement> lastPostLinksFromTopic;
 
-//    TODO getPagesButtons() works wrong. One returns not a collection of buttons. (JC117 and other)
-	@FindBy(xpath = pagesButtonsSel)
-	private List<WebElement> pagesButtons;
+    //    TODO getPagesButtons() works wrong. One returns not a collection of buttons. (JC117 and other)
+    @FindBy(xpath = pagesButtonsSel)
+    private List<WebElement> pagesButtons;
 
     @FindBy(xpath = secondTopicPageButtonSel)
     private WebElement secondTopicPageButton;
 
-	@FindBy(xpath = showAllButtonSel)
-	private WebElement showAllButton;
+    @FindBy(xpath = showAllButtonSel)
+    private WebElement showAllButton;
 
-	@FindBy(xpath = showPagesButtonSel)
-	private WebElement showPagesButton;
+    @FindBy(xpath = showPagesButtonSel)
+    private WebElement showPagesButton;
 
-	@FindBy(xpath = signatureTextSel)
-	private WebElement signatureText;
+    @FindBy(xpath = signatureTextSel)
+    private WebElement signatureText;
 
-	@FindBy(xpath = authorsOfPostsListSel)
-	private List<WebElement> authorsOfPostsList;
-
-
-	public PostPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    @FindBy(xpath = authorsOfPostsListSel)
+    private List<WebElement> authorsOfPostsList;
 
 
-	//Getters
+    public PostPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
 
 
-	public WebElement getLastPostAuthor() {
-		return lastPostAuthor;
-	}
+    //Getters
 
-	public WebElement getNewButton() {
-		return newButton;
-	}
 
-	public WebElement getMessageField() {
-		return messageField;
-	}
+    public WebElement getLastPostAuthor() {
+        return lastPostAuthor;
+    }
 
-	public WebElement getPostButton() {
-		return postButton;
-	}
+    public WebElement getNewButton() {
+        return newButton;
+    }
 
-	public WebElement getLastPostMessage() {
-		return lastPostMessage;
-	}
+    public WebElement getMessageField() {
+        return messageField;
+    }
 
-	public WebElement getBackButton() {
-		return backButton;
-	}
+    public WebElement getPostButton() {
+        return postButton;
+    }
 
-	public WebElement getDeleteButtonNearLastPost() {
-		return deleteButtonNearLastPost;
-	}
+    public WebElement getLastPostMessage() {
+        return lastPostMessage;
+    }
 
-	public WebElement getLinkButtonNearLastPost() {
-		return linkButtonNearLastPost;
-	}
+    public WebElement getBackButton() {
+        return backButton;
+    }
 
-	public WebElement getDeleteConfirmOkButton() {
-		return deleteConfirmOkButton;
-	}
+    public WebElement getDeleteButtonNearLastPost() {
+        return deleteButtonNearLastPost;
+    }
 
-	public WebElement getDeleteConfirmCancelButton() {
-		return deleteConfirmCancelButton;
-	}
+    public WebElement getLinkButtonNearLastPost() {
+        return linkButtonNearLastPost;
+    }
 
-	public WebElement getPostErrorMessage() {
-		return postErrorMessage;
-	}
+    public WebElement getDeleteConfirmOkButton() {
+        return deleteConfirmOkButton;
+    }
 
-	public List<WebElement> getPostsList() {
-		return postsList;
-	}
+    public WebElement getDeleteConfirmCancelButton() {
+        return deleteConfirmCancelButton;
+    }
 
-	public List<WebElement> getPostsMessages() {
-		return postsMessages;
-	}
+    public WebElement getPostErrorMessage() {
+        return postErrorMessage;
+    }
 
-	public WebElement getDeleteTopicButton() {
-		return deleteTopicButton;
-	}
+    public List<WebElement> getPostsList() {
+        return postsList;
+    }
 
-	public WebElement getEditPostButton() {
-		return editPostButton;
-	}
+    public List<WebElement> getPostsMessages() {
+        return postsMessages;
+    }
 
-	public WebElement getEditTopicButton() {
-		return editTopicButton;
-	}
+    public WebElement getDeleteTopicButton() {
+        return deleteTopicButton;
+    }
 
-	public WebElement getPermanentUrlToPost() {
-		return permanentUrlToPost;
-	}
+    public WebElement getEditPostButton() {
+        return editPostButton;
+    }
 
-	public List<WebElement> getLastPostLinksFromBranch() {
-		return lastPostLinksFromBranch;
-	}
+    public WebElement getEditTopicButton() {
+        return editTopicButton;
+    }
 
-	public List<WebElement> getLastPostLinksFromTopic() {
-		return lastPostLinksFromTopic;
-	}
+    public WebElement getPermanentUrlToPost() {
+        return permanentUrlToPost;
+    }
 
-	public List<WebElement> getPagesButtons() {
-		return pagesButtons;
-	}
+    public List<WebElement> getLastPostLinksFromBranch() {
+        return lastPostLinksFromBranch;
+    }
 
-	public WebElement getShowAllButton() {
-		return showAllButton;
-	}
+    public List<WebElement> getLastPostLinksFromTopic() {
+        return lastPostLinksFromTopic;
+    }
+
+    public List<WebElement> getPagesButtons() {
+        return pagesButtons;
+    }
+
+    public WebElement getShowAllButton() {
+        return showAllButton;
+    }
+
     //Pagination
     public WebElement getSecondTopicPageButton() {
-		return secondTopicPageButton;
-	}
+        return secondTopicPageButton;
+    }
 
-	public WebElement getShowPagesButton() {
-		return showPagesButton;
-	}
+    public WebElement getShowPagesButton() {
+        return showPagesButton;
+    }
 
-	public WebElement getSignatureText() {
-		return signatureText;
-	}
+    public WebElement getSignatureText() {
+        return signatureText;
+    }
 
-	public List<WebElement> getAuthorsOfPostsList() {
-		return authorsOfPostsList;
-	}
+    public List<WebElement> getAuthorsOfPostsList() {
+        return authorsOfPostsList;
+    }
 }
