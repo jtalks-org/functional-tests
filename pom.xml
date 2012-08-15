@@ -10,6 +10,7 @@
     <name>${project.artifactId}</name>
     <modules>
         <module>functional-tests-jcommune</module>
+        <module>load-tests</module>
     </modules>
 
     <dependencies>
