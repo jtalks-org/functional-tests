@@ -1,15 +1,6 @@
 package org.jtalks.tests.jcommune.common;
 
-import org.jtalks.tests.jcommune.pages.BranchPage;
-import org.jtalks.tests.jcommune.pages.MainPage;
-import org.jtalks.tests.jcommune.pages.PMPage;
-import org.jtalks.tests.jcommune.pages.PostPage;
-import org.jtalks.tests.jcommune.pages.ProfilePage;
-import org.jtalks.tests.jcommune.pages.SectionPage;
-import org.jtalks.tests.jcommune.pages.SignInPage;
-import org.jtalks.tests.jcommune.pages.SignUpPage;
-import org.jtalks.tests.jcommune.pages.TopicPage;
-import org.openqa.selenium.NoSuchElementException;
+import org.jtalks.tests.jcommune.pages.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -149,8 +140,7 @@ public class JCommuneSeleniumTest {
         if (dbConnection != null) {
             try {
                 dbConnection.close();
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
 
             }
         }
@@ -165,8 +155,7 @@ public class JCommuneSeleniumTest {
             boolean result = signIn(user[0], user[2]);
             if (result) {
                 logOut(appUrl);
-            }
-            else {
+            } else {
                 //registration user
                 signInPage.getCloseSignInWindowButton().click();
 
@@ -176,8 +165,7 @@ public class JCommuneSeleniumTest {
                 //user with name "random" used in recovery password test. He have real email
                 if (user[0].equals("tochanges")) {
                     mailServer.signIn(user[1], user[0]);
-                }
-                else {
+                } else {
                     mailServer.signIn(publicEmail, publicPass);
                 }
 
@@ -212,17 +200,21 @@ public class JCommuneSeleniumTest {
         signInPage.getPasswordField().sendKeys(password);
         signInPage.getSubmitButton().click();
         //wait until user is logining
-        try {
-            signInPage.getErrorMessage().isDisplayed();
-            return false;
-        }
-        catch (NoSuchElementException ex) {
-            return (new WebDriverWait(driver, timeout)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return mainPage.getCurrentUsernameLink().isDisplayed();
-                }
-            });
-        }
+        if (mainPage.getCurrentUsernameLink().isDisplayed()) {
+            return true;
+        } else return false;
+//        try {
+//            signInPage.getErrorMessage().isDisplayed();
+//            return false;
+//        }
+//        catch (NoSuchElementException ex) {
+//            return (new WebDriverWait(driver, timeout)).until(new ExpectedCondition<Boolean>() {
+//                public Boolean apply(WebDriver d) {
+//                    return mainPage.getCurrentUsernameLink().isDisplayed();
+//                }
+//            });
+//        }
+
     }
 
     /**
@@ -379,15 +371,14 @@ public class JCommuneSeleniumTest {
             driver = new RemoteWebDriver(
                     new URL(selServerURL),
                     SeleniumConfig.getBrowserDriver(selDriverType));
+//            driver = new FirefoxDriver();
 
             driver.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 
             createPages();
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
@@ -404,8 +395,7 @@ public class JCommuneSeleniumTest {
 //			driver2 = new FirefoxDriver();
             driver2.manage().timeouts().implicitlyWait(timeout, TimeUnit.SECONDS);
 
-        }
-        catch (MalformedURLException e) {
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
