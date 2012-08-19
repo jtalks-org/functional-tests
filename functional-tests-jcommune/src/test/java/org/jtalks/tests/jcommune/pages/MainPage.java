@@ -37,6 +37,15 @@ public class MainPage {
 
     public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user' and not(@class='currentusername')]";
 
+    public static final String languageSwitcherSel = "//div[@id='lang-selector-toggle']/a/img";
+
+    public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
+
+    @FindBy(xpath = languageDropdownMenuSel)
+    private WebElement languageDropdownMenu;
+
+    @FindBy(xpath = languageSwitcherSel)
+    private WebElement languageSwitcher;
 
     @FindBy(xpath = profileLinkSel)
     private WebElement profileLink;
@@ -84,7 +93,13 @@ public class MainPage {
     }
 
     //Getters
+    public WebElement getLanguageDropdownMenu() {
+        return languageDropdownMenu;
+    }
 
+    public WebElement getLanguageSwitcher() {
+        return languageSwitcher;
+    }
 
     public WebElement getProfileLink() {
         return profileLink;
