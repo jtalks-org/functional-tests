@@ -48,6 +48,6 @@ public class JC39EditTopicWithValidMessage {
         topicPage.getPostButton().click();
 
         assertionContainsInString(topicPage.getTopicMessage().getText(), msg);
-        assertionContainsInString(topicPage.getTopicMessage().getText(), "изменен");
+        assertionContainsInString(topicPage.getTopicMessage().getText(), "edited");
     }
 }
