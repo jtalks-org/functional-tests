@@ -32,6 +32,7 @@ public class JC118PaginationForRegisteredUserCountsOfPosts {
     @BeforeMethod
     public void navigateToFirstTopicPage() {
         driver.get(topicLink);
+
     }
 
     @Test
@@ -56,8 +57,11 @@ public class JC118PaginationForRegisteredUserCountsOfPosts {
         postPage.getPageLinkButton(2).click();
         //Step 3: check posts count on the 1 topic page
         Assert.assertEquals(postPage.getPostsList().size(), 1);
-
-
+        //set page size to 5
+        profilePage.getCurrentUserLink().click();
+        profilePage.getEditProfileButton().click();
+        profilePage.selectPageSizeByValue(5);
+        profilePage.getSaveEditButton().click();
     }
 
 }
