@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ import static org.testng.Assert.fail;
 /**
  * The class contains a check for the existence of elements
  *
- * @author masyan
+ * @authors masyan, yacov
  */
 public class Exsistence {
 
@@ -167,5 +168,30 @@ public class Exsistence {
 			fail("Element with text '" + text + "' not contained in list");
 		}
 	}
+
+    /**
+     * The method checks that the element is _disabled_
+     *
+     * @param selector is Element Xpath Selector
+     */
+public static void assertionCheckIfDisabled(WebDriver driver, String selector){
+    WebElement button = driver.findElement(By.xpath(selector));
+    if(button.isEnabled()){
+        fail("The element with selector =\"" + selector + "\" is not disabled");
+    }
+}
+
+    /**
+     * The method checks that the element is _enabled_
+     *
+     * @param selector is Element Xpath Selector
+     */
+    public static void assertionCheckIfEnabled(WebDriver driver, String selector){
+        WebElement button = driver.findElement(By.xpath(selector));
+        if (!button.isEnabled()) {
+           fail("The element with selector =\"" + selector + "\" is not Enabled");
+        }
+
+    }
 
 }

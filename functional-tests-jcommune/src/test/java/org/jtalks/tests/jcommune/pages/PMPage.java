@@ -24,6 +24,8 @@ public class PMPage {
 	public static final String titleFieldSel = "title";
 
 	public static final String messageFieldSel = "tbMsg";
+	
+	public static final String delButtonSel = "deleteCheckedPM";
 
 	public static final String sendButtonSel = "post";
 
@@ -45,8 +47,18 @@ public class PMPage {
 
 	public static final String draftMessageEditButtonSel = "editCheckedPM";
 
-	public static final String draftMessageCheckboxesSel = "//input[@class='checker']";
+    public static final String jqiMessageSel = "jqi"; //Alert message when you delete PM from inbox
 
+    public static final String jqiButtonOKSel = "jqi_state0_buttonOk"; // OK Button on Alert message when you delete PM from inbox
+
+    public static final String jqiButtonCancelSel = "jqi_state0_buttonCancel"; // Cancel Button on Alert message when you delete PM from inbox
+
+	public static final String draftMessageCheckboxesSel = "//input[@class='checker']";
+	
+	public static final String inboxCheckboxesSel = "//input[@type='checkbox' AND @class='checker']";
+
+    public static final String inboxCheckedCheckboxSel = "//input[@class='mess check']";
+	
 	public static final String pmHeadingOutboxSel = "//li[@id='outbox_link' and @class='active']";
 
 	public static final String recepientsListSel = "//td[@class='pm_user_to_from']/a";
@@ -69,9 +81,21 @@ public class PMPage {
 	@FindBy(id = messageFieldSel)
 	private WebElement messageField;
 
-	@FindBy(id = sendButtonSel)
-	private WebElement sendButton;
+	@FindBy(id = jqiMessageSel)
+	private WebElement jqiMessage;
 
+    @FindBy(id = jqiButtonCancelSel)
+    private WebElement jqiButtonCancel;
+
+    @FindBy(id = jqiButtonOKSel)
+    private WebElement jqiButtonOK;
+
+    @FindBy(id = sendButtonSel)
+    private WebElement sendButton;
+
+	@FindBy(id = delButtonSel)
+	private WebElement delButton;
+	
 	@FindBy(xpath = pmSubjectLinksSel)
 	private List<WebElement> pmSubjectLinks;
 
@@ -105,6 +129,12 @@ public class PMPage {
 	@FindBy(xpath = draftMessageCheckboxesSel)
 	private List<WebElement> draftMessageCheckboxes;
 
+	@FindBy(xpath = inboxCheckboxesSel)
+	private List<WebElement> InboxCheckboxes;
+
+    @FindBy(xpath = inboxCheckedCheckboxSel)
+    private WebElement InboxCheckedCheckbox;
+	
 	@FindBy(xpath = recepientsListSel)
 	private List<WebElement> recepientsList;
 
@@ -142,7 +172,7 @@ public class PMPage {
 		return sendButton;
 	}
 
-	public List<WebElement> getPmSubjectLinks() {
+	public List <WebElement> getPmSubjectLinks() {
 		return pmSubjectLinks;
 	}
 
@@ -158,9 +188,21 @@ public class PMPage {
 		return bodyMsgErrorMessage;
 	}
 
-	public WebElement getReplyButton() {
-		return replyButton;
+	public WebElement getJqiMessage() {
+		return jqiMessage;
 	}
+
+    public WebElement getJqiButtonOK() {
+        return jqiButtonOK;
+    }
+
+    public WebElement getJqiButtonCancel() {
+        return jqiButtonCancel;
+    }
+
+    public WebElement getReplyButton() {
+        return replyButton;
+    }
 
 	public WebElement getQuoteButton() {
 		return quoteButton;
@@ -177,6 +219,10 @@ public class PMPage {
 	public WebElement getDraftMessageEditButton() {
 		return draftMessageEditButton;
 	}
+	public WebElement getDelButton() {
+		return delButton;
+	}
+	//*[@id="deleteCheckedPM"]
 
 	public WebElement getPmHeadingOutbox() {
 		return pmHeadingOutbox;
@@ -185,6 +231,13 @@ public class PMPage {
 	public List<WebElement> getDraftMessageCheckboxes() {
 		return draftMessageCheckboxes;
 	}
+	public List<WebElement> getInboxCheckboxes() {
+		return InboxCheckboxes;
+	}
+
+    public WebElement getInboxCheckedCheckbox() {
+        return InboxCheckedCheckbox;
+    }
 
 	public List<WebElement> getRecepientsList() {
 		return recepientsList;
