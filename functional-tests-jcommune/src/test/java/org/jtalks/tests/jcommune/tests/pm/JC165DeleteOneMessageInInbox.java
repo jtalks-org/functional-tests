@@ -1,14 +1,10 @@
 package org.jtalks.tests.jcommune.tests.pm;
 import org.jtalks.tests.jcommune.assertion.Exsistence;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.internal.selenesedriver.FindElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
-import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
@@ -49,13 +45,13 @@ public class JC165DeleteOneMessageInInbox {
 		pmPage.getPmInboxLink().click();   //Enter to Inbox
         CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
         pmPage.getDelButton().click();  //Click on 'Delete' button
-        Exsistence.assertionExistBySelector(driver, pmPage.jqiMessageSel);   //Check that Alert Message appears
+        Exsistence.assertionExistBySelector(driver, pmPage.jqiMessageSel);   //Control that Alert Message appears
         pmPage.getJqiButtonCancel().click();   //Click on 'Cancel'
-        Exsistence.assertionExistBySelector(driver, pmPage.inboxCheckedCheckboxSel);   //Check that a checkbox is still checked
+        Exsistence.assertionExistBySelector(driver, pmPage.сheckedCheckboxSel);   //Control that a checkbox is still checked
         pmPage.getDelButton().click();   //Click again on 'Delete' button
-        Exsistence.assertionExistBySelector(driver, pmPage.jqiMessageSel);      //Check that Alert Message appears
+        Exsistence.assertionExistBySelector(driver, pmPage.jqiMessageSel);      //Control that Alert Message appears
         pmPage.getJqiButtonOK().click(); //Click on 'OK' button of Alert Message
-        Exsistence.assertionNotExistBySelector(driver, pmPage.inboxCheckedCheckboxSel); //Check, that there is no more checked message on Inbox
+        Exsistence.assertionNotExistBySelector(driver, pmPage.сheckedCheckboxSel); //Control, that there is no more checked message on Inbox
 
          }
 		}

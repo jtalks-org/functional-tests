@@ -47,17 +47,17 @@ public class PMPage {
 
 	public static final String draftMessageEditButtonSel = "editCheckedPM";
 
-    public static final String jqiMessageSel = "jqi"; //Alert message when you delete PM from inbox
+    public static final String jqiMessageSel = "jqi"; //Alert message when you delete private message
 
-    public static final String jqiButtonOKSel = "jqi_state0_buttonOk"; // OK Button on Alert message when you delete PM from inbox
+    public static final String jqiButtonOKSel = "jqi_state0_buttonOk"; // OK Button on Alert message when you delete private message
 
-    public static final String jqiButtonCancelSel = "jqi_state0_buttonCancel"; // Cancel Button on Alert message when you delete PM from inbox
+    public static final String jqiButtonCancelSel = "jqi_state0_buttonCancel"; // Cancel Button on Alert message when you delete private message
 
 	public static final String draftMessageCheckboxesSel = "//input[@class='checker']";
 	
 	public static final String inboxCheckboxesSel = "//input[@type='checkbox' AND @class='checker']";
 
-    public static final String inboxCheckedCheckboxSel = "//input[@class='mess check']";
+    public static final String сheckedCheckboxSel = "//input[@class='mess check']";
 	
 	public static final String pmHeadingOutboxSel = "//li[@id='outbox_link' and @class='active']";
 
@@ -130,10 +130,10 @@ public class PMPage {
 	private List<WebElement> draftMessageCheckboxes;
 
 	@FindBy(xpath = inboxCheckboxesSel)
-	private List<WebElement> InboxCheckboxes;
+	private List<WebElement> inboxCheckboxes;
 
-    @FindBy(xpath = inboxCheckedCheckboxSel)
-    private WebElement InboxCheckedCheckbox;
+    @FindBy(xpath = сheckedCheckboxSel)
+    private WebElement checkedCheckbox;
 	
 	@FindBy(xpath = recepientsListSel)
 	private List<WebElement> recepientsList;
@@ -232,11 +232,11 @@ public class PMPage {
 		return draftMessageCheckboxes;
 	}
 	public List<WebElement> getInboxCheckboxes() {
-		return InboxCheckboxes;
+		return inboxCheckboxes;
 	}
 
-    public WebElement getInboxCheckedCheckbox() {
-        return InboxCheckedCheckbox;
+    public WebElement getCheckedCheckbox() {
+        return checkedCheckbox;
     }
 
 	public List<WebElement> getRecepientsList() {
