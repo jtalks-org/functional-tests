@@ -18,6 +18,10 @@
     <parameter name="db-username" value="selenium"/>
     <parameter name="db-password" value="selenium_KjY4"/>
 
+    <!-- Jcommune default settings -->
+    <parameter name="pageSizeForUnregisteredUser" value="50"/>
+    <parameter name="pageSizeDefaultForRegisteredUser" value="5"/>
+
     <!--Registered users-->
     <!--simlpe users-->
     <parameter name="uUsername" value="testSel"/>

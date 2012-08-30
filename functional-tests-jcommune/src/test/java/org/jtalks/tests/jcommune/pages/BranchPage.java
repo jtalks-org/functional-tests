@@ -20,11 +20,16 @@ public class BranchPage {
 
 	public static final String breadCrumbsBranchLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/branches/')]";
 
+    public static final String branchNameSel = "//div[2]/div/h2";
+
 	@FindBy(xpath = branchListSel)
 	private List<WebElement> branchList;
 
 	@FindBy(xpath = breadCrumbsBranchLinkSel)
 	private WebElement breadCrumbsBranchLink;
+
+    @FindBy(xpath = branchNameSel)
+	private WebElement branchName;
 
 	public BranchPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -37,5 +42,9 @@ public class BranchPage {
 
 	public WebElement getBreadCrumbsBranchLink() {
 		return breadCrumbsBranchLink;
+	}
+
+    public String getBranchName() {
+		return branchName.getText();
 	}
 }

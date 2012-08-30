@@ -1,58 +1,67 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
-import utils.CollectionHelp;
+import org.testng.annotations.*;
 
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranchFromSectionPage;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomSection;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createPostsForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * author: erik
  */
 public class JC118PaginationForRegisteredUserCountsOfPosts {
-	Boolean wasValueChanged = false;
-	String value;
-	String topicLink;
+    String topicLink;
 
-	@BeforeMethod
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setUp(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		clickOnRandomSection();
-		clickOnRandomBranchFromSectionPage();
-		createTopicForTest();
-		topicLink = driver.getCurrentUrl();
-		createPostsForTest(5, 50);
-	}
+    @BeforeClass
+    @Parameters({"app-url", "uUsername", "uPassword", "pageSizeDefaultForRegisteredUser"})
+    public void setUp(String appUrl, String username, String password, int pageSizeDefault) {
+        driver.get(appUrl);
+        signIn(username, password);
+        clickOnRandomSection();
+        clickOnRandomBranchFromSectionPage();
+        createTopicForTest();
+        topicLink = driver.getCurrentUrl();
+        createPostsForTest(10, 50);
+    }
 
-	@AfterMethod
-	@Parameters({"app-url", "uUsername"})
-	public void back(String appUrl, String username) {
-		logOut(appUrl);
-	}
+    @AfterClass
+    @Parameters({"app-url", "uUsername"})
+    public void back(String appUrl, String username) {
+        logOut(appUrl);
+    }
 
-	@Test
-	public void paginationTest() {
-		driver.get(topicLink);
-		if (postPage.getPostsList().size() != 5) {
-			Assert.fail("Post page contains count of posts that not equals 5");
-		}
+    @BeforeMethod
+    public void navigateToFirstTopicPage() {
+        driver.get(topicLink);
 
-		CollectionHelp.getWebElementFromCollectionByIndex(postPage.getPagesButtons(), 2).click();
-		if (postPage.getPostsList().size() != 1) {
-			Assert.fail("Post page contains count of posts that not equals 1");
-		}
-	}
+    }
+
+    @Test
+    @Parameters({"pageSizeDefaultForRegisteredUser"})
+    public void postsCountShouldBeFiveOnFirstTopicPage(int pageSizeDefault) {
+        int postsPageSize = postPage.getPostsList().size();
+        Assert.assertEquals(postsPageSize, pageSizeDefault,
+                "Post page contains count of posts that not equals " + pageSizeDefault
+        );
+    }
+
+    @Test
+    public void postsCountShouldBeTenOnSecondTopicPage() {
+        //Step 1: set 10 page size
+        profilePage.getCurrentUserLink().click();
+        profilePage.getEditProfileButton().click();
+        profilePage.selectPageSizeByValue(10);
+        profilePage.getSaveEditButton().click();
+        //Step 2: check posts count on the 1 topic page
+        driver.get(topicLink);
+        Assert.assertEquals(postPage.getPostsList().size(), 10);
+        postPage.getPageLinkButton(2).click();
+        //Step 3: check posts count on the 1 topic page
+        Assert.assertEquals(postPage.getPostsList().size(), 1);
+        //set page size to 5
+        profilePage.getCurrentUserLink().click();
+        profilePage.getEditProfileButton().click();
+        profilePage.selectPageSizeByValue(5);
+        profilePage.getSaveEditButton().click();
+    }
 
 }

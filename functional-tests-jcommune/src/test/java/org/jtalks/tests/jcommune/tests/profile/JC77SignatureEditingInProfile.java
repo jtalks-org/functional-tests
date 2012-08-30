@@ -18,29 +18,29 @@ import static org.testng.Assert.assertEquals;
 public class JC77SignatureEditingInProfile {
 
 
-	@BeforeMethod
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		profilePage.getProfileLinkFromMainPage().click();
-		profilePage.getEditProfileButton().click();
-	}
+    @BeforeMethod
+    @Parameters({"app-url", "uUsername", "uPassword"})
+    public void setupCase(String appUrl, String username, String password) {
+        driver.get(appUrl);
+        signIn(username, password);
+        profilePage.getProfileLinkFromMainPage().click();
+        profilePage.getEditProfileButton().click();
+    }
 
-	@AfterMethod
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
-	}
+    @AfterMethod
+    @Parameters({"app-url"})
+    public void destroy(String appUrl) {
+        logOut(appUrl);
+    }
 
-	@Test
-	public void signatureEditingInProfileTest() {
-		profilePage.getSignatureField().clear();
-		String newSign = StringHelp.getRandomString(10);
-		profilePage.getSignatureField().sendKeys(newSign);
-		profilePage.getSaveEditButton().click();
+    @Test
+    public void signatureEditingInProfileTest() {
+        profilePage.getSignatureField().clear();
+        String newSign = StringHelp.getRandomString(10);
+        profilePage.getSignatureField().sendKeys(newSign);
+        profilePage.getSaveEditButton().click();
 
-		assertEquals(profilePage.getSignatureText().getAttribute("value"), newSign);
-	}
+        assertEquals(profilePage.getSignatureText().getText(), newSign);
+    }
 
 }

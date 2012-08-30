@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 
@@ -13,328 +14,328 @@ import java.util.List;
  */
 public class ProfilePage {
 
-	public static final String currentUserLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
+    public static final String currentUserLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
-	public static final String userDetailsFormSel = "userdetails";
+    public static final String userDetailsFormSel = "userdetails";
 
-	public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
+    public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users')]";
 
-	public static final String profileLinkFromTopicPageSel = "//div[@class='post']//td[@class='userinfo']/div/a[@class='post-userinfo-username']";
+    public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
-	public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
+    public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @type='submit']";
 
-	public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/edit') and @type='submit']";
+    public static final String emailEditFieldIdSel = "email";
 
-	public static final String emailEditFieldIdSel = "email";
+    public static final String saveEditButtonIdSel = "saveChanges";
 
-	public static final String saveEditButtonIdSel = "saveChanges";
+    public static final String errorEmailMessageIdSel = "email.errors";
 
-	public static final String errorEmailMessageIdSel = "email.errors";
+    public static final String emailSel = "//label[contains(@class,'test-mail')]";
 
-	public static final String emailSel = "//input[contains(@class,'test-mail')]";
+    public static final String currentPasswordFieldIdSel = "currentUserPassword";
 
-	public static final String currentPasswordFieldIdSel = "currentUserPassword";
+    public static final String newPasswordFieldIdSel = "newUserPassword";
 
-	public static final String newPasswordFieldIdSel = "newUserPassword";
+    public static final String confirmNewPasswordFieldIdSel = "newUserPasswordConfirm";
 
-	public static final String confirmNewPasswordFieldIdSel = "newUserPasswordConfirm";
+    public static final String errorCurrentUserPasswordMessageIdSel = "currentUserPassword.errors";
 
-	public static final String errorCurrentUserPasswordMessageIdSel = "currentUserPassword.errors";
+    public static final String errorNewUserPasswordMessageIdSel = "newUserPassword.errors";
 
-	public static final String errorNewUserPasswordMessageIdSel = "newUserPassword.errors";
+    public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
 
-	public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
+    public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/user') and @class='button']";
 
-	public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/user') and @class='button']";
+    public static final String profileLinkFromLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/p/a";
 
-	public static final String profileLinkFromLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/p/a";
+    public static final String signatureFieldSel = "signature";
 
-	public static final String signatureFieldSel = "signature";
+    public static final String signatureTextSel = "//label[contains(@class,'test-signature')]";
 
-	public static final String signatureTextSel = "//input[contains(@class,'test-signature')]";
+    public static final String postListButtonSel = "//a[@class='btn btn-mini pull-right user-profile-buttons-posts']";
 
-	public static final String postListButtonSel = "//a[@class='btn btn-mini pull-right user-profile-buttons-posts']";
+    public static final String emptyMessageInPosListSel = "//div[@class='post']//td[contains(text(), 'There are no posts yet')]";
 
-	public static final String emptyMessageInPosListSel = "//div[@class='post']//td[contains(text(), 'There are no posts yet')]";
+    public static final String newPrivateMessageButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/new')]";
 
-	public static final String newPrivateMessageButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/new')]";
+    public static final String usernameTableFieldSel = "//h2[@class='pull-right user-profile-username']";
 
-	public static final String usernameTableFieldSel = "//h2[@class='pull-right user-profile-username']";
+    public static final String firstNameTableFieldSel = "//label[contains(text(),'First name')]";
 
-	public static final String firstNameTableFieldSel = "//label[contains(text(),'First name')]";
+    public static final String lastNameTableFieldSel = "//label[contains(text(),'Last name')]";
 
-	public static final String lastNameTableFieldSel = "//label[contains(text(),'Last name')]";
+    public static final String emailTableFieldSel = "//label[contains(text(),'Email')]";
 
-	public static final String emailTableFieldSel = "//label[contains(text(),'Email')]";
+    public static final String languageTableFieldSel = "//label[contains(text(),'Language')]";
 
-	public static final String languageTableFieldSel = "//label[contains(text(),'Language')]";
+    public static final String pageSizeTableFieldSel = "//label[contains(text(), 'Page size')]";
 
-	public static final String pageSizeTableFieldSel = "//label[contains(text(),'Page size')]";
+    public static final String signatureTableFieldSel = "//label[contains(text(),'Your signature')]";
 
-	public static final String signatureTableFieldSel = "//label[contains(text(),'Your signature')]";
+    public static final String locationTableFieldSel = "//label[contains(text(),'Location')]";
 
-	public static final String locationTableFieldSel = "//label[contains(text(),'Location')]";
+    public static final String lastLoginTableFieldSel = "//label[contains(text(),'Last login')]";
 
-	public static final String lastLoginTableFieldSel = "//label[contains(text(),'Last login')]";
+    public static final String registrationDateTableFieldSel = "//label[contains(text(),'Registration date')]";
 
-	public static final String registrationDateTableFieldSel = "//label[contains(text(),'Registration date')]";
+    public static final String postCountDateTableFieldSel = "//label[contains(text(),'Post count')]";
 
-	public static final String postCountDateTableFieldSel = "//label[contains(text(),'Post count')]";
+    public static final String pageSizeFieldSel = "pageSize";
 
-	public static final String pageSizeFieldSel = "pageSize";
+    public static final String pmLinksFromLastColumnSel = "//td[@class='latest-by']/p/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/')]";
 
-	public static final String pmLinksFromLastColumnSel = "//td[@class='latest-by']/p/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/')]";
 
+    @FindBy(xpath = emptyMessageInPosListSel)
+    private WebElement emptyMessageInPosList;
 
-	@FindBy(xpath = emptyMessageInPosListSel)
-	private WebElement emptyMessageInPosList;
+    @FindBy(xpath = postListButtonSel)
+    private WebElement postListButton;
 
-	@FindBy(xpath = postListButtonSel)
-	private WebElement postListButton;
+    @FindBy(xpath = backButtonSel)
+    private WebElement backButton;
 
-	@FindBy(xpath = backButtonSel)
-	private WebElement backButton;
+    @FindBy(id = errorNewUserPasswordConfirmMessageIdSel)
+    private WebElement errorNewUserPasswordConfirmMessage;
 
-	@FindBy(id = errorNewUserPasswordConfirmMessageIdSel)
-	private WebElement errorNewUserPasswordConfirmMessage;
+    @FindBy(id = errorNewUserPasswordMessageIdSel)
+    private WebElement errorNewUserPasswordMessage;
 
-	@FindBy(id = errorNewUserPasswordMessageIdSel)
-	private WebElement errorNewUserPasswordMessage;
+    @FindBy(id = errorCurrentUserPasswordMessageIdSel)
+    private WebElement errorCurrentUserPasswordMessage;
 
-	@FindBy(id = errorCurrentUserPasswordMessageIdSel)
-	private WebElement errorCurrentUserPasswordMessage;
+    @FindBy(id = currentPasswordFieldIdSel)
+    private WebElement currentPasswordField;
 
-	@FindBy(id = currentPasswordFieldIdSel)
-	private WebElement currentPasswordField;
+    @FindBy(id = newPasswordFieldIdSel)
+    private WebElement newPasswordField;
 
-	@FindBy(id = newPasswordFieldIdSel)
-	private WebElement newPasswordField;
+    @FindBy(id = confirmNewPasswordFieldIdSel)
+    private WebElement confirmNewPasswordField;
 
-	@FindBy(id = confirmNewPasswordFieldIdSel)
-	private WebElement confirmNewPasswordField;
+    @FindBy(xpath = emailSel)
+    private WebElement email;
 
-	@FindBy(xpath = emailSel)
-	private WebElement email;
+    @FindBy(xpath = currentUserLinkSel)
+    private WebElement currentUserLink;
 
-	@FindBy(xpath = currentUserLinkSel)
-	private WebElement currentUserLink;
+    @FindBy(id = userDetailsFormSel)
+    private WebElement userDetailsForm;
 
-	@FindBy(id = userDetailsFormSel)
-	private WebElement userDetailsForm;
+    @FindBy(xpath = profileLinkFromPMInpoxPageSel)
+    private WebElement profileLinkFromPMInpoxPage;
 
-	@FindBy(xpath = profileLinkFromPMInpoxPageSel)
-	private WebElement profileLinkFromPMInpoxPage;
+    @FindBy(xpath = profileLinkFromMainPageSel)
+    private WebElement profileLinkFromMainPage;
 
-	@FindBy(xpath = profileLinkFromTopicPageSel)
-	private WebElement profileLinkFromTopicPage;
+    @FindBy(xpath = editProfileButtonSel)
+    private WebElement editProfileButton;
 
-	@FindBy(xpath = profileLinkFromMainPageSel)
-	private WebElement profileLinkFromMainPage;
+    @FindBy(id = emailEditFieldIdSel)
+    private WebElement emailEditField;
 
-	@FindBy(xpath = editProfileButtonSel)
-	private WebElement editProfileButton;
+    @FindBy(id = saveEditButtonIdSel)
+    private WebElement saveEditButton;
 
-	@FindBy(id = emailEditFieldIdSel)
-	private WebElement emailEditField;
+    @FindBy(xpath = profileLinkFromLastColumnSel)
+    private WebElement profileLinkFromLastColumn;
 
-	@FindBy(id = saveEditButtonIdSel)
-	private WebElement saveEditButton;
+    @FindBy(id = signatureFieldSel)
+    private WebElement signatureField;
 
-	@FindBy(xpath = profileLinkFromLastColumnSel)
-	private WebElement profileLinkFromLastColumn;
+    @FindBy(xpath = signatureTextSel)
+    private WebElement signatureText;
 
-	@FindBy(id = signatureFieldSel)
-	private WebElement signatureField;
+    @FindBy(xpath = newPrivateMessageButtonSel)
+    private WebElement newPrivateMessageButton;
 
-	@FindBy(xpath = signatureTextSel)
-	private WebElement signatureText;
+    @FindBy(xpath = usernameTableFieldSel)
+    private WebElement usernameTableField;
 
-	@FindBy(xpath = newPrivateMessageButtonSel)
-	private WebElement newPrivateMessageButton;
+    @FindBy(xpath = firstNameTableFieldSel)
+    private WebElement firstNameTableField;
 
-	@FindBy(xpath = usernameTableFieldSel)
-	private WebElement usernameTableField;
+    @FindBy(xpath = lastNameTableFieldSel)
+    private WebElement lastNameTableField;
 
-	@FindBy(xpath = firstNameTableFieldSel)
-	private WebElement firstNameTableField;
+    @FindBy(xpath = emailTableFieldSel)
+    private WebElement emailTableField;
 
-	@FindBy(xpath = lastNameTableFieldSel)
-	private WebElement lastNameTableField;
+    @FindBy(xpath = languageTableFieldSel)
+    private WebElement languageTableField;
 
-	@FindBy(xpath = emailTableFieldSel)
-	private WebElement emailTableField;
+    @FindBy(xpath = pageSizeTableFieldSel)
+    private WebElement pageSizeTableField;
 
-	@FindBy(xpath = languageTableFieldSel)
-	private WebElement languageTableField;
+    @FindBy(xpath = signatureTableFieldSel)
+    private WebElement signatureTableField;
 
-	@FindBy(xpath = pageSizeTableFieldSel)
-	private WebElement pageSizeTableField;
+    @FindBy(xpath = locationTableFieldSel)
+    private WebElement locationTableField;
 
-	@FindBy(xpath = signatureTableFieldSel)
-	private WebElement signatureTableField;
+    @FindBy(xpath = lastLoginTableFieldSel)
+    private WebElement lastLoginTableField;
 
-	@FindBy(xpath = locationTableFieldSel)
-	private WebElement locationTableField;
+    @FindBy(xpath = registrationDateTableFieldSel)
+    private WebElement registrationDateTableField;
 
-	@FindBy(xpath = lastLoginTableFieldSel)
-	private WebElement lastLoginTableField;
+    @FindBy(xpath = postCountDateTableFieldSel)
+    private WebElement postCountDateTableField;
 
-	@FindBy(xpath = registrationDateTableFieldSel)
-	private WebElement registrationDateTableField;
+    @FindBy(id = pageSizeFieldSel)
+    private WebElement pageSizeField;
 
-	@FindBy(xpath = postCountDateTableFieldSel)
-	private WebElement postCountDateTableField;
+    @FindBy(xpath = pmLinksFromLastColumnSel)
+    private List<WebElement> pmLinksFromLastColumn;
 
-	@FindBy(id = pageSizeFieldSel)
-	private WebElement pageSizeField;
+    public ProfilePage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
 
-	@FindBy(xpath = pmLinksFromLastColumnSel)
-	private List<WebElement> pmLinksFromLastColumn;
+    //Getters
 
-	public ProfilePage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
 
-	//Getters
+    public WebElement getPostListButton() {
+        return postListButton;
+    }
 
+    public WebElement getCurrentUserLink() {
+        return currentUserLink;
+    }
 
-	public WebElement getPostListButton() {
-		return postListButton;
-	}
+    public WebElement getUserDetailsForm() {
+        return userDetailsForm;
+    }
 
-	public WebElement getCurrentUserLink() {
-		return currentUserLink;
-	}
+    public WebElement getProfileLinkFromPMInpoxPage() {
+        return profileLinkFromPMInpoxPage;
+    }
 
-	public WebElement getUserDetailsForm() {
-		return userDetailsForm;
-	}
+    public WebElement getProfileLinkFromMainPage() {
+        return profileLinkFromMainPage;
+    }
 
-	public WebElement getProfileLinkFromPMInpoxPage() {
-		return profileLinkFromPMInpoxPage;
-	}
+    public WebElement getEditProfileButton() {
+        return editProfileButton;
+    }
 
-	public WebElement getProfileLinkFromTopicPage() {
-		return profileLinkFromTopicPage;
-	}
+    public WebElement getEmailEditField() {
+        return emailEditField;
+    }
 
-	public WebElement getProfileLinkFromMainPage() {
-		return profileLinkFromMainPage;
-	}
+    public WebElement getSaveEditButton() {
+        return saveEditButton;
+    }
 
-	public WebElement getEditProfileButton() {
-		return editProfileButton;
-	}
+    public WebElement getEmail() {
+        return email;
+    }
 
-	public WebElement getEmailEditField() {
-		return emailEditField;
-	}
+    public WebElement getCurrentPasswordField() {
+        return currentPasswordField;
+    }
 
-	public WebElement getSaveEditButton() {
-		return saveEditButton;
-	}
+    public WebElement getNewPasswordField() {
+        return newPasswordField;
+    }
 
-	public WebElement getEmail() {
-		return email;
-	}
+    public WebElement getConfirmNewPasswordField() {
+        return confirmNewPasswordField;
+    }
 
-	public WebElement getCurrentPasswordField() {
-		return currentPasswordField;
-	}
+    public WebElement getErrorCurrentUserPasswordMessage() {
+        return errorCurrentUserPasswordMessage;
+    }
 
-	public WebElement getNewPasswordField() {
-		return newPasswordField;
-	}
+    public WebElement getErrorNewUserPasswordMessage() {
+        return errorNewUserPasswordMessage;
+    }
 
-	public WebElement getConfirmNewPasswordField() {
-		return confirmNewPasswordField;
-	}
+    public WebElement getErrorNewUserPasswordConfirmMessage() {
+        return errorNewUserPasswordConfirmMessage;
+    }
 
-	public WebElement getErrorCurrentUserPasswordMessage() {
-		return errorCurrentUserPasswordMessage;
-	}
+    public WebElement getBackButton() {
+        return backButton;
+    }
 
-	public WebElement getErrorNewUserPasswordMessage() {
-		return errorNewUserPasswordMessage;
-	}
+    public WebElement getProfileLinkFromLastColumn() {
+        return profileLinkFromLastColumn;
+    }
 
-	public WebElement getErrorNewUserPasswordConfirmMessage() {
-		return errorNewUserPasswordConfirmMessage;
-	}
+    public WebElement getSignatureField() {
+        return signatureField;
+    }
 
-	public WebElement getBackButton() {
-		return backButton;
-	}
+    public WebElement getSignatureText() {
+        return signatureText;
+    }
 
-	public WebElement getProfileLinkFromLastColumn() {
-		return profileLinkFromLastColumn;
-	}
+    public WebElement getNewPrivateMessageButton() {
+        return newPrivateMessageButton;
+    }
 
-	public WebElement getSignatureField() {
-		return signatureField;
-	}
+    public WebElement getEmptyMessageInPosList() {
+        return emptyMessageInPosList;
+    }
 
-	public WebElement getSignatureText() {
-		return signatureText;
-	}
+    public WebElement getUsernameTableField() {
+        return usernameTableField;
+    }
 
-	public WebElement getNewPrivateMessageButton() {
-		return newPrivateMessageButton;
-	}
+    public WebElement getFirstNameTableField() {
+        return firstNameTableField;
+    }
 
-	public WebElement getEmptyMessageInPosList() {
-		return emptyMessageInPosList;
-	}
+    public WebElement getLastNameTableField() {
+        return lastNameTableField;
+    }
 
-	public WebElement getUsernameTableField() {
-		return usernameTableField;
-	}
+    public WebElement getEmailTableField() {
+        return emailTableField;
+    }
 
-	public WebElement getFirstNameTableField() {
-		return firstNameTableField;
-	}
+    public WebElement getLanguageTableField() {
+        return languageTableField;
+    }
 
-	public WebElement getLastNameTableField() {
-		return lastNameTableField;
-	}
+    public WebElement getPageSizeTableField() {
+        return pageSizeTableField;
+    }
 
-	public WebElement getEmailTableField() {
-		return emailTableField;
-	}
+    public WebElement getSignatureTableField() {
+        return signatureTableField;
+    }
 
-	public WebElement getLanguageTableField() {
-		return languageTableField;
-	}
+    public WebElement getLocationTableField() {
+        return locationTableField;
+    }
 
-	public WebElement getPageSizeTableField() {
-		return pageSizeTableField;
-	}
+    public WebElement getLastLoginTableField() {
+        return lastLoginTableField;
+    }
 
-	public WebElement getSignatureTableField() {
-		return signatureTableField;
-	}
+    public WebElement getRegistrationDateTableField() {
+        return registrationDateTableField;
+    }
 
-	public WebElement getLocationTableField() {
-		return locationTableField;
-	}
+    public WebElement getPostCountDateTableField() {
+        return postCountDateTableField;
+    }
 
-	public WebElement getLastLoginTableField() {
-		return lastLoginTableField;
-	}
+    public WebElement getPageSizeField() {
+        return pageSizeField;
+    }
 
-	public WebElement getRegistrationDateTableField() {
-		return registrationDateTableField;
-	}
+    public List<WebElement> getPmLinksFromLastColumn() {
+        return pmLinksFromLastColumn;
+    }
 
-	public WebElement getPostCountDateTableField() {
-		return postCountDateTableField;
-	}
 
-	public WebElement getPageSizeField() {
-		return pageSizeField;
-	}
+    //setters
 
-	public List<WebElement> getPmLinksFromLastColumn() {
-		return pmLinksFromLastColumn;
-	}
+    public void selectPageSizeByValue(int num) {
+        String sNum = Integer.toString(num);
+        new Select(getPageSizeField()).selectByValue(sNum);
+    }
+
 }

@@ -19,9 +19,11 @@ public class JC119PaginationForUnregisteredUser {
     }
 
     @Test
-    public void paginationTest() {
-        if (topicPage.getTopicsList().size() != 50) {
-            Assert.fail("Count of topics not equals 50");
-        }
+    @Parameters("pageSizeForUnregisteredUser")
+    public void topicsCountShouldBeFiftyOnFirstPage(int pageSize) {
+        int topicsSize = topicPage.getTopicsList().size();
+        Assert.assertEquals(topicsSize, pageSize,
+                "\nSelected branch: " + branchPage.getBranchName()
+                        + "\nTopics: " + topicsSize);
     }
 }
