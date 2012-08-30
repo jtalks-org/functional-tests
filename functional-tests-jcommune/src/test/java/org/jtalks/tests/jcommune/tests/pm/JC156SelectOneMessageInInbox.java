@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.tests.pm;
-import org.jtalks.tests.jcommune.assertion.Exsistence;
+
+import org.jtalks.tests.jcommune.assertion.Clickable;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -7,10 +8,7 @@ import org.testng.annotations.Test;
 import utils.CollectionHelp;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.pmPage;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * @author yacov
@@ -33,19 +31,19 @@ public class JC156SelectOneMessageInInbox {
 		pmPage.getMessageField().sendKeys(message);
 		pmPage.getSaveButton().click();
 	}
-
+    @Test
+    public void selectOneMessageInInbox() {
+        pmPage.getPmInboxLink().click(); //Enter into PM Inbox
+        Clickable.assertDisabled(driver, pmPage.DEL_BUTTON_SEL);   //Control if 'Delete' is disabled
+        CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
+        Clickable.assertEnabled(driver, pmPage.DEL_BUTTON_SEL);  // Control if 'Delete' button is now enabled
+        pmPage.getCheckedCheckbox().click(); //Un-check highlighted message
+        Clickable.assertDisabled(driver, pmPage.DEL_BUTTON_SEL);   //Control if 'Delete' button now disabled
+    }
 	@AfterMethod(alwaysRun = true)
 	@Parameters({"app-url"})
 	public void destroy(String appUrl) {
 		logOut(appUrl);
 	}
-	@Test
-	public void JC156SelectOneMessageInInbox() {
-		pmPage.getPmInboxLink().click(); //Enter into PM Inbox
-        Exsistence.assertionCheckIfDisabled(driver, pmPage.delButtonSel);   //Control if 'Delete' is disabled
-        CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
-        Exsistence.assertionCheckIfEnabled(driver, pmPage.delButtonSel);  // Control if 'Delete' button is now enabled
-        pmPage.getCheckedCheckbox().click(); //Un-check highlighted message
-        Exsistence.assertionCheckIfDisabled(driver, pmPage.delButtonSel);   //Control if 'Delete' button now disabled
-    }
+
 	}
