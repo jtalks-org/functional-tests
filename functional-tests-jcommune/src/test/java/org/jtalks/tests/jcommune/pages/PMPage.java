@@ -19,7 +19,7 @@ public class PMPage {
 
     public static final String pmOutboxLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/outbox']";
 
-    public static final String pmNewMessageLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/pm/new']";
+    public static final String pmNewMessageLinkSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/new')]";
 
     public static final String toFieldSel = "recipient";
 
@@ -44,7 +44,7 @@ public class PMPage {
 
     public static final String quoteButtonSel = "//a[@class='btn' and contains(@href,'" + JCommuneSeleniumTest.contextPath + "/quote/')]";
 
-    public static final String saveButtonSel = "save_pm";
+    public static final String saveButtonSel = "savePM";
 
     public static final String draftMessageTitlesSel = "//td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/')]";
 
