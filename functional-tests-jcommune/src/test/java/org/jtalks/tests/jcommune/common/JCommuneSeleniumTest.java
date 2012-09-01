@@ -25,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionNotEmptyCollection;
 
 /**
  * Parent class for Tests. Contains common methods

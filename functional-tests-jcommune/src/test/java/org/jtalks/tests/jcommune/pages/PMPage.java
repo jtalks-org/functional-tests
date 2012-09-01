@@ -1,6 +1,6 @@
 package org.jtalks.tests.jcommune.pages;
 
-import org.jtalks.tests.jcommune.assertion.Exsistence;
+import org.jtalks.tests.jcommune.assertion.Existance;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,7 +27,8 @@ public class PMPage {
 
     public static final String messageFieldSel = "tbMsg";
 
-    public static final String DEL_BUTTON_SEL = "deleteCheckedPM";
+    public static final String DEL_BUTTON_ENABLED = "//a[@class='btn btn-danger']";
+    public static final String DEL_BUTTON_DISABLED = "//a[@class='btn btn-danger disabled']";
 
     public static final String SEND_BUTTON_SEL = "post";
 
@@ -101,7 +102,7 @@ public class PMPage {
     @FindBy(id = SEND_BUTTON_SEL)
     private WebElement sendButton;
 
-    @FindBy(id = DEL_BUTTON_SEL)
+    @FindBy(id = DEL_BUTTON_ENABLED)
     private WebElement delButton;
 
     @FindBy(xpath = pmSubjectLinksSel)
@@ -140,8 +141,8 @@ public class PMPage {
     @FindBy(xpath = PM_CHECKBOXES_SEL)
     private List<WebElement> inboxCheckboxes;
 
-    @FindBy(xpath = PM_CHECKED_UNREAD_CHECKBOX)
-    private WebElement checkedCheckbox;
+    @FindBy(xpath = PM_CHECKED_UNREAD_CHECKBOX + "//input[@type='checkbox']")
+    public WebElement checkedCheckbox;
 
     @FindBy(xpath = recepientsListSel)
     private List<WebElement> recepientsList;
@@ -259,9 +260,9 @@ public class PMPage {
      */
     public void assertOneOfPmMessagesIsChecked(WebDriver driver) {
         try {
-            Exsistence.assertElementExistsBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
+            Existance.assertElementExistsBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
         } catch (AssertionError e) {
-            Exsistence.assertElementExistsBySelector(driver, PM_CHECKED_READ_CHECKBOX);
+            Existance.assertElementExistsBySelector(driver, PM_CHECKED_READ_CHECKBOX);
         }
     }
 }

@@ -10,7 +10,7 @@ import utils.StringHelp;
 
 import java.util.ArrayList;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionContainsStringInList;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionContainsStringInList;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 

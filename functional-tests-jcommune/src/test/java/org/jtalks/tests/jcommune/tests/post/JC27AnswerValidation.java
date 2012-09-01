@@ -7,7 +7,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;

@@ -6,7 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**

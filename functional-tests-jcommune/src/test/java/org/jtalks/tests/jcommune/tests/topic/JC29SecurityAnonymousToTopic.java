@@ -7,8 +7,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;

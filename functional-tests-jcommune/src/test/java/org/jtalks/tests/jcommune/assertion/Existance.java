@@ -15,7 +15,7 @@ import static org.testng.Assert.fail;
  * @author masyan
  *
  */
-public class Exsistence {
+public class Existance {
 
 	/**
 	 * The method checks that the element does not exist

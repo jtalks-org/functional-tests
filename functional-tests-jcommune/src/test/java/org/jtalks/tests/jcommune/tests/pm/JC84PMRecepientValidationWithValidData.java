@@ -5,7 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionNotExistById;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.pmPage;

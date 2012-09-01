@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import utils.CollectionHelp;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**

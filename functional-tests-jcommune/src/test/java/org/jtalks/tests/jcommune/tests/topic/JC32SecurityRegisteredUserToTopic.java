@@ -8,8 +8,8 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionNotEmptyCollection;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**

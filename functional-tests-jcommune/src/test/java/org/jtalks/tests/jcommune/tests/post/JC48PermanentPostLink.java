@@ -6,7 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistElementOnViewPresent;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistElementOnViewPresent;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswerForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;

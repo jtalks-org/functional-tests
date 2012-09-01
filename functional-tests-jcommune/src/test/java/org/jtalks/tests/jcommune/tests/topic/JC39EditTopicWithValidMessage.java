@@ -3,7 +3,7 @@ package org.jtalks.tests.jcommune.tests.topic;
 import org.testng.annotations.*;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionContainsInString;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionContainsInString;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 
