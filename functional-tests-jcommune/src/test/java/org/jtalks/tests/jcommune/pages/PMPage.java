@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.pages;
 
+import org.jtalks.tests.jcommune.assertion.Exsistence;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,8 +12,7 @@ import java.util.List;
 /**
  * @author masyan
  * @author yacov
- *
- **/
+ */
 public class PMPage {
 
     public static final String pmInboxLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/inbox']";
@@ -49,7 +49,7 @@ public class PMPage {
 
     public static final String draftMessageEditButtonSel = "editCheckedPM";
 
-    public static final String PM_DEL_MESSAGE_SEL = "jqi";
+    public static final String PM_DEL_DIALOG = "//div[@id='jqi']";
 
     public static final String PM_DEL_MES_BUTTON_OK_SEL = "jqi_state0_buttonOk"; // OK Button on Alert message when you delete private message
 
@@ -58,8 +58,14 @@ public class PMPage {
     public static final String draftMessageCheckboxesSel = "//input[@class='checker']";
 
     public static final String PM_CHECKBOXES_SEL = "//input[@class='checker']";
-
-    public static final String PM_CHECKED_CHECKBOX_SEL = "//input[@class='mess check']";
+    /**
+     * If checkbox is checked and the message is unread, then the class of checkbox is next.
+     */
+    public static final String PM_CHECKED_UNREAD_CHECKBOX = "//tr[@class='mess pm_unread check']";
+    /**
+     * If checkbox is checked and the message is already read.
+     */
+    public static final String PM_CHECKED_READ_CHECKBOX = "//tr[@class='mess check']";
 
     public static final String pmHeadingOutboxSel = "//li[@id='outbox_link' and @class='active']";
 
@@ -83,7 +89,7 @@ public class PMPage {
     @FindBy(id = messageFieldSel)
     private WebElement messageField;
 
-    @FindBy(id = PM_DEL_MESSAGE_SEL)
+    @FindBy(id = PM_DEL_DIALOG)
     private WebElement pmDelAlertMessage;
 
     @FindBy(id = PM_DEL_MES_BUTTON_CANCEL_SEL)
@@ -134,7 +140,7 @@ public class PMPage {
     @FindBy(xpath = PM_CHECKBOXES_SEL)
     private List<WebElement> inboxCheckboxes;
 
-    @FindBy(xpath = PM_CHECKED_CHECKBOX_SEL)
+    @FindBy(xpath = PM_CHECKED_UNREAD_CHECKBOX)
     private WebElement checkedCheckbox;
 
     @FindBy(xpath = recepientsListSel)
@@ -245,5 +251,17 @@ public class PMPage {
 
     public List<WebElement> getRecepientsList() {
         return recepientsList;
+    }
+
+    /**
+     * Checks whether there is a checkbox for read or unread messages (we don't know here whether the message is checked
+     * since we don't create that message).
+     */
+    public void assertOneOfPmMessagesIsChecked(WebDriver driver) {
+        try {
+            Exsistence.assertionExistBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
+        } catch (AssertionError e) {
+            Exsistence.assertionExistBySelector(driver, PM_CHECKED_READ_CHECKBOX);
+        }
     }
 }

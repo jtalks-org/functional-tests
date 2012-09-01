@@ -14,23 +14,24 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  * @author yacov
  */
 public class JC156SelectOneMessageInInbox {
-	String title = StringHelp.getRandomString(10);
-	String toUser;
-	String message = StringHelp.getRandomString(10);
+    String title = StringHelp.getRandomString(10);
+    String toUser;
+    String message = StringHelp.getRandomString(10);
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername", "uPassword", "uUsername2"})
-	public void setupCase(String appUrl, String username, String password, String username2) {
-		driver.get(appUrl);
-		signIn(username, password);
-		pmPage.getPmInboxLink().click();
-		pmPage.getPmNewMessageLink().click();
-		this.toUser = username2;
-		pmPage.getToField().sendKeys(toUser);
-		pmPage.getTitleField().sendKeys(title);
-		pmPage.getMessageField().sendKeys(message);
-		pmPage.getSaveButton().click();
-	}
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"app-url", "uUsername", "uPassword", "uUsername2"})
+    public void setupCase(String appUrl, String username, String password, String username2) {
+        driver.get(appUrl);
+        signIn(username, password);
+        pmPage.getPmInboxLink().click();
+        pmPage.getPmNewMessageLink().click();
+        this.toUser = username2;
+        pmPage.getToField().sendKeys(toUser);
+        pmPage.getTitleField().sendKeys(title);
+        pmPage.getMessageField().sendKeys(message);
+        pmPage.getSaveButton().click();
+    }
+
     @Test
     public void selectOneMessageInInbox() {
         pmPage.getPmInboxLink().click(); //Enter into PM Inbox
@@ -40,10 +41,11 @@ public class JC156SelectOneMessageInInbox {
         pmPage.getCheckedCheckbox().click(); //Un-check highlighted message
         Clickable.assertDisabled(driver, pmPage.DEL_BUTTON_SEL);   //Control if 'Delete' button now disabled
     }
-	@AfterMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
-	}
 
-	}
+    @AfterMethod(alwaysRun = true)
+    @Parameters({"app-url"})
+    public void destroy(String appUrl) {
+        logOut(appUrl);
+    }
+
+}
