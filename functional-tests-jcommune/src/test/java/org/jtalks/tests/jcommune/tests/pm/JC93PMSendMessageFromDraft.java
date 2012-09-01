@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import utils.CollectionHelp;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
@@ -43,6 +43,6 @@ public class JC93PMSendMessageFromDraft {
         CollectionHelp.getFirstWebElementFromCollection(pmPage.getDraftMessageCheckboxes()).click();
         pmPage.getDraftMessageEditButton().click();
         pmPage.getSendButton().click();
-        assertionExistBySelector(driver, pmPage.pmHeadingOutboxSel);
+        assertElementExistsBySelector(driver, pmPage.pmHeadingOutboxSel);
     }
 }

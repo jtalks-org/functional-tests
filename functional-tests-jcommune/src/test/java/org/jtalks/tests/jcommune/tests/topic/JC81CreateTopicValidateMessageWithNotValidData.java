@@ -4,7 +4,7 @@ import org.jtalks.tests.jcommune.pages.TopicPage;
 import org.testng.annotations.*;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 import static org.testng.Assert.assertEquals;
 
@@ -45,13 +45,13 @@ public class JC81CreateTopicValidateMessageWithNotValidData {
         topicPage.getMessageField().sendKeys(shortMessage);
         topicPage.getPostButton().click();
 
-        assertionExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+        assertElementExistsBySelector(driver, TopicPage.bodyErrorMessageSel);
 
         topicPage.getMessageField().clear();
         StringHelp.setLongTextValue(driver, topicPage.getMessageField(), longTopicMessage);
         topicPage.getPostButton().click();
 
-        assertionExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+        assertElementExistsBySelector(driver, TopicPage.bodyErrorMessageSel);
         assertEquals(topicPage.getMessageField().getText().trim(), longTopicMessage);
 
     }

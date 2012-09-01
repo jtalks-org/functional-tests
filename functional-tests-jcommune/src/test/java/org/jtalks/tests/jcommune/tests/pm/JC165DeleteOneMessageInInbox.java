@@ -8,6 +8,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.pages.PMPage.*;
 
 /**
@@ -27,12 +28,12 @@ public class JC165DeleteOneMessageInInbox extends JCommuneSeleniumTest {
         pmPage.getPmInboxLink().click();   //Enter to Inbox
         CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
         pmPage.getDelButton().click();  //Click on 'Delete' button
-        Exsistence.assertionExistBySelector(driver, PM_DEL_DIALOG);   //Control that Alert Message appears
+        assertElementExistsBySelector(driver, PM_DEL_DIALOG);   //Control that Alert Message appears
         pmPage.getPmDelMesButtonCancel().click();   //Click on 'Cancel'
         pmPage.assertOneOfPmMessagesIsChecked(driver);
 
         pmPage.getDelButton().click();   //Click again on 'Delete' button
-        Exsistence.assertionExistBySelector(driver, PM_DEL_DIALOG);      //Control that Alert Message appears
+        assertElementExistsBySelector(driver, PM_DEL_DIALOG);      //Control that Alert Message appears
         pmPage.getPmDelMesButtonOK().click(); //Click on 'OK' button of Alert Message
         Exsistence.assertionNotExistBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX); //Control, that there is no more checked message on Inbox
 

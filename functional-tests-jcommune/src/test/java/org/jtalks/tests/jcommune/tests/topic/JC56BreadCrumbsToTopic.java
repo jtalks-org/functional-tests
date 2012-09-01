@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.branchPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomTopic;
@@ -36,8 +36,8 @@ public class JC56BreadCrumbsToTopic {
 	public void BreadCrumbsToTopicTest() {
 		clickOnRandomTopic();
 		//check breadcrumbs
-		assertionExistBySelector(driver, mainPage.breadCrumbsForumLinkSel);
-		assertionExistBySelector(driver, sectionPage.breadCrumbsSectionLinkSel);
-		assertionExistBySelector(driver, branchPage.breadCrumbsBranchLinkSel);
+		assertElementExistsBySelector(driver, mainPage.breadCrumbsForumLinkSel);
+		assertElementExistsBySelector(driver, sectionPage.breadCrumbsSectionLinkSel);
+		assertElementExistsBySelector(driver, branchPage.breadCrumbsBranchLinkSel);
 	}
 }

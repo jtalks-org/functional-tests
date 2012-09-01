@@ -37,7 +37,7 @@ public class Exsistence {
 	 *
 	 * @param selector Selector to find element
 	 */
-	public static void assertionExistBySelector(WebDriver driver, String selector) {
+	public static void assertElementExistsBySelector(WebDriver driver, String selector) {
 		try {
 			WebElement f = driver.findElement(By.xpath(selector));
 		}

@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -41,7 +41,7 @@ public class JC25CreatingTopicValidateTitle {
 		topicPage.getSubjectField().sendKeys(shortTitle);
 		topicPage.getPostButton().click();
 
-		assertionExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+		assertElementExistsBySelector(driver, TopicPage.subjectErrorMessageSel);
 
 		topicPage.getSubjectField().clear();
 		topicPage.getSubjectField().sendKeys(validTitle);

@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
@@ -34,7 +34,7 @@ public class JC105PostsInProfileListIsEmpty {
         mainPage.getProfileLink().click();
         profilePage.getPostListButton().click();
 
-        assertionExistBySelector(driver, ProfilePage.emptyMessageInPosListSel);
+        assertElementExistsBySelector(driver, ProfilePage.emptyMessageInPosListSel);
 
     }
 

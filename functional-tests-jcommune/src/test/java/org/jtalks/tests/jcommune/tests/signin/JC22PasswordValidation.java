@@ -5,7 +5,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.mainPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signInPage;
@@ -38,6 +38,6 @@ public class JC22PasswordValidation {
 	public void passwordValidationTest(String password) {
 		signInPage.getPasswordField().sendKeys(password);
 		signInPage.getSubmitButton().click();
-		assertionExistBySelector(driver, signInPage.errorMessageSel);
+		assertElementExistsBySelector(driver, signInPage.errorMessageSel);
 	}
 }

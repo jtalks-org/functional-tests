@@ -5,7 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.profilePage;
@@ -33,16 +33,16 @@ public class JC42ViewProfileFromCurrentUsernameLink {
 	public void ViewProfileFromCurrentUsernameLinkTest() {
 		profilePage.getCurrentUserLink().click();
 
-		assertionExistBySelector(driver, profilePage.usernameTableFieldSel);
-		assertionExistBySelector(driver, profilePage.firstNameTableFieldSel);
-		assertionExistBySelector(driver, profilePage.lastNameTableFieldSel);
-		assertionExistBySelector(driver, profilePage.emailTableFieldSel);
-		assertionExistBySelector(driver, profilePage.languageTableFieldSel);
-		assertionExistBySelector(driver, profilePage.pageSizeTableFieldSel);
-		assertionExistBySelector(driver, profilePage.signatureTableFieldSel);
-		assertionExistBySelector(driver, profilePage.locationTableFieldSel);
-		assertionExistBySelector(driver, profilePage.lastLoginTableFieldSel);
-		assertionExistBySelector(driver, profilePage.registrationDateTableFieldSel);
-		assertionExistBySelector(driver, profilePage.postCountDateTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.usernameTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.firstNameTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.lastNameTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.emailTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.languageTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.pageSizeTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.signatureTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.locationTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.lastLoginTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.registrationDateTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.postCountDateTableFieldSel);
 	}
 }

@@ -6,7 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createAnswerForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
@@ -53,6 +53,6 @@ public class JC50PermanentPostLinkForDeletedTopic {
 
 		driver.get(url);
 
-		assertionExistBySelector(driver, mainPage.errorPageSel);
+		assertElementExistsBySelector(driver, mainPage.errorPageSel);
 	}
 }

@@ -31,6 +31,6 @@ public class JC108PasswordRecoveryByEmailValidationWithValidData {
 //		String newPasswd = mailServer.getPasswdFromMessage();
 //		driver.get(appUrl);
 //		signIn(username, newPasswd);
-//		assertionExistBySelector(driver, mainPage.currentUsernameLinkSel);
+//		assertElementExistsBySelector(driver, mainPage.currentUsernameLinkSel);
 //	}
 }

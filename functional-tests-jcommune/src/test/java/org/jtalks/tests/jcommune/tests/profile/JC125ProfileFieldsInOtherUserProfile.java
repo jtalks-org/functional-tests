@@ -6,7 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
@@ -41,13 +41,13 @@ public class JC125ProfileFieldsInOtherUserProfile {
 	public void viewProfileFromCurrentUsernameLinkTest(String usernameSecond) {
 		CollectionHelp.findWebElementByValueInCollection(profilePage.getPmLinksFromLastColumn(), usernameSecond).click();
 
-		assertionExistBySelector(driver, profilePage.firstNameTableFieldSel);
-		assertionExistBySelector(driver, profilePage.lastNameTableFieldSel);
-		assertionExistBySelector(driver, profilePage.locationTableFieldSel);
-		assertionExistBySelector(driver, profilePage.lastLoginTableFieldSel);
-		assertionExistBySelector(driver, profilePage.registrationDateTableFieldSel);
-		assertionExistBySelector(driver, profilePage.postCountDateTableFieldSel);
-		assertionExistBySelector(driver, profilePage.signatureTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.firstNameTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.lastNameTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.locationTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.lastLoginTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.registrationDateTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.postCountDateTableFieldSel);
+		assertElementExistsBySelector(driver, profilePage.signatureTableFieldSel);
 
 		assertionNotExistBySelector(driver, profilePage.emailTableFieldSel);
 		assertionNotExistBySelector(driver, profilePage.languageTableFieldSel);

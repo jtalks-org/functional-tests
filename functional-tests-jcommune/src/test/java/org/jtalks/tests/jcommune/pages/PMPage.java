@@ -259,9 +259,9 @@ public class PMPage {
      */
     public void assertOneOfPmMessagesIsChecked(WebDriver driver) {
         try {
-            Exsistence.assertionExistBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
+            Exsistence.assertElementExistsBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
         } catch (AssertionError e) {
-            Exsistence.assertionExistBySelector(driver, PM_CHECKED_READ_CHECKBOX);
+            Exsistence.assertElementExistsBySelector(driver, PM_CHECKED_READ_CHECKBOX);
         }
     }
 }

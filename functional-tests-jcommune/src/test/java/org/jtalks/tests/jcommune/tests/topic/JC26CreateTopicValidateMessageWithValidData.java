@@ -8,7 +8,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotExistBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -56,7 +56,7 @@ public class JC26CreateTopicValidateMessageWithValidData {
 		topicPage.getPostButton().click();
 
 		assertionNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
-		assertionExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+		assertElementExistsBySelector(driver, TopicPage.bodyErrorMessageSel);
 
 		topicPage.getMessageField().clear();
 		StringHelp.setLongTextValue(driver, topicPage.getMessageField(), validTopicMessage);

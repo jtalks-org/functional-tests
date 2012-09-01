@@ -3,7 +3,7 @@ package org.jtalks.tests.jcommune.tests.topic;
 import org.testng.annotations.*;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
@@ -50,7 +50,7 @@ public class JC40EditTopicWithNotValidMessage {
         StringHelp.setLongTextValue(driver, topicPage.getMessageField(), msg);
         topicPage.getPostButton().click();
 
-        assertionExistBySelector(driver, topicPage.bodyErrorMessageSel);
+        assertElementExistsBySelector(driver, topicPage.bodyErrorMessageSel);
     }
 
 }

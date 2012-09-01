@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
@@ -37,7 +37,7 @@ public class JC24CreateTopicWithoutData {
 	public void createTopicWithoutData() throws InterruptedException {
 		topicPage.getNewButton().click();
 		topicPage.getPostButton().click();
-		assertionExistBySelector(driver, TopicPage.subjectErrorMessageSel);
-		assertionExistBySelector(driver, TopicPage.bodyErrorMessageSel);
+		assertElementExistsBySelector(driver, TopicPage.subjectErrorMessageSel);
+		assertElementExistsBySelector(driver, TopicPage.bodyErrorMessageSel);
 	}
 }

@@ -7,7 +7,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
@@ -59,7 +59,7 @@ public class JC38EditTopicWithNotValidTitle {
 		topicPage.getSubjectField().sendKeys(title);
 		topicPage.getPostButton().click();
 
-		assertionExistBySelector(driver, topicPage.subjectErrorMessageSel);
+		assertElementExistsBySelector(driver, topicPage.subjectErrorMessageSel);
 	}
 
 }

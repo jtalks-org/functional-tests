@@ -9,7 +9,7 @@ import utils.StringHelp;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionNotEmptyCollection;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
@@ -52,33 +52,33 @@ public class JC36SecurityAdminToPost {
         assertionNotEmptyCollection(posts);
 
         //create post
-        assertionExistBySelector(driver, postPage.newButtonSel);
+        assertElementExistsBySelector(driver, postPage.newButtonSel);
 
 
         //delete topic (user is owner this topic)
-        assertionExistBySelector(driver, postPage.deleteTopicButtonSel);
+        assertElementExistsBySelector(driver, postPage.deleteTopicButtonSel);
 
         //delete post (user is owner this post)
-        assertionExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
+        assertElementExistsBySelector(driver, postPage.deleteButtonNearLastPostSel);
 
         //edit topic (user is owner this topic)
-        assertionExistBySelector(driver, postPage.editTopicButtonSel);
+        assertElementExistsBySelector(driver, postPage.editTopicButtonSel);
 
         //edit post (user is owner this post)
-        assertionExistBySelector(driver, postPage.editPostButtonSel);
+        assertElementExistsBySelector(driver, postPage.editPostButtonSel);
 
         driver.get(urlTopic);
 
         //delete topic (user is't owner this topic)
-        assertionExistBySelector(driver, postPage.deleteTopicButtonSel);
+        assertElementExistsBySelector(driver, postPage.deleteTopicButtonSel);
 
         //delete post (user is't owner this post)
-        assertionExistBySelector(driver, postPage.deleteButtonNearLastPostSel);
+        assertElementExistsBySelector(driver, postPage.deleteButtonNearLastPostSel);
 
         //edit topic (user is't owner this topic)
-        assertionExistBySelector(driver, postPage.editTopicButtonSel);
+        assertElementExistsBySelector(driver, postPage.editTopicButtonSel);
 
         //edit post (user is't owner this post)
-        assertionExistBySelector(driver, postPage.editPostButtonSel);
+        assertElementExistsBySelector(driver, postPage.editPostButtonSel);
     }
 }

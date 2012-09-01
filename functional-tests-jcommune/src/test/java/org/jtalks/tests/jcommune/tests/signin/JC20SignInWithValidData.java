@@ -6,7 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistById;
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
@@ -44,6 +44,6 @@ public class JC20SignInWithValidData {
         signInPage.getSubmitButton().click();
 
 
-        assertionExistBySelector(driver, mainPage.currentUsernameLinkSel);
+        assertElementExistsBySelector(driver, mainPage.currentUsernameLinkSel);
     }
 }

@@ -5,7 +5,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Exsistence.assertionExistBySelector;
+import static org.jtalks.tests.jcommune.assertion.Exsistence.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.mainPage;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signInPage;
@@ -36,6 +36,6 @@ public class JC21UsernameValidation {
 	public void usernameValidationTest(String username) {
 		signInPage.getUsernameField().sendKeys(username);
 		signInPage.getSubmitButton().click();
-		assertionExistBySelector(driver, signInPage.errorMessageSel);
+		assertElementExistsBySelector(driver, signInPage.errorMessageSel);
 	}
 }
