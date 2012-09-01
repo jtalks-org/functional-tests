@@ -8,6 +8,8 @@ import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.pages.PMPage.PM_CHECKED_CHECKBOX_SEL;
+import static org.jtalks.tests.jcommune.pages.PMPage.PM_DEL_MESSAGE_SEL;
 
 /**
  * @author yacov
@@ -36,13 +38,13 @@ public class JC165DeleteOneMessageInInbox {
         pmPage.getPmInboxLink().click();   //Enter to Inbox
         CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
         pmPage.getDelButton().click();  //Click on 'Delete' button
-        Exsistence.assertionExistBySelector(driver, pmPage.PM_DEL_MESSAGE_SEL);   //Control that Alert Message appears
-        pmPage.getPmDelMesButtonCancel().click();   //Click on 'Cancel'
-        Exsistence.assertionExistBySelector(driver, pmPage.PM_CHECKED_CHECKBOX_SEL);   //Control that a checkbox is still checked
-        pmPage.getDelButton().click();   //Click again on 'Delete' button
-        Exsistence.assertionExistBySelector(driver, pmPage.PM_DEL_MESSAGE_SEL);      //Control that Alert Message appears
+        //Exsistence.assertionExistBySelector(driver, PM_DEL_MESSAGE_SEL);   //Control that Alert Message appears
+        //pmPage.getPmDelMesButtonCancel().click();   //Click on 'Cancel'
+        //Exsistence.assertionExistBySelector(driver, PM_CHECKED_CHECKBOX_SEL);   //Control that a checkbox is still checked
+        //pmPage.getDelButton().click();   //Click again on 'Delete' button
+        Exsistence.assertionExistBySelector(driver, PM_DEL_MESSAGE_SEL);      //Control that Alert Message appears
         pmPage.getPmDelMesButtonOK().click(); //Click on 'OK' button of Alert Message
-        Exsistence.assertionNotExistBySelector(driver, pmPage.PM_CHECKED_CHECKBOX_SEL); //Control, that there is no more checked message on Inbox
+        Exsistence.assertionNotExistBySelector(driver, PM_CHECKED_CHECKBOX_SEL); //Control, that there is no more checked message on Inbox
 
     }
 
