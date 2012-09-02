@@ -1,12 +1,14 @@
 package org.jtalks.tests.jcommune.tests.pm;
 
-import org.jtalks.tests.jcommune.assertion.Clickable;
-import org.jtalks.tests.jcommune.assertion.Existance;
 import org.jtalks.tests.jcommune.common.JCommuneSeleniumTest;
 import org.jtalks.tests.jcommune.pages.PMPage;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 import utils.CollectionHelp;
 
+import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsByCssSelector;
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 
 /**
@@ -31,7 +33,8 @@ public class JC156SelectOneMessageInInbox extends JCommuneSeleniumTest {
     public void checkingPmShouldEnableDeleteButtonAndUncheckingShouldDisableIt() throws Exception {
         pmPage.getPmInboxLink().click();
         CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
-        assertElementExistsBySelector(driver, PMPage.DEL_BUTTON_ENABLED);
+
+        assertElementExistsByCssSelector(driver, PMPage.DEL_BUTTON_ENABLED);
 
         pmPage.checkedCheckbox.click(); //Un-check highlighted message
         assertElementExistsBySelector(driver, PMPage.DEL_BUTTON_DISABLED);
