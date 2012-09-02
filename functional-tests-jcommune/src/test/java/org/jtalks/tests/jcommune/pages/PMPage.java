@@ -27,7 +27,8 @@ public class PMPage {
 
     public static final String messageFieldSel = "tbMsg";
 
-    public static final String DEL_BUTTON_ENABLED = "//a[@class='btn btn-danger']";
+    public static final String DEL_BUTTON_ENABLED = "a#deleteCheckedPM.btn.btn-danger";
+
     public static final String DEL_BUTTON_DISABLED = "//a[@class='btn btn-danger disabled']";
 
     public static final String SEND_BUTTON_SEL = "post";
@@ -102,7 +103,7 @@ public class PMPage {
     @FindBy(id = SEND_BUTTON_SEL)
     private WebElement sendButton;
 
-    @FindBy(id = DEL_BUTTON_ENABLED)
+    @FindBy(css = DEL_BUTTON_ENABLED)
     private WebElement delButton;
 
     @FindBy(xpath = pmSubjectLinksSel)
