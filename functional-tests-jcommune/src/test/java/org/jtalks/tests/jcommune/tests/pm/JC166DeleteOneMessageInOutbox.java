@@ -26,6 +26,7 @@ public class JC166DeleteOneMessageInOutbox extends JCommuneSeleniumTest {
 
     @Test
     public void deleteMessageInOutbox() {
+        pmPage.getPmInboxLink().click();
         pmPage.getPmOutboxLink().click();
         CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
         pmPage.getDelButton().click();  //Click on 'Delete' button

@@ -25,12 +25,14 @@ public class JC157SelectOneMessageInOutbox extends JCommuneSeleniumTest {
 
     @Test
     public void deleteButtonShouldBeDisabledByDefault() {
+        pmPage.getPmInboxLink().click();
         pmPage.getPmOutboxLink().click(); //Enter into PM Outbox
         assertElementExistsBySelector(driver, PMPage.DEL_BUTTON_DISABLED);
     }
 
     @Test
     public void checkingPmShouldEnableDeleteButtonAndUncheckingShouldDisableIt() throws Exception {
+        pmPage.getPmInboxLink().click();
         pmPage.getPmOutboxLink().click();
         CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click();  //Click on the checkbox of the first message
 
