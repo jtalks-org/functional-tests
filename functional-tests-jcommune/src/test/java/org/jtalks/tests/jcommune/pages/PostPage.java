@@ -47,7 +47,7 @@ public class PostPage {
 
     public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
-    public static final String lastPostLinksFromBranchSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
+    public static final String lastPostLinksFromBranchSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class, 'latest-by')]/a";
 
     public static final String lastPostLinksFromTopicSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
 
@@ -227,8 +227,9 @@ public class PostPage {
     }
 
     /**
-    Returns the page link button object in pagination region
-     @param pageNum - page number is needed to return
+     * Returns the page link button object in pagination region
+     *
+     * @param pageNum - page number is needed to return
      */
     public WebElement getPageLinkButton(int pageNum) {
         WebElement pageLinkButton = pagesButtons.get(pageNum - 1);
