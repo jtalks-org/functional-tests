@@ -82,7 +82,7 @@ public class ProfilePage {
 
     public static final String pageSizeFieldSel = "pageSize";
 
-    public static final String pmLinksFromLastColumnSel = "//td[@class='latest-by']/p/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/')]";
+    public static final String pmLinksFromLastColumnSel = "//td[contains(@class, 'latest-by')]/p/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/users/')]";
 
 
     @FindBy(xpath = emptyMessageInPosListSel)
