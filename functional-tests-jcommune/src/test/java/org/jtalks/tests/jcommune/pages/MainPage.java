@@ -17,7 +17,7 @@ public class MainPage {
 
     public static final String currentUsernameLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
 
-    public static final String errorPageSel = "//span[@class='error_errorpage']";
+    public static final String errorPageSel = "//div[@class='text_errorpage']";
 
     public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumTest.contextPath + "/sections']";
 
