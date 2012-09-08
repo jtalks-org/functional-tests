@@ -49,7 +49,7 @@ public class PostPage {
 
     public static final String lastPostLinksFromBranchSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class, 'latest-by')]/a";
 
-    public static final String lastPostLinksFromTopicSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/a";
+    public static final String lastPostLinksFromTopicSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class, 'latest-by')]/a";
 
     public static final String pagesButtonsSel = "//div[contains(@class, 'pull-right forum-pagination')]//li/a";
 
