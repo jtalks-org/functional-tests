@@ -46,7 +46,7 @@ public class ProfilePage {
 
     public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/user') and @class='button']";
 
-    public static final String profileLinkFromLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[@class='latest-by']/p/a";
+    public static final String profileLinkFromLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class,'latest-by')]/p/a";
 
     public static final String signatureFieldSel = "signature";
 
