@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
+import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsByCssSelector;
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
@@ -15,12 +16,26 @@ import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsB
  * @author yacov
  */
 public class JC157SelectOneMessageInOutbox extends JCommuneSeleniumTest {
+    String title = StringHelp.getRandomString(10);
+    String toUser;
+    String message = StringHelp.getRandomString(10);
+
 
     @BeforeClass(alwaysRun = true)
-    @Parameters({"app-url", "uUsername", "uPassword"})
-    public static void setupCase(String appUrl, String username, String password) {
+    @Parameters({"app-url", "uUsername", "uPassword", "uUsername2"})
+    public void setupCase(String appUrl, String username, String password, String username2) {
         driver.get(appUrl);
         signIn(username, password);
+
+        //create unread message
+        pmPage.getPmInboxLink().click();
+        pmPage.getPmNewMessageLink().click();
+        this.toUser = username2;
+        pmPage.getToField().sendKeys(toUser);
+        pmPage.getTitleField().sendKeys(title);
+        pmPage.getMessageField().sendKeys(message);
+        pmPage.getSendButton().click();
+        driver.get(appUrl);
     }
 
     @Test
