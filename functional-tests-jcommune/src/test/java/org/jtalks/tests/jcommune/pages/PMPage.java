@@ -19,6 +19,8 @@ public class PMPage {
 
     public static final String pmOutboxLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/outbox']";
 
+    public static final String PM_DRAFTS_LINK = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/drafts']";
+
     public static final String pmNewMessageLinkSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/new')]";
 
     public static final String toFieldSel = "recipient";
@@ -45,7 +47,7 @@ public class PMPage {
 
     public static final String quoteButtonSel = "//a[@class='btn' and contains(@href,'" + JCommuneSeleniumTest.contextPath + "/quote/')]";
 
-    public static final String saveButtonSel = "savePM";
+    public static final String SAVE_BUTTON = "savePM";
 
     public static final String draftMessageTitlesSel = "//td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/')]";
 
@@ -78,6 +80,9 @@ public class PMPage {
 
     @FindBy(xpath = pmOutboxLinkSel)
     private WebElement pmOutboxLink;
+
+    @FindBy(xpath = PM_DRAFTS_LINK)
+    private WebElement pmDraftsLink;
 
     @FindBy(xpath = pmNewMessageLinkSel)
     private WebElement pmNewMessageLink;
@@ -124,7 +129,7 @@ public class PMPage {
     @FindBy(xpath = quoteButtonSel)
     private WebElement quoteButton;
 
-    @FindBy(id = saveButtonSel)
+    @FindBy(id = SAVE_BUTTON)
     private WebElement saveButton;
 
     @FindBy(xpath = draftMessageTitlesSel)
@@ -160,6 +165,10 @@ public class PMPage {
 
     public WebElement getPmOutboxLink() {
         return pmOutboxLink;
+    }
+
+    public WebElement getPmDraftsLink() {
+        return pmDraftsLink;
     }
 
     public WebElement getPmNewMessageLink() {
