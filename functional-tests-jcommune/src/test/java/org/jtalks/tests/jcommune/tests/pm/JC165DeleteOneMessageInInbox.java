@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
+import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.pages.PMPage.PM_CHECKED_UNREAD_CHECKBOX;
@@ -18,8 +19,18 @@ import static org.jtalks.tests.jcommune.pages.PMPage.PM_DEL_DIALOG;
 public class JC165DeleteOneMessageInInbox extends JCommuneSeleniumTest {
 
     @BeforeMethod(alwaysRun = true)
-    @Parameters({"app-url", "uUsername", "uPassword"})
-    public void setupCase(String appUrl, String username, String password) {
+    @Parameters({"app-url", "uUsername", "uPassword", "uUsername2", "uPassword2"})
+    public void setupCase(String appUrl, String username, String password, String username2, String password2) {
+        driver.get(appUrl);
+        signIn(username2, password2);
+        pmPage.getPmInboxLink().click();
+        pmPage.getPmNewMessageLink().click();
+        pmPage.getToField().sendKeys(username);
+        pmPage.getTitleField().sendKeys(StringHelp.getRandomString(10));
+        pmPage.getMessageField().sendKeys(StringHelp.getRandomString(40));
+        pmPage.getSendButton().click();
+        logOut(appUrl);
+
         driver.get(appUrl);
         signIn(username, password);
     }
