@@ -53,7 +53,7 @@ public class JC158SelectOneMessageInDrafts extends JCommuneSeleniumTest {
 
         assertElementExistsByCssSelector(driver, PMPage.DEL_BUTTON_ENABLED);
 
-        pmPage.checkedCheckbox.click(); //Un-check highlighted message
+        CollectionHelp.getFirstWebElementFromCollection(pmPage.getInboxCheckboxes()).click(); //Un-check highlighted message
         assertElementExistsBySelector(driver, PMPage.DEL_BUTTON_DISABLED);
     }
 
