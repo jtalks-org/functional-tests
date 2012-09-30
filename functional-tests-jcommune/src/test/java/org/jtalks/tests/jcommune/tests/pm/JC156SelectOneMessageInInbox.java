@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.CollectionHelp;
+import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsByCssSelector;
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
@@ -17,10 +18,19 @@ import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsB
 public class JC156SelectOneMessageInInbox extends JCommuneSeleniumTest {
 
     @BeforeClass(alwaysRun = true)
-    @Parameters({"app-url", "uUsername", "uPassword"})
-    public static void setupCase(String appUrl, String username, String password) {
+    @Parameters({"app-url", "uUsername", "uPassword", "uUsername2", "uPassword2"})
+    public static void setupCase(String appUrl, String username, String password, String username2, String password2) {
         driver.get(appUrl);
-        signIn(username, password);
+        signIn(username2, password2);
+        pmPage.getPmInboxLink().click();
+        pmPage.getPmNewMessageLink().click();
+        pmPage.getToField().sendKeys(username);
+        pmPage.getTitleField().sendKeys(StringHelp.getRandomString(10));
+        pmPage.getMessageField().sendKeys(StringHelp.getRandomString(40));
+        pmPage.getSendButton().click();
+        logOut(appUrl);
+        driver.get(appUrl);
+        signIn(username, username);
     }
 
     @Test
