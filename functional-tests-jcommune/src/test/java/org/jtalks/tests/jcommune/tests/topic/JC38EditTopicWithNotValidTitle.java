@@ -1,20 +1,10 @@
 package org.jtalks.tests.jcommune.tests.topic;
 
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 import utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.createTopicForTest;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.postPage;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 
 /**
@@ -22,44 +12,44 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
  */
 public class JC38EditTopicWithNotValidTitle {
 
-	@DataProvider(name = "notValidTitle")
-	public Object[][] notValidTitle() {
-		String shortTitle = StringHelp.getRandomString(4);
-		String startSpTitle = " " + StringHelp.getRandomString(4);
-		String endSpTitle = StringHelp.getRandomString(4) + " ";
-		return new Object[][]{
-				{shortTitle},
-				{startSpTitle},
-				{endSpTitle}
+    @DataProvider(name = "notValidTitle")
+    public Object[][] notValidTitle() {
+        String shortTitle = StringHelp.getRandomString(4);
+        String startSpTitle = " " + StringHelp.getRandomString(4);
+        String endSpTitle = StringHelp.getRandomString(4) + " ";
+        return new Object[][]{
+                {shortTitle},
+                {startSpTitle},
+                {endSpTitle}
 
-		};
-	}
+        };
+    }
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		clickOnRandomBranch();
-		createTopicForTest();
-		postPage.getEditTopicButton().click();
-	}
+    @BeforeMethod(alwaysRun = true, enabled = false)
+    @Parameters({"app-url", "uUsername", "uPassword"})
+    public void setupCase(String appUrl, String username, String password) {
+        driver.get(appUrl);
+        signIn(username, password);
+        clickOnRandomBranch();
+        createTopicForTest();
+        postPage.getEditTopicButton().click();
+    }
 
-	@AfterMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
+    @AfterMethod(alwaysRun = true, enabled = false)
+    @Parameters({"app-url"})
+    public void destroy(String appUrl) {
+        logOut(appUrl);
 
-	}
+    }
 
-	@Test(dataProvider = "notValidTitle")
-	public void editTopicWithNotValidTitleTest(String title) {
+    @Test(dataProvider = "notValidTitle", enabled = false)
+    public void editTopicWithNotValidTitleTest(String title) {
 
-		topicPage.getSubjectField().clear();
-		topicPage.getSubjectField().sendKeys(title);
-		topicPage.getPostButton().click();
+        topicPage.getSubjectField().clear();
+        topicPage.getSubjectField().sendKeys(title);
+        topicPage.getPostButton().click();
 
-		assertElementExistsBySelector(driver, topicPage.subjectErrorMessageSel);
-	}
+        assertElementExistsBySelector(driver, topicPage.subjectErrorMessageSel);
+    }
 
 }

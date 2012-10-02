@@ -8,49 +8,45 @@ import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.assertion.Existance.assertionNotExistBySelector;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.clickOnRandomBranch;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signIn;
-import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.topicPage;
+import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * @author erik
  */
 public class JC25CreatingTopicValidateTitle {
-	String shortTitle = "mssg";
-	String validTitle = "new topic";
+    String shortTitle = "mssg";
+    String validTitle = "new topic";
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername", "uPassword"})
-	public void setupCase(String appUrl, String username, String password) {
-		driver.get(appUrl);
-		signIn(username, password);
-		clickOnRandomBranch();
-	}
+    @BeforeMethod(alwaysRun = true, enabled = false)
+    @Parameters({"app-url", "uUsername", "uPassword"})
+    public void setupCase(String appUrl, String username, String password) {
+        driver.get(appUrl);
+        signIn(username, password);
+        clickOnRandomBranch();
+    }
 
-	@AfterMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void destroy(String appUrl) {
-		logOut(appUrl);
-	}
+    @AfterMethod(alwaysRun = true, enabled = false)
+    @Parameters({"app-url"})
+    public void destroy(String appUrl) {
+        logOut(appUrl);
+    }
 
-	@Test
-	public void testValidateTitle() {
-		topicPage.getNewButton().click();
-		topicPage.getSubjectField().sendKeys(shortTitle);
-		topicPage.getPostButton().click();
+    @Test(alwaysRun = true, enabled = false)
+    public void testValidateTitle() {
+        topicPage.getNewButton().click();
+        topicPage.getSubjectField().sendKeys(shortTitle);
+        topicPage.getPostButton().click();
 
-		assertElementExistsBySelector(driver, TopicPage.subjectErrorMessageSel);
+        assertElementExistsBySelector(driver, TopicPage.subjectErrorMessageSel);
 
-		topicPage.getSubjectField().clear();
-		topicPage.getSubjectField().sendKeys(validTitle);
-		topicPage.getPostButton().click();
+        topicPage.getSubjectField().clear();
+        topicPage.getSubjectField().sendKeys(validTitle);
+        topicPage.getPostButton().click();
 
-		assertionNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
+        assertionNotExistBySelector(driver, TopicPage.subjectErrorMessageSel);
 
 
-	}
+    }
 
 
 }
