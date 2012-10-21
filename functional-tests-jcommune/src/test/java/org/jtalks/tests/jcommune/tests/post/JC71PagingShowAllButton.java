@@ -7,7 +7,6 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-
 import java.util.ArrayList;
 
 import static org.jtalks.tests.jcommune.assertion.Existance.assertionContainsStringInList;
@@ -19,7 +18,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  */
 public class JC71PagingShowAllButton {
 
-    @BeforeMethod(alwaysRun = true)
+    @BeforeMethod(alwaysRun = true, enabled = false)
     @Parameters({"app-url", "uUsername", "uPassword"})
     public void setupCase(String appUrl, String username, String password) {
         driver.get(appUrl);
@@ -32,15 +31,16 @@ public class JC71PagingShowAllButton {
         createAnswerForTest(StringHelp.getRandomString(10));
         createAnswerForTest(StringHelp.getRandomString(10));
         createAnswerForTest(StringHelp.getRandomString(10));
+        System.out.println(driver.getCurrentUrl());
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod(alwaysRun = true, enabled = false)
     @Parameters({"app-url"})
     public void destroy(String appUrl) {
         logOut(appUrl);
     }
 
-    @Test
+    @Test(enabled = false)
     public void pagingShowAllButtonTest() {
         postPage.getShowAllButton().click();
         ArrayList list = new ArrayList<String>();
