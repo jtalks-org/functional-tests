@@ -19,7 +19,7 @@ public class SignInPage {
 
     public static final String passwordFieldSel = "j_password";
 
-    public static final String submitButtonSel = "jqi_state0_buttonOK";
+    public static final String submitButtonSel = "signin-submit-button";
 
     public static final String submitButtonAfterRegistrationSel = "//input[@type='submit']";
 
