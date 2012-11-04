@@ -20,7 +20,7 @@
                 <executions>
                     <execution>
                         <id>jmeter-tests</id>
-                        <phase>jmeter</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>jmeter</goal>
                         </goals>
@@ -34,11 +34,11 @@
                 <executions>
                     <execution>
                         <id>jmeter-tests</id>
-                        <phase>jmeter</phase>
+                        <phase>verify</phase>
                         <goals>
                             <goal>analyze</goal>
                         </goals>
-                        
+
                     </execution>
                 </executions>
                 <configuration>
@@ -48,7 +48,7 @@
                     <generateCharts>true</generateCharts>
                     <processAllFilesFound>true</processAllFilesFound>
                 </configuration>
-            </plugin> 
+            </plugin>
 		</plugins>
 	</build>
 </project>
