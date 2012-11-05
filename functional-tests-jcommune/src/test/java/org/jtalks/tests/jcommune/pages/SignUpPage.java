@@ -15,22 +15,22 @@ public class SignUpPage {
 
     public static final String passwordFieldSel = "password";
 
-    public static final String passwordErrorMessageSel = "password.errors";
+    public static final String passwordErrorMessageSel = "//input[@id='password']/following-sibling::span[@class='help-block _error']";
 
 
     public static final String passwordConfirmFieldSel = "passwordConfirm";
 
-    public static final String passwordConfirmErrorMessageSel = "passwordConfirm.errors";
+    public static final String passwordConfirmErrorMessageSel = "//input[@id='passwordConfirm']/following-sibling::span[@class='help-block _error']";
 
 
     public static final String usernameFieldSel = "username";
 
-    public static final String usernameErrorMessageSel = "//*[@class='help-block _error']";
+    public static final String usernameErrorMessageSel = "//input[@id='username']/following-sibling::span[@class='help-block _error']";
 
 
     public static final String emailFieldSel = "email";
 
-    public static final String emailErrorMessageSel = "email.errors";
+    public static final String emailErrorMessageSel = "//input[@id='email']/following-sibling::span[@class='help-block _error']";
 
 
     public static final String submitButtonSel = "signup-submit-button";
