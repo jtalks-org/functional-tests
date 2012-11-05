@@ -11,122 +11,122 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class SignUpPage {
 
-	public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user/new']";
+    public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user/new']";
 
-	public static final String passwordFieldSel = "password";
+    public static final String passwordFieldSel = "password";
 
-	public static final String passwordErrorMessageSel = "password.errors";
-
-
-	public static final String passwordConfirmFieldSel = "passwordConfirm";
-
-	public static final String passwordConfirmErrorMessageSel = "passwordConfirm.errors";
+    public static final String passwordErrorMessageSel = "password.errors";
 
 
-	public static final String usernameFieldSel = "username";
+    public static final String passwordConfirmFieldSel = "passwordConfirm";
 
-	public static final String usernameErrorMessageSel = "username.errors";
-
-
-	public static final String emailFieldSel = "email";
-
-	public static final String emailErrorMessageSel = "email.errors";
+    public static final String passwordConfirmErrorMessageSel = "passwordConfirm.errors";
 
 
-	public static final String submitButtonSel = "jqi_state0_buttonOK";
+    public static final String usernameFieldSel = "username";
 
-	public static final String okButtonOnInfoWindowSel = "jqi_state0_buttonOk";
-
-	public static final String captchaFieldSel = "captcha";
+    public static final String usernameErrorMessageSel = "//*[@class='help-block _error']";
 
 
-	@FindBy(xpath = signUpButtonSel)
-	WebElement signUpButton;
+    public static final String emailFieldSel = "email";
 
-	@FindBy(id = passwordFieldSel)
-	WebElement passwordField;
-
-	@FindBy(id = passwordErrorMessageSel)
-	WebElement passwordErrorMessage;
-
-	@FindBy(id = passwordConfirmFieldSel)
-	WebElement passwordConfirmField;
-
-	@FindBy(id = passwordConfirmErrorMessageSel)
-	WebElement passwordConfirmErrorMessage;
-
-	@FindBy(id = usernameFieldSel)
-	WebElement usernameField;
-
-	@FindBy(id = usernameErrorMessageSel)
-	WebElement usernameErrorMessage;
-
-	@FindBy(id = emailFieldSel)
-	WebElement emailField;
-
-	@FindBy(id = emailErrorMessageSel)
-	WebElement emailErrorMessage;
-
-	@FindBy(id = submitButtonSel)
-	WebElement submitButton;
-
-	@FindBy(id = okButtonOnInfoWindowSel)
-	WebElement okButtonOnInfoWindow;
-
-	@FindBy(id = captchaFieldSel)
-	WebElement captchaField;
+    public static final String emailErrorMessageSel = "email.errors";
 
 
-	public SignUpPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+    public static final String submitButtonSel = "signup-submit-button";
 
-	//Getters
-	public WebElement getSignUpButton() {
-		return signUpButton;
-	}
+    public static final String okButtonOnInfoWindowSel = "jqi_state0_buttonOk";
 
-	public WebElement getPasswordField() {
-		return passwordField;
-	}
+    public static final String captchaFieldSel = "captcha";
 
-	public WebElement getPasswordErrorMessage() {
-		return passwordErrorMessage;
-	}
 
-	public WebElement getPasswordConfirmField() {
-		return passwordConfirmField;
-	}
+    @FindBy(xpath = signUpButtonSel)
+    WebElement signUpButton;
 
-	public WebElement getPasswordConfirmErrorMessage() {
-		return passwordConfirmErrorMessage;
-	}
+    @FindBy(id = passwordFieldSel)
+    WebElement passwordField;
 
-	public WebElement getUsernameField() {
-		return usernameField;
-	}
+    @FindBy(id = passwordErrorMessageSel)
+    WebElement passwordErrorMessage;
 
-	public WebElement getUsernameErrorMessage() {
-		return usernameErrorMessage;
-	}
+    @FindBy(id = passwordConfirmFieldSel)
+    WebElement passwordConfirmField;
 
-	public WebElement getEmailField() {
-		return emailField;
-	}
+    @FindBy(id = passwordConfirmErrorMessageSel)
+    WebElement passwordConfirmErrorMessage;
 
-	public WebElement getEmailErrorMessage() {
-		return emailErrorMessage;
-	}
+    @FindBy(id = usernameFieldSel)
+    WebElement usernameField;
 
-	public WebElement getSubmitButton() {
-		return submitButton;
-	}
+    @FindBy(xpath = usernameErrorMessageSel)
+    WebElement usernameErrorMessage;
 
-	public WebElement getOkButtonOnInfoWindow() {
-		return okButtonOnInfoWindow;
-	}
+    @FindBy(id = emailFieldSel)
+    WebElement emailField;
 
-	public WebElement getCaptchaField() {
-		return captchaField;
-	}
+    @FindBy(id = emailErrorMessageSel)
+    WebElement emailErrorMessage;
+
+    @FindBy(id = submitButtonSel)
+    WebElement submitButton;
+
+    @FindBy(id = okButtonOnInfoWindowSel)
+    WebElement okButtonOnInfoWindow;
+
+    @FindBy(id = captchaFieldSel)
+    WebElement captchaField;
+
+
+    public SignUpPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
+    }
+
+    //Getters
+    public WebElement getSignUpButton() {
+        return signUpButton;
+    }
+
+    public WebElement getPasswordField() {
+        return passwordField;
+    }
+
+    public WebElement getPasswordErrorMessage() {
+        return passwordErrorMessage;
+    }
+
+    public WebElement getPasswordConfirmField() {
+        return passwordConfirmField;
+    }
+
+    public WebElement getPasswordConfirmErrorMessage() {
+        return passwordConfirmErrorMessage;
+    }
+
+    public WebElement getUsernameField() {
+        return usernameField;
+    }
+
+    public WebElement getUsernameErrorMessage() {
+        return usernameErrorMessage;
+    }
+
+    public WebElement getEmailField() {
+        return emailField;
+    }
+
+    public WebElement getEmailErrorMessage() {
+        return emailErrorMessage;
+    }
+
+    public WebElement getSubmitButton() {
+        return submitButton;
+    }
+
+    public WebElement getOkButtonOnInfoWindow() {
+        return okButtonOnInfoWindow;
+    }
+
+    public WebElement getCaptchaField() {
+        return captchaField;
+    }
 }
