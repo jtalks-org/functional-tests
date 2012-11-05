@@ -6,7 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
@@ -19,30 +19,30 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 public class JC3UsernameValidationWithNotValidData {
 
 
-	@DataProvider(name = "notValidUsername")
-	public Object[][] notValidUsername() {
-		String longUsername = StringHelp.getRandomString(26);
-		String startOfBS = " ";
+    @DataProvider(name = "notValidUsername")
+    public Object[][] notValidUsername() {
+        String longUsername = StringHelp.getRandomString(26);
+        String startOfBS = " ";
 
-		return new Object[][]{
-				{longUsername},
-				{startOfBS}
-		};
-	}
+        return new Object[][]{
+                {longUsername},
+                {startOfBS}
+        };
+    }
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void setupCase(String appUrl) {
-		driver.get(appUrl);
-		signUpPage.getSignUpButton().click();
-	}
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"app-url"})
+    public void setupCase(String appUrl) {
+        driver.get(appUrl);
+        signUpPage.getSignUpButton().click();
+    }
 
 
-	@Test(dataProvider = "notValidUsername")
-	public void usernameValidationWithNotValidDataTest(String username) {
-		signUpPage.getUsernameField().clear();
-		signUpPage.getUsernameField().sendKeys(username);
-		signUpPage.getSubmitButton().click();
-		assertionExistById(driver, signUpPage.usernameErrorMessageSel);
-	}
+    @Test(dataProvider = "notValidUsername")
+    public void usernameValidationWithNotValidDataTest(String username) {
+        signUpPage.getUsernameField().clear();
+        signUpPage.getUsernameField().sendKeys(username);
+        signUpPage.getSubmitButton().click();
+        assertElementExistsBySelector(driver, signUpPage.usernameErrorMessageSel);
+    }
 }

@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
@@ -15,21 +15,21 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
  * @author erik
  */
 public class JC11UniqueUsername {
-	String existUsername;
+    String existUsername;
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uUsername"})
-	public void setupCase(String appUrl, String username) {
-		this.existUsername = username;
-		driver.get(appUrl);
-		signUpPage.getSignUpButton().click();
-	}
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"app-url", "uUsername"})
+    public void setupCase(String appUrl, String username) {
+        this.existUsername = username;
+        driver.get(appUrl);
+        signUpPage.getSignUpButton().click();
+    }
 
-	@Test
-	public void usernameUniqueValidationTest() {
-		signUpPage.getUsernameField().clear();
-		signUpPage.getUsernameField().sendKeys(this.existUsername);
-		signUpPage.getSubmitButton().click();
-		assertionExistById(driver, signUpPage.usernameErrorMessageSel);
-	}
+    @Test
+    public void usernameUniqueValidationTest() {
+        signUpPage.getUsernameField().clear();
+        signUpPage.getUsernameField().sendKeys(this.existUsername);
+        signUpPage.getSubmitButton().click();
+        assertElementExistsBySelector(driver, signUpPage.usernameErrorMessageSel);
+    }
 }

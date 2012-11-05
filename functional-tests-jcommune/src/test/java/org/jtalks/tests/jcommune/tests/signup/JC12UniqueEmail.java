@@ -4,7 +4,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
@@ -16,23 +16,23 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
  */
 public class JC12UniqueEmail {
 
-	String existEmail;
+    String existEmail;
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url", "uEmail"})
-	public void setupCase(String appUrl, String email) {
-		this.existEmail = email;
-		driver.get(appUrl);
-		signUpPage.getSignUpButton().click();
-	}
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"app-url", "uEmail"})
+    public void setupCase(String appUrl, String email) {
+        this.existEmail = email;
+        driver.get(appUrl);
+        signUpPage.getSignUpButton().click();
+    }
 
-	@Test
-	public void emailUniqueValidationTest() {
-		signUpPage.getEmailField().clear();
-		signUpPage.getEmailField().sendKeys(this.existEmail);
-		signUpPage.getSubmitButton().click();
-		assertionExistById(driver, signUpPage.emailErrorMessageSel);
-	}
+    @Test
+    public void emailUniqueValidationTest() {
+        signUpPage.getEmailField().clear();
+        signUpPage.getEmailField().sendKeys(this.existEmail);
+        signUpPage.getSubmitButton().click();
+        assertElementExistsBySelector(driver, signUpPage.emailErrorMessageSel);
+    }
 
 
 }

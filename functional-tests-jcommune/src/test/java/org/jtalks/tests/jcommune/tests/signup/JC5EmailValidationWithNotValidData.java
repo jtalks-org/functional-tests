@@ -6,7 +6,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import utils.StringHelp;
 
-import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
+import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 
@@ -19,27 +19,27 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.signUpPage;
 public class JC5EmailValidationWithNotValidData {
 
 
-	@DataProvider(name = "notValidEmail")
-	public Object[][] notValidEmail() {
-		String notValidEmail = StringHelp.getRandomString(6);
-		String emptyEmail = "";
-		return new Object[][]{
-				{notValidEmail}
-		};
-	}
+    @DataProvider(name = "notValidEmail")
+    public Object[][] notValidEmail() {
+        String notValidEmail = StringHelp.getRandomString(6);
+        String emptyEmail = "";
+        return new Object[][]{
+                {notValidEmail}
+        };
+    }
 
-	@BeforeMethod(alwaysRun = true)
-	@Parameters({"app-url"})
-	public void setupCase(String appUrl) {
-		driver.get(appUrl);
-		signUpPage.getSignUpButton().click();
-	}
+    @BeforeMethod(alwaysRun = true)
+    @Parameters({"app-url"})
+    public void setupCase(String appUrl) {
+        driver.get(appUrl);
+        signUpPage.getSignUpButton().click();
+    }
 
-	@Test(dataProvider = "notValidEmail")
-	public void emailValidationWithNotValidDataTest(String email) {
-		signUpPage.getEmailField().clear();
-		signUpPage.getEmailField().sendKeys(email);
-		signUpPage.getSubmitButton().click();
-		assertionExistById(driver, signUpPage.emailErrorMessageSel);
-	}
+    @Test(dataProvider = "notValidEmail")
+    public void emailValidationWithNotValidDataTest(String email) {
+        signUpPage.getEmailField().clear();
+        signUpPage.getEmailField().sendKeys(email);
+        signUpPage.getSubmitButton().click();
+        assertElementExistsBySelector(driver, signUpPage.emailErrorMessageSel);
+    }
 }
