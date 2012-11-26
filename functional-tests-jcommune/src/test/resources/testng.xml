@@ -5,7 +5,7 @@
     <parameter name="selenium-driver-type" value="html"/>
 
     <!--Applicatiaon URL. Start page-->
-    <parameter name="app-url" value="http://deploy.jtalks.org/test-jcommune/"/>
+    <parameter name="app-url" value="http://dev.jtalks.org/test-jcommune/"/>
 
     <!--Mail server type-->
     <parameter name="mail" value="exim"/>
