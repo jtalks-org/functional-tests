@@ -27,7 +27,7 @@ public class SignInPage {
 
     public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.contextPath + "/password/restore']";
 
-    public static final String signInFormSel = "form";
+    public static final String signInFormSel = "signin-modal-dialog";
 
     public static final String errorMessageSel = "//span[@class='help-inline']";
 
