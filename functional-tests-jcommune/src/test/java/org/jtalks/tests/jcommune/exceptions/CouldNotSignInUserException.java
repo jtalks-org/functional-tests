@@ -13,45 +13,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.common;
+package org.jtalks.tests.jcommune.exceptions;
+
+import org.jtalks.tests.jcommune.common.User;
 
 /**
- * Jcommune user representation
+ * The exception for case when user could not be signed in.
  *
  * @author Guram Savinov
  */
-public class User {
+public class CouldNotSignInUserException extends Exception {
 
-    private String userName;
-    private String password;
-
-    public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public CouldNotSignInUserException(User user) {
+        super("User " + user + " could not be signed in." );
     }
 
 }

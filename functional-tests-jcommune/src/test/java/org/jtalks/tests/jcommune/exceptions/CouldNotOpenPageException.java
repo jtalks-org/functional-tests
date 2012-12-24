@@ -13,45 +13,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.common;
+package org.jtalks.tests.jcommune.exceptions;
 
 /**
- * Jcommune user representation
+ * The exception for case when a page could not be opened.
  *
  * @author Guram Savinov
  */
-public class User {
+public class CouldNotOpenPageException extends Exception {
 
-    private String userName;
-    private String password;
-
-    public User(String userName, String password) {
-        this.userName = userName;
-        this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+    public CouldNotOpenPageException(String page) {
+        super("Could not open " + page + "page.");
     }
 
 }
