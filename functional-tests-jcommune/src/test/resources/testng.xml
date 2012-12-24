@@ -52,7 +52,7 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
-            <class name="org.jtalks.tests.jcommune.tests.signin.JC20SignInWithValidData">
+            <class name="org.jtalks.tests.jcommune.testlink.signin.JC20SignInWithValidData">
                 <methods>
                     <include name="signInWithValidDataTest"/>
                 </methods>
