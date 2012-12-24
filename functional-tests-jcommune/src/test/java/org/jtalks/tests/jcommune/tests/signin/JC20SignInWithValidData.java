@@ -1,29 +1,28 @@
 package org.jtalks.tests.jcommune.tests.signin;
 
-import org.jtalks.tests.jcommune.common.UserActions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static org.jtalks.tests.jcommune.assertion.Existance.assertionExistById;
 import static org.jtalks.tests.jcommune.assertion.Existance.assertElementExistsBySelector;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
 
 /**
  * @author masyan
  * @author erik
- * @author Guram Savinov
  */
 public class JC20SignInWithValidData {
-    String userName;
+    String username;
     String password;
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({"app-url", "uUsername", "uPassword"})
-    public void setupCase(String appUrl, String userName, String password) {
+    public void setupCase(String appUrl, String username, String password) {
         driver.get(appUrl);
 
-        this.userName = userName;
+        this.username = username;
         this.password = password;
     }
 
@@ -35,7 +34,16 @@ public class JC20SignInWithValidData {
 
     @Test
     public void signInWithValidDataTest() {
-        UserActions.login(userName, password);
-    }
+        //step 1
+        mainPage.getLoginLink().click();
+        assertionExistById(driver, signInPage.signInFormSel);
 
+        //step 2
+        signInPage.getUsernameField().sendKeys(username);
+        signInPage.getPasswordField().sendKeys(password);
+        signInPage.getSubmitButton().click();
+
+
+        assertElementExistsBySelector(driver, mainPage.currentUsernameLinkSel);
+    }
 }
