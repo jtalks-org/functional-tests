@@ -34,19 +34,19 @@ public class SignIn {
         driver.get(appUrl);
     }
 
-    @AfterMethod
-    @Parameters("app-url")
-    public void destroy(String appUrl) {
+    @Test
+    @Parameters({"app-url", "uUsername", "uPassword"})
+    public void correctUsernameAndPassword(String appUrl, String username, String password)
+            throws CouldNotSignInUserException, CouldNotOpenPageException {
+        UserActions.signIn(username, password);
         logOut(appUrl);
     }
 
-    @Test
-    @Parameters({"uUsername", "uPassword"})
-    public void correctUsernameAndPassword(String userName, String password)
+    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Parameters({"iuUsername", "iuPassword"})
+    public void incorrectUsernameAndPassword(String username, String password)
             throws CouldNotSignInUserException, CouldNotOpenPageException {
-        UserActions.signIn(userName, password);
+        UserActions.signIn(username, password);
     }
 
-    @Test
-    @Parameters({""})
 }

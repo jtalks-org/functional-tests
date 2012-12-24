@@ -34,13 +34,13 @@ public class UserActions {
     /**
      * Sign in by userName and password.
      *
-     * @param userName the userName
+     * @param username the username
      * @param password the password
      * @throws org.jtalks.tests.jcommune.exceptions.CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.exceptions.CouldNotSignInUserException
      * @return the {@code User} instance
      */
-    public static User signIn(String userName, String password)
+    public static User signIn(String username, String password)
             throws CouldNotOpenPageException, CouldNotSignInUserException {
         mainPage.getLoginLink().click();
         try {
@@ -49,8 +49,8 @@ public class UserActions {
             throw new CouldNotOpenPageException("sign in form");
         }
 
-        User user = new User(userName, password);
-        signInPage.getUsernameField().sendKeys(user.getUserName());
+        User user = new User(username, password);
+        signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButton().click();
         try {
