@@ -36,16 +36,14 @@ public class SignIn {
 
     @Test
     @Parameters({"app-url", "uUsername", "uPassword"})
-    public void correctUsernameAndPassword(String appUrl, String username, String password)
-            throws CouldNotSignInUserException, CouldNotOpenPageException {
+    public void correctUsernameAndPassword(String appUrl, String username, String password) throws Exception{
         UserActions.signIn(username, password);
         logOut(appUrl);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"iuUsername", "iuPassword"})
-    public void incorrectUsernameAndPassword(String username, String password)
-            throws CouldNotSignInUserException, CouldNotOpenPageException {
+    public void incorrectUsernameAndPassword(String username, String password) throws Exception {
         UserActions.signIn(username, password);
     }
 
