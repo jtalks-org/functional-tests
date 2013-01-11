@@ -20,10 +20,10 @@ package org.jtalks.tests.jcommune.exceptions;
  *
  * @author Guram Savinov
  */
-public class CouldNotOpenPageException extends Exception {
+public class CouldNotOpenPageException extends RuntimeException {
 
     public CouldNotOpenPageException(String page) {
-        super("Could not open " + page + "page.");
+        super("Could not open page: " + page);
     }
 
 }

@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.common;
 
 import org.jtalks.tests.jcommune.pages.*;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -249,7 +250,10 @@ public class JCommuneSeleniumTest {
      * @author erik
      */
     public static void logOut(String appUrl) {
-        mainPage.getLogOutButton().click();
+        try {
+            mainPage.getLogOutButton().click();
+        } catch (NoSuchElementException e) {
+        }
     }
 
     /**

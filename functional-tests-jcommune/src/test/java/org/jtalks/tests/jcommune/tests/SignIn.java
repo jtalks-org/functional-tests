@@ -16,9 +16,11 @@
 package org.jtalks.tests.jcommune.tests;
 
 import org.jtalks.tests.jcommune.common.UserActions;
-import org.jtalks.tests.jcommune.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.exceptions.CouldNotSignInUserException;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.logOut;
@@ -34,17 +36,40 @@ public class SignIn {
         driver.get(appUrl);
     }
 
-    @Test
-    @Parameters({"app-url", "uUsername", "uPassword"})
-    public void correctUsernameAndPassword(String appUrl, String username, String password) throws Exception{
-        UserActions.signIn(username, password);
+    @AfterMethod
+    @Parameters("app-url")
+    public void destroy(String appUrl) {
         logOut(appUrl);
+    }
+
+    @Test
+    @Parameters({"uUsername", "uPassword"})
+    public void correctUsernameAndPassword(String username, String password) throws Exception {
+        UserActions.signIn(username, password);
+    }
+
+    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Parameters({"iuUsername", "uPassword"})
+    public void incorrectUsername(String username, String password) throws Exception {
+        UserActions.signIn(username, password);
+    }
+
+    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Parameters({"uUsername", "iuPassword"})
+    public void incorrectPassword(String username, String password) throws Exception {
+        UserActions.signIn(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"iuUsername", "iuPassword"})
     public void incorrectUsernameAndPassword(String username, String password) throws Exception {
         UserActions.signIn(username, password);
+    }
+
+    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Parameters({"uUsername", "uPassword"})
+    public void logInIsCaseSensitive(String username, String password) throws Exception {
+        UserActions.signIn(username.toUpperCase(), password);
     }
 
 }
