@@ -56,7 +56,7 @@
     <test name="JCommune">
         <classes>
             <class name="org.jtalks.tests.jcommune.common.JCommuneSeleniumTest"/>
-            <class name="org.jtalks.tests.jcommune.tests.SignIn"/>
+            <class name="org.jtalks.tests.jcommune.tests.signin.SignIn"/>
         </classes>
     </test>
 </suite>

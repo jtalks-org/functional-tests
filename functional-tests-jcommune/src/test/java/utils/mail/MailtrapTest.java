@@ -33,7 +33,7 @@ public class MailtrapTest {
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
         Mailtrap mailtrap = new Mailtrap(driver);
         mailtrap.signIn();
-        String link = mailtrap.getActivationLink("mailtrap@gmail.com");
+        String link = mailtrap.getActivationLink("testmailtrap@mailtrap.io");
         System.out.println(link);
         driver.quit();
     }
