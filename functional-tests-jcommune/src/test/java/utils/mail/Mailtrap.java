@@ -55,12 +55,12 @@ public class Mailtrap {
         driver.findElement(By.id("user_session_email")).sendKeys(MAILTRAP_EMAIL);
         driver.findElement(By.id("user_session_password")).sendKeys(MAILTRAP_PASSWORD);
         driver.findElement(By.name("button")).click();
-
-        driver.get(MAILTRAP_MESSAGES_URL);
-        metadataList = parseMetadata(driver.getPageSource());
     }
 
     public String getActivationLink(String recipient) {
+        driver.get(MAILTRAP_MESSAGES_URL);
+        metadataList = parseMetadata(driver.getPageSource());
+
         String id = "0";
         String link = null;
         for (Metadata metadata : metadataList) {

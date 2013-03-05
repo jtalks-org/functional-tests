@@ -16,6 +16,7 @@ import utils.SeleniumConfig;
 import utils.StringHelp;
 import utils.mail.Mail;
 import utils.mail.MailHelp;
+import utils.mail.Mailtrap;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -88,6 +89,8 @@ public class JCommuneSeleniumTest {
     //Mail implementation
     public static Mail mailServer;
 
+    // Mailtrap server implementation
+    public static Mailtrap mailtrapServer;
 
     public static int timeout = 10;
 
@@ -117,6 +120,7 @@ public class JCommuneSeleniumTest {
         recreateDriver(false);
 
         mailServer = MailHelp.getMailImpl(mail);
+        mailtrapServer = new Mailtrap(driver);
 
 
         HashMap<Object, String[]> users = new HashMap();
@@ -137,7 +141,7 @@ public class JCommuneSeleniumTest {
      */
     @AfterSuite(alwaysRun = true)
     public void destroy() {
-        driver.close();
+        driver.quit();
         if (dbConnection != null) {
             try {
                 dbConnection.close();
