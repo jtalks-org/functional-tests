@@ -118,9 +118,10 @@ public class JCommuneSeleniumTest {
         this.selServerURL = selServerURL;
 
         recreateDriver(false);
+        createSecondDriver();
 
         mailServer = MailHelp.getMailImpl(mail);
-        mailtrapServer = new Mailtrap(driver);
+        mailtrapServer = new Mailtrap(driver2);
 
 
         HashMap<Object, String[]> users = new HashMap();

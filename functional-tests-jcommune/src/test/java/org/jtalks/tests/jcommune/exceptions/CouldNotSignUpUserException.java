@@ -18,14 +18,14 @@ package org.jtalks.tests.jcommune.exceptions;
 import org.jtalks.tests.jcommune.common.User;
 
 /**
- * The exception for case when user could not be signed in.
+ * The exception for case when user could not be signed up.
  *
  * @author Guram Savinov
  */
-public class CouldNotSignInUserException extends Exception {
+public class CouldNotSignUpUserException extends Exception {
 
-    public CouldNotSignInUserException(User user, Throwable cause) {
-        super("User " + user + " could not be signed in.", cause);
+    public CouldNotSignUpUserException(User user, Throwable cause) {
+        super("User " + user + " could not be signed up.", cause);
     }
 
 }

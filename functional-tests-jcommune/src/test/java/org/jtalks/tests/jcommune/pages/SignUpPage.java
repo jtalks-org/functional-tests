@@ -11,6 +11,8 @@ import org.openqa.selenium.support.PageFactory;
  */
 public class SignUpPage {
 
+    public static final String signUpFormSel = "signup-modal-dialog";
+
     public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user/new']";
 
     public static final String passwordFieldSel = "password";
@@ -35,10 +37,15 @@ public class SignUpPage {
 
     public static final String submitButtonSel = "signup-submit-button";
 
-    public static final String okButtonOnInfoWindowSel = "jqi_state0_buttonOk";
+    public static final String okButtonOnInfoWindowSel = "btn-primary";
 
     public static final String captchaFieldSel = "captcha";
 
+    public static final String captchaImageSel = "captcha-img";
+
+
+    @FindBy(id = signUpFormSel)
+    WebElement signUpForm;
 
     @FindBy(xpath = signUpButtonSel)
     WebElement signUpButton;
@@ -70,11 +77,14 @@ public class SignUpPage {
     @FindBy(id = submitButtonSel)
     WebElement submitButton;
 
-    @FindBy(id = okButtonOnInfoWindowSel)
+    @FindBy(className = okButtonOnInfoWindowSel)
     WebElement okButtonOnInfoWindow;
 
     @FindBy(id = captchaFieldSel)
     WebElement captchaField;
+
+    @FindBy(id = captchaImageSel)
+    WebElement captchaImage;
 
 
     public SignUpPage(WebDriver driver) {
@@ -128,5 +138,13 @@ public class SignUpPage {
 
     public WebElement getCaptchaField() {
         return captchaField;
+    }
+
+    public WebElement getSignUpForm() {
+        return signUpForm;
+    }
+
+    public WebElement getCaptchaImage() {
+        return captchaImage;
     }
 }
