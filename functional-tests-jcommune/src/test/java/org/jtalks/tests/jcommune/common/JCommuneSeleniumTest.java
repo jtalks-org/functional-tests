@@ -122,6 +122,7 @@ public class JCommuneSeleniumTest {
 
         mailServer = MailHelp.getMailImpl(mail);
         mailtrapServer = new Mailtrap(driver2);
+        mailtrapServer.signIn();
 
 
         HashMap<Object, String[]> users = new HashMap();

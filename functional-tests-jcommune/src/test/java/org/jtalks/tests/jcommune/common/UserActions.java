@@ -37,7 +37,7 @@ public class UserActions {
             "подтверждения регистрации.";
 
     /**
-     * Sign in by userName and password.
+     * Sign in user by dialog. Action should by started from any page of JCommune.
      *
      * @param username the username
      * @param password the password
@@ -45,13 +45,13 @@ public class UserActions {
      * @throws org.jtalks.tests.jcommune.exceptions.CouldNotSignInUserException
      * @return the {@code User} instance
      */
-    public static User signIn(String username, String password)
+    public static User signInByDialog(String username, String password)
             throws CouldNotOpenPageException, CouldNotSignInUserException {
         mainPage.getLoginLink().click();
         try {
-            driver.findElement(By.id(signInPage.signInFormSel));
+            driver.findElement(By.id(signInPage.signInDialogFormSel));
         } catch (NoSuchElementException e) {
-            throw new CouldNotOpenPageException("sign in form", e);
+            throw new CouldNotOpenPageException("sign in dialog form", e);
         }
 
         User user = new User(username, password);
@@ -67,7 +67,44 @@ public class UserActions {
         return user;
     }
 
-    public static User signUpNewUser() throws CouldNotOpenPageException, CouldNotSignUpUserException {
+    /**
+     * Sign in user by page. Action should be started from sign in page of JCommune.
+     *
+     * @param username the username
+     * @param password the password
+     * @throws org.jtalks.tests.jcommune.exceptions.CouldNotOpenPageException
+     * @throws org.jtalks.tests.jcommune.exceptions.CouldNotSignInUserException
+     * @return the {@code User} instance
+     */
+    public static User signInByPage(String username, String password)
+            throws CouldNotOpenPageException, CouldNotSignInUserException {
+        try {
+            driver.findElement(By.id(signInPage.signInPageFormSel));
+        } catch (NoSuchElementException e) {
+            throw new CouldNotOpenPageException("sign in page form", e);
+        }
+
+        User user = new User(username, password);
+        signInPage.getUsernameField().sendKeys(user.getUsername());
+        signInPage.getPasswordField().sendKeys(user.getPassword());
+        signInPage.getSubmitButtonAfterRegistration().click();
+        try {
+            driver.findElement(By.xpath(mainPage.currentUsernameLinkSel));
+        } catch (NoSuchElementException e) {
+            throw new CouldNotSignInUserException(user, e);
+        }
+
+        return user;
+    }
+
+    /**
+     * Sign up new user with random data by dialog. Action should be started from any page of JCommune.
+     *
+     * @throws CouldNotOpenPageException
+     * @throws CouldNotSignUpUserException
+     * @return the {@code User} instance
+     */
+    public static User signUpNewUserByDialog() throws CouldNotOpenPageException, CouldNotSignUpUserException {
         // Check opening sign up form
         signUpPage.getSignUpButton().click();
         try {
@@ -102,11 +139,16 @@ public class UserActions {
         } catch (InterruptedException e) {
         }
 
-        // Open activation link
-        mailtrapServer.signIn();
-        String activationLink = mailtrapServer.getActivationLink(user.getEmail());
-        driver.get(activationLink);
-
         return user;
+    }
+
+    /**
+     * Open activation link from message sent by JCommune to confirm user registration.
+     *
+     * @param email the user email
+     */
+    public static void openActivationLink(String email) {
+        String activationLink = mailtrapServer.getActivationLink(email);
+        driver.get(activationLink);
     }
 }

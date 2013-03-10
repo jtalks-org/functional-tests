@@ -27,7 +27,9 @@ public class SignInPage {
 
     public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.contextPath + "/password/restore']";
 
-    public static final String signInFormSel = "signin-modal-dialog";
+    public static final String signInDialogFormSel = "signin-modal-dialog";
+
+    public static final String signInPageFormSel = "login-form";
 
     public static final String errorMessageSel = "//span[@class='help-inline']";
 
@@ -58,8 +60,11 @@ public class SignInPage {
     @FindBy(xpath = restorePasswordLinkSel)
     WebElement restorePasswordLink;
 
-    @FindBy(id = signInFormSel)
-    WebElement signInForm;
+    @FindBy(id = signInDialogFormSel)
+    WebElement signInDialogForm;
+
+    @FindBy(id = signInPageFormSel)
+    WebElement signInPageForm;
 
     @FindBy(xpath = errorMessageSel)
     WebElement errorMessage;
@@ -104,8 +109,8 @@ public class SignInPage {
         return restorePasswordLink;
     }
 
-    public WebElement getSignInForm() {
-        return signInForm;
+    public WebElement getSignInDialogForm() {
+        return signInDialogForm;
     }
 
     public WebElement getErrorMessage() {
@@ -126,5 +131,9 @@ public class SignInPage {
 
     public WebElement getCloseSignInWindowButton() {
         return closeSignInWindowButton;
+    }
+
+    public WebElement getSignInPageForm() {
+        return signInPageForm;
     }
 }

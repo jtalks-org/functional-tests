@@ -42,6 +42,6 @@ public class JC64ViewProfileFromLastColumnByAnonymous {
 	public void viewProfileFromLastColumnByAnonymousTest() {
 		profilePage.getProfileLinkFromLastColumn().click();
 
-		assertionExistById(driver, signInPage.signInFormSel);
+		assertionExistById(driver, signInPage.signInDialogFormSel);
 	}
 }

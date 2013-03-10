@@ -36,7 +36,7 @@ public class JC20SignInWithValidData {
     public void signInWithValidDataTest() {
         //step 1
         mainPage.getLoginLink().click();
-        assertionExistById(driver, signInPage.signInFormSel);
+        assertionExistById(driver, signInPage.signInDialogFormSel);
 
         //step 2
         signInPage.getUsernameField().sendKeys(username);

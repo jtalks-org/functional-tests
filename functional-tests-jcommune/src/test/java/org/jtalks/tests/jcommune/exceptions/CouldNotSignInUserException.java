@@ -25,7 +25,8 @@ import org.jtalks.tests.jcommune.common.User;
 public class CouldNotSignInUserException extends Exception {
 
     public CouldNotSignInUserException(User user, Throwable cause) {
-        super("User " + user + " could not be signed in.", cause);
+        super("User with username: " + user.getUsername() + " and password: " + user.getPassword() +
+                " could not be signed in.", cause);
     }
 
 }

@@ -45,31 +45,31 @@ public class SignIn {
     @Test
     @Parameters({"uUsername", "uPassword"})
     public void correctUsernameAndPassword(String username, String password) throws Exception {
-        UserActions.signIn(username, password);
+        UserActions.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"iuUsername", "uPassword"})
     public void incorrectUsername(String username, String password) throws Exception {
-        UserActions.signIn(username, password);
+        UserActions.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"uUsername", "iuPassword"})
     public void incorrectPassword(String username, String password) throws Exception {
-        UserActions.signIn(username, password);
+        UserActions.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"iuUsername", "iuPassword"})
     public void incorrectUsernameAndPassword(String username, String password) throws Exception {
-        UserActions.signIn(username, password);
+        UserActions.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"uUsername", "uPassword"})
     public void logInIsCaseSensitive(String username, String password) throws Exception {
-        UserActions.signIn(username.toUpperCase(), password);
+        UserActions.signInByDialog(username.toUpperCase(), password);
     }
 
 }
