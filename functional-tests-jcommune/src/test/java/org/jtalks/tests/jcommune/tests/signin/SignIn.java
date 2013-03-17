@@ -66,9 +66,9 @@ public class SignIn {
         UserActions.signInByDialog(username, password);
     }
 
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Test
     @Parameters({"uUsername", "uPassword"})
-    public void logInIsCaseSensitive(String username, String password) throws Exception {
+    public void logInIsCaseInsensitive(String username, String password) throws Exception {
         UserActions.signInByDialog(username.toUpperCase(), password);
     }
 
