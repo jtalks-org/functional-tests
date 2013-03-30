@@ -13,49 +13,28 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail;
+package org.jtalks.tests.jcommune.mail.mailtrap;
 
-import org.joda.time.DateTime;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * @author Guram Savinov
  */
-public class Metadata {
+public class MailtrapTest {
 
-    private String id;
-    private String title;
-    private DateTime dateTime;
-    private String recipient;
+    private static final String SELENIUM_SERVER_URL = "http://autotest.jtalks.org:4444/wd/hub";
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getRecipient() {
-        return recipient;
-    }
-
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public DateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
+    public static void main(String[] args) throws MalformedURLException {
+        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
+        Mailtrap mailtrap = new Mailtrap(driver);
+        mailtrap.signIn();
+        String link = mailtrap.getActivationLink("testmailtrap@mailtrap.io");
+        System.out.println(link);
+        driver.quit();
     }
 }
