@@ -44,7 +44,7 @@ public class JCommuneSeleniumTest {
 
     public Connection dbConnection;
 
-    public static final String contextPath = "/org/jtalks/tests/jcommune";
+    public static final String contextPath = "/jcommune";
 
     public static String selServerURL;
 
