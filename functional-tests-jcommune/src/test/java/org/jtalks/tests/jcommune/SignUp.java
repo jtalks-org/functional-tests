@@ -19,6 +19,7 @@ import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignUpUserException;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.*;
 import org.testng.annotations.*;
 
 /**
