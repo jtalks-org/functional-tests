@@ -3,7 +3,7 @@ package org.jtalks.tests.jcommune.webdriver;
 import org.jtalks.tests.jcommune.assertion.Existance;
 import org.jtalks.tests.jcommune.mail.Mail;
 import org.jtalks.tests.jcommune.mail.MailHelp;
-import org.jtalks.tests.jcommune.mail.Mailtrap;
+import org.jtalks.tests.jcommune.mail.mailtrap.Mailtrap;
 import org.jtalks.tests.jcommune.utils.CollectionHelp;
 import org.jtalks.tests.jcommune.utils.SeleniumConfig;
 import org.jtalks.tests.jcommune.utils.StringHelp;
