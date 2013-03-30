@@ -15,7 +15,7 @@
 
 package org.jtalks.tests.jcommune.tests.signin;
 
-import org.jtalks.tests.jcommune.common.UserActions;
+import org.jtalks.tests.jcommune.common.Users;
 import org.jtalks.tests.jcommune.exceptions.CouldNotSignInUserException;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -45,31 +45,31 @@ public class SignIn {
     @Test
     @Parameters({"uUsername", "uPassword"})
     public void correctUsernameAndPassword(String username, String password) throws Exception {
-        UserActions.signInByDialog(username, password);
+        Users.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"iuUsername", "uPassword"})
     public void incorrectUsername(String username, String password) throws Exception {
-        UserActions.signInByDialog(username, password);
+        Users.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"uUsername", "iuPassword"})
     public void incorrectPassword(String username, String password) throws Exception {
-        UserActions.signInByDialog(username, password);
+        Users.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"iuUsername", "iuPassword"})
     public void incorrectUsernameAndPassword(String username, String password) throws Exception {
-        UserActions.signInByDialog(username, password);
+        Users.signInByDialog(username, password);
     }
 
     @Test
     @Parameters({"uUsername", "uPassword"})
     public void logInIsCaseInsensitive(String username, String password) throws Exception {
-        UserActions.signInByDialog(username.toUpperCase(), password);
+        Users.signInByDialog(username.toUpperCase(), password);
     }
 
 }

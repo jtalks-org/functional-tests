@@ -31,7 +31,7 @@ import static org.jtalks.tests.jcommune.common.JCommuneSeleniumTest.*;
  *
  * @author Guram Savinov
  */
-public class UserActions {
+public class Users {
 
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
             "подтверждения регистрации.";

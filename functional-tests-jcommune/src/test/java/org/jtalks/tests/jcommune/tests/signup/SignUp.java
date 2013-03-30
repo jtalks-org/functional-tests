@@ -16,7 +16,7 @@
 package org.jtalks.tests.jcommune.tests.signup;
 
 import org.jtalks.tests.jcommune.common.User;
-import org.jtalks.tests.jcommune.common.UserActions;
+import org.jtalks.tests.jcommune.common.Users;
 import org.jtalks.tests.jcommune.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.exceptions.CouldNotSignUpUserException;
 import org.testng.annotations.*;
@@ -42,14 +42,14 @@ public class SignUp {
 
     @Test
     public void signUpWithActivation() throws CouldNotSignUpUserException, CouldNotSignInUserException {
-        User user = UserActions.signUpNewUserByDialog();
-        UserActions.openActivationLink(user.getEmail());
-        UserActions.signInByPage(user.getUsername(), user.getPassword());
+        User user = Users.signUpNewUserByDialog();
+        Users.openActivationLink(user.getEmail());
+        Users.signInByPage(user.getUsername(), user.getPassword());
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     public void signUpWithoutActivation() throws CouldNotSignInUserException, CouldNotSignUpUserException {
-        User user = UserActions.signUpNewUserByDialog();
-        UserActions.signInByDialog(user.getUsername(), user.getPassword());
+        User user = Users.signUpNewUserByDialog();
+        Users.signInByDialog(user.getUsername(), user.getPassword());
     }
 }
