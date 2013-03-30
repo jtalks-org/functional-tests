@@ -13,6 +13,9 @@
     <module>load-tests</module>
     <module>jcommune-webdriver</module>
   </modules>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
 
   <dependencies>
     <dependency>
