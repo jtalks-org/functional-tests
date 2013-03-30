@@ -11,6 +11,7 @@
     <modules>
         <module>functional-tests-jcommune</module>
         <module>load-tests</module>
+      <module>jcommune-webdriver</module>
     </modules>
 
     <dependencies>
