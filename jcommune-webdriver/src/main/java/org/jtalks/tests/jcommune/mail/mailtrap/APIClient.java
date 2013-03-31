@@ -15,25 +15,26 @@
 
 package org.jtalks.tests.jcommune.mail.mailtrap;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
-import java.net.URL;
 
 /**
  * @author Guram Savinov
  */
-public class MailtrapTest {
+public class APIClient {
 
-    private static final String SELENIUM_SERVER_URL = "http://autotest.jtalks.org:4444/wd/hub";
+    private static final String API_INBOXES_URL = "http://mailtrap.io/api/v1/inboxes/";
+    private static final String JTALKS_AUTOTESTS_MESSAGES = "jtalks-autotests/messages/";
+    private static final String API_TOKEN_PARAM = "?token=fWJsZAhSzI4Ghb9cE42ouA";
 
-    public static void main(String[] args) throws IOException {
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
-        RestMailtrap mailtrap = new RestMailtrap();
-        String link = mailtrap.getActivationLink("P_y4rn7pj0v2@jtalks.org");
-        System.out.println(link);
-        driver.quit();
+    public static String getMessages() throws IOException {
+        ClientResource client = new ClientResource(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM);
+        return client.get().getText();
+    }
+
+    public static String getMessage(String id) throws IOException {
+        ClientResource client = new ClientResource(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM);
+        return client.get().getText();
     }
 }
