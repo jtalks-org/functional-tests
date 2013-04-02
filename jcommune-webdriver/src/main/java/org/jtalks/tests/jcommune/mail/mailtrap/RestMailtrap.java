@@ -15,9 +15,12 @@
 
 package org.jtalks.tests.jcommune.mail.mailtrap;
 
+import com.google.gson.Gson;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
+import org.jtalks.tests.jcommune.mail.mailtrap.dto.Message;
+import org.jtalks.tests.jcommune.mail.mailtrap.dto.MessageDto;
 
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -41,7 +44,9 @@ public class RestMailtrap {
     private List<Metadata> metadataList;
 
     public String getActivationLink(String recipient) throws IOException {
-        metadataList = parseMetadata(APIClient.getMessages());
+        Gson gson = new Gson();
+        MessageDto[] messages = gson.fromJson(APIClient.getMessages(),MessageDto[].class);
+        metadataList = getMetadataList(messages);
 
         String id = NOT_FOUND_ID;
         String link = null;
@@ -60,9 +65,11 @@ public class RestMailtrap {
 
         // TODO: extract source value from Mailtrap JSON message (pay attention on \r \n and \" escaped characters) and
         //       construct MimeMessage from it
-        Matcher matcher = Pattern.compile("\"source\":\"(.*)").matcher(APIClient.getMessage(id));
-        String source = matcher.group(1);
+
         try {
+            MessageDto messageDto = gson.fromJson(APIClient.getMessage(id),MessageDto.class);
+            String source = messageDto.getMessage().getSource();
+
             MimeMessage message = new MimeMessage(Session.getInstance(new Properties()),
                     (new ByteArrayInputStream(source.getBytes())));
             Multipart multipart = (Multipart) message.getContent();
@@ -70,7 +77,7 @@ public class RestMailtrap {
             Multipart multipart2 = (Multipart) multipart1.getBodyPart(0).getContent();
             String escapedText = (String) multipart2.getBodyPart(0).getContent();
             String text = StringEscapeUtils.unescapeHtml(escapedText);
-            matcher = Pattern.compile("(http://.*/activate/.*)[\\s]").matcher(text);
+            Matcher matcher = Pattern.compile("(http://.*/activate/.*)[\\s]").matcher(text);
             if(matcher.find()){
                 link = matcher.group(1);
             }
@@ -82,34 +89,20 @@ public class RestMailtrap {
         return link;
     }
 
-    private List<Metadata> parseMetadata(String source) {
+    private List<Metadata> getMetadataList(MessageDto[] messages){
         List<Metadata> metadataList = new ArrayList<Metadata>();
-        Matcher matcher = Pattern.compile("\"id\":\"(.[^\"]*)").matcher(source);
-        while (matcher.find()) {
-            Metadata metadata = new Metadata();
-            metadata.setId(matcher.group(1));
+        Metadata metadata = null;
+        Message message = null;
+        for(int i=0; i<messages.length; i++){
+            message = messages[i].getMessage();
+            metadata = new Metadata();
+            metadata.setId(message.getId());
+            metadata.setTitle(message.getTitle());
+            metadata.setRecipient(message.getRecipients()[0].getRecipient() //TODO: change for array
+                    .getTitle().replaceAll("[<>]", ""));
+            metadata.setDateTime(ISODateTimeFormat.dateTimeParser().parseDateTime(message.getCreated_at()));
             metadataList.add(metadata);
         }
-        matcher = Pattern.compile("created_at\":\"(.[^\"]*)").matcher(source);
-        int index = 0;
-        while (matcher.find()) {
-            String createdAt = matcher.group(1);
-            DateTime dateTime = ISODateTimeFormat.dateTimeParser().parseDateTime(createdAt);
-            metadataList.get(index++).setDateTime(dateTime);
-        }
-        matcher = Pattern.compile(",\"title\":\"(.[^\"]*)").matcher(source);
-        index = 0;
-        while (matcher.find()) {
-            String title = StringEscapeUtils.unescapeJava(matcher.group(1));
-            metadataList.get(index++).setTitle(title);
-        }
-        matcher = Pattern.compile("recipient\":\\{\"title\":\"<(.[^>]*)").matcher(source);
-        index = 0;
-        while (matcher.find()) {
-            String recipient = matcher.group(1).replaceAll("[<>]", "");
-            metadataList.get(index++).setRecipient(recipient);
-        }
-
         return metadataList;
     }
 }

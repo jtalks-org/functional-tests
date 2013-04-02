@@ -13,27 +13,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail.mailtrap;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.io.IOException;
-import java.net.URL;
+package org.jtalks.tests.jcommune.mail.mailtrap.dto;
 
 /**
- * @author Guram Savinov
+ * The Data Transfer Object for recipient of message
  */
-public class MailtrapTest {
+public class Recipient {
 
-    private static final String SELENIUM_SERVER_URL = "http://autotest.jtalks.org:4444/wd/hub";
+    private String title;
 
-    public static void main(String[] args) throws IOException {
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
-        RestMailtrap mailtrap = new RestMailtrap();
-        String link = mailtrap.getActivationLink("P_0vdm4dw0qz@jtalks.org");
-        System.out.println(link);
-        driver.quit();
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
