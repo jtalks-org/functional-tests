@@ -44,19 +44,19 @@ public class SignIn {
 
     @Test
     @Parameters({"uUsername", "uPassword"})
-    public void correctUsernameAndPassword(String username, String password) throws Exception {
+    public void correctUsernameAndPassword_JC_20(String username, String password) throws Exception {
         Users.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"iuUsername", "uPassword"})
-    public void incorrectUsername(String username, String password) throws Exception {
+    public void incorrectUsername_JC_21(String username, String password) throws Exception {
         Users.signInByDialog(username, password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"uUsername", "iuPassword"})
-    public void incorrectPassword(String username, String password) throws Exception {
+    public void incorrectPassword_JC_22(String username, String password) throws Exception {
         Users.signInByDialog(username, password);
     }
 
@@ -70,6 +70,11 @@ public class SignIn {
     @Parameters({"uUsername", "uPassword"})
     public void logInIsCaseInsensitive(String username, String password) throws Exception {
         Users.signInByDialog(username.toUpperCase(), password);
+
+    }@Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Parameters({"uUsername", "uPassword"})
+    public void passwordIsntCaseInsensitive(String username, String password) throws Exception {
+        Users.signInByDialog(username, password.toUpperCase());
     }
 
 }
