@@ -15,26 +15,52 @@
 
 package org.jtalks.tests.jcommune.mail.mailtrap;
 
+import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
+import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
 import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
 
 /**
+ * This class contains operations for getting data from Mailtrap service by REST API: get inbox metadata,
+ * get list of messages metadata, get message by identifier
+ *
  * @author Guram Savinov
  */
-public class APIClient {
+public class MailtrapClient {
 
     private static final String API_INBOXES_URL = "http://mailtrap.io/api/v1/inboxes/";
     private static final String JTALKS_AUTOTESTS_MESSAGES = "jtalks-autotests/messages/";
     private static final String API_TOKEN_PARAM = "?token=fWJsZAhSzI4Ghb9cE42ouA";
 
-    public static String getMessages() throws IOException {
+    /**
+     * Gets list of messages metadata
+     *
+     * @return the list of messages metadata
+     * @throws CouldNotGetMessagesException
+     */
+    public static String getMessages() throws CouldNotGetMessagesException {
         ClientResource client = new ClientResource(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM);
-        return client.get().getText();
+        try {
+            return client.get().getText();
+        } catch (IOException e) {
+            throw new CouldNotGetMessagesException(e);
+        }
     }
 
-    public static String getMessage(String id) throws IOException {
+    /**
+     * Get message by identifier
+     *
+     * @param id the UUID type identifier
+     * @return the message
+     * @throws CouldNotGetMessageException
+     */
+    public static String getMessage(String id) throws CouldNotGetMessageException {
         ClientResource client = new ClientResource(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM);
-        return client.get().getText();
+        try {
+            return client.get().getText();
+        } catch (IOException e) {
+            throw new CouldNotGetMessageException(e);
+        }
     }
 }

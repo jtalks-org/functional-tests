@@ -21,6 +21,8 @@ import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 import org.jtalks.tests.jcommune.mail.mailtrap.dto.Message;
 import org.jtalks.tests.jcommune.mail.mailtrap.dto.MessageDto;
+import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
+import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
 
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -35,21 +37,32 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Contain operations related to the Maitrap service such as: get activation link sent by JCommune
+ *
  * @author Guram Savinov
  */
-public class RestMailtrap {
+public class MailtrapMail {
 
     private static final String NOT_FOUND_ID = "no message with this ID";
 
-    private List<Metadata> metadataList;
-
-    public String getActivationLink(String recipient) throws IOException {
+    /**
+     * Get activation link sent by JCommune for not activated user
+     *
+     * @param recipient the recipient email
+     * @throws CouldNotGetMessagesException
+     * @throws CouldNotGetMessageException
+     * @return the activation link, that user should open to confirm registration
+     */
+    public String getActivationLink(String recipient) throws CouldNotGetMessagesException, CouldNotGetMessageException {
         Gson gson = new Gson();
-        MessageDto[] messages = gson.fromJson(APIClient.getMessages(),MessageDto[].class);
-        metadataList = getMetadataList(messages);
+        MessageDto[] messages;
+        String link = null;
+
+        messages = gson.fromJson(MailtrapClient.getMessages(),MessageDto[].class);
+
+        List<Metadata> metadataList = getMetadataList(messages);
 
         String id = NOT_FOUND_ID;
-        String link = null;
         DateTime createdAt = null;
         for (Metadata metadata : metadataList) {
             if (!recipient.equals(metadata.getRecipient())) {
@@ -63,11 +76,11 @@ public class RestMailtrap {
             return link;
         }
 
+        MessageDto messageDto = gson.fromJson(MailtrapClient.getMessage(id),MessageDto.class);
+
         // TODO: extract source value from Mailtrap JSON message (pay attention on \r \n and \" escaped characters) and
         //       construct MimeMessage from it
-
         try {
-            MessageDto messageDto = gson.fromJson(APIClient.getMessage(id),MessageDto.class);
             String source = messageDto.getMessage().getSource();
 
             MimeMessage message = new MimeMessage(Session.getInstance(new Properties()),
@@ -91,10 +104,10 @@ public class RestMailtrap {
 
     private List<Metadata> getMetadataList(MessageDto[] messages){
         List<Metadata> metadataList = new ArrayList<Metadata>();
-        Metadata metadata = null;
-        Message message = null;
-        for(int i=0; i<messages.length; i++){
-            message = messages[i].getMessage();
+        Metadata metadata;
+        Message message;
+        for (MessageDto message1 : messages) {
+            message = message1.getMessage();
             metadata = new Metadata();
             metadata.setId(message.getId());
             metadata.setTitle(message.getTitle());

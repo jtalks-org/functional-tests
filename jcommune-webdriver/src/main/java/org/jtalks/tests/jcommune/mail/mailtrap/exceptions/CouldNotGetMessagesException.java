@@ -13,27 +13,19 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail.mailtrap;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
+package org.jtalks.tests.jcommune.mail.mailtrap.exceptions;
 
 import java.io.IOException;
-import java.net.URL;
 
 /**
+ * Thrown if some I/O errors happened when getting data from Mailtrap API messages endpoint
+ *
  * @author Guram Savinov
  */
-public class MailtrapTest {
+public class CouldNotGetMessagesException extends IOException {
 
-    private static final String SELENIUM_SERVER_URL = "http://autotest.jtalks.org:4444/wd/hub";
-
-    public static void main(String[] args) throws IOException {
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
-        MailtrapMail mailtrapMail = new MailtrapMail();
-        String link = mailtrapMail.getActivationLink("P_w4a7h0ptao@jtalks.org");
-        System.out.println(link);
-        driver.quit();
+    public CouldNotGetMessagesException(Throwable cause) {
+        super("Could not get data from Mailtrap messages endpoint", cause);
     }
+
 }
