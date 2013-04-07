@@ -25,9 +25,7 @@ import org.testng.annotations.Test;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.logOut;
 
-/**
- * @author Guram Savinov
- */
+/** @author Guram Savinov */
 public class SignIn {
 
     @BeforeMethod
@@ -71,7 +69,9 @@ public class SignIn {
     public void logInIsCaseInsensitive(String username, String password) throws Exception {
         Users.signInByDialog(username.toUpperCase(), password);
 
-    }@Test(expectedExceptions = CouldNotSignInUserException.class)
+    }
+
+    @Test(expectedExceptions = CouldNotSignInUserException.class)
     @Parameters({"uUsername", "uPassword"})
     public void passwordIsntCaseInsensitive(String username, String password) throws Exception {
         Users.signInByDialog(username, password.toUpperCase());
