@@ -16,6 +16,9 @@
 package org.jtalks.tests.jcommune.webdriver;
 
 
+import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
+import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
+import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
 import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
@@ -144,12 +147,15 @@ public class Users {
     }
 
     /**
-     * Open activation link from message sent by JCommune to confirm user registration.
+     * Open activation link from message sent by JCommune to confirm user registration
      *
      * @param email the user email
+     * @throws CouldNotGetMessagesException
+     * @throws CouldNotGetMessageException
      */
-    public static void openActivationLink(String email) {
-        String activationLink = mailtrapServer.getActivationLink(email);
+    public static void openActivationLink(String email) throws CouldNotGetMessagesException,
+            CouldNotGetMessageException {
+        String activationLink = MailtrapMail.getActivationLink(email);
         driver.get(activationLink);
     }
 }

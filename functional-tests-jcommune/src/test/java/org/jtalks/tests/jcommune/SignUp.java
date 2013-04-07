@@ -18,9 +18,13 @@ package org.jtalks.tests.jcommune;
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignUpUserException;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.*;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.logOut;
 
 /**
  * @author Guram Savinov
@@ -40,14 +44,14 @@ public class SignUp {
     }
 
     @Test
-    public void signUpWithActivation() throws CouldNotSignUpUserException, CouldNotSignInUserException {
+    public void signUpWithActivation() throws Exception {
         User user = Users.signUpNewUserByDialog();
         Users.openActivationLink(user.getEmail());
         Users.signInByPage(user.getUsername(), user.getPassword());
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
-    public void signUpWithoutActivation() throws CouldNotSignInUserException, CouldNotSignUpUserException {
+    public void signUpWithoutActivation() throws Exception {
         User user = Users.signUpNewUserByDialog();
         Users.signInByDialog(user.getUsername(), user.getPassword());
     }

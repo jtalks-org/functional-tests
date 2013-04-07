@@ -3,7 +3,6 @@ package org.jtalks.tests.jcommune.webdriver;
 import org.jtalks.tests.jcommune.assertion.Existance;
 import org.jtalks.tests.jcommune.mail.Mail;
 import org.jtalks.tests.jcommune.mail.MailHelp;
-import org.jtalks.tests.jcommune.mail.mailtrap.Mailtrap;
 import org.jtalks.tests.jcommune.utils.CollectionHelp;
 import org.jtalks.tests.jcommune.utils.SeleniumConfig;
 import org.jtalks.tests.jcommune.utils.StringHelp;
@@ -88,9 +87,6 @@ public class JCommuneSeleniumTest {
     //Mail implementation
     public static Mail mailServer;
 
-    // Mailtrap server implementation
-    public static Mailtrap mailtrapServer;
-
     public static int timeout = 10;
 
     /**
@@ -120,9 +116,6 @@ public class JCommuneSeleniumTest {
         createSecondDriver();
 
         mailServer = MailHelp.getMailImpl(mail);
-        mailtrapServer = new Mailtrap(driver2);
-        mailtrapServer.signIn();
-
 
         HashMap<Object, String[]> users = new HashMap();
         users.put(1, new String[]{uUsername, uEmail, uPassword});
