@@ -53,7 +53,8 @@ public class MailtrapMail {
      * @throws CouldNotGetMessageException
      * @return the activation link, that user should open to confirm registration
      */
-    public String getActivationLink(String recipient) throws CouldNotGetMessagesException, CouldNotGetMessageException {
+    public static String getActivationLink(String recipient) throws CouldNotGetMessagesException,
+            CouldNotGetMessageException {
         Gson gson = new Gson();
         MessageDto[] messages;
         String link = null;
@@ -102,12 +103,11 @@ public class MailtrapMail {
         return link;
     }
 
-    private List<Metadata> getMetadataList(MessageDto[] messages){
+    private static List<Metadata> getMetadataList(MessageDto[] messageDtoArray) {
         List<Metadata> metadataList = new ArrayList<Metadata>();
         Metadata metadata;
-        Message message;
-        for (MessageDto message1 : messages) {
-            message = message1.getMessage();
+        for (MessageDto messageDto : messageDtoArray) {
+            Message message = messageDto.getMessage();
             metadata = new Metadata();
             metadata.setId(message.getId());
             metadata.setTitle(message.getTitle());

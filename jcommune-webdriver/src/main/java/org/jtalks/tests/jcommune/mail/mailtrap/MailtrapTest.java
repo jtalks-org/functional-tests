@@ -31,8 +31,7 @@ public class MailtrapTest {
 
     public static void main(String[] args) throws IOException {
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
-        MailtrapMail mailtrapMail = new MailtrapMail();
-        String link = mailtrapMail.getActivationLink("P_w4a7h0ptao@jtalks.org");
+        String link = MailtrapMail.getActivationLink("P_w4a7h0ptao@jtalks.org");
         System.out.println(link);
         driver.quit();
     }
