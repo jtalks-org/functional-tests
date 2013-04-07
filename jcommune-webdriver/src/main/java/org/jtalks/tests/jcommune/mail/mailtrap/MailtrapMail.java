@@ -79,8 +79,6 @@ public class MailtrapMail {
 
         MessageDto messageDto = gson.fromJson(MailtrapClient.getMessage(id),MessageDto.class);
 
-        // TODO: extract source value from Mailtrap JSON message (pay attention on \r \n and \" escaped characters) and
-        //       construct MimeMessage from it
         try {
             String source = messageDto.getMessage().getSource();
 
@@ -111,7 +109,7 @@ public class MailtrapMail {
             metadata = new Metadata();
             metadata.setId(message.getId());
             metadata.setTitle(message.getTitle());
-            metadata.setRecipient(message.getRecipients()[0].getRecipient() //TODO: change for array
+            metadata.setRecipient(message.getRecipients()[0].getRecipient()
                     .getTitle().replaceAll("[<>]", ""));
             metadata.setDateTime(ISODateTimeFormat.dateTimeParser().parseDateTime(message.getCreated_at()));
             metadataList.add(metadata);
