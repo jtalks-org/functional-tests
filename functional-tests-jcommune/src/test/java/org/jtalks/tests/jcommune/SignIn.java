@@ -15,15 +15,16 @@
 
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.logOut;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.logOutIfLoggedIn;
 
 /** @author Guram Savinov */
 public class SignIn {
@@ -32,49 +33,51 @@ public class SignIn {
     @Parameters("app-url")
     public void setup(String appUrl) {
         driver.get(appUrl);
-    }
-
-    @AfterMethod
-    @Parameters("app-url")
-    public void destroy(String appUrl) {
-        logOut(appUrl);
+        logOutIfLoggedIn();
     }
 
     @Test
-    @Parameters({"uUsername", "uPassword"})
-    public void correctUsernameAndPassword_JC_20(String username, String password) throws Exception {
-        Users.signInByDialog(username, password);
+    public void correctUsernameAndPassword_JC_20() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user.getUsername(), user.getPassword());
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
-    @Parameters({"iuUsername", "uPassword"})
-    public void incorrectUsername_JC_21(String username, String password) throws Exception {
-        Users.signInByDialog(username, password);
+    public void emptyUsernameCausesError_JC_21() throws Exception {
+        String password = StringHelp.getRandomString(9);
+        Users.signIn("", password);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
-    @Parameters({"uUsername", "iuPassword"})
-    public void incorrectPassword_JC_22(String username, String password) throws Exception {
-        Users.signInByDialog(username, password);
+    public void incorrectUsernameCausesError_JC_21() throws Exception {
+        User user = Users.signUp();
+        String username = StringHelp.getRandomString(8);
+        Users.signIn(username, user.getPassword());
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
-    @Parameters({"iuUsername", "iuPassword"})
-    public void incorrectUsernameAndPassword(String username, String password) throws Exception {
-        Users.signInByDialog(username, password);
+    public void incorrectPassword_JC_22() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user.getUsername(), user.getPassword()+"a");
+    }
+
+    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    public void incorrectUsernameAndPassword() throws Exception {
+        String username = StringHelp.getRandomString(8);
+        String password = StringHelp.getRandomString(9);
+        Users.signIn(username, password);
     }
 
     @Test
-    @Parameters({"uUsername", "uPassword"})
-    public void logInIsCaseInsensitive(String username, String password) throws Exception {
-        Users.signInByDialog(username.toUpperCase(), password);
-
+    public void checkUsernameIsCaseInsensitive() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user.getUsername().toUpperCase(), user.getPassword());
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
-    @Parameters({"uUsername", "uPassword"})
-    public void passwordIsntCaseInsensitive(String username, String password) throws Exception {
-        Users.signInByDialog(username, password.toUpperCase());
+    public void checkPasswordIsnotCaseInsensitive() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user.getUsername(), user.getPassword().toUpperCase());
     }
 
 }

@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune.webdriver.page;
 
 
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,35 +12,18 @@ import org.openqa.selenium.support.PageFactory;
  * @author erik
  */
 public class MainPage {
-
-    private static final String loginLinkSel = "signin";
-
     public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/logout']";
-
-    public static final String currentUsernameLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user']";
-
     public static final String errorPageSel = "//div[@class='text_errorpage']";
-
     public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumTest.contextPath + "/sections']";
-
     public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/']";
-
     public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/topics/recent']";
-
     public static final String messagesCountSel = "//span[@class='test-messages']";
-
     public static final String usersCountSel = "//span[@class='test-registered-users']";
-
     public static final String usersOnlineCountSel = "//span[@class='test-visitors-total']";
-
     public static final String registeredUsersOnlineCountSel = "//span[@class='test-visitors-registered']";
-
     public static final String guestsUsersOnlineCountSel = "//span[@class='test-visitors-guests']";
-
     public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user' and not(@class='currentusername')]";
-
     public static final String languageSwitcherSel = "//div[@id='lang-selector-toggle']/a/img";
-
     public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
 
     @FindBy(xpath = languageDropdownMenuSel)
@@ -54,12 +38,11 @@ public class MainPage {
     @FindBy(xpath = logOutButtonSel)
     private WebElement logOutButton;
 
+    @FindBy(id = "user-dropdown-menu-link")
+    private WebElement userMenuLink;
 
-    @FindBy(id = loginLinkSel)
+    @FindBy(id = "signin")
     private WebElement loginLink;
-
-    @FindBy(xpath = currentUsernameLinkSel)
-    private WebElement currentUsernameLink;
 
     @FindBy(xpath = errorPageSel)
     private WebElement errorPage;
@@ -106,16 +89,21 @@ public class MainPage {
         return profileLink;
     }
 
-    public WebElement getLoginLink() {
-        return loginLink;
+    public void clickLogin() {
+        loginLink.click();
     }
 
-    public WebElement getLogOutButton() {
-        return logOutButton;
+    public void clickLogout() {
+        userMenuLink.click();
+        logOutButton.click();
     }
 
-    public WebElement getCurrentUsernameLink() {
-        return currentUsernameLink;
+    public boolean userIsLoggedIn() {
+        try {
+            return userMenuLink.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 
     public WebElement getErrorPage() {

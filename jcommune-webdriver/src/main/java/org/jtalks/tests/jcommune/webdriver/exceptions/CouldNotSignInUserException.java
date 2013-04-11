@@ -24,6 +24,11 @@ import org.jtalks.tests.jcommune.webdriver.User;
  */
 public class CouldNotSignInUserException extends Exception {
 
+    public CouldNotSignInUserException(User user, String pageSource) {
+        super("User with username: " + user.getUsername() + " and password: " + user.getPassword() +
+                " could not be signed in. Current page source: \n" + pageSource);
+    }
+
     public CouldNotSignInUserException(User user, Throwable cause) {
         super("User with username: " + user.getUsername() + " and password: " + user.getPassword() +
                 " could not be signed in.", cause);

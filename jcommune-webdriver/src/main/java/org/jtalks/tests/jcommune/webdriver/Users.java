@@ -27,6 +27,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.*;
 
@@ -39,6 +41,7 @@ public class Users {
 
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
             "подтверждения регистрации.";
+    private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
 
     /**
      * Sign in user by dialog. Action should by started from any page of JCommune.
@@ -49,9 +52,9 @@ public class Users {
      * @throws CouldNotSignInUserException
      * @return the {@code User} instance
      */
-    public static User signInByDialog(String username, String password)
-            throws CouldNotOpenPageException, CouldNotSignInUserException {
-        mainPage.getLoginLink().click();
+    public static User signIn(String username, String password)
+    throws CouldNotOpenPageException, CouldNotSignInUserException {
+        mainPage.clickLogin();
         try {
             driver.findElement(By.id(signInPage.signInDialogFormSel));
         } catch (NoSuchElementException e) {
@@ -59,15 +62,13 @@ public class Users {
         }
 
         User user = new User(username, password);
+        LOGGER.info("Trying to log in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButton().click();
-        try {
-            driver.findElement(By.xpath(mainPage.currentUsernameLinkSel));
-        } catch (NoSuchElementException e) {
-            throw new CouldNotSignInUserException(user, e);
+        if (!mainPage.userIsLoggedIn()) {
+            throw new CouldNotSignInUserException(user, driver.getPageSource());
         }
-
         return user;
     }
 
@@ -89,15 +90,13 @@ public class Users {
         }
 
         User user = new User(username, password);
+        LOGGER.info("Trying to log in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButtonAfterRegistration().click();
-        try {
-            driver.findElement(By.xpath(mainPage.currentUsernameLinkSel));
-        } catch (NoSuchElementException e) {
-            throw new CouldNotSignInUserException(user, e);
+        if (!mainPage.userIsLoggedIn()) {
+            throw new CouldNotSignInUserException(user, driver.getPageSource());
         }
-
         return user;
     }
 
@@ -108,7 +107,22 @@ public class Users {
      * @throws CouldNotSignUpUserException
      * @return the {@code User} instance
      */
-    public static User signUpNewUserByDialog() throws CouldNotOpenPageException, CouldNotSignUpUserException {
+    public static User signUp() throws CouldNotOpenPageException, CouldNotSignUpUserException,
+            CouldNotGetMessageException, CouldNotGetMessagesException {
+        User user = signUpWithoutActivation();
+        activateUserByMail(user.getEmail());
+        return user;
+    }
+
+    /**
+     * Sign up new user with random data by dialog. Action should be started from any page of JCommune.
+     *
+     * @throws CouldNotOpenPageException
+     * @throws CouldNotSignUpUserException
+     * @return the {@code User} instance
+     */
+    public static User signUpWithoutActivation() throws CouldNotOpenPageException, CouldNotSignUpUserException,
+            CouldNotGetMessageException, CouldNotGetMessagesException {
         // Check opening sign up form
         signUpPage.getSignUpButton().click();
         try {
@@ -127,8 +141,9 @@ public class Users {
 
         // Fill sign up form and submit
         User user = new User(StringHelp.getRandomString(8), StringHelp.getRandomString(9), StringHelp.getRandomEmail());
+        LOGGER.info("Registering user {}", user);
         signUpPage.getUsernameField().sendKeys(user.getUsername());
-		signUpPage.getEmailField().sendKeys(user.getEmail());
+        signUpPage.getEmailField().sendKeys(user.getEmail());
         signUpPage.getPasswordField().sendKeys(user.getPassword());
         signUpPage.getPasswordConfirmField().sendKeys(user.getPassword());
         signUpPage.getCaptchaField().sendKeys(validCaptchaValue);
@@ -142,9 +157,9 @@ public class Users {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
         }
-
         return user;
     }
+
 
     /**
      * Open activation link from message sent by JCommune to confirm user registration
@@ -153,9 +168,10 @@ public class Users {
      * @throws CouldNotGetMessagesException
      * @throws CouldNotGetMessageException
      */
-    public static void openActivationLink(String email) throws CouldNotGetMessagesException,
+    public static void activateUserByMail(String email) throws CouldNotGetMessagesException,
             CouldNotGetMessageException {
         String activationLink = MailtrapMail.getActivationLink(email);
         driver.get(activationLink);
+        mainPage.getIconLinkToMainPage().click();
     }
 }

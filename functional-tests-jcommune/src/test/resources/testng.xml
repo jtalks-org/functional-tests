@@ -48,7 +48,7 @@
     <parameter name="aUsername" value="adminSel"/>
     <parameter name="aPassword" value="adminSel"/>
     <parameter name="aEmail" value="adminSel@jtalks.org"/>
-    
+
     <!--Incorrect username and password-->
     <parameter name="iuUsername" value="iuTestSel"/>
     <parameter name="iuPassword" value="iuTestSel"/>

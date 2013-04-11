@@ -145,124 +145,24 @@ public class JCommuneSeleniumTest {
         }
     }
 
-    /**
-     * Method checks users in application. If user not exists, then registering it.
-     */
-    private void usersCheck(HashMap<Object, String[]> users, String appUrl, String publicEmail, String publicPass) {
-        driver.get(appUrl);
-        for (String[] user : users.values()) {
-            boolean result = signIn(user[0], user[2]);
-            if (result) {
-                logOut(appUrl);
-            } else {
-                //registration user
-                signInPage.getCloseSignInWindowButton().click();
 
-                registerNewUser(user[0], user[1], user[2]);
-
-                mailServer.goToMailServer();
-                //user with name "random" used in recovery password test. He have real email
-                if (user[0].equals("tochanges")) {
-                    mailServer.signIn(user[1], user[0]);
-                } else {
-                    mailServer.signIn(publicEmail, publicPass);
-                }
-
-                mailServer.openFirstMessage();
-                String activeLink = mailServer.getFirstLinkInMessageText().getText();
-
-                driver.get(activeLink);
-                signInPage.getUsernameField().sendKeys(user[0]);
-                signInPage.getPasswordField().sendKeys(user[2]);
-                signInPage.getSubmitButtonAfterRegistration().click();
-
-                profilePage.getCurrentUserLink().click();
-                profilePage.getEditProfileButton().click();
-                Select selectBox = new Select(profilePage.getPageSizeField());
-                selectBox.selectByValue("5");
-                profilePage.getSaveEditButton().click();
-                logOut(appUrl);
-            }
-        }
-    }
-
-    /**
-     * This method does the authentication
-     *
-     * @param username
-     * @param password
-     * @author erik
-     */
     public static boolean signIn(String username, String password) {
-        mainPage.getLoginLink().click();
+        mainPage.clickLogin();
         signInPage.getUsernameField().sendKeys(username);
         signInPage.getPasswordField().sendKeys(password);
         signInPage.getSubmitButton().click();
-        //wait until user is logining
-        if (mainPage.getCurrentUsernameLink().isDisplayed()) {
-            return true;
-        } else return false;
-//        try {
-//            signInPage.getErrorMessage().isDisplayed();
-//            return false;
-//        }
-//        catch (NoSuchElementException ex) {
-//            return (new WebDriverWait(driver, timeout)).until(new ExpectedCondition<Boolean>() {
-//                public Boolean apply(WebDriver d) {
-//                    return mainPage.getCurrentUsernameLink().isDisplayed();
-//                }
-//            });
-//        }
-
-    }
-
-    /**
-     * This method does the authentication
-     *
-     * @param username
-     * @param password
-     * @author masyan
-     */
-    public static void signInByAnotherDriver(String username, String password) {
-        if (driver2 != null) {
-            final MainPage mainPage = new MainPage(driver2);
-            SignInPage signInPage = new SignInPage(driver2);
-            mainPage.getLoginLink().click();
-            signInPage.getUsernameField().sendKeys(username);
-            signInPage.getPasswordField().sendKeys(password);
-            signInPage.getSubmitButton().click();
-            //wait until usern is logining
-            (new WebDriverWait(driver2, timeout)).until(new ExpectedCondition<Boolean>() {
-                public Boolean apply(WebDriver d) {
-                    return mainPage.getCurrentUsernameLink().isDisplayed();
-                }
-            });
-        }
+        return mainPage.userIsLoggedIn();
     }
 
 
     /**
-     * This method checks that link for logout present, than click on it
      * Method  used static link because in selenium exist bag  MoveTargetOutOfBoundsError
-     *
-     * @author erik
      */
-    public static void logOut(String appUrl) {
+    public static void logOutIfLoggedIn() {
         try {
-            mainPage.getLogOutButton().click();
+            mainPage.clickLogout();
         } catch (NoSuchElementException e) {
-        }
-    }
-
-    /**
-     * This method checks that link for logout present, than click on it
-     * Method  used static link because in selenium exist bag  MoveTargetOutOfBoundsError
-     *
-     * @author masyan
-     */
-    public static void logOutByAnotherDriver() {
-        if (driver2 != null) {
-            mainPage.getLogOutButton().click();
+            //we don't care if user already is logged out
         }
     }
 

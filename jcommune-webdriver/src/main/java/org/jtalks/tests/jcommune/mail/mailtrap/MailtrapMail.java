@@ -23,6 +23,8 @@ import org.jtalks.tests.jcommune.mail.mailtrap.dto.Message;
 import org.jtalks.tests.jcommune.mail.mailtrap.dto.MessageDto;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -42,7 +44,7 @@ import java.util.regex.Pattern;
  * @author Guram Savinov
  */
 public class MailtrapMail {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(MailtrapMail.class);
     private static final String NOT_FOUND_ID = "no message with this ID";
 
     /**
@@ -94,9 +96,9 @@ public class MailtrapMail {
                 link = matcher.group(1);
             }
         } catch (MessagingException e) {
-            e.printStackTrace();
+            LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap",e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap",e);
         }
         return link;
     }
