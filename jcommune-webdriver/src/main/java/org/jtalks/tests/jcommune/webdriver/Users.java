@@ -121,6 +121,7 @@ public class Users {
      *
      * @param username the username of new user
      * @param password the password of new user
+     * @param passwordConfirm the confirm of the password for new user
      * @param email the email of new user
      * @return the {@code User} instance
      * @throws CouldNotOpenPageException
@@ -128,9 +129,9 @@ public class Users {
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      */
-    public static User signUp(String username, String password, String email)
+    public static User signUp(String username, String password, String passwordConfirm, String email)
             throws CouldNotOpenPageException, CouldNotSignUpUserException,CouldNotGetMessageException, CouldNotGetMessagesException{
-        User user = signUpWithoutActivation(username,password,email);
+        User user = signUpWithoutActivation(username,password,passwordConfirm,email);
         activateUserByMail(user.getEmail());
         return user;
     }
@@ -145,8 +146,10 @@ public class Users {
      */
     public static User signUpWithoutActivation() throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
+        String password = StringHelp.getRandomString(9);
         return signUpWithoutActivation(StringHelp.getRandomString(8),
-                StringHelp.getRandomString(9),
+                password,
+                password,
                 StringHelp.getRandomEmail());
     }
 
@@ -155,6 +158,7 @@ public class Users {
      *
      * @param username the username of new user
      * @param password the password of new user
+     * @param passwordConfirm the confirm of the password for new user
      * @param email the email of new user
      * @return the {@code User} instance
      * @throws CouldNotOpenPageException
@@ -162,7 +166,7 @@ public class Users {
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      */
-    public static User signUpWithoutActivation(String username, String password, String email)
+    public static User signUpWithoutActivation(String username, String password, String passwordConfirm, String email)
             throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
         // Check opening sign up form
@@ -187,7 +191,7 @@ public class Users {
         signUpPage.getUsernameField().sendKeys(user.getUsername());
         signUpPage.getEmailField().sendKeys(user.getEmail());
         signUpPage.getPasswordField().sendKeys(user.getPassword());
-        signUpPage.getPasswordConfirmField().sendKeys(user.getPassword());
+        signUpPage.getPasswordConfirmField().sendKeys(passwordConfirm);
         signUpPage.getCaptchaField().sendKeys(validCaptchaValue);
         signUpPage.getSubmitButton().submit();
         new WebDriverWait(driver, 10).until(ExpectedConditions
