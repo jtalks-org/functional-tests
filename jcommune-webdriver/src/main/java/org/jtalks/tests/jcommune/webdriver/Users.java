@@ -117,6 +117,26 @@ public class Users {
     }
 
     /**
+     * Sign up new user with some parameters.
+     *
+     * @param username the username of new user
+     * @param password the password of new user
+     * @param email the email of new user
+     * @return the {@code User} instance
+     * @throws CouldNotOpenPageException
+     * @throws CouldNotSignUpUserException
+     * @throws CouldNotGetMessageException
+     * @throws CouldNotGetMessagesException
+     */
+    public static User signUp(String username, String password, String email)
+            throws CouldNotOpenPageException, CouldNotSignUpUserException,CouldNotGetMessageException, CouldNotGetMessagesException{
+        User user = signUpWithoutActivation(username,password,email);
+        activateUserByMail(user.getEmail());
+        return user;
+    }
+
+
+    /**
      * Sign up new user with random data by dialog. Action should be started from any page of JCommune.
      *
      * @throws CouldNotOpenPageException
@@ -124,6 +144,26 @@ public class Users {
      * @return the {@code User} instance
      */
     public static User signUpWithoutActivation() throws CouldNotOpenPageException, CouldNotSignUpUserException,
+            CouldNotGetMessageException, CouldNotGetMessagesException {
+        return signUpWithoutActivation(StringHelp.getRandomString(8),
+                StringHelp.getRandomString(9),
+                StringHelp.getRandomEmail());
+    }
+
+    /**
+     *  Sign up new user without activation, with some parameters.
+     *
+     * @param username the username of new user
+     * @param password the password of new user
+     * @param email the email of new user
+     * @return the {@code User} instance
+     * @throws CouldNotOpenPageException
+     * @throws CouldNotSignUpUserException
+     * @throws CouldNotGetMessageException
+     * @throws CouldNotGetMessagesException
+     */
+    public static User signUpWithoutActivation(String username, String password, String email)
+            throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
         // Check opening sign up form
         signUpPage.getSignUpButton().click();
@@ -142,7 +182,7 @@ public class Users {
         }
 
         // Fill sign up form and submit
-        User user = new User(StringHelp.getRandomString(8), StringHelp.getRandomString(9), StringHelp.getRandomEmail());
+        User user = new User(username,password,email);
         LOGGER.info("Registering user {}", user);
         signUpPage.getUsernameField().sendKeys(user.getUsername());
         signUpPage.getEmailField().sendKeys(user.getEmail());
@@ -161,7 +201,6 @@ public class Users {
         }
         return user;
     }
-
 
     /**
      * Open activation link from message sent by JCommune to confirm user registration
