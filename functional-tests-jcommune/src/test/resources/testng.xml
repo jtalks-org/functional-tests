@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="JCommune">
     <!--Selenium server paramentrs-->
-    <parameter name="selenium-server-url" value="http://autotest.jtalks.org:4444/wd/hub"/>
+    <parameter name="selenium-server-url" value="http://jtalks.org:4444/wd/hub"/>
     <!--Values: chrome, ie, opera, android, ipad, iphone, html-->
     <parameter name="selenium-driver-type" value="html"/>
 
