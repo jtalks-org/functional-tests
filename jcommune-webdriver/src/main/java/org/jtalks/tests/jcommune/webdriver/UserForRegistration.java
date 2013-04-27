@@ -24,12 +24,21 @@ public class UserForRegistration extends User {
 
     private String passwordConfirmation;
 
-    public UserForRegistration(String username, String password, String passwordConfirmation, String email) {
-        super(username, password, email);
-        this.passwordConfirmation = passwordConfirmation;
+    public UserForRegistration() {
     }
 
     public String getPasswordConfirmation() {
         return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
+    @Override
+    public String toString() {
+        return "UserForRegistration{" +
+                "passwordConfirmation='" + passwordConfirmation + '\'' +
+                "} " + super.toString();
     }
 }

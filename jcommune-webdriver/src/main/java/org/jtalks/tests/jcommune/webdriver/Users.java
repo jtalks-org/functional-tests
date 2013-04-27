@@ -124,7 +124,7 @@ public class Users {
     }
 
     /**
-     * Sign up new user without activation by dialog. Form data will be filled randomly.
+     * Sign up new user without activation by dialog. Form fields will be filled by randomly valid values.
      * Action should be started from any page of JCommune.
      *
      * @throws CouldNotOpenPageException
@@ -133,13 +133,12 @@ public class Users {
      */
     public static User signUpWithoutActivation() throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
-        String password = StringHelp.getRandomString(9);
-        return signUpWithoutActivation(new UserForRegistration(StringHelp.getRandomString(8), password, password,
-                StringHelp.getRandomEmail()));
+        return signUpWithoutActivation(new UserForRegistration());
     }
 
     /**
-     *  Sign up new user by dialog without activation. Action should be started from any page of JCommune.
+     *  Sign up new user by dialog without activation. Properties with null value will be set by random valid value.
+     *  Action should be started from any page of JCommune.
      *
      * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
      * @return the {@code User} instance that contains registered user data
@@ -165,6 +164,20 @@ public class Users {
             driver.get(signUpPage.getCaptchaImage().getAttribute("src"));
             driver.navigate().back();
             signUpPage.getSignUpButton().click();
+        }
+
+        // Set null value properties with valid random values
+        if (userForRegistration.getUsername() == null) {
+            userForRegistration.setUsername(StringHelp.getRandomString(8));
+        }
+        if (userForRegistration.getEmail() == null) {
+            userForRegistration.setEmail(StringHelp.getRandomEmail());
+        }
+        if (userForRegistration.getPassword() == null) {
+            userForRegistration.setPassword(StringHelp.getRandomString(9));
+        }
+        if (userForRegistration.getPasswordConfirmation() == null) {
+            userForRegistration.setPasswordConfirmation(userForRegistration.getPassword());
         }
 
         // Fill sign up form and submit

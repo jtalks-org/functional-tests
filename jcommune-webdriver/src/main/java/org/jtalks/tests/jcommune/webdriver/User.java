@@ -23,8 +23,12 @@ package org.jtalks.tests.jcommune.webdriver;
 public class User {
 
     private String username;
-    private String password;
     private String email;
+
+    private String password;
+
+    public User() {
+    }
 
     public User(String username, String password) {
         this.username = username;
