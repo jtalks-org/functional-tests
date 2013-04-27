@@ -48,14 +48,11 @@ public class Users {
     /**
      * Sign in user by dialog. Action should by started from any page of JCommune.
      *
-     * @param username the username
-     * @param password the password
+     * @param user the {@code User} instance with sign in form data
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignInUserException
-     * @return the {@code User} instance
      */
-    public static User signIn(String username, String password)
-    throws CouldNotOpenPageException, CouldNotSignInUserException {
+    public static void signIn(User user) throws CouldNotOpenPageException, CouldNotSignInUserException {
         mainPage.clickLogin();
         try {
             driver.findElement(By.id(signInPage.signInDialogFormSel));
@@ -63,7 +60,6 @@ public class Users {
             throw new CouldNotOpenPageException("sign in dialog form", e);
         }
 
-        User user = new User(username, password);
         LOGGER.info("Trying to log in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
@@ -71,27 +67,22 @@ public class Users {
         if (!mainPage.userIsLoggedIn()) {
             throw new CouldNotSignInUserException(user, driver.getPageSource());
         }
-        return user;
     }
 
     /**
      * Sign in user by page. Action should be started from sign in page of JCommune.
      *
-     * @param username the username
-     * @param password the password
+     * @param user the {@code User} instance with sign in form data
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignInUserException
-     * @return the {@code User} instance
      */
-    public static User signInByPage(String username, String password)
-            throws CouldNotOpenPageException, CouldNotSignInUserException {
+    public static void signInByPage(User user) throws CouldNotOpenPageException, CouldNotSignInUserException {
         try {
             driver.findElement(By.id(signInPage.signInPageFormSel));
         } catch (NoSuchElementException e) {
             throw new CouldNotOpenPageException("sign in page form", e);
         }
 
-        User user = new User(username, password);
         LOGGER.info("Trying to log in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
@@ -99,7 +90,6 @@ public class Users {
         if (!mainPage.userIsLoggedIn()) {
             throw new CouldNotSignInUserException(user, driver.getPageSource());
         }
-        return user;
     }
 
     /**
@@ -107,7 +97,7 @@ public class Users {
      *
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignUpUserException
-     * @return the {@code User} instance
+     * @return the {@code User} instance that contains registered user data
      */
     public static User signUp() throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
@@ -117,58 +107,50 @@ public class Users {
     }
 
     /**
-     * Sign up new user with some parameters.
+     * Sign up new user by dialog. Action should be started from any page of JCommune.
      *
-     * @param username the username of new user
-     * @param password the password of new user
-     * @param passwordConfirm the confirm of the password for new user
-     * @param email the email of new user
-     * @return the {@code User} instance
+     * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
+     * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignUpUserException
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      */
-    public static User signUp(String username, String password, String passwordConfirm, String email)
-            throws CouldNotOpenPageException, CouldNotSignUpUserException,CouldNotGetMessageException, CouldNotGetMessagesException{
-        User user = signUpWithoutActivation(username,password,passwordConfirm,email);
+    public static User signUp(UserForRegistration userForRegistration) throws CouldNotOpenPageException,
+            CouldNotSignUpUserException,CouldNotGetMessageException, CouldNotGetMessagesException {
+        User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
         return user;
     }
 
-
     /**
-     * Sign up new user with random data by dialog. Action should be started from any page of JCommune.
+     * Sign up new user without activation by dialog. Form data will be filled randomly.
+     * Action should be started from any page of JCommune.
      *
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignUpUserException
-     * @return the {@code User} instance
+     * @return the {@code User} instance that contains registered user data
      */
     public static User signUpWithoutActivation() throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
         String password = StringHelp.getRandomString(9);
-        return signUpWithoutActivation(StringHelp.getRandomString(8),
-                password,
-                password,
-                StringHelp.getRandomEmail());
+        return signUpWithoutActivation(new UserForRegistration(StringHelp.getRandomString(8), password, password,
+                StringHelp.getRandomEmail()));
     }
 
     /**
-     *  Sign up new user without activation, with some parameters.
+     *  Sign up new user by dialog without activation. Action should be started from any page of JCommune.
      *
-     * @param username the username of new user
-     * @param password the password of new user
-     * @param passwordConfirm the confirm of the password for new user
-     * @param email the email of new user
-     * @return the {@code User} instance
+     * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
+     * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignUpUserException
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      */
-    public static User signUpWithoutActivation(String username, String password, String passwordConfirm, String email)
-            throws CouldNotOpenPageException, CouldNotSignUpUserException,
-            CouldNotGetMessageException, CouldNotGetMessagesException {
+    public static User signUpWithoutActivation(UserForRegistration userForRegistration)
+            throws CouldNotOpenPageException, CouldNotSignUpUserException, CouldNotGetMessageException,
+            CouldNotGetMessagesException {
         // Check opening sign up form
         signUpPage.getSignUpButton().click();
         try {
@@ -186,12 +168,11 @@ public class Users {
         }
 
         // Fill sign up form and submit
-        User user = new User(username,password,email);
-        LOGGER.info("Registering user {}", user);
-        signUpPage.getUsernameField().sendKeys(user.getUsername());
-        signUpPage.getEmailField().sendKeys(user.getEmail());
-        signUpPage.getPasswordField().sendKeys(user.getPassword());
-        signUpPage.getPasswordConfirmField().sendKeys(passwordConfirm);
+        LOGGER.info("Registering user {}", userForRegistration);
+        signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
+        signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
+        signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
+        signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
         signUpPage.getCaptchaField().sendKeys(validCaptchaValue);
         signUpPage.getSubmitButton().submit();
         new WebDriverWait(driver, 10).until(ExpectedConditions
@@ -203,7 +184,8 @@ public class Users {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
         }
-        return user;
+        return new User(userForRegistration.getUsername(), userForRegistration.getPassword(),
+                userForRegistration.getEmail());
     }
 
     /**

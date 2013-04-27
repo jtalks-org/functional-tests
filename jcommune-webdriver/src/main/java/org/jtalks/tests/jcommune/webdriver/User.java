@@ -16,7 +16,7 @@
 package org.jtalks.tests.jcommune.webdriver;
 
 /**
- * Jcommune user representation
+ * Jcommune user representation. Contains username, password and e-mail.
  *
  * @author Guram Savinov
  */

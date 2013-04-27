@@ -39,45 +39,47 @@ public class SignIn {
     @Test
     public void correctUsernameAndPassword_JC_20() throws Exception {
         User user = Users.signUp();
-        Users.signIn(user.getUsername(), user.getPassword());
+        Users.signIn(user);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     public void emptyUsernameCausesError_JC_21() throws Exception {
         String password = StringHelp.getRandomString(9);
-        Users.signIn("", password);
+        Users.signIn(new User("", password));
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     public void incorrectUsernameCausesError_JC_21() throws Exception {
         User user = Users.signUp();
-        String username = StringHelp.getRandomString(8);
-        Users.signIn(username, user.getPassword());
+        user.setUsername(StringHelp.getRandomString(8));
+        Users.signIn(user);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     public void incorrectPassword_JC_22() throws Exception {
         User user = Users.signUp();
-        Users.signIn(user.getUsername(), user.getPassword()+"a");
+        user.setPassword(user.getPassword() + "a");
+        Users.signIn(user);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     public void incorrectUsernameAndPassword() throws Exception {
         String username = StringHelp.getRandomString(8);
         String password = StringHelp.getRandomString(9);
-        Users.signIn(username, password);
+        Users.signIn(new User(username, password));
     }
 
     @Test
     public void checkUsernameIsCaseInsensitive() throws Exception {
         User user = Users.signUp();
-        Users.signIn(user.getUsername().toUpperCase(), user.getPassword());
+        user.setUsername(user.getUsername().toUpperCase());
+        Users.signIn(user);
     }
 
     @Test(expectedExceptions = CouldNotSignInUserException.class)
     public void checkPasswordIsnotCaseInsensitive() throws Exception {
         User user = Users.signUp();
-        Users.signIn(user.getUsername(), user.getPassword().toUpperCase());
+        user.setPassword(user.getPassword().toUpperCase());
+        Users.signIn(user);
     }
-
 }
