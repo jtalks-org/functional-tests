@@ -35,8 +35,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.jayway.awaitility.Awaitility.await;
 
 /**
  * Contain operations related to the Maitrap service such as: get activation link sent by JCommune
@@ -44,18 +48,34 @@ import java.util.regex.Pattern;
  * @author Guram Savinov
  */
 public class MailtrapMail {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MailtrapMail.class);
     private static final String NOT_FOUND_ID = "no message with this ID";
+    private String activationLink;
 
     /**
-     * Get activation link sent by JCommune for not activated user
-     *
+     * Get activation link sent by JCommune for the not activated user. Because Mailtrap need any time to receive
+     * message there is 4 attempts to get activation link. The first attempt starts after 10 seconds delay,
+     * next 3 attempts starts with 30 seconds interval.
      * @param recipient the recipient email
      * @throws CouldNotGetMessagesException
      * @throws CouldNotGetMessageException
      * @return the activation link, that user should open to confirm registration
      */
-    public static String getActivationLink(String recipient) throws CouldNotGetMessagesException,
+    public String getActivationLink(final String recipient) throws CouldNotGetMessagesException,
+            CouldNotGetMessageException {
+        await().dontCatchUncaughtExceptions().atMost(2, TimeUnit.MINUTES).pollDelay(10, TimeUnit.SECONDS)
+                .pollInterval(30, TimeUnit.SECONDS).until(new Callable<Boolean>() {
+                    public Boolean call() throws Exception {
+                        LOGGER.info("Trying to get activation link for email {}", recipient);
+                        activationLink = tryToGetLink(recipient);
+                        return activationLink != null;
+                    }
+                });
+        return activationLink;
+    }
+
+    private String tryToGetLink(String recipient) throws CouldNotGetMessagesException,
             CouldNotGetMessageException {
         Gson gson = new Gson();
         MessageDto[] messages;
@@ -96,14 +116,14 @@ public class MailtrapMail {
                 link = matcher.group(1);
             }
         } catch (MessagingException e) {
-            LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap",e);
+            LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap", e);
         } catch (IOException e) {
-            LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap",e);
+            LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap", e);
         }
         return link;
     }
 
-    private static List<Metadata> getMetadataList(MessageDto[] messageDtoArray) {
+    private List<Metadata> getMetadataList(MessageDto[] messageDtoArray) {
         List<Metadata> metadataList = new ArrayList<Metadata>();
         Metadata metadata;
         for (MessageDto messageDto : messageDtoArray) {

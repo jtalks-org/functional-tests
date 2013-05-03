@@ -30,8 +30,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.TimeUnit;
-
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.*;
 
 /**
@@ -192,11 +190,6 @@ public class Users {
                 .textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
         signUpPage.getOkButtonOnInfoWindow().click();
 
-        // Waiting for message with activation link
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-        }
         return new User(userForRegistration.getUsername(), userForRegistration.getPassword(),
                 userForRegistration.getEmail());
     }
@@ -210,13 +203,8 @@ public class Users {
      */
     public static void activateUserByMail(String email) throws CouldNotGetMessagesException,
             CouldNotGetMessageException {
-        try {
-            TimeUnit.SECONDS.sleep(5);//waiting since Mailtrap looks to work slower than expected
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        String activationLink = MailtrapMail.getActivationLink(email);
-        driver.get(activationLink);
+        MailtrapMail mailtrapMail = new MailtrapMail();
+        driver.get(mailtrapMail.getActivationLink(email));
         mainPage.getIconLinkToMainPage().click();
     }
 }

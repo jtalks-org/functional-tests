@@ -27,11 +27,12 @@ import java.net.URL;
  */
 public class MailtrapTest {
 
-    private static final String SELENIUM_SERVER_URL = "http://autotest.jtalks.org:4444/wd/hub";
+    private static final String SELENIUM_SERVER_URL = "http://autotests.jtalks.org:4444/wd/hub";
 
     public static void main(String[] args) throws IOException {
         WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
-        String link = MailtrapMail.getActivationLink("P_w4a7h0ptao@jtalks.org");
+        MailtrapMail mailtrapMail = new MailtrapMail();
+        String link = mailtrapMail.getActivationLink("P_r23n20nyoq@jtalks.org");
         System.out.println(link);
         driver.quit();
     }
