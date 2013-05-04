@@ -7,13 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-/**
- * Created by IntelliJ IDEA.
- * User: erik
- * Date: 03.03.12
- * Time: 13:06
- * To change this template use File | Settings | File Templates.
- */
 public class SignInPage {
 
     public static final String usernameFieldSel = "j_username";
