@@ -89,6 +89,14 @@ public class MainPage {
         return profileLink;
     }
 
+    public void logOutIfLoggedIn() {
+        try {
+            clickLogout();
+        } catch (NoSuchElementException e) {
+            //we don't care if user already is logged out
+        }
+    }
+
     public void clickLogin() {
         loginLink.click();
     }

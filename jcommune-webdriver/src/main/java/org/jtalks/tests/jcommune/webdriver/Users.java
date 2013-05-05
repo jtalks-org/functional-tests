@@ -23,6 +23,8 @@ import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignUpUserException;
+import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
+import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -30,7 +32,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.*;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.selDriverType;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 /**
  * Contain user actions like sign in, sign out etc.
@@ -53,7 +57,7 @@ public class Users {
     public static void signIn(User user) throws CouldNotOpenPageException, CouldNotSignInUserException {
         mainPage.clickLogin();
         try {
-            driver.findElement(By.id(signInPage.signInDialogFormSel));
+            driver.findElement(By.id(SignInPage.signInDialogFormSel));
         } catch (NoSuchElementException e) {
             throw new CouldNotOpenPageException("sign in dialog form", e);
         }
@@ -76,7 +80,7 @@ public class Users {
      */
     public static void signInByPage(User user) throws CouldNotOpenPageException, CouldNotSignInUserException {
         try {
-            driver.findElement(By.id(signInPage.signInPageFormSel));
+            driver.findElement(By.id(SignInPage.signInPageFormSel));
         } catch (NoSuchElementException e) {
             throw new CouldNotOpenPageException("sign in page form", e);
         }
@@ -151,7 +155,7 @@ public class Users {
         // Check opening sign up form
         signUpPage.getSignUpButton().click();
         try {
-            driver.findElement(By.id(signUpPage.signUpFormSel));
+            driver.findElement(By.id(SignUpPage.signUpFormSel));
         } catch (NoSuchElementException e) {
             throw new CouldNotOpenPageException("sign up form", e);
         }
@@ -184,7 +188,7 @@ public class Users {
         signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
         signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
-        signUpPage.getCaptchaField().sendKeys(VALID_CAPTCHA_VALUE);
+        signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
         signUpPage.getSubmitButton().submit();
         new WebDriverWait(driver, 10).until(ExpectedConditions
                 .textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));

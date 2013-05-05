@@ -11,7 +11,11 @@ import org.openqa.selenium.support.PageFactory;
  * @author masyan
  */
 public class SignUpPage {
-
+    /**
+     * JCommune instance for functional should be configured to use only 0000 as captcha so that we can actually
+     * register users without writing a tool to break our own captcha
+     */
+    public static final String VALID_CAPTCHA_VALUE = "0000";
     public static final String signUpFormSel = "signup-modal-dialog";
 
     public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user/new']";

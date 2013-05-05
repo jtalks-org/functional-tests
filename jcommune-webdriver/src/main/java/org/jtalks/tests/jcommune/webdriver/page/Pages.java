@@ -1,0 +1,29 @@
+package org.jtalks.tests.jcommune.webdriver.page;
+
+import org.openqa.selenium.WebDriver;
+
+/** @author stanislav bashkirtsev */
+public class Pages {
+    public static MainPage mainPage;
+    public static SignInPage signInPage;
+    public static SignUpPage signUpPage;
+    public static TopicPage topicPage;
+    public static PostPage postPage;
+    public static SectionPage sectionPage;
+    public static BranchPage branchPage;
+    public static PMPage pmPage;
+    public static ProfilePage profilePage;
+
+
+    public static void createAllPages(WebDriver driver) {
+        mainPage = new MainPage(driver);
+        signInPage = new SignInPage(driver);
+        signUpPage = new SignUpPage(driver);
+        topicPage = new TopicPage(driver);
+        postPage = new PostPage(driver);
+        sectionPage = new SectionPage(driver);
+        branchPage = new BranchPage(driver);
+        pmPage = new PMPage(driver);
+        profilePage = new ProfilePage(driver);
+    }
+}

@@ -23,7 +23,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.logOutIfLoggedIn;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
  * @author Guram Savinov
@@ -34,8 +34,8 @@ public class SignUp {
 	@Parameters({"app-url"})
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
-        logOutIfLoggedIn();
-	}
+        mainPage.logOutIfLoggedIn();
+    }
 
     @Test
     public void signUpWithActivation() throws Exception {
