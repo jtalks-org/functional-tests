@@ -19,7 +19,7 @@ public class SignInPage {
 
     public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
 
-    public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.contextPath + "/password/restore']";
+    public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/password/restore']";
 
     public static final String signInDialogFormSel = "signin-modal-dialog";
 

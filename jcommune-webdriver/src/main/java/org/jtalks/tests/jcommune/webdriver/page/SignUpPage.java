@@ -18,7 +18,7 @@ public class SignUpPage {
     public static final String VALID_CAPTCHA_VALUE = "0000";
     public static final String signUpFormSel = "signup-modal-dialog";
 
-    public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user/new']";
+    public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/user/new']";
 
     public static final String passwordFieldSel = "password";
 

@@ -28,7 +28,7 @@ public class TopicPage {
 
     public static final String topicMessageSel = "//div[@class = 'post']/table/tbody/tr/td[@class='post-content-td']/div";
 
-    public static final String topicsListSel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/')]";
+    public static final String topicsListSel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/topics/')]";
 
     public static final String subjectErrorMessageSel = "//span[@id='subject']";
 
@@ -38,11 +38,11 @@ public class TopicPage {
 
     public static final String topicLinksFromDateInLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class,'latest-by')]/a";
 
-    public static final String topicLinksFromRecentActivitySel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/topics/')]";
+    public static final String topicLinksFromRecentActivitySel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/topics/')]";
 
     public static final String amountsOfViewTopicsSel = "//span[@class='test-views']";
 
-    public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/user' and not(@class='currentusername')]";
+    public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
 
     public static final String whoBrowsingTopicSel = "//div[@class='forum_misc_info']/a";
 

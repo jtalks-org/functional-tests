@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.selDriverType;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.webdriverType;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 /**
@@ -162,7 +162,7 @@ public class Users {
 
         // JCommune add captcha value to session on image request. Because HtmlUnit doesn't load images, captcha image
         // should be requested manually.
-        if (selDriverType.equals("html")) {
+        if ("html".equalsIgnoreCase(webdriverType)) {
             driver.get(signUpPage.getCaptchaImage().getAttribute("src"));
             driver.navigate().back();
             signUpPage.getSignUpButton().click();

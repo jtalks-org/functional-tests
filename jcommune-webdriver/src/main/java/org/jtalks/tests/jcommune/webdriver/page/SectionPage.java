@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class SectionPage {
 
-    public static final String sectionListSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/sections/')]";
+    public static final String sectionListSel = "//a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
 
-    public static final String breadCrumbsSectionLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/sections/')]";
+    public static final String breadCrumbsSectionLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
 
     @FindBy(xpath = sectionListSel)
     private List<WebElement> sectionList;

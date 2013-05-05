@@ -16,13 +16,13 @@ import java.util.List;
  */
 public class PMPage {
 
-    public static final String pmInboxLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/inbox']";
+    public static final String pmInboxLinkSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/inbox']";
 
-    public static final String pmOutboxLinkSel = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/outbox']";
+    public static final String pmOutboxLinkSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/outbox']";
 
-    public static final String PM_DRAFTS_LINK = "//a[@href='" + JCommuneSeleniumTest.contextPath + "/drafts']";
+    public static final String PM_DRAFTS_LINK = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/drafts']";
 
-    public static final String pmNewMessageLinkSel = "//a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/new')]";
+    public static final String pmNewMessageLinkSel = "//a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/pm/new')]";
 
     public static final String toFieldSel = "recipient";
 
@@ -36,7 +36,7 @@ public class PMPage {
 
     public static final String SEND_BUTTON_SEL = "post";
 
-    public static final String pmSubjectLinksSel = "//td/a[contains(@href,'" + JCommuneSeleniumTest.contextPath + "/pm/')]";
+    public static final String pmSubjectLinksSel = "//td/a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/pm/')]";
 
     public static final String recipientErrorMessageSel = "recipient.errors";
 
@@ -44,13 +44,13 @@ public class PMPage {
 
     public static final String bodyMsgErrorMessageSel = "body.errors";
 
-    public static final String replyButtonSel = "//a[@class='btn btn-primary' and contains(@href,'" + JCommuneSeleniumTest.contextPath + "/reply/')]";
+    public static final String replyButtonSel = "//a[@class='btn btn-primary' and contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/reply/')]";
 
-    public static final String quoteButtonSel = "//a[@class='btn' and contains(@href,'" + JCommuneSeleniumTest.contextPath + "/quote/')]";
+    public static final String quoteButtonSel = "//a[@class='btn' and contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/quote/')]";
 
     public static final String SAVE_BUTTON = "savePM";
 
-    public static final String draftMessageTitlesSel = "//td/a[contains(@href, '" + JCommuneSeleniumTest.contextPath + "/pm/')]";
+    public static final String draftMessageTitlesSel = "//td/a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/pm/')]";
 
     public static final String draftMessageEditButtonSel = "editCheckedPM";
 
