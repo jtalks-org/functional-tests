@@ -1,64 +1,15 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="JCommune">
-    <!--Selenium server paramentrs-->
-    <parameter name="selenium-server-url" value="http://jtalks.org:4444/wd/hub"/>
-    <!--Values: chrome, ie, opera, android, ipad, iphone, html-->
-    <parameter name="selenium-driver-type" value="html"/>
-
-    <!--Applicatiaon URL. Start page-->
-    <parameter name="app-url" value="http://autotests.jtalks.org/jcommune/"/>
-
-    <!--Mail server type-->
-    <parameter name="mail" value="exim"/>
-
-    <!--CONTEXT PATH sets in common file-->
-
-    <!--Database params-->
-    <parameter name="db-url" value="jdbc:mysql://176.9.66.108/test_jtalks"/>
-    <parameter name="db-driver" value="com.mysql.jdbc.Driver"/>
-    <parameter name="db-username" value="selenium"/>
-    <parameter name="db-password" value="selenium_KjY4"/>
-
-    <!-- Jcommune default settings -->
-    <parameter name="pageSizeForUnregisteredUser" value="50"/>
-    <parameter name="pageSizeDefaultForRegisteredUser" value="5"/>
-
-    <!--Registered users-->
-    <!--simlpe users-->
-    <parameter name="uUsername" value="testSel"/>
-    <parameter name="uPassword" value="testSel"/>
-    <parameter name="uEmail" value="testsel@jtalks.org"/>
-    <parameter name="uUsername2" value="testSel2"/>
-    <parameter name="uPassword2" value="testSel2"/>
-    <parameter name="uEmail2" value="testsel2@jtalks.org"/>
-    <parameter name="uUsername3" value="testSel3"/>
-    <parameter name="uPassword3" value="testSel3"/>
-    <parameter name="uEmail3" value="testSel3@jtalks.org"/>
-    <parameter name="uUsername4" value="tochanges"/>
-    <parameter name="uPassword4" value="tochanges"/>
-    <parameter name="uEmail4" value="tochanges@jtalks.org"/>
-    <parameter name="pEmail4" value="tochanges"/>
-
-    <!--Public emails-->
-    <parameter name="publicemail" value="public@jtalks.org"/>
-    <parameter name="publicpass" value="public"/>
-
-
-    <!--Admin user-->
-    <parameter name="aUsername" value="adminSel"/>
-    <parameter name="aPassword" value="adminSel"/>
-    <parameter name="aEmail" value="adminSel@jtalks.org"/>
-
-    <!--Incorrect username and password-->
-    <parameter name="iuUsername" value="iuTestSel"/>
-    <parameter name="iuPassword" value="iuTestSel"/>
-
-    <test name="JCommune">
-        <classes>
-            <class name="org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest"/>
-            <class name="org.jtalks.tests.jcommune.SignIn"/>
-            <class name="org.jtalks.tests.jcommune.SignUp"/>
-        </classes>
-    </test>
+  <parameter name="app-url" value="http://autotests.jtalks.org/jcommune/"/>
+  <parameter name="selenium-server-url" value="http://jtalks.org:4444/wd/hub"/>
+  <!--Values: chrome, ie, opera, android, ipad, iphone, html-->
+  <parameter name="selenium-driver-type" value="html"/>
+  <test name="JCommune">
+    <classes>
+      <class name="org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest"/>
+      <class name="org.jtalks.tests.jcommune.SignIn"/>
+      <class name="org.jtalks.tests.jcommune.SignUp"/>
+    </classes>
+  </test>
 </suite>
 

@@ -184,7 +184,7 @@ public class Users {
         signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
         signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
-        signUpPage.getCaptchaField().sendKeys(validCaptchaValue);
+        signUpPage.getCaptchaField().sendKeys(VALID_CAPTCHA_VALUE);
         signUpPage.getSubmitButton().submit();
         new WebDriverWait(driver, 10).until(ExpectedConditions
                 .textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
