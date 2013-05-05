@@ -97,9 +97,9 @@ public class Users {
     /**
      * Sign up new user with random data by dialog. Action should be started from any page of JCommune.
      *
+     * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignUpUserException
-     * @return the {@code User} instance that contains registered user data
      */
     public static User signUp() throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
@@ -119,19 +119,19 @@ public class Users {
      * @throws CouldNotGetMessagesException
      */
     public static User signUp(UserForRegistration userForRegistration) throws CouldNotOpenPageException,
-            CouldNotSignUpUserException,CouldNotGetMessageException, CouldNotGetMessagesException {
+            CouldNotSignUpUserException, CouldNotGetMessageException, CouldNotGetMessagesException {
         User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
         return user;
     }
 
     /**
-     * Sign up new user without activation by dialog. Form fields will be filled by randomly valid values.
-     * Action should be started from any page of JCommune.
+     * Sign up new user without activation by dialog. Form fields will be filled by randomly valid values. Action should
+     * be started from any page of JCommune.
      *
+     * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignUpUserException
-     * @return the {@code User} instance that contains registered user data
      */
     public static User signUpWithoutActivation() throws CouldNotOpenPageException, CouldNotSignUpUserException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
@@ -139,8 +139,8 @@ public class Users {
     }
 
     /**
-     *  Sign up new user by dialog without activation. Properties with null value will be set by random valid value.
-     *  Action should be started from any page of JCommune.
+     * Sign up new user by dialog without activation. Properties with null value will be set by random valid value.
+     * Action should be started from any page of JCommune.
      *
      * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
      * @return the {@code User} instance that contains registered user data
