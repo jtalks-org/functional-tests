@@ -17,6 +17,7 @@ package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.User;
+import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.testng.annotations.BeforeMethod;
@@ -26,7 +27,9 @@ import org.testng.annotations.Test;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
-/** @author Guram Savinov */
+/**
+ * @author Guram Savinov
+ */
 public class SignIn {
 
     @BeforeMethod
@@ -81,5 +84,13 @@ public class SignIn {
         User user = Users.signUp();
         user.setPassword(user.getPassword().toUpperCase());
         Users.signIn(user);
+    }
+
+    @Test
+    public void shouldLoginIfUsernameContainsSlash() throws Exception {
+        UserForRegistration user = new UserForRegistration();
+        user.setUsername(StringHelp.getRandomString(10) + "/");
+        User registeredUser = Users.signUp(user);
+        Users.signIn(registeredUser);
     }
 }
