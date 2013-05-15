@@ -13,28 +13,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail.mailtrap;
-
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.concurrent.TimeoutException;
+package org.jtalks.tests.jcommune.webdriver.exceptions;
 
 /**
+ * The exception for case when message was not received from JCommune
+ *
  * @author Guram Savinov
  */
-public class MailtrapTest {
+public class MailWasNotReceivedException extends Exception {
 
-    private static final String SELENIUM_SERVER_URL = "http://autotests.jtalks.org:4444/wd/hub";
-
-    public static void main(String[] args) throws IOException, TimeoutException {
-        WebDriver driver = new RemoteWebDriver(new URL(SELENIUM_SERVER_URL), DesiredCapabilities.htmlUnit());
-        MailtrapMail mailtrapMail = new MailtrapMail();
-        String link = mailtrapMail.getActivationLink("P_r23n20nyoq@jtalks.org");
-        System.out.println(link);
-        driver.quit();
+    public MailWasNotReceivedException(String details, Throwable cause) {
+        super(details, cause);
     }
 }

@@ -23,6 +23,7 @@ import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignUpUserException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.MailWasNotReceivedException;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
@@ -31,6 +32,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.TimeoutException;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.webdriverType;
@@ -100,9 +103,10 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws CouldNotSignUpUserException
+     * @throws MailWasNotReceivedException
      */
     public static User signUp() throws CouldNotOpenPageException, CouldNotSignUpUserException,
-            CouldNotGetMessageException, CouldNotGetMessagesException {
+            CouldNotGetMessageException, CouldNotGetMessagesException, MailWasNotReceivedException {
         User user = signUpWithoutActivation();
         activateUserByMail(user.getEmail());
         return user;
@@ -117,9 +121,11 @@ public class Users {
      * @throws CouldNotSignUpUserException
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
+     * @throws MailWasNotReceivedException
      */
     public static User signUp(UserForRegistration userForRegistration) throws CouldNotOpenPageException,
-            CouldNotSignUpUserException, CouldNotGetMessageException, CouldNotGetMessagesException {
+            CouldNotSignUpUserException, CouldNotGetMessageException, CouldNotGetMessagesException,
+            MailWasNotReceivedException {
         User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
         return user;
@@ -204,11 +210,16 @@ public class Users {
      * @param email the user email
      * @throws CouldNotGetMessagesException
      * @throws CouldNotGetMessageException
+     * @throws MailWasNotReceivedException
      */
     public static void activateUserByMail(String email) throws CouldNotGetMessagesException,
-            CouldNotGetMessageException {
+            CouldNotGetMessageException, MailWasNotReceivedException {
         MailtrapMail mailtrapMail = new MailtrapMail();
-        driver.get(mailtrapMail.getActivationLink(email));
+        try {
+            driver.get(mailtrapMail.getActivationLink(email));
+        } catch (TimeoutException e) {
+            throw new MailWasNotReceivedException("Message was not received by mailtrap", e);
+        }
         mainPage.getIconLinkToMainPage().click();
     }
 }

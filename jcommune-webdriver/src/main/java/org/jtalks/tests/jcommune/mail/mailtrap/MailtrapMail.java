@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -59,10 +60,11 @@ public class MailtrapMail {
      * @param recipient the recipient email
      * @throws CouldNotGetMessagesException
      * @throws CouldNotGetMessageException
+     * @throws TimeoutException
      * @return the activation link, that user should open to confirm registration
      */
     public String getActivationLink(final String recipient) throws CouldNotGetMessagesException,
-            CouldNotGetMessageException {
+            CouldNotGetMessageException, TimeoutException {
         await().dontCatchUncaughtExceptions().atMost(15, TimeUnit.SECONDS).pollInterval(500, TimeUnit.MILLISECONDS)
                 .until(new Callable<Boolean>() {
                     public Boolean call() throws Exception {
