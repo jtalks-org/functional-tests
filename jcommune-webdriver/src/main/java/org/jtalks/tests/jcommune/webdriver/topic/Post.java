@@ -1,6 +1,7 @@
-package org.jtalks.tests.jcommune.webdriver;
+package org.jtalks.tests.jcommune.webdriver.topic;
 
 import org.joda.time.DateTime;
+import org.jtalks.tests.jcommune.webdriver.User;
 
 /**
  * Jcommune post representation.

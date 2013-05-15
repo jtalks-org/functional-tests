@@ -1,4 +1,4 @@
-package org.jtalks.tests.jcommune.webdriver;
+package org.jtalks.tests.jcommune.webdriver.topic;
 
 import java.util.ArrayList;
 import java.util.List;
