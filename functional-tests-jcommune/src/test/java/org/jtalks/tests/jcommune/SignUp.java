@@ -17,7 +17,9 @@ package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
+import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignUpUserException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -47,5 +49,15 @@ public class SignUp {
     public void signUpWithoutActivation() throws Exception {
         User user = Users.signUpWithoutActivation();
         Users.signIn(user);
+    }
+
+    @Test(enabled=false)
+    public void emptyData_JC_2() throws Exception {
+        UserForRegistration user = new UserForRegistration();
+        user.setUsername("");
+        user.setPassword("");
+        user.setPasswordConfirmation("");
+        user.setEmail("");
+        Users.signUp(user);
     }
 }
