@@ -19,11 +19,10 @@ package org.jtalks.tests.jcommune.webdriver;
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
-import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignUpUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.MailWasNotReceivedException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
@@ -49,6 +48,7 @@ public class Users {
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
             "подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
+    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 5;
 
     /**
      * Sign in user by dialog. Action should by started from any page of JCommune.
@@ -65,7 +65,7 @@ public class Users {
             throw new CouldNotOpenPageException("sign in dialog form", e);
         }
 
-        LOGGER.info("Trying to log in {}", user);
+        LOGGER.info("Log in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButton().click();
@@ -88,7 +88,7 @@ public class Users {
             throw new CouldNotOpenPageException("sign in page form", e);
         }
 
-        LOGGER.info("Trying to log in {}", user);
+        LOGGER.info("Log in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButtonAfterRegistration().click();
@@ -102,10 +102,10 @@ public class Users {
      *
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
-     * @throws CouldNotSignUpUserException
+     * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
      * @throws MailWasNotReceivedException
      */
-    public static User signUp() throws CouldNotOpenPageException, CouldNotSignUpUserException,
+    public static User signUp() throws CouldNotOpenPageException, ValidationException,
             CouldNotGetMessageException, CouldNotGetMessagesException, MailWasNotReceivedException {
         User user = signUpWithoutActivation();
         activateUserByMail(user.getEmail());
@@ -118,13 +118,13 @@ public class Users {
      * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
-     * @throws CouldNotSignUpUserException
+     * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      * @throws MailWasNotReceivedException
      */
     public static User signUp(UserForRegistration userForRegistration) throws CouldNotOpenPageException,
-            CouldNotSignUpUserException, CouldNotGetMessageException, CouldNotGetMessagesException,
+            ValidationException, CouldNotGetMessageException, CouldNotGetMessagesException,
             MailWasNotReceivedException {
         User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
@@ -137,9 +137,9 @@ public class Users {
      *
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
-     * @throws CouldNotSignUpUserException
+     * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
      */
-    public static User signUpWithoutActivation() throws CouldNotOpenPageException, CouldNotSignUpUserException,
+    public static User signUpWithoutActivation() throws CouldNotOpenPageException, ValidationException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
         return signUpWithoutActivation(new UserForRegistration());
     }
@@ -151,12 +151,12 @@ public class Users {
      * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
-     * @throws CouldNotSignUpUserException
+     * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      */
     public static User signUpWithoutActivation(UserForRegistration userForRegistration)
-            throws CouldNotOpenPageException, CouldNotSignUpUserException, CouldNotGetMessageException,
+            throws CouldNotOpenPageException, ValidationException, CouldNotGetMessageException,
             CouldNotGetMessagesException {
         // Check opening sign up form
         signUpPage.getSignUpButton().click();
@@ -174,20 +174,6 @@ public class Users {
             signUpPage.getSignUpButton().click();
         }
 
-        // Set null value properties with valid random values
-        if (userForRegistration.getUsername() == null) {
-            userForRegistration.setUsername(StringHelp.getRandomString(8));
-        }
-        if (userForRegistration.getEmail() == null) {
-            userForRegistration.setEmail(StringHelp.getRandomEmail());
-        }
-        if (userForRegistration.getPassword() == null) {
-            userForRegistration.setPassword(StringHelp.getRandomString(9));
-        }
-        if (userForRegistration.getPasswordConfirmation() == null) {
-            userForRegistration.setPasswordConfirmation(userForRegistration.getPassword());
-        }
-
         // Fill sign up form and submit
         LOGGER.info("Registering user {}", userForRegistration);
         signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
@@ -196,12 +182,20 @@ public class Users {
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
         signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
         signUpPage.getSubmitButton().submit();
-        new WebDriverWait(driver, 10).until(ExpectedConditions
-                .textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
+        waitForLoginDialogShowsUp();
         signUpPage.getOkButtonOnInfoWindow().click();
 
         return new User(userForRegistration.getUsername(), userForRegistration.getPassword(),
                 userForRegistration.getEmail());
+    }
+
+    private static void waitForLoginDialogShowsUp() throws ValidationException {
+        try {
+            new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
+                    ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
+        } catch (org.openqa.selenium.TimeoutException e) {
+            throw new ValidationException();
+        }
     }
 
     /**

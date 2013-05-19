@@ -15,17 +15,15 @@
 
 package org.jtalks.tests.jcommune.webdriver.exceptions;
 
-import org.jtalks.tests.jcommune.webdriver.User;
-
 /**
  * The exception for case when user could not be signed up.
  *
  * @author Guram Savinov
  */
-public class CouldNotSignUpUserException extends Exception {
+public class ValidationException extends Exception {
 
-    public CouldNotSignUpUserException(User user, Throwable cause) {
-        super("User " + user + " could not be signed up.", cause);
+    public ValidationException() {
+        super("Data did not pass validation");
     }
 
 }

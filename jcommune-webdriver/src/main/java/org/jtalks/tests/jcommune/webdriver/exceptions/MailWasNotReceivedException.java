@@ -21,7 +21,6 @@ package org.jtalks.tests.jcommune.webdriver.exceptions;
  * @author Guram Savinov
  */
 public class MailWasNotReceivedException extends Exception {
-
     public MailWasNotReceivedException(String details, Throwable cause) {
         super(details, cause);
     }

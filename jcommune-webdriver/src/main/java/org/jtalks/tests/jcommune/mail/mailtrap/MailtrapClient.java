@@ -17,6 +17,8 @@ package org.jtalks.tests.jcommune.mail.mailtrap;
 
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
+import org.restlet.engine.Engine;
+import org.restlet.ext.slf4j.Slf4jLoggerFacade;
 import org.restlet.resource.ClientResource;
 
 import java.io.IOException;
@@ -32,6 +34,11 @@ public class MailtrapClient {
     private static final String API_INBOXES_URL = "http://mailtrap.io/api/v1/inboxes/";
     private static final String JTALKS_AUTOTESTS_MESSAGES = "jtalks-autotests/messages/";
     private static final String API_TOKEN_PARAM = "?token=fWJsZAhSzI4Ghb9cE42ouA";
+
+    static {
+        Slf4jLoggerFacade loggerFacade = new Slf4jLoggerFacade();
+        Engine.getInstance().setLoggerFacade(loggerFacade);//by default it will use Java SE logging
+    }
 
     /**
      * Gets list of messages metadata

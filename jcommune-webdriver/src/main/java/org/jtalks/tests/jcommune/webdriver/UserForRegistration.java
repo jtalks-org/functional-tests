@@ -21,8 +21,7 @@ package org.jtalks.tests.jcommune.webdriver;
  * @author Guram Savinov
  */
 public class UserForRegistration extends User {
-
-    private String passwordConfirmation;
+    private String passwordConfirmation = super.getPassword();//same as password by default
 
     public UserForRegistration() {
     }
@@ -31,14 +30,13 @@ public class UserForRegistration extends User {
         return passwordConfirmation;
     }
 
+    /**
+     * Set the value to be specified in sign up dialog for the password confirmation, user won't pass registration if
+     * password confirmation does not match the password. By default it takes value from {@link #getPassword()}. It
+     * makes sense to change it only if you'd like to check validation.
+     * @param passwordConfirmation a confirmation of the password to be specified into sign up window
+     */
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
-    }
-
-    @Override
-    public String toString() {
-        return "UserForRegistration{" +
-                "passwordConfirmation='" + passwordConfirmation + '\'' +
-                "} " + super.toString();
     }
 }

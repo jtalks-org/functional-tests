@@ -19,7 +19,7 @@ import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignUpUserException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -51,7 +51,7 @@ public class SignUp {
         Users.signIn(user);
     }
 
-    @Test(enabled=false)
+    @Test(expectedExceptions = ValidationException.class)
     public void emptyData_JC_2() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("");

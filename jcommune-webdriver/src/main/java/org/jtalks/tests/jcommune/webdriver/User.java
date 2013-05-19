@@ -15,17 +15,20 @@
 
 package org.jtalks.tests.jcommune.webdriver;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+import org.jtalks.tests.jcommune.utils.StringHelp;
+
 /**
- * Jcommune user representation. Contains username, password and e-mail.
+ * Jcommune user representation. Contains username, password and e-mail. If nothing is changed, all the fields
+ * take random value.
  *
  * @author Guram Savinov
  */
 public class User {
-
-    private String username;
-    private String email;
-
-    private String password;
+    private String username = StringHelp.getRandomString(15);
+    private String email = StringHelp.getRandomEmail();
+    private String password = username;
 
     public User() {
     }
@@ -66,10 +69,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
     }
 }

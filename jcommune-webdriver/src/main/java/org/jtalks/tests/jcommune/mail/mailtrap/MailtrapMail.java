@@ -68,7 +68,7 @@ public class MailtrapMail {
         await().dontCatchUncaughtExceptions().atMost(15, TimeUnit.SECONDS).pollInterval(500, TimeUnit.MILLISECONDS)
                 .until(new Callable<Boolean>() {
                     public Boolean call() throws Exception {
-                        LOGGER.info("Trying to get activation link for email {}", recipient);
+                        LOGGER.debug("Trying to get activation link for email [{}]", recipient);
                         activationLink = tryToGetLink(recipient);
                         return activationLink != null;
                     }
