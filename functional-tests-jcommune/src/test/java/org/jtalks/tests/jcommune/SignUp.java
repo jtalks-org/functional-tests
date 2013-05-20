@@ -140,7 +140,7 @@ public class SignUp {
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void уьзенEmailFormat_JC_5() throws Exception {
+    public void emptyEmail_JC_5() throws Exception {
         String password = StringHelp.getRandomString(9);
         UserForRegistration user = new UserForRegistration();
         user.setUsername(StringHelp.getRandomString((26)));
