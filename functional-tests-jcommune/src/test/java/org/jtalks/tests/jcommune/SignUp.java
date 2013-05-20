@@ -132,7 +132,7 @@ public class SignUp {
      public void invalidEmailFormat_JC_5() throws Exception {
         String password = StringHelp.getRandomString(9);
         UserForRegistration user = new UserForRegistration();
-        user.setUsername(StringHelp.getRandomString((26)));
+        user.setUsername(StringHelp.getRandomString((8)));
         user.setPassword(password);
         user.setPasswordConfirmation(password);
         user.setEmail(StringHelp.getRandomString(8) + "@jtalks.org");
@@ -143,7 +143,7 @@ public class SignUp {
     public void emptyEmail_JC_5() throws Exception {
         String password = StringHelp.getRandomString(9);
         UserForRegistration user = new UserForRegistration();
-        user.setUsername(StringHelp.getRandomString((26)));
+        user.setUsername(StringHelp.getRandomString((8)));
         user.setPassword(password);
         user.setPasswordConfirmation(password);
         user.setEmail("");
