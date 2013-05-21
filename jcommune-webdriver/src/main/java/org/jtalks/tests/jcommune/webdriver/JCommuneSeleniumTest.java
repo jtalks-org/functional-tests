@@ -3,6 +3,7 @@ package org.jtalks.tests.jcommune.webdriver;
 import org.jtalks.tests.jcommune.webdriver.page.Pages;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
@@ -35,18 +36,20 @@ public class JCommuneSeleniumTest {
     }
 
     private void initDriver(String defaultSeleniumServerUrl) throws MalformedURLException {
-        DesiredCapabilities capabilities = new DesiredCapabilities(getBrowser(),
-                getBrowserVersion(), getOs());
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.PLATFORM, getOs());
+        capabilities.setBrowserName(getBrowser());
+        capabilities.setVersion(getBrowserVersion());
         driver = new RemoteWebDriver(new URL(getSeleniumUrl(defaultSeleniumServerUrl)), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
     }
 
-    private Platform getOs() {
+    private String getOs() {
         String os = System.getenv("SELENIUM_PLATFORM") == null ? "" : System.getenv("SELENIUM_PLATFORM");
         if (os.isEmpty()) {
-            return Platform.ANY;
+            return Platform.ANY.toString();
         }
-        return Platform.valueOf(os);
+        return os;
     }
 
     private String getBrowserVersion() {
