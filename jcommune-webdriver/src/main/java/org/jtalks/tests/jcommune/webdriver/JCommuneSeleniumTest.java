@@ -14,6 +14,7 @@ import org.testng.annotations.Parameters;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class JCommuneSeleniumTest {
@@ -46,6 +47,9 @@ public class JCommuneSeleniumTest {
 
         String seleniumUrl = getSeleniumUrl(defaultSeleniumServerUrl);
         logger.info("Selenium URL: [{}]", seleniumUrl);
+        for (Map.Entry<String, String> var : System.getenv().entrySet()) {
+            logger.info("{}={}", var.getKey(), var.getValue());
+        }
         driver = new RemoteWebDriver(new URL(seleniumUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
     }
