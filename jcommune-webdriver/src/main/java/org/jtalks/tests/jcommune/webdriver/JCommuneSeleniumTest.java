@@ -72,11 +72,14 @@ public class JCommuneSeleniumTest {
 
     private String getSeleniumUrl(String defaultUrl) {
         String url;
-        String sauceApiKey = System.getenv("SAUCE_API_KEY");
-        String sauceUsername = System.getenv("SAUCE_USER_NAME");
-        String sauceHost = System.getenv("SELENIUM_HOST");
-        if (sauceApiKey != null && sauceUsername != null) {
-            url = "http://" + sauceUsername + ":" + sauceApiKey + "@" + sauceHost + ":80/wd/hub";
+        String sauceDriver = System.getenv("SELENIUM_DRIVER");
+        if (sauceDriver != null) {
+            String sauceUsername = sauceDriver.substring(sauceDriver.indexOf("username"),
+                    sauceDriver.lastIndexOf("&")).split("=")[1];
+            String sauceApiKey = sauceDriver.substring(sauceDriver.indexOf("access-key"),
+                    sauceDriver.length()).split("=")[1];
+            String sauceHost = "@ondemand.saucelabs.com:80/wd/hub";
+            url = "http://" + sauceUsername + ":" + sauceApiKey + sauceHost;
         } else {
             url = defaultUrl;
         }
