@@ -1,9 +1,12 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="JCommune">
-  <parameter name="app-url" value="http://autotests.jtalks.org/jcommune/"/>
-  <parameter name="selenium-server-url" value="http://jtalks.org:4444/wd/hub"/>
+  <parameter name="appUrl" value="http://autotests.jtalks.org/jcommune/"/>
+  <parameter name="seleniumServerUrl"
+             value="http://jtalks.org:4444/wd/hub"/>
   <!--Values: chrome, ie, opera, android, ipad, iphone, html-->
-  <parameter name="selenium-driver-type" value="html"/>
+  <parameter name="browser" value="html"/>
+  <parameter name="browserVersion" value="no browser"/>
+  <parameter name="os" value="XP"/>
   <test name="JCommune">
     <classes>
       <class name="org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest"/>

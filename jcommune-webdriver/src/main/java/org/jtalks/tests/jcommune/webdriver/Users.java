@@ -48,7 +48,7 @@ public class Users {
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
             "подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
-    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 5;
+    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 10;
 
     /**
      * Sign in user by dialog. Action should by started from any page of JCommune.
@@ -181,7 +181,7 @@ public class Users {
         signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
         signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
-        signUpPage.getSubmitButton().submit();
+        signUpPage.getSubmitButton().click();
         waitForLoginDialogShowsUp();
         signUpPage.getOkButtonOnInfoWindow().click();
 
@@ -191,6 +191,7 @@ public class Users {
 
     private static void waitForLoginDialogShowsUp() throws ValidationException {
         try {
+
             new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
                     ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
         } catch (org.openqa.selenium.TimeoutException e) {
