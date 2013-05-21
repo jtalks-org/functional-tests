@@ -135,7 +135,7 @@ public class SignUp {
         user.setUsername(StringHelp.getRandomString((8)));
         user.setPassword(password);
         user.setPasswordConfirmation(password);
-        user.setEmail(StringHelp.getRandomString(8) + "@jtalks.org");
+        user.setEmail(StringHelp.getRandomString(8) + "@" + "jtalks");
         Users.signUp(user);
     }
 
