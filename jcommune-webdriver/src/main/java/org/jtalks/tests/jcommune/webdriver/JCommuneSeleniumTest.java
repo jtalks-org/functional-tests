@@ -23,7 +23,8 @@ public class JCommuneSeleniumTest {
      * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server. All values
      * are stored in testng.xml file.
      *
-     * @param webDriverUrl  Selenium server URL
+     * @param webDriverUrl  selenium server URL, will be used by default if no SELENIUM_URL env var is set (like in
+     *                      case with SauceLabs integration on Jenkins)
      */
     @BeforeSuite(alwaysRun = true)
     @Parameters({"webDriverUrl", "appUrl"})
@@ -33,11 +34,10 @@ public class JCommuneSeleniumTest {
         Pages.createAllPages(driver);
     }
 
-    private void initDriver(String seleniumServerUrl) throws
-            MalformedURLException {
+    private void initDriver(String defaultSeleniumServerUrl) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities(getBrowser(),
                 getBrowserVersion(), getOs());
-        driver = new RemoteWebDriver(new URL(seleniumServerUrl), capabilities);
+        driver = new RemoteWebDriver(new URL(getSeleniumUrl(defaultSeleniumServerUrl)), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
     }
 
@@ -55,6 +55,10 @@ public class JCommuneSeleniumTest {
 
     private String getBrowser() {
         return System.getenv("SELENIUM_BROWSER") == null ? "htmlunit" : System.getenv("SELENIUM_BROWSER");
+    }
+
+    private String getSeleniumUrl(String defaultUrl) {
+        return System.getenv("SELENIUM_URL") == null ? defaultUrl : System.getenv("SELENIUM_URL");
     }
 
     /** Method destroy connect with Selenium Server */
