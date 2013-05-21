@@ -48,7 +48,7 @@ public class Users {
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
             "подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
-    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 10;
+    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 5;
 
     /**
      * Sign in user by dialog. Action should by started from any page of JCommune.
@@ -168,7 +168,7 @@ public class Users {
 
         // JCommune add captcha value to session on image request. Because HtmlUnit doesn't load images, captcha image
         // should be requested manually.
-        if ("html".equalsIgnoreCase(webdriverType)) {
+        if ("htmlunit".equalsIgnoreCase(webdriverType)) {
             driver.get(signUpPage.getCaptchaImage().getAttribute("src"));
             driver.navigate().back();
             signUpPage.getSignUpButton().click();

@@ -14,7 +14,6 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class JCommuneSeleniumTest {
-    /** Object to work with Remote Selenium Server */
     public static WebDriver driver = null;
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private static final int SELENIUM_TIMEOUT = 10;
@@ -24,37 +23,38 @@ public class JCommuneSeleniumTest {
      * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server. All values
      * are stored in testng.xml file.
      *
-     * @param selServerURL  Selenium server URL
-     * @param browser Selenium driver type
+     * @param webDriverUrl  Selenium server URL
      */
     @BeforeSuite(alwaysRun = true)
-    @Parameters({"seleniumServerUrl", "appUrl", "browser", "browserVersion", "os"})
-    public void init(String selServerURL, String appUrl, String browser, String browserVersion,
-                     String os) throws Exception {
-        webdriverType = browser;
-        initDriver(selServerURL, browser, browserVersion, os);
+    @Parameters({"webDriverUrl", "appUrl"})
+    public void init(String webDriverUrl, String appUrl) throws Exception {
+        webdriverType = getBrowser();
+        initDriver(webDriverUrl);
         Pages.createAllPages(driver);
     }
 
-    private void initDriver(String seleniumServerUrl, String browser,
-                            String browserVersion, String os) throws MalformedURLException {
-        DesiredCapabilities capabilities = new DesiredCapabilities(getBrowser(browser),
-                getBrowserVersion(browserVersion), getOs(os));
+    private void initDriver(String seleniumServerUrl) throws
+            MalformedURLException {
+        DesiredCapabilities capabilities = new DesiredCapabilities(getBrowser(),
+                getBrowserVersion(), getOs());
         driver = new RemoteWebDriver(new URL(seleniumServerUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
     }
 
-    private Platform getOs(String defaultOs) {
-        String os = System.getenv("SELENIUM_PLATFORM") == null ? defaultOs : System.getenv("SELENIUM_PLATFORM");
+    private Platform getOs() {
+        String os = System.getenv("SELENIUM_PLATFORM") == null ? "" : System.getenv("SELENIUM_PLATFORM");
+        if (os.isEmpty()) {
+            return Platform.ANY;
+        }
         return Platform.valueOf(os);
     }
 
-    private String getBrowserVersion(String defaultVersion) {
-        return System.getenv("SELENIUM_VERSION") == null ? defaultVersion : System.getenv("SELENIUM_VERSION");
+    private String getBrowserVersion() {
+        return System.getenv("SELENIUM_VERSION") == null ? "" : System.getenv("SELENIUM_VERSION");
     }
 
-    private String getBrowser(String defaultBrowser) {
-        return System.getenv("SELENIUM_BROWSER") == null ? defaultBrowser : System.getenv("SELENIUM_BROWSER");
+    private String getBrowser() {
+        return System.getenv("SELENIUM_BROWSER") == null ? "htmlunit" : System.getenv("SELENIUM_BROWSER");
     }
 
     /** Method destroy connect with Selenium Server */
