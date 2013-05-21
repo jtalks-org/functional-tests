@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
@@ -19,6 +21,7 @@ public class JCommuneSeleniumTest {
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private static final int SELENIUM_TIMEOUT = 10;
     public static String webdriverType;
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server. All values
@@ -40,7 +43,10 @@ public class JCommuneSeleniumTest {
         capabilities.setCapability(CapabilityType.PLATFORM, getOs());
         capabilities.setBrowserName(getBrowser());
         capabilities.setVersion(getBrowserVersion());
-        driver = new RemoteWebDriver(new URL(getSeleniumUrl(defaultSeleniumServerUrl)), capabilities);
+
+        String seleniumUrl = getSeleniumUrl(defaultSeleniumServerUrl);
+        logger.info("Selenium URL: [{}]", seleniumUrl);
+        driver = new RemoteWebDriver(new URL(seleniumUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
     }
 
@@ -61,7 +67,16 @@ public class JCommuneSeleniumTest {
     }
 
     private String getSeleniumUrl(String defaultUrl) {
-        return System.getenv("SELENIUM_URL") == null ? defaultUrl : System.getenv("SELENIUM_URL");
+        String url;
+        String sauceApiKey = System.getenv("SAUCE_API_KEY");
+        String sauceUsername = System.getenv("SAUCE_USER_NAME");
+        String sauceHost = System.getenv("SELENIUM_HOST");
+        if (sauceApiKey != null && sauceUsername != null) {
+            url = "http://" + sauceUsername + ":" + sauceApiKey + "@" + sauceHost + ":80/wd/hub";
+        } else {
+            url = defaultUrl;
+        }
+        return url;
     }
 
     /** Method destroy connect with Selenium Server */
