@@ -103,6 +103,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      * @throws MailWasNotReceivedException
      */
     public static User signUp() throws CouldNotOpenPageException, ValidationException,
@@ -119,6 +120,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      * @throws MailWasNotReceivedException
@@ -138,6 +140,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      */
     public static User signUpWithoutActivation() throws CouldNotOpenPageException, ValidationException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
@@ -152,6 +155,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      */
