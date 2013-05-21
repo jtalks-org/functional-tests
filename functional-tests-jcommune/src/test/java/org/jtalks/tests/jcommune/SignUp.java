@@ -17,8 +17,8 @@ package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.User;
-import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
+import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.BeforeMethod;
@@ -26,6 +26,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.printSeleniumSessionId;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /** @author Guram Savinov */
@@ -36,6 +37,7 @@ public class SignUp {
     public void setupCase(String appUrl) {
 		driver.get(appUrl);
         mainPage.logOutIfLoggedIn();
+        printSeleniumSessionId(getClass());
     }
 
     @Test

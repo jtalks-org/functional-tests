@@ -78,6 +78,13 @@ public class JCommuneSeleniumTest {
         return url;
     }
 
+    public static void printSeleniumSessionId(Class currentTestClass) {
+        String sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
+        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId,
+                currentTestClass.getSimpleName());
+        System.out.println(message);
+    }
+
     /** Method destroy connect with Selenium Server */
     @AfterSuite(alwaysRun = true)
     public void destroy() {
