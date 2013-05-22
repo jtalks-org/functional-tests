@@ -1,7 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,9 +14,9 @@ import java.util.List;
  */
 public class SectionPage {
 
-    public static final String sectionListSel = "//a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
+    public static final String sectionListSel = "//a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
 
-    public static final String breadCrumbsSectionLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
+    public static final String breadCrumbsSectionLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
 
     @FindBy(xpath = sectionListSel)
     private List<WebElement> sectionList;

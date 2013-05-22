@@ -1,7 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,7 +19,7 @@ public class SignInPage {
 
     public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
 
-    public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/password/restore']";
+    public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/password/restore']";
 
     public static final String signInDialogFormSel = "signin-modal-dialog";
 

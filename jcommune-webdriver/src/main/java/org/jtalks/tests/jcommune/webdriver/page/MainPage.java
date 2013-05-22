@@ -1,7 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,17 +12,17 @@ import org.openqa.selenium.support.PageFactory;
  * @author erik
  */
 public class MainPage {
-    public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/logout']";
+    public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout']";
     public static final String errorPageSel = "//div[@class='text_errorpage']";
-    public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/sections']";
-    public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/']";
-    public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/topics/recent']";
+    public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections']";
+    public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/']";
+    public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/recent']";
     public static final String messagesCountSel = "//span[@class='test-messages']";
     public static final String usersCountSel = "//span[@class='test-registered-users']";
     public static final String usersOnlineCountSel = "//span[@class='test-visitors-total']";
     public static final String registeredUsersOnlineCountSel = "//span[@class='test-visitors-registered']";
     public static final String guestsUsersOnlineCountSel = "//span[@class='test-visitors-guests']";
-    public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
+    public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
     public static final String languageSwitcherSel = "//div[@id='lang-selector-toggle']/a/img";
     public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
 

@@ -34,8 +34,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeoutException;
 
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.webdriverType;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.webdriverType;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 /**

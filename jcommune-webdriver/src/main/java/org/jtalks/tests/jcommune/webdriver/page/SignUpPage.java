@@ -1,7 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,7 +18,7 @@ public class SignUpPage {
     public static final String VALID_CAPTCHA_VALUE = "0000";
     public static final String signUpFormSel = "signup-modal-dialog";
 
-    public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/user/new']";
+    public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user/new']";
 
     public static final String passwordFieldSel = "password";
 

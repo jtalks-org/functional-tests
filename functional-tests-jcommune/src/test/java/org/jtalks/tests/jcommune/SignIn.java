@@ -24,8 +24,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.printSeleniumSessionId;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
@@ -38,7 +37,6 @@ public class SignIn {
     public void setup(String appUrl) {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn();
-        printSeleniumSessionId(getClass());
     }
 
     @Test

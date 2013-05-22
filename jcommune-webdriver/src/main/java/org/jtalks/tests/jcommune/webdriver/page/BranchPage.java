@@ -1,6 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,9 +16,9 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class BranchPage {
-	public static final String branchListSel = "//tbody/tr/td/a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/branches/')]";
+	public static final String branchListSel = "//tbody/tr/td/a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/branches/')]";
 
-	public static final String breadCrumbsBranchLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/branches/')]";
+	public static final String breadCrumbsBranchLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/branches/')]";
 
     public static final String branchNameSel = "//div[2]/div/h2";
 

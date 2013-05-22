@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-public class JCommuneSeleniumTest {
+public class JCommuneSeleniumConfig {
     public static WebDriver driver = null;
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private static final int SELENIUM_TIMEOUT = 10;
@@ -78,10 +78,9 @@ public class JCommuneSeleniumTest {
         return url;
     }
 
-    public static void printSeleniumSessionId(Class currentTestClass) {
+    public void printSeleniumSessionId(String currentTestClass) {
         String sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
-        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId,
-                currentTestClass.getSimpleName());
+        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId, currentTestClass);
         System.out.println(message);
     }
 

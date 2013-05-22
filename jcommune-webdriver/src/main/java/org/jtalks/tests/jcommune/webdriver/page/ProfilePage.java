@@ -1,7 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -15,15 +15,15 @@ import java.util.List;
  */
 public class ProfilePage {
 
-    public static final String currentUserLinkSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/user']";
+    public static final String currentUserLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user']";
 
     public static final String userDetailsFormSel = "userdetails";
 
-    public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/users')]";
+    public static final String profileLinkFromPMInpoxPageSel = "//a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/users')]";
 
-    public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/user']";
+    public static final String profileLinkFromMainPageSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user']";
 
-    public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/users/edit') and @type='submit']";
+    public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/users/edit') and @type='submit']";
 
     public static final String emailEditFieldIdSel = "email";
 
@@ -45,7 +45,7 @@ public class ProfilePage {
 
     public static final String errorNewUserPasswordConfirmMessageIdSel = "newUserPasswordConfirm.errors";
 
-    public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/user') and @class='button']";
+    public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user') and @class='button']";
 
     public static final String profileLinkFromLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class,'latest-by')]/p/a";
 
@@ -57,7 +57,7 @@ public class ProfilePage {
 
     public static final String emptyMessageInPosListSel = "//div[@class='post']//td[contains(text(), 'There are no posts yet')]";
 
-    public static final String newPrivateMessageButtonSel = "//a[contains(@href, '" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/pm/new')]";
+    public static final String newPrivateMessageButtonSel = "//a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/pm/new')]";
 
     public static final String usernameTableFieldSel = "//h2[@class='pull-right user-profile-username']";
 
@@ -83,7 +83,7 @@ public class ProfilePage {
 
     public static final String pageSizeFieldSel = "pageSize";
 
-    public static final String pmLinksFromLastColumnSel = "//td[contains(@class, 'latest-by')]/p/a[contains(@href,'" + JCommuneSeleniumTest.JCOMMUNE_CONTEXT_PATH + "/users/')]";
+    public static final String pmLinksFromLastColumnSel = "//td[contains(@class, 'latest-by')]/p/a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/users/')]";
 
 
     @FindBy(xpath = emptyMessageInPosListSel)
