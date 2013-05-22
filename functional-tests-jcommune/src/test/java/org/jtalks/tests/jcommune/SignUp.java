@@ -15,29 +15,29 @@
 
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.User;
-import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
+import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-import org.jtalks.tests.jcommune.utils.StringHelp;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.driver;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumTest.printSeleniumSessionId;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
-/**
- * @author Guram Savinov
- */
+/** @author Guram Savinov */
 public class SignUp {
 
 	@BeforeMethod
-	@Parameters({"app-url"})
-	public void setupCase(String appUrl) {
+    @Parameters({"appUrl"})
+    public void setupCase(String appUrl) {
 		driver.get(appUrl);
         mainPage.logOutIfLoggedIn();
+        printSeleniumSessionId(getClass());
     }
 
     @Test
@@ -129,13 +129,13 @@ public class SignUp {
     }
 
     @Test(expectedExceptions = ValidationException.class)
-     public void invalidEmailFormat_JC_5() throws Exception {
+    public void invalidEmailFormat_JC_5() throws Exception {
         String password = StringHelp.getRandomString(9);
         UserForRegistration user = new UserForRegistration();
         user.setUsername(StringHelp.getRandomString((8)));
         user.setPassword(password);
         user.setPasswordConfirmation(password);
-        user.setEmail(StringHelp.getRandomString(8) + "@jtalks.org");
+        user.setEmail(StringHelp.getRandomString(8) + "@" + "jtalks");
         Users.signUp(user);
     }
 

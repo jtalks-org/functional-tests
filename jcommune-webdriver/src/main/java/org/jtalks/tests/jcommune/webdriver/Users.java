@@ -103,6 +103,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      * @throws MailWasNotReceivedException
      */
     public static User signUp() throws CouldNotOpenPageException, ValidationException,
@@ -119,6 +120,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      * @throws MailWasNotReceivedException
@@ -138,6 +140,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      */
     public static User signUpWithoutActivation() throws CouldNotOpenPageException, ValidationException,
             CouldNotGetMessageException, CouldNotGetMessagesException {
@@ -152,6 +155,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException
+     *
      * @throws CouldNotGetMessageException
      * @throws CouldNotGetMessagesException
      */
@@ -168,7 +172,7 @@ public class Users {
 
         // JCommune add captcha value to session on image request. Because HtmlUnit doesn't load images, captcha image
         // should be requested manually.
-        if ("html".equalsIgnoreCase(webdriverType)) {
+        if ("htmlunit".equalsIgnoreCase(webdriverType)) {
             driver.get(signUpPage.getCaptchaImage().getAttribute("src"));
             driver.navigate().back();
             signUpPage.getSignUpButton().click();
@@ -181,7 +185,7 @@ public class Users {
         signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
         signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
-        signUpPage.getSubmitButton().submit();
+        signUpPage.getSubmitButton().click();
         waitForLoginDialogShowsUp();
         signUpPage.getOkButtonOnInfoWindow().click();
 
@@ -191,6 +195,7 @@ public class Users {
 
     private static void waitForLoginDialogShowsUp() throws ValidationException {
         try {
+
             new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
                     ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
         } catch (org.openqa.selenium.TimeoutException e) {

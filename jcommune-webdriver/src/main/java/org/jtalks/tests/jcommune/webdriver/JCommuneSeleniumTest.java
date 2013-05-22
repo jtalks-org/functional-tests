@@ -1,8 +1,10 @@
 package org.jtalks.tests.jcommune.webdriver;
 
-import org.jtalks.tests.jcommune.utils.SeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.page.Pages;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -13,7 +15,6 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class JCommuneSeleniumTest {
-    /** Object to work with Remote Selenium Server */
     public static WebDriver driver = null;
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private static final int SELENIUM_TIMEOUT = 10;
@@ -23,20 +24,65 @@ public class JCommuneSeleniumTest {
      * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server. All values
      * are stored in testng.xml file.
      *
-     * @param selServerURL  Selenium server URL
-     * @param selDriverType Selenium driver type
+     * @param webDriverUrl selenium server URL, will be used by default if no SELENIUM_URL env var is set (like in case
+     *                     with SauceLabs integration on Jenkins)
      */
     @BeforeSuite(alwaysRun = true)
-    @Parameters({"selenium-server-url", "selenium-driver-type", "app-url"})
-    public void init(String selServerURL, String selDriverType, String appUrl) throws Exception {
-        webdriverType = selDriverType;
-        initDriver(selServerURL, selDriverType);
+    @Parameters({"webDriverUrl", "appUrl"})
+    public void init(String webDriverUrl, String appUrl) throws Exception {
+        webdriverType = getBrowser();
+        initDriver(webDriverUrl);
         Pages.createAllPages(driver);
     }
 
-    private void initDriver(String seleniumServerUrl, String webdriverType) throws MalformedURLException {
-        driver = new RemoteWebDriver(new URL(seleniumServerUrl), SeleniumConfig.getBrowserDriver(webdriverType));
+    private void initDriver(String defaultSeleniumServerUrl) throws MalformedURLException {
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability(CapabilityType.PLATFORM, getOs());
+        capabilities.setBrowserName(getBrowser());
+        capabilities.setVersion(getBrowserVersion());
+
+        String seleniumUrl = getSeleniumUrl(defaultSeleniumServerUrl);
+        driver = new RemoteWebDriver(new URL(seleniumUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
+    }
+
+    private String getOs() {
+        String os = System.getenv("SELENIUM_PLATFORM") == null ? "" : System.getenv("SELENIUM_PLATFORM");
+        if (os.isEmpty()) {
+            return Platform.ANY.toString();
+        }
+        return os;
+    }
+
+    private String getBrowserVersion() {
+        return System.getenv("SELENIUM_VERSION") == null ? "" : System.getenv("SELENIUM_VERSION");
+    }
+
+    private String getBrowser() {
+        return System.getenv("SELENIUM_BROWSER") == null ? "htmlunit" : System.getenv("SELENIUM_BROWSER");
+    }
+
+    private String getSeleniumUrl(String defaultUrl) {
+        String url;
+        String sauceDriver = System.getenv("SELENIUM_DRIVER");
+        if (sauceDriver != null) {
+            String sauceUsername = sauceDriver.substring(sauceDriver.indexOf("username"),
+                    sauceDriver.lastIndexOf("&")).split("=")[1];
+            String sauceApiKey = sauceDriver.substring(sauceDriver.indexOf("access-key"),
+                    sauceDriver.length()).split("=")[1];
+            String sauceHost = "@ondemand.saucelabs.com:80/wd/hub";
+            url = "http://" + sauceUsername + ":" + sauceApiKey + sauceHost;
+        } else {
+            url = defaultUrl;
+        }
+        return url;
+    }
+
+    public static void printSeleniumSessionId(Class currentTestClass) {
+        String sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
+        String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId,
+                currentTestClass.getSimpleName());
+        System.out.println(message);
     }
 
     /** Method destroy connect with Selenium Server */
