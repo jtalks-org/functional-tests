@@ -39,4 +39,16 @@ public class UserForRegistration extends User {
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
     }
+
+    public static UserForRegistration withUsername(String username) {
+        UserForRegistration user = new UserForRegistration();
+        user.setUsername(username);
+        return user;
+    }
+
+    public static UserForRegistration withEmail(String email) {
+        UserForRegistration user = new UserForRegistration();
+        user.setEmail(email);
+        return user;
+    }
 }
