@@ -20,9 +20,7 @@ import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static org.jtalks.tests.jcommune.utils.StringHelp.getRandomString;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
@@ -30,6 +28,14 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /** @author Guram Savinov */
 public class SignUp {
+
+    @BeforeClass
+    public void beforeClass() {
+    }
+
+    @AfterClass
+    public void afterClass() {
+    }
 
     @BeforeMethod
     @Parameters({"appUrl"})

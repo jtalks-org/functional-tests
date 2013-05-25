@@ -18,7 +18,7 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration debug="false" xmlns:log4j="http://jakarta.apache.org/log4j/">
   <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
-    <param name="Encoding" value="Cp866"/>
+    <param name="Encoding" value="utf8"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%d{ISO8601} [%-5p][%-10.10t][%32.32c] - %m%n"/>
     </layout>
