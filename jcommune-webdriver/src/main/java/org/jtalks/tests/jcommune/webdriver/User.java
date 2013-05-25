@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune.webdriver;
 
+import org.apache.commons.lang.builder.StandardToStringStyle;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.jtalks.tests.jcommune.utils.StringHelp;
@@ -69,6 +70,7 @@ public class User {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE)
+                .replace(getClass().getSimpleName(), "User");
     }
 }

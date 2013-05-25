@@ -179,7 +179,7 @@ public class Users {
         }
 
         // Fill sign up form and submit
-        LOGGER.info("Registering user {}", userForRegistration);
+        LOGGER.info("Registering {}", userForRegistration);
         signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
         signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
         signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
