@@ -65,7 +65,7 @@ public class Users {
             throw new CouldNotOpenPageException("sign in dialog form", e);
         }
 
-        LOGGER.info("Log in {}", user);
+        LOGGER.info("Sign in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButton().click();
@@ -88,7 +88,7 @@ public class Users {
             throw new CouldNotOpenPageException("sign in page form", e);
         }
 
-        LOGGER.info("Log in {}", user);
+        LOGGER.info("Sign in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButtonAfterRegistration().click();
@@ -179,7 +179,7 @@ public class Users {
         }
 
         // Fill sign up form and submit
-        LOGGER.info("Registering {}", userForRegistration);
+        LOGGER.info("Sign Up {}", userForRegistration);
         signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
         signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
         signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());

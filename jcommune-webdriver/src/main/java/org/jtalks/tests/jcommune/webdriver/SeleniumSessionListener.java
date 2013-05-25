@@ -6,32 +6,7 @@ import org.testng.*;
 import org.testng.xml.XmlSuite;
 
 /** @author stanislav bashkirtsev */
-public class SeleniumSessionListener implements ITestListener, IConfigurationListener2 {
-    @Override
-    public void beforeConfiguration(ITestResult tr) {
-        if (tr.getMethod().isBeforeClassConfiguration()) {
-            ITestClass testClass = tr.getMethod().getTestClass();
-
-            logger.info("STARTING TEST CLASS [{}] >>> >>>", testClass.getName());
-            XmlSuite suite = testClass.getXmlTest().getSuite();
-            JCommuneSeleniumConfig seleniumConfig = new JCommuneSeleniumConfig();
-            try {
-                seleniumConfig.init(suite.getParameter("webDriverUrl"), suite.getParameter("appUrl"));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            seleniumConfig.printSeleniumSessionId(tr.getTestClass().getName());
-            configs.set(seleniumConfig);
-        }
-    }
-
-    @Override
-    public void onConfigurationSuccess(ITestResult tr) {
-        if (tr.getMethod().isAfterClassConfiguration()) {
-            logger.info("FINISHING TEST CLASS [{}] >>> >>>", tr.getTestClass().getName());
-            configs.get().destroy();
-        }
-    }
+public class SeleniumSessionListener implements ITestListener, IInvokedMethodListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
@@ -66,16 +41,44 @@ public class SeleniumSessionListener implements ITestListener, IConfigurationLis
 
     @Override
     public void onFinish(ITestContext context) {
+        if (seleniumConfig != null) {
+            seleniumConfig.destroy();
+        }
     }
 
     @Override
-    public void onConfigurationFailure(ITestResult itr) {
+    public void beforeInvocation(IInvokedMethod method, ITestResult testResult) {
+        ITestClass testClass = method.getTestMethod().getTestClass();
+        Class testClassToBeInvoked = testClass.getRealClass();
+        if (testClassToBeInvoked != currentTestClass) {
+            currentTestClass = testClassToBeInvoked;
+            logger.info("STARTING TEST CLASS [{}] >>> >>>", currentTestClass.getSimpleName());
+            if (seleniumConfig != null) {
+                seleniumConfig.destroy();
+            }
+
+            seleniumConfig = new JCommuneSeleniumConfig();
+            XmlSuite suite = testClass.getXmlTest().getSuite();
+            try {
+                seleniumConfig.init(suite.getParameter("webDriverUrl"), suite.getParameter("appUrl"));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            seleniumConfig.printSeleniumSessionId(testClass.getName());
+        }
     }
 
     @Override
-    public void onConfigurationSkip(ITestResult itr) {
+    public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
+
     }
 
-    private final ThreadLocal<JCommuneSeleniumConfig> configs = new ThreadLocal<JCommuneSeleniumConfig>();
+    private JCommuneSeleniumConfig seleniumConfig;
+    /**
+     * TestNG runs tests in groups split by class name. So first it runs all the tests in class 1, then in class 2. We
+     * change the value of this field when first method of class 2 is invoked - this is a sign that we need to start a
+     * new selenium session.
+     */
+    private Class currentTestClass;
     private final Logger logger = LoggerFactory.getLogger(SeleniumSessionListener.class);
 }
