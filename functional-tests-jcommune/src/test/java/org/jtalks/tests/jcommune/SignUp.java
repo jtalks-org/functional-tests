@@ -28,15 +28,6 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /** @author Guram Savinov */
 public class SignUp {
-
-    @BeforeClass
-    public void beforeClass() {
-    }
-
-    @AfterClass
-    public void afterClass() {
-    }
-
     @BeforeMethod
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) {

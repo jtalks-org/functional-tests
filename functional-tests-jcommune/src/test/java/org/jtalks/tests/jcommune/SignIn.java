@@ -29,15 +29,6 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class SignIn {
-
-    @BeforeClass
-    public void beforeClass() {
-    }
-
-    @AfterClass
-    public void afterClass() {
-    }
-
     @BeforeMethod
     @Parameters("appUrl")
     public void setup(String appUrl) {
