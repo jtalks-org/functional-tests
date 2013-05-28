@@ -14,6 +14,10 @@ public class Post {
     private String postContent;
     private Topic topic;
 
+    public Post(String postContent) {
+        this.postContent = postContent;
+    }
+
     public DateTime getCreationDate() {
         return creationDate;
     }

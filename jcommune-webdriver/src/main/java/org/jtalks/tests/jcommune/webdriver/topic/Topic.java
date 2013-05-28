@@ -26,6 +26,10 @@ public class Topic {
     private List<Post> posts = new ArrayList<Post>();
     private Set<User> subscribers = new HashSet<User>();
 
+    public Topic(String title, String firstPostContent) {
+        this.title = title;
+        posts.add(new Post(firstPostContent));
+    }
 
     public DateTime getCreationDate() {
         return creationDate;

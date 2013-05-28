@@ -15,8 +15,8 @@
 
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.webdriver.User;
-import org.jtalks.tests.jcommune.webdriver.Users;
+import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
+import org.jtalks.tests.jcommune.webdriver.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.topic.Topics;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -30,17 +30,23 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 public class TopicPost {
 
+    private Topic topic;
+
     @BeforeMethod
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) {
 		driver.get(appUrl);
         mainPage.logOutIfLoggedIn();
+        topic = new Topic("subject", "message");
     }
 
-    @Test(groups = { "develop" })
-    public void createTopic() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
-        Topics.createTopic("subject", "message");
+    @Test
+    public void signUpAndCreateTopic() throws Exception {
+        Topics.signUpAndcreateTopic(topic);
+    }
+
+    @Test(expectedExceptions = CouldNotOpenPageException.class)
+    public void createTopicAsAnonymous() throws Exception {
+        Topics.createTopic(topic);
     }
 }

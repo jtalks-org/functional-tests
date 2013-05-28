@@ -17,9 +17,13 @@ package org.jtalks.tests.jcommune.webdriver.topic;
 
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
+import org.jtalks.tests.jcommune.webdriver.User;
+import org.jtalks.tests.jcommune.webdriver.Users;
+import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.MailWasNotReceivedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.openqa.selenium.NoSuchElementException;
 
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
@@ -29,13 +33,42 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  */
 public class Topics {
 
-    public static void createTopic(String subject, String message) throws MailWasNotReceivedException,
+    /**
+     * Sign-up new user and create new topic
+     *
+     * @param topic the topic representation
+     * @throws MailWasNotReceivedException
+     * @throws CouldNotGetMessagesException
+     * @throws CouldNotGetMessageException
+     * @throws ValidationException
+     * @throws CouldNotSignInUserException
+     */
+    public static void signUpAndcreateTopic(Topic topic) throws MailWasNotReceivedException,
             CouldNotGetMessagesException, CouldNotGetMessageException, ValidationException,
             CouldNotSignInUserException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        createTopic(topic);
+    }
+
+    /**
+     * Create new topic
+     *
+     * @param topic the topic representation
+     */
+    public static void createTopic(Topic topic) {
+        // Open first branch from the main page top
         branchPage.getBranchList().get(0).click();
-        topicPage.getNewButton().click();
-        topicPage.getSubjectField().sendKeys(subject);
-        topicPage.getMessageField().sendKeys(message);
+
+        // Create new topic
+        try {
+            topicPage.getNewButton().click();
+        } catch (NoSuchElementException e) {
+            throw new CouldNotOpenPageException("new branch", e);
+        }
+        topicPage.getSubjectField().sendKeys(topic.getTitle());
+        Post firstPost = topic.getPosts().get(0);
+        topicPage.getMessageField().sendKeys(firstPost.getPostContent());
         topicPage.getPostButton().click();
     }
 }
