@@ -36,14 +36,8 @@ public class SignUp {
     }
 
     @Test
-    public void signUpWithActivation() throws Exception {
+    public void signUpWithActivationProvideCorrectLogin_JC_112() throws Exception {
         User user = Users.signUp();
-        Users.signIn(user);
-    }
-
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
-    public void signUpWithoutActivation() throws Exception {
-        User user = Users.signUpWithoutActivation();
         Users.signIn(user);
     }
 

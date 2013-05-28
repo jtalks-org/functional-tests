@@ -36,6 +36,12 @@ public class SignIn {
         mainPage.logOutIfLoggedIn();
     }
 
+    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    public void signUpWithoutActivationCausesError_JC_564() throws Exception {
+        User user = Users.signUpWithoutActivation();
+        Users.signIn(user);
+    }
+
     @Test
     public void correctUsernameAndPassword_JC_20() throws Exception {
         User user = Users.signUp();
