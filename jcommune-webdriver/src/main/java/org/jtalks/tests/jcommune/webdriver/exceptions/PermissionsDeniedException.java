@@ -15,13 +15,15 @@
 
 package org.jtalks.tests.jcommune.webdriver.exceptions;
 
+import org.jtalks.tests.jcommune.webdriver.User;
+
 /**
- * This exception should be thrown when a form validation occurs
+ * This exception should be thrown when user haven't appropriate permissions for his action
  *
  * @author Guram Savinov
  */
-public class ValidationException extends Exception {
-    public ValidationException() {
-        super("Data did not pass validation");
+public class PermissionsDeniedException extends Exception {
+    public PermissionsDeniedException(User user) {
+        super("User with username: '" + user.getUsername() + "' haven't permissions for current action");
     }
 }
