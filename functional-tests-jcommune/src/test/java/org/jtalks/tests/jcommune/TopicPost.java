@@ -15,7 +15,7 @@
 
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.topic.Topics;
 import org.testng.annotations.BeforeMethod;
@@ -45,7 +45,7 @@ public class TopicPost {
         Topics.signUpAndcreateTopic(topic);
     }
 
-    @Test(expectedExceptions = CouldNotOpenPageException.class)
+    @Test(expectedExceptions = PermissionsDeniedException.class)
     public void createTopicAsAnonymous() throws Exception {
         Topics.createTopic(topic);
     }

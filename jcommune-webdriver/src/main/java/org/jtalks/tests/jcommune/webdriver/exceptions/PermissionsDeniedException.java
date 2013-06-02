@@ -15,15 +15,13 @@
 
 package org.jtalks.tests.jcommune.webdriver.exceptions;
 
-import org.jtalks.tests.jcommune.webdriver.User;
-
 /**
  * This exception should be thrown when user haven't appropriate permissions for his action
  *
  * @author Guram Savinov
  */
 public class PermissionsDeniedException extends Exception {
-    public PermissionsDeniedException(User user) {
-        super("User with username: '" + user.getUsername() + "' haven't permissions for current action");
+    public PermissionsDeniedException() {
+        super("User hasn't permissions for the current action");
     }
 }

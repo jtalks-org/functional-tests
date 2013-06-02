@@ -17,10 +17,7 @@ package org.jtalks.tests.jcommune.webdriver.topic;
 
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.MailtrapException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.*;
 import org.openqa.selenium.NoSuchElementException;
 
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
@@ -38,9 +35,10 @@ public class Topics {
      * @throws MailtrapException
      * @throws ValidationException
      * @throws CouldNotSignInUserException
+     * @throws PermissionsDeniedException
      */
     public static void signUpAndcreateTopic(Topic topic) throws MailtrapException, ValidationException,
-            CouldNotSignInUserException {
+            CouldNotSignInUserException, PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
         createTopic(topic);
@@ -50,8 +48,9 @@ public class Topics {
      * Create new topic
      *
      * @param topic the topic representation
+     * @throws PermissionsDeniedException
      */
-    public static void createTopic(Topic topic) {
+    public static void createTopic(Topic topic) throws PermissionsDeniedException {
         // Open first branch from the main page top
         branchPage.getBranchList().get(0).click();
 
@@ -59,7 +58,7 @@ public class Topics {
         try {
             topicPage.getNewButton().click();
         } catch (NoSuchElementException e) {
-            throw new CouldNotOpenPageException("new branch", e);
+            throw new PermissionsDeniedException();
         }
         topicPage.getSubjectField().sendKeys(topic.getTitle());
         Post firstPost = topic.getPosts().get(0);
