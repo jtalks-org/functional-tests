@@ -16,12 +16,12 @@
 package org.jtalks.tests.jcommune.webdriver.exceptions;
 
 /**
- * The exception for case when message was not received from JCommune
+ * Base exception for Mailtrap exceptions related to timeout, Rest API etc.
  *
  * @author Guram Savinov
  */
-public class MailWasNotReceivedException extends Exception {
-    public MailWasNotReceivedException(String details, Throwable cause) {
-        super(details, cause);
+public class MailtrapException extends Exception {
+    public MailtrapException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

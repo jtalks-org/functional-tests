@@ -23,6 +23,7 @@ import org.jtalks.tests.jcommune.mail.mailtrap.dto.Message;
 import org.jtalks.tests.jcommune.mail.mailtrap.dto.MessageDto;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
+import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.MailWasNotReceivedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +38,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -60,19 +60,29 @@ public class MailtrapMail {
      * @param recipient the recipient email
      * @throws CouldNotGetMessagesException
      * @throws CouldNotGetMessageException
-     * @throws TimeoutException
+     * @throws MailWasNotReceivedException
      * @return the activation link, that user should open to confirm registration
      */
     public String getActivationLink(final String recipient) throws CouldNotGetMessagesException,
-            CouldNotGetMessageException, TimeoutException {
-        await().dontCatchUncaughtExceptions().atMost(15, TimeUnit.SECONDS).pollInterval(500, TimeUnit.MILLISECONDS)
-                .until(new Callable<Boolean>() {
-                    public Boolean call() throws Exception {
-                        LOGGER.debug("Trying to get activation link for email [{}]", recipient);
-                        activationLink = tryToGetLink(recipient);
-                        return activationLink != null;
-                    }
-                });
+            CouldNotGetMessageException, MailWasNotReceivedException {
+        try {
+            await().dontCatchUncaughtExceptions().atMost(15, TimeUnit.SECONDS).pollInterval(500, TimeUnit.MILLISECONDS)
+                    .until(new Callable<Boolean>() {
+                        public Boolean call() throws Exception {
+                            LOGGER.debug("Trying to get activation link for email [{}]", recipient);
+                            activationLink = tryToGetLink(recipient);
+                            return activationLink != null;
+                        }
+                    });
+        } catch (Exception e) {
+            if (e.getClass().equals(CouldNotGetMessageException.class)) {
+                throw (CouldNotGetMessageException) e;
+            } else if (e.getClass().equals(CouldNotGetMessagesException.class)) {
+                throw (CouldNotGetMessagesException) e;
+            } else {
+                throw new MailWasNotReceivedException(e);
+            }
+        }
         return activationLink;
     }
 

@@ -15,13 +15,11 @@
 
 package org.jtalks.tests.jcommune.webdriver.topic;
 
-import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
-import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.MailWasNotReceivedException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.MailtrapException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.openqa.selenium.NoSuchElementException;
 
@@ -37,14 +35,11 @@ public class Topics {
      * Sign-up new user and create new topic
      *
      * @param topic the topic representation
-     * @throws MailWasNotReceivedException
-     * @throws CouldNotGetMessagesException
-     * @throws CouldNotGetMessageException
+     * @throws MailtrapException
      * @throws ValidationException
      * @throws CouldNotSignInUserException
      */
-    public static void signUpAndcreateTopic(Topic topic) throws MailWasNotReceivedException,
-            CouldNotGetMessagesException, CouldNotGetMessageException, ValidationException,
+    public static void signUpAndcreateTopic(Topic topic) throws MailtrapException, ValidationException,
             CouldNotSignInUserException {
         User user = Users.signUp();
         Users.signIn(user);
