@@ -49,4 +49,10 @@ public class TopicPost {
     public void createTopicAsAnonymous() throws Exception {
         Topics.createTopic(topic);
     }
+
+    @Test
+    public void createTopicWithStickedTrue() throws Exception {
+        topic.setSticked(true);
+        Topics.signUpAndcreateTopic(topic);
+    }
 }

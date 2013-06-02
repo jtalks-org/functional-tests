@@ -17,9 +17,9 @@ public class Topic {
     private DateTime modificationDate;
     private User topicStarter;
     private String title;
-    private boolean sticked;
-    private boolean announcement;
-    private boolean closed;
+    private Boolean sticked;
+    private Boolean announcement;
+    private Boolean closed;
     private int views;
     private Poll poll;
     private CodeReview codeReview;
@@ -63,27 +63,27 @@ public class Topic {
         this.title = title;
     }
 
-    public boolean isSticked() {
+    public Boolean isSticked() {
         return sticked;
     }
 
-    public void setSticked(boolean sticked) {
+    public void setSticked(Boolean sticked) {
         this.sticked = sticked;
     }
 
-    public boolean isAnnouncement() {
+    public Boolean isAnnouncement() {
         return announcement;
     }
 
-    public void setAnnouncement(boolean announcement) {
+    public void setAnnouncement(Boolean announcement) {
         this.announcement = announcement;
     }
 
-    public boolean isClosed() {
+    public Boolean isClosed() {
         return closed;
     }
 
-    public void setClosed(boolean closed) {
+    public void setClosed(Boolean closed) {
         this.closed = closed;
     }
 

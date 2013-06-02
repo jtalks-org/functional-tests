@@ -19,6 +19,7 @@ import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.*;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
@@ -57,6 +58,7 @@ public class Topics {
         // Create new topic
         try {
             topicPage.getNewButton().click();
+            setStateFlag(topicPage.getTopicStickedFlag(),topic.isSticked());
         } catch (NoSuchElementException e) {
             throw new PermissionsDeniedException();
         }
@@ -65,4 +67,22 @@ public class Topics {
         topicPage.getMessageField().sendKeys(firstPost.getPostContent());
         topicPage.getPostButton().click();
     }
+
+    /**
+     * Sets state for flag element.
+     * @param flagElement the flag web element.
+     * @param state the state: true - enabled, false- disabled, null - the element is not use,
+     */
+    private static void setStateFlag(WebElement flagElement, Boolean state){
+        if(state == true){
+            if(flagElement.isDisplayed()){
+                flagElement.click();
+            }
+        }else if(state == false){
+            if(flagElement.isEnabled()){
+                flagElement.click();
+            }
+        }
+    }
+
 }
