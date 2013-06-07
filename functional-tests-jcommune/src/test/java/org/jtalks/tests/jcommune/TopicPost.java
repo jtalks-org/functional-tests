@@ -51,7 +51,7 @@ public class TopicPost {
     }
 
     @Test
-    public void createTopicWithStickedTrue() throws Exception {
+    public void createStickedTopic() throws Exception {
         topic.setSticked(true);
         Topics.signUpAndcreateTopic(topic);
     }

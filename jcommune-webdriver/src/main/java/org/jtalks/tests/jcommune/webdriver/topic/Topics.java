@@ -26,6 +26,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
 /**
  * Contain topic actions like creating, deleting etc.
+ *
+ * @author Guram Savinov
  */
 public class Topics {
 
@@ -57,7 +59,7 @@ public class Topics {
         // Create new topic
         try {
             topicPage.getNewButton().click();
-            setStateFlag(topicPage.getTopicStickedFlag(),topic.isSticked());
+            setStateFlag(topicPage.getTopicStickedFlag(), topic.getSticked());
         } catch (NoSuchElementException e) {
             throw new PermissionsDeniedException();
         }
@@ -68,20 +70,18 @@ public class Topics {
     }
 
     /**
-     * Sets state for flag element.
-     * @param flagElement the flag web element.
-     * @param state the state: true - enabled, false- disabled, null - the element is not use,
+     * Sets state for checkbox element
+     * @param checkboxElement the checkbox web element
+     * @param state the state: true - checked, false - unchecked, null - the element is not used
      */
-    private static void setStateFlag(WebElement flagElement, Boolean state){
-        if(state == true){
-            if(flagElement.isDisplayed()){
-                flagElement.click();
-            }
-        }else if(state == false){
-            if(flagElement.isEnabled()){
-                flagElement.click();
-            }
+    private static void setStateFlag(WebElement checkboxElement, Boolean state) {
+        if (state == null) {
+            return;
+        }
+        if (state && !checkboxElement.isSelected()) {
+            checkboxElement.click();
+        } else if (!state && checkboxElement.isSelected()) {
+            checkboxElement.click();
         }
     }
-
 }

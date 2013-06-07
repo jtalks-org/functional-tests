@@ -63,7 +63,7 @@ public class Topic {
         this.title = title;
     }
 
-    public Boolean isSticked() {
+    public Boolean getSticked() {
         return sticked;
     }
 
@@ -71,7 +71,7 @@ public class Topic {
         this.sticked = sticked;
     }
 
-    public Boolean isAnnouncement() {
+    public Boolean getAnnouncement() {
         return announcement;
     }
 
@@ -79,7 +79,7 @@ public class Topic {
         this.announcement = announcement;
     }
 
-    public Boolean isClosed() {
+    public Boolean getClosed() {
         return closed;
     }
 
