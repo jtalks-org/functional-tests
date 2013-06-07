@@ -26,6 +26,8 @@ public class TopicPage {
 
     public static final String topicStickedSel = "topic.sticked1";
 
+    public static final String topicAnnouncementSel = "topic.announcement1";
+
     public static final String topicSubjectSel = "//div[@id='branch-header']/h3";
 
     public static final String topicMessageSel = "//div[@class = 'post']/table/tbody/tr/td[@class='post-content-td']/div";
@@ -60,7 +62,10 @@ public class TopicPage {
     private WebElement newButton;
 
     @FindBy(id = topicStickedSel)
-    private WebElement topicStickedFlag;
+    private WebElement topicSticked;
+
+    @FindBy(id = topicAnnouncementSel)
+    private WebElement topicAnnouncement;
 
     @FindBy(id = subjectFieldSel)
     private WebElement subjectField;
@@ -174,7 +179,11 @@ public class TopicPage {
         return topicsButtons.get(pageNum - 1);
     }
 
-    public WebElement getTopicStickedFlag() {
-        return topicStickedFlag;
+    public WebElement getTopicSticked() {
+        return topicSticked;
+    }
+
+    public WebElement getTopicAnnouncement() {
+        return topicAnnouncement;
     }
 }

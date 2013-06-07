@@ -59,7 +59,8 @@ public class Topics {
         // Create new topic
         try {
             topicPage.getNewButton().click();
-            setStateFlag(topicPage.getTopicStickedFlag(), topic.getSticked());
+            setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
+            setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
         } catch (NoSuchElementException e) {
             throw new PermissionsDeniedException();
         }
@@ -74,7 +75,7 @@ public class Topics {
      * @param checkboxElement the checkbox web element
      * @param state the state: true - checked, false - unchecked, null - the element is not used
      */
-    private static void setStateFlag(WebElement checkboxElement, Boolean state) {
+    private static void setCheckboxState(WebElement checkboxElement, Boolean state) {
         if (state == null) {
             return;
         }

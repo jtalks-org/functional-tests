@@ -55,4 +55,10 @@ public class TopicPost {
         topic.setSticked(true);
         Topics.signUpAndcreateTopic(topic);
     }
+
+    @Test
+    public void createAnnouncementTopic() throws Exception {
+        topic.setAnnouncement(true);
+        Topics.signUpAndcreateTopic(topic);
+    }
 }
