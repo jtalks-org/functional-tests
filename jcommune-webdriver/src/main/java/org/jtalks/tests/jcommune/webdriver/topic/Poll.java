@@ -1,17 +1,36 @@
+/**
+ * Copyright (C) 2011  JTalks.org Team
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+
 package org.jtalks.tests.jcommune.webdriver.topic;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Jcommune poll representation.
+ * Jcommune poll representation
+ *
+ * @author Guram Savinov
  */
 public class Poll {
 
     private String title;
-    private Topic topic;
-    private List<PollItem> pollItems = new ArrayList<PollItem>();
-    private String pollItemsValue;
+    private List<String> items = new ArrayList<String>();
+
+    public Poll(String title) {
+        this.title = title;
+    }
 
     public String getTitle() {
         return title;
@@ -21,27 +40,11 @@ public class Poll {
         this.title = title;
     }
 
-    public Topic getTopic() {
-        return topic;
+    public List<String> getItems() {
+        return items;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
-
-    public List<PollItem> getPollItems() {
-        return pollItems;
-    }
-
-    public void setPollItems(List<PollItem> pollItems) {
-        this.pollItems = pollItems;
-    }
-
-    public String getPollItemsValue() {
-        return pollItemsValue;
-    }
-
-    public void setPollItemsValue(String pollItemsValue) {
-        this.pollItemsValue = pollItemsValue;
+    public void addItem(String item) {
+        items.add(item);
     }
 }

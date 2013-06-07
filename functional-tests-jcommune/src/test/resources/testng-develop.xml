@@ -7,7 +7,11 @@
   </listeners>
   <test name="JCommune development">
     <classes>
-      <class name="org.jtalks.tests.jcommune.TopicPost" />
+      <class name="org.jtalks.tests.jcommune.TopicPost">
+        <methods>
+          <include name="createPoll" />
+        </methods>
+      </class>
     </classes>
   </test>
 </suite>

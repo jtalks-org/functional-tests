@@ -16,6 +16,7 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
+import org.jtalks.tests.jcommune.webdriver.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.topic.Topics;
 import org.testng.annotations.BeforeMethod;
@@ -59,6 +60,16 @@ public class TopicPost {
     @Test
     public void createAnnouncementTopic() throws Exception {
         topic.setAnnouncement(true);
+        Topics.signUpAndcreateTopic(topic);
+    }
+
+    @Test
+    public void createPoll() throws Exception {
+        Poll poll = new Poll("poll title");
+        for (int i = 0; i < 5; i++) {
+            poll.addItem("item" + i);
+        }
+        topic.setPoll(poll);
         Topics.signUpAndcreateTopic(topic);
     }
 }

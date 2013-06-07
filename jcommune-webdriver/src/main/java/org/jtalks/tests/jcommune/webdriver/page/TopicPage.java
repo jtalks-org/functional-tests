@@ -17,40 +17,25 @@ import java.util.List;
 public class TopicPage {
 
     public static final String newButtonSel = "new-topic-btn";
-
     public static final String subjectFieldSel = "subject";
-
     public static final String messageFieldSel = "tbMsg";
-
     public static final String postButtonSel = "post";
-
     public static final String topicStickedSel = "topic.sticked1";
-
     public static final String topicAnnouncementSel = "topic.announcement1";
-
     public static final String topicSubjectSel = "//div[@id='branch-header']/h3";
-
     public static final String topicMessageSel = "//div[@class = 'post']/table/tbody/tr/td[@class='post-content-td']/div";
-
     public static final String topicsListSel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/')]";
-
     public static final String subjectErrorMessageSel = "//span[@id='subject']";
-
     public static final String bodyErrorMessageSel = "//span[@id='bodyText.errors']";
-
     public static final String backButtonOnEditFormSel = "//a[@class='back-btn']";
-
     public static final String topicLinksFromDateInLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class,'latest-by')]/a";
-
     public static final String topicLinksFromRecentActivitySel = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/')]";
-
     public static final String amountsOfViewTopicsSel = "//span[@class='test-views']";
-
     public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
-
     public static final String whoBrowsingTopicSel = "//div[@class='forum_misc_info']/a";
-
     public static final String topicsButtonsSel = "//div[@class='pagination pull-right forum-pagination']/ul/li/a";
+    public static final String topicsPollTitleFieldSel = "pollTitle";
+    public static final String topicsPollItemsFieldSel = "pollItems";
 
     @FindBy(xpath = topicsButtonsSel)
     private List<WebElement> topicsButtons;
@@ -105,6 +90,12 @@ public class TopicPage {
 
     @FindBy(xpath = whoBrowsingTopicSel)
     List<WebElement> whoBrowsingTopic;
+
+    @FindBy(id = topicsPollTitleFieldSel)
+    WebElement topicsPollTitleField;
+
+    @FindBy(id = topicsPollItemsFieldSel)
+    WebElement topicsPollItemsField;
 
     public TopicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -185,5 +176,13 @@ public class TopicPage {
 
     public WebElement getTopicAnnouncement() {
         return topicAnnouncement;
+    }
+
+    public WebElement getTopicPollTitleField() {
+        return topicsPollTitleField;
+    }
+
+    public WebElement getTopicPollItemsField() {
+        return topicsPollItemsField;
     }
 }
