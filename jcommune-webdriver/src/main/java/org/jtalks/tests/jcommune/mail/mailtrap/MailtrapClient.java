@@ -62,7 +62,7 @@ public class MailtrapClient {
      * @return the message
      * @throws CouldNotGetMessageException
      */
-    public static String getMessage(String id) throws CouldNotGetMessageException {
+    public static String getMessage(String id) {
         ClientResource client = new ClientResource(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM);
         try {
             return client.get().getText();

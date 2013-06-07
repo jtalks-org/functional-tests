@@ -19,7 +19,6 @@ package org.jtalks.tests.jcommune.webdriver;
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.MailtrapException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
@@ -99,9 +98,8 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws ValidationException
-     * @throws MailtrapException
      */
-    public static User signUp() throws CouldNotOpenPageException, ValidationException, MailtrapException {
+    public static User signUp() throws CouldNotOpenPageException, ValidationException {
         User user = signUpWithoutActivation();
         activateUserByMail(user.getEmail());
         return user;
@@ -114,10 +112,9 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws ValidationException
-     * @throws MailtrapException
      */
     public static User signUp(UserForRegistration userForRegistration) throws CouldNotOpenPageException,
-            ValidationException, MailtrapException {
+            ValidationException {
         User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
         return user;
@@ -130,11 +127,9 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws ValidationException
-     * @throws MailtrapException
      *
      */
-    public static User signUpWithoutActivation() throws CouldNotOpenPageException, ValidationException,
-            MailtrapException {
+    public static User signUpWithoutActivation() throws CouldNotOpenPageException, ValidationException {
         return signUpWithoutActivation(new UserForRegistration());
     }
 
@@ -146,10 +141,9 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws CouldNotOpenPageException
      * @throws ValidationException
-     * @throws MailtrapException
      */
     public static User signUpWithoutActivation(UserForRegistration userForRegistration)
-            throws CouldNotOpenPageException, ValidationException, MailtrapException {
+            throws CouldNotOpenPageException, ValidationException {
         // Check opening sign up form
         signUpPage.getSignUpButton().click();
         try {
@@ -194,9 +188,8 @@ public class Users {
      * Open activation link from message sent by JCommune to confirm user registration
      *
      * @param email the user email
-     * @throws MailtrapException
      */
-    public static void activateUserByMail(String email) throws MailtrapException {
+    public static void activateUserByMail(String email) {
         MailtrapMail mailtrapMail = new MailtrapMail();
         driver.get(mailtrapMail.getActivationLink(email));
         mainPage.getIconLinkToMainPage().click();

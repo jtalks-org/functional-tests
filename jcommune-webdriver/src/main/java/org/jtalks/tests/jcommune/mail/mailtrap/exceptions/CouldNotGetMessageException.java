@@ -15,14 +15,12 @@
 
 package org.jtalks.tests.jcommune.mail.mailtrap.exceptions;
 
-import org.jtalks.tests.jcommune.webdriver.exceptions.MailtrapException;
-
 /**
  * Thrown if some I/O errors happened when getting data from Mailtrap API message endpoint
  *
  * @author Guram Savinov
  */
-public class CouldNotGetMessageException extends MailtrapException {
+public class CouldNotGetMessageException extends RuntimeException {
     public CouldNotGetMessageException(Throwable cause) {
         super("Could not get data from Mailtrap message endpoint", cause);
     }

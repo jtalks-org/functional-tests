@@ -58,13 +58,10 @@ public class MailtrapMail {
      * Get activation link sent by JCommune for the not activated user. Because Mailtrap need any time to receive
      * message getting activation link repeats for 15 seconds with 500 milliseconds interval.
      * @param recipient the recipient email
-     * @throws CouldNotGetMessagesException
-     * @throws CouldNotGetMessageException
      * @throws MailWasNotReceivedException
      * @return the activation link, that user should open to confirm registration
      */
-    public String getActivationLink(final String recipient) throws CouldNotGetMessagesException,
-            CouldNotGetMessageException, MailWasNotReceivedException {
+    public String getActivationLink(final String recipient) {
         try {
             await().dontCatchUncaughtExceptions().atMost(15, TimeUnit.SECONDS).pollInterval(500, TimeUnit.MILLISECONDS)
                     .until(new Callable<Boolean>() {
@@ -86,8 +83,7 @@ public class MailtrapMail {
         return activationLink;
     }
 
-    private String tryToGetLink(String recipient) throws CouldNotGetMessagesException,
-            CouldNotGetMessageException {
+    private String tryToGetLink(String recipient) {
         Gson gson = new Gson();
         MessageDto[] messages;
         String link = null;

@@ -15,14 +15,12 @@
 
 package org.jtalks.tests.jcommune.mail.mailtrap.exceptions;
 
-import org.jtalks.tests.jcommune.webdriver.exceptions.MailtrapException;
-
 /**
  * The exception for case when message was not received from JCommune
  *
  * @author Guram Savinov
  */
-public class MailWasNotReceivedException extends MailtrapException {
+public class MailWasNotReceivedException extends RuntimeException {
     public MailWasNotReceivedException(Throwable cause) {
         super("Message was not received by mailtrap", cause);
     }

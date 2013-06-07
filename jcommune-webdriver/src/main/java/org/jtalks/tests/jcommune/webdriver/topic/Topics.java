@@ -33,13 +33,12 @@ public class Topics {
      * Sign-up new user and create new topic
      *
      * @param topic the topic representation
-     * @throws MailtrapException
      * @throws ValidationException
      * @throws CouldNotSignInUserException
      * @throws PermissionsDeniedException
      */
-    public static void signUpAndcreateTopic(Topic topic) throws MailtrapException, ValidationException,
-            CouldNotSignInUserException, PermissionsDeniedException {
+    public static void signUpAndcreateTopic(Topic topic) throws ValidationException, CouldNotSignInUserException,
+            PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
         createTopic(topic);
