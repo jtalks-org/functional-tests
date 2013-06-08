@@ -77,7 +77,7 @@ public class SignUp {
 
     @Test
     public void usernameWithSpacesShouldPassRegistration_JC_4() throws Exception {
-        UserForRegistration user = UserForRegistration.withUsername(getRandomString(3) + " " + getRandomString(4));
+        UserForRegistration user = UserForRegistration.withUsername(getRandomString(8) + " " + getRandomString(8));
         Users.signUp(user);
     }
 
