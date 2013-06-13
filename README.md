@@ -8,3 +8,7 @@ from [wiki-guide](http://jtalks.org/pages/viewpage.action?pageId=6422581)
 Choose folder where you installed JDK.
 6. Add Maven to your IntelliJ IDEA: go to **File** - **Settings** - **Maven**. Select checkbox **Override** at the **Maven home directory** item.
 Paste path to Maven folder in textbox.
+7. Go to menu **Run** - **Edit** Configuration.
+Add new configuration for type "TestNG". Fill **Name** and **Suite** fields with path to testng.xml,
+i.e. %path_to_project%/functional-tests-jcommune/src/test/resources/testng.xml.
+Fill "Working directory" field with %path_to_project%. Press "Ok".
