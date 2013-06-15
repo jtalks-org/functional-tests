@@ -18,13 +18,11 @@ package org.jtalks.tests.jcommune.webdriver.topic;
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.*;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
 /**
  * Contain topic actions like creating, deleting etc.
@@ -63,22 +61,25 @@ public class Topics {
             topicPage.getNewButton().click();
             setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
             setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-            Poll poll = topic.getPoll();
-            if (poll != null) {
-                topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
-                WebElement itemsField = topicPage.getTopicPollItemsField();
-                for (String item : poll.getItems()) {
-                    itemsField.sendKeys(item);
-                    itemsField.sendKeys(Keys.ENTER);
-                    System.out.println(driver.getPageSource());
-                }
-            }
         } catch (NoSuchElementException e) {
             throw new PermissionsDeniedException();
         }
+
+        // Type subject and message
         topicPage.getSubjectField().sendKeys(topic.getTitle());
         Post firstPost = topic.getPosts().get(0);
         topicPage.getMessageField().sendKeys(firstPost.getPostContent());
+
+        // Type poll title and items
+        Poll poll = topic.getPoll();
+        if (poll != null) {
+            topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
+            WebElement itemsField = topicPage.getTopicPollItemsField();
+            for (String item : poll.getItems()) {
+                itemsField.sendKeys(item + "\n");
+            }
+        }
+
         topicPage.getPostButton().click();
     }
 

@@ -9,7 +9,7 @@
     <classes>
       <class name="org.jtalks.tests.jcommune.TopicPost">
         <methods>
-          <include name="createPoll" />
+          <include name="createTopicWithPoll" />
         </methods>
       </class>
     </classes>

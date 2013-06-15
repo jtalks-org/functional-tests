@@ -64,7 +64,7 @@ public class TopicPost {
     }
 
     @Test
-    public void createPoll() throws Exception {
+    public void createTopicWithPoll() throws Exception {
         Poll poll = new Poll("poll title");
         for (int i = 0; i < 5; i++) {
             poll.addItem("item" + i);
