@@ -65,10 +65,7 @@ public class TopicPost {
 
     @Test
     public void createTopicWithPoll() throws Exception {
-        Poll poll = new Poll("poll title");
-        for (int i = 0; i < 5; i++) {
-            poll.addItem("item" + i);
-        }
+        Poll poll = new Poll("poll title", new String[] {"option1", "option2", "option3"});
         topic.setPoll(poll);
         Topics.signUpAndcreateTopic(topic);
     }

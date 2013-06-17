@@ -15,9 +15,6 @@
 
 package org.jtalks.tests.jcommune.webdriver.topic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Jcommune poll representation
  *
@@ -26,25 +23,18 @@ import java.util.List;
 public class Poll {
 
     private String title;
-    private List<String> items = new ArrayList<String>();
+    private String[] options;
 
-    public Poll(String title) {
+    public Poll(String title, String[] options) {
         this.title = title;
+        this.options = options;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public List<String> getItems() {
-        return items;
-    }
-
-    public void addItem(String item) {
-        items.add(item);
+    public String[] getOptions() {
+        return options;
     }
 }

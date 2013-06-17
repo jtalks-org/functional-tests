@@ -70,13 +70,13 @@ public class Topics {
         Post firstPost = topic.getPosts().get(0);
         topicPage.getMessageField().sendKeys(firstPost.getPostContent());
 
-        // Type poll title and items
+        // Type poll title and options
         Poll poll = topic.getPoll();
         if (poll != null) {
             topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
-            WebElement itemsField = topicPage.getTopicPollItemsField();
-            for (String item : poll.getItems()) {
-                itemsField.sendKeys(item + "\n");
+            WebElement optionsField = topicPage.getTopicPollItemsField();
+            for (String option : poll.getOptions()) {
+                optionsField.sendKeys(option + "\n");
             }
         }
 
