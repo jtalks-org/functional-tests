@@ -19,9 +19,9 @@ import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageExce
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
 import org.restlet.engine.Engine;
 import org.restlet.ext.slf4j.Slf4jLoggerFacade;
-import org.restlet.resource.ClientResource;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
+import java.net.URI;
 
 /**
  * This class contains operations for getting data from Mailtrap service by REST API: get inbox metadata,
@@ -47,10 +47,12 @@ public class MailtrapClient {
      * @throws CouldNotGetMessagesException
      */
     public static String getMessages() throws CouldNotGetMessagesException {
-        ClientResource client = new ClientResource(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM);
+        RestTemplate client = new RestTemplate();
         try {
-            return client.get().getText();
-        } catch (IOException e) {
+            String data = client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM),
+                    String.class);
+            return data;
+        } catch (Exception e) {
             throw new CouldNotGetMessagesException(e);
         }
     }
@@ -63,10 +65,12 @@ public class MailtrapClient {
      * @throws CouldNotGetMessageException
      */
     public static String getMessage(String id) {
-        ClientResource client = new ClientResource(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM);
+        RestTemplate client = new RestTemplate();
         try {
-            return client.get().getText();
-        } catch (IOException e) {
+            String data = client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM),
+                    String.class);
+            return data;
+        } catch (Exception e) {
             throw new CouldNotGetMessageException(e);
         }
     }
