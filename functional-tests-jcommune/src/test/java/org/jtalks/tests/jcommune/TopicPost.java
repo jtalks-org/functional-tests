@@ -32,6 +32,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 public class TopicPost {
 
 	private Topic topic;
+	private String branchTitle;
 
 	@BeforeMethod
 	@Parameters({ "appUrl" })
@@ -39,6 +40,7 @@ public class TopicPost {
 		driver.get(appUrl);
 		mainPage.logOutIfLoggedIn();
 		topic = new Topic("subject", "message");
+		branchTitle = "TestBranch2";
 	}
 
 	@Test
@@ -47,8 +49,9 @@ public class TopicPost {
 	}
 
 	@Test
-	public void SignUpAndCreateTopicInBranch() throws Exception {
-		Topics.signUpAndcreateTopicInBranch(topic, "TestBranch");
+	public void signUpAndCreateTopicInBranch() throws Exception {
+		Topics.signUpAndcreateTopicInBranch(topic, branchTitle);
+		
 	}
 
 	@Test(expectedExceptions = PermissionsDeniedException.class)

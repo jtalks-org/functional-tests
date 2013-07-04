@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune.webdriver.topic;
 
+
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.*;
@@ -47,15 +48,14 @@ public class Topics {
 		Users.signIn(user);
 		createTopic(topic);
 	}
-	
-	public static void signUpAndcreateTopicInBranch(Topic topic, String branchTitle)
-			throws ValidationException, CouldNotSignInUserException,
-			PermissionsDeniedException {
+
+	public static void signUpAndcreateTopicInBranch(Topic topic,
+			String branchTitle) throws ValidationException,
+			CouldNotSignInUserException, PermissionsDeniedException {
 		User user = Users.signUp();
 		Users.signIn(user);
 		createTopicInBranch(topic, branchTitle);
 	}
-	
 
 	/**
 	 * Create new topic
@@ -66,17 +66,9 @@ public class Topics {
 	 */
 	public static void createTopic(Topic topic)
 			throws PermissionsDeniedException {
-		
-		System.out.println(branchPage.getBranchList().size()+ " amount of branches");
-		
-		for (WebElement x:branchPage.getBranchList()) 
-				System.out.println(x.getText());
-		
+
 		// Open first branch from the main page top
-	/*	branchPage.getBranchList().get(0).click();
-		
-		//Printing total amount of branches found
-		System.out.println(branchPage.getBranchList().size()+ " amount of branches");
+		branchPage.getBranchList().get(0).click();
 
 		// Create new topic
 		try {
@@ -103,22 +95,25 @@ public class Topics {
 			}
 		}
 
-		topicPage.getPostButton().click();*/
+		topicPage.getPostButton().click();
 	}
 
-	
 	public static void createTopicInBranch(Topic topic, String branchTitle)
 			throws PermissionsDeniedException {
-		
-		System.out.println(branchPage.getSearchedBranch().getText());
-		
-	
-		
-		// Open first branch from the main page top
-	/*	branchPage.getBranchList().get(0).click();
-		
-		//Printing total amount of branches found
-		System.out.println(branchPage.getBranchList().size()+ " amount of branches");
+
+		boolean found = false;
+
+		// Searching for correct branch
+		for (WebElement x : branchPage.getBranchList()) {
+			if (x.getText().equals(new String(branchTitle))) {
+				x.click();
+				found = true;
+				break;
+			}
+		}
+
+		if (!found)
+			System.out.println("No branch with such name found!");
 
 		// Create new topic
 		try {
@@ -145,10 +140,9 @@ public class Topics {
 			}
 		}
 
-		topicPage.getPostButton().click();*/
+		topicPage.getPostButton().click();
 	}
-	
-	
+
 	/**
 	 * Sets state for checkbox element
 	 * 
