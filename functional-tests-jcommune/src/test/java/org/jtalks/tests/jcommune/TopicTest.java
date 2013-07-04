@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.topic.Topic;
@@ -29,9 +30,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 /**
  * @author Guram Savinov
  */
-public class TopicPost {
-
-	private Topic topic;
+public class TopicTest {
+    private Topic topic;
 	private String branchTitle;
 
 	@BeforeMethod
@@ -45,16 +45,16 @@ public class TopicPost {
 
 	@Test
 	public void signUpAndCreateTopic() throws Exception {
-		Topics.signUpAndcreateTopic(topic);
+		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void signUpAndCreateTopicInBranch() throws Exception {
-		Topics.signUpAndcreateTopicInBranch(topic, branchTitle);
-		
-	}
+        Users.signIn(Users.signUp());
+        Topics.createTopic(topic, branchTitle);
+    }
 
-	@Test(expectedExceptions = PermissionsDeniedException.class)
+    @Test(expectedExceptions = PermissionsDeniedException.class)
 	public void createTopicAsAnonymous() throws Exception {
 		Topics.createTopic(topic);
 	}
@@ -62,20 +62,19 @@ public class TopicPost {
 	@Test
 	public void createStickedTopic() throws Exception {
 		topic.setSticked(true);
-		Topics.signUpAndcreateTopic(topic);
+		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void createAnnouncementTopic() throws Exception {
 		topic.setAnnouncement(true);
-		Topics.signUpAndcreateTopic(topic);
+		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void createTopicWithPoll() throws Exception {
-		Poll poll = new Poll("poll title", new String[] { "option1", "option2",
-				"option3" });
-		topic.setPoll(poll);
-		Topics.signUpAndcreateTopic(topic);
+        Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
+        topic.setPoll(poll);
+        Topics.signUpAndСreateTopic(topic);
 	}
 }

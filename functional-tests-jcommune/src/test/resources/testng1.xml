@@ -7,7 +7,7 @@
     </listeners>
     <test name="JCommune">
         <classes>
-            <class name="org.jtalks.tests.jcommune.TopicPost"/>
+            <class name="org.jtalks.tests.jcommune.TopicTest"/>
             <methods>
                 <include name="SignUpAndCreateTopicInBranch" />
 
