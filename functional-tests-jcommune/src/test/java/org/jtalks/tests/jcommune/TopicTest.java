@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.topic.Topic;
@@ -29,53 +30,59 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 /**
  * @author Guram Savinov
  */
-public class TopicPost {
+public class TopicTest {
 
-	private Topic topic;
-	private String branchTitle;
 
-	@BeforeMethod
+	/*@BeforeMethod
 	@Parameters({ "appUrl" })
 	public void setupCase(String appUrl) {
 		driver.get(appUrl);
 		mainPage.logOutIfLoggedIn();
 		topic = new Topic("subject", "message");
-		branchTitle = "TestBranch2";
-	}
+		
+	}*/
 
 	@Test
 	public void signUpAndCreateTopic() throws Exception {
-		Topics.signUpAndcreateTopic(topic);
+		    Topic topic;
+			
+		topic = new Topic("subject", "message");
+		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void signUpAndCreateTopicInBranch() throws Exception {
-		Topics.signUpAndcreateTopicInBranch(topic, branchTitle);
-		
-	}
+		Topic topic = new Topic("subject", "message");
+		String branchTitle = "TestBranch2";
+        Users.signIn(Users.signUp());
+        Topics.createTopic(topic, branchTitle);
+    }
 
-	@Test(expectedExceptions = PermissionsDeniedException.class)
+    @Test(expectedExceptions = PermissionsDeniedException.class)
 	public void createTopicAsAnonymous() throws Exception {
+    	Topic topic = new Topic("subject", "message");
 		Topics.createTopic(topic);
 	}
 
 	@Test
 	public void createStickedTopic() throws Exception {
+		Topic topic = new Topic("subject", "message");
 		topic.setSticked(true);
-		Topics.signUpAndcreateTopic(topic);
+		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void createAnnouncementTopic() throws Exception {
+		Topic topic = new Topic("subject", "message");
 		topic.setAnnouncement(true);
-		Topics.signUpAndcreateTopic(topic);
+		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void createTopicWithPoll() throws Exception {
-		Poll poll = new Poll("poll title", new String[] { "option1", "option2",
-				"option3" });
-		topic.setPoll(poll);
-		Topics.signUpAndcreateTopic(topic);
+		Topic topic = new Topic("subject", "message");
+        Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
+        topic.setPoll(poll);
+        Topics.signUpAndСreateTopic(topic);
 	}
 }
