@@ -88,7 +88,7 @@ public class Topics {
 		Post firstPost = topic.getPosts().get(0);
 		topicPage.getMessageField().sendKeys(firstPost.getPostContent());
 
-		// Type poll title and options
+		// Type poll title, options, end date, multiple answers
 		Poll poll = topic.getPoll();
 		if (poll != null) {
 			topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
@@ -97,6 +97,7 @@ public class Topics {
 				optionsField.sendKeys(option + "\n");
 			}
             setPollsEndDate(poll);
+            setCheckboxState(topicPage.getTopicsPollMultipleChecker(),poll.isMultipleAnswers());
 		}
 
 		topicPage.getPostButton().click();
@@ -119,7 +120,7 @@ public class Topics {
 		Post firstPost = topic.getPosts().get(0);
 		topicPage.getMessageField().sendKeys(firstPost.getPostContent());
 
-		// Fill poll title and options
+		// Fill poll title, options, end date, multiple answers
 		Poll poll = topic.getPoll();
 		if (poll != null) {
 			topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
@@ -128,6 +129,7 @@ public class Topics {
 				optionsField.sendKeys(option + "\n");
 			}
             setPollsEndDate(poll);
+            setCheckboxState(topicPage.getTopicsPollMultipleChecker(),poll.isMultipleAnswers());
 		}
 
 		topicPage.getPostButton().click();

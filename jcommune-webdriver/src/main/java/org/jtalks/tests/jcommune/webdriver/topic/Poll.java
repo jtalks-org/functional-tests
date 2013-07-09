@@ -27,6 +27,7 @@ public class Poll {
     private String title;
     private String[] options;
     private Date endDate;
+    private boolean multipleAnswers;
 
     public Poll(String title, String[] options) {
         this.title = title;
@@ -47,5 +48,13 @@ public class Poll {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isMultipleAnswers() {
+        return multipleAnswers;
+    }
+
+    public void setMultipleAnswers(boolean multipleAnswers) {
+        this.multipleAnswers = multipleAnswers;
     }
 }

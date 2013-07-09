@@ -34,16 +34,11 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 public class TopicTest {
 
-    private Topic topic;
-    private String branchTitle;
-
     @BeforeMethod
     @Parameters({ "appUrl" })
     public void setupCase(String appUrl) {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn();
-        topic = new Topic("subject", "message");
-        branchTitle = "TestBranch";
     }
 
 	@Test
@@ -98,4 +93,14 @@ public class TopicTest {
         topic.setPoll(poll);
         Topics.signUpAndСreateTopic(topic);
     }
+
+    @Test
+    public void createTopicWithPollMultipleAnswers() throws Exception {
+        Topic topic = new Topic("subject", "message");
+        Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
+        poll.setMultipleAnswers(true);
+        topic.setPoll(poll);
+        Topics.signUpAndСreateTopic(topic);
+    }
+
 }
