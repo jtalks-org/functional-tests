@@ -24,6 +24,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.util.Date;
+
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -32,15 +34,17 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 public class TopicTest {
 
+    private Topic topic;
+    private String branchTitle;
 
-	/*@BeforeMethod
-	@Parameters({ "appUrl" })
-	public void setupCase(String appUrl) {
-		driver.get(appUrl);
-		mainPage.logOutIfLoggedIn();
-		topic = new Topic("subject", "message");
-		
-	}*/
+    @BeforeMethod
+    @Parameters({ "appUrl" })
+    public void setupCase(String appUrl) {
+        driver.get(appUrl);
+        mainPage.logOutIfLoggedIn();
+        topic = new Topic("subject", "message");
+        branchTitle = "TestBranch";
+    }
 
 	@Test
 	public void signUpAndCreateTopic() throws Exception {
@@ -85,4 +89,13 @@ public class TopicTest {
         topic.setPoll(poll);
         Topics.signUpAndСreateTopic(topic);
 	}
+
+    @Test
+    public void createTopicWithPollEndDate() throws Exception {
+        Topic topic = new Topic("subject", "message");
+        Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
+        poll.setEndDate(new Date(System.currentTimeMillis()+86400000));
+        topic.setPoll(poll);
+        Topics.signUpAndСreateTopic(topic);
+    }
 }

@@ -36,6 +36,7 @@ public class TopicPage {
     public static final String topicsButtonsSel = "//div[@class='pagination pull-right forum-pagination']/ul/li/a";
     public static final String topicsPollTitleFieldSel = "pollTitle";
     public static final String topicsPollItemsFieldSel = "pollItems";
+    public static final String topicsPollEndDateFieldSel = "datepicker";
 
     @FindBy(xpath = topicsButtonsSel)
     private List<WebElement> topicsButtons;
@@ -96,6 +97,10 @@ public class TopicPage {
 
     @FindBy(id = topicsPollItemsFieldSel)
     WebElement topicsPollItemsField;
+
+    @FindBy(id = topicsPollEndDateFieldSel)
+    WebElement topicsPollEndDateField;
+
 
     public TopicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -184,5 +189,9 @@ public class TopicPage {
 
     public WebElement getTopicPollItemsField() {
         return topicsPollItemsField;
+    }
+
+    public WebElement getTopicsPollEndDateField() {
+        return topicsPollEndDateField;
     }
 }
