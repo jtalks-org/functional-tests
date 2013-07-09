@@ -24,10 +24,13 @@ import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.webdriverType;
@@ -43,7 +46,7 @@ public class Users {
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
             "подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
-    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 20;
+    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 30;
 
     /**
      * Sign in user by dialog. Action should by started from any page of JCommune.
@@ -168,6 +171,18 @@ public class Users {
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
         signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
         signUpPage.getSubmitButton().click();
+
+        // Check  sign-up form validation results, throw ValidationException if form data is not valid
+        List<WebElement> errorFormElements = signUpPage.getErrorFormElements();
+        if (!errorFormElements.isEmpty()) {
+            String failedFields = "";
+            for (WebElement element : errorFormElements) {
+                failedFields += element.findElement(By.tagName("input")).getAttribute("placeholder") + ": ";
+                failedFields += element.findElement(By.className("help-inline")).getText() + "\n";
+            }
+            throw new ValidationException(failedFields);
+        }
+
         waitForEmailActivationInfoShowsUp();
         signUpPage.getOkButtonOnInfoWindow().click();
 
