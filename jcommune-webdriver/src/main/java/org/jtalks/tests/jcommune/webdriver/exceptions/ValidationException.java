@@ -24,4 +24,8 @@ public class ValidationException extends Exception {
     public ValidationException() {
         super("Data did not pass validation");
     }
+
+    public ValidationException(String message) {
+        super(message);
+    }
 }
