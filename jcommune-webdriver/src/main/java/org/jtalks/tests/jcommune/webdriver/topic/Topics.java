@@ -27,6 +27,9 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
@@ -37,6 +40,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  */
 public class Topics {
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
+
+    private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
     /**
      * Sign-up new user and create new topic
@@ -91,6 +96,7 @@ public class Topics {
 			for (String option : poll.getOptions()) {
 				optionsField.sendKeys(option + "\n");
 			}
+            setPollsEndDate(poll);
 		}
 
 		topicPage.getPostButton().click();
@@ -121,6 +127,7 @@ public class Topics {
 			for (String option : poll.getOptions()) {
 				optionsField.sendKeys(option + "\n");
 			}
+            setPollsEndDate(poll);
 		}
 
 		topicPage.getPostButton().click();
@@ -161,4 +168,32 @@ public class Topics {
 			checkboxElement.click();
 		}
 	}
+
+    /**
+     * Sets the end date in the poll.
+     *
+     * @param poll the poll.
+     */
+    private static void setPollsEndDate(Poll poll){
+        if(poll==null){return;}
+        String date = null;
+        if((date=dateToString(poll.getEndDate(),POLL_END_DATE_FORMAT))!=null){
+            topicPage.getTopicsPollEndDateField().sendKeys(date);
+        }
+
+    }
+
+    /**
+     * Returns date in string type.
+     *
+     * @param date  the date.
+     * @param format the format of date in string.
+     * @return the date in the string.
+     */
+    private static String dateToString(Date date, String format){
+        if(date != null){
+            return new SimpleDateFormat(format).format(date);
+        }
+        return null;
+    }
 }

@@ -24,6 +24,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import java.util.Date;
+
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -31,50 +33,69 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class TopicTest {
-    private Topic topic;
-	private String branchTitle;
 
-	@BeforeMethod
-	@Parameters({ "appUrl" })
-	public void setupCase(String appUrl) {
-		driver.get(appUrl);
-		mainPage.logOutIfLoggedIn();
-		topic = new Topic("subject", "message");
-		branchTitle = "TestBranch2";
-	}
+    private Topic topic;
+    private String branchTitle;
+
+    @BeforeMethod
+    @Parameters({ "appUrl" })
+    public void setupCase(String appUrl) {
+        driver.get(appUrl);
+        mainPage.logOutIfLoggedIn();
+        topic = new Topic("subject", "message");
+        branchTitle = "TestBranch";
+    }
 
 	@Test
 	public void signUpAndCreateTopic() throws Exception {
+		    Topic topic;
+			
+		topic = new Topic("subject", "message");
 		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void signUpAndCreateTopicInBranch() throws Exception {
+		Topic topic = new Topic("subject", "message");
+		String branchTitle = "TestBranch2";
         Users.signIn(Users.signUp());
         Topics.createTopic(topic, branchTitle);
     }
 
     @Test(expectedExceptions = PermissionsDeniedException.class)
 	public void createTopicAsAnonymous() throws Exception {
+    	Topic topic = new Topic("subject", "message");
 		Topics.createTopic(topic);
 	}
 
 	@Test
 	public void createStickedTopic() throws Exception {
+		Topic topic = new Topic("subject", "message");
 		topic.setSticked(true);
 		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void createAnnouncementTopic() throws Exception {
+		Topic topic = new Topic("subject", "message");
 		topic.setAnnouncement(true);
 		Topics.signUpAndСreateTopic(topic);
 	}
 
 	@Test
 	public void createTopicWithPoll() throws Exception {
+		Topic topic = new Topic("subject", "message");
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         topic.setPoll(poll);
         Topics.signUpAndСreateTopic(topic);
 	}
+
+    @Test
+    public void createTopicWithPollEndDate() throws Exception {
+        Topic topic = new Topic("subject", "message");
+        Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
+        poll.setEndDate(new Date(System.currentTimeMillis()+86400000));
+        topic.setPoll(poll);
+        Topics.signUpAndСreateTopic(topic);
+    }
 }
