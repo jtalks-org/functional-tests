@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 /**
  * @author masyan
  */
@@ -47,6 +49,8 @@ public class SignUpPage {
     public static final String captchaFieldSel = "captcha";
 
     public static final String captchaImageSel = "captcha-img";
+
+    public static final String errorFormElementsSel = "div.control-group.error";
 
 
     @FindBy(id = signUpFormSel)
@@ -90,6 +94,9 @@ public class SignUpPage {
 
     @FindBy(id = captchaImageSel)
     WebElement captchaImage;
+
+    @FindBy(css = errorFormElementsSel)
+    List<WebElement> errorFormElements;
 
 
     public SignUpPage(WebDriver driver) {
@@ -151,5 +158,9 @@ public class SignUpPage {
 
     public WebElement getCaptchaImage() {
         return captchaImage;
+    }
+
+    public List<WebElement> getErrorFormElements() {
+        return errorFormElements;
     }
 }

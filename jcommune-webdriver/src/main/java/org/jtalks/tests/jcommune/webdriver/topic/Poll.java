@@ -15,6 +15,8 @@
 
 package org.jtalks.tests.jcommune.webdriver.topic;
 
+import java.util.Date;
+
 /**
  * Jcommune poll representation
  *
@@ -24,6 +26,8 @@ public class Poll {
 
     private String title;
     private String[] options;
+    private Date endDate;
+    private boolean multipleAnswers;
 
     public Poll(String title, String[] options) {
         this.title = title;
@@ -36,5 +40,21 @@ public class Poll {
 
     public String[] getOptions() {
         return options;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public boolean isMultipleAnswers() {
+        return multipleAnswers;
+    }
+
+    public void setMultipleAnswers(boolean multipleAnswers) {
+        this.multipleAnswers = multipleAnswers;
     }
 }
