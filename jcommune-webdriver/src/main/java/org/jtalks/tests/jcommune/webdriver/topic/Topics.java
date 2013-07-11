@@ -72,65 +72,22 @@ public class Topics {
 
 		// Open first branch from the main page top
 		branchPage.getBranchList().get(0).click();
-
-		// Create new topic
-		try {
-			topicPage.getNewButton().click();
-			setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
-			setCheckboxState(topicPage.getTopicAnnouncement(),
-					topic.getAnnouncement());
-		} catch (NoSuchElementException e) {
-			throw new PermissionsDeniedException();
-		}
-
-		// Type subject and message
-		topicPage.getSubjectField().sendKeys(topic.getTitle());
-		Post firstPost = topic.getPosts().get(0);
-		topicPage.getMessageField().sendKeys(firstPost.getPostContent());
-
-		// Type poll title and options
-		Poll poll = topic.getPoll();
-		if (poll != null) {
-			topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
-			WebElement optionsField = topicPage.getTopicPollItemsField();
-			for (String option : poll.getOptions()) {
-				optionsField.sendKeys(option + "\n");
-			}
-            setPollsEndDate(poll);
-		}
-
-		topicPage.getPostButton().click();
+		createNewTopic(topic);
 	}
 
+    /**
+     * Creates new topic in branch.
+     *
+     * @param topic the topic representation.
+     * @param branchTitle the title of branch.
+     * @throws PermissionsDeniedException
+     * @throws CouldNotOpenBranchException
+     */
     public static void createTopic(Topic topic, String branchTitle) throws PermissionsDeniedException,
             CouldNotOpenBranchException {
         openBranch(branchTitle);
+        createNewTopic(topic);
 
-        try {
-            topicPage.getNewButton().click();
-            setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
-            setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        } catch (NoSuchElementException e) {
-            throw new PermissionsDeniedException();
-		}
-
-		// Fill subject and message
-		topicPage.getSubjectField().sendKeys(topic.getTitle());
-		Post firstPost = topic.getPosts().get(0);
-		topicPage.getMessageField().sendKeys(firstPost.getPostContent());
-
-		// Fill poll title and options
-		Poll poll = topic.getPoll();
-		if (poll != null) {
-			topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
-			WebElement optionsField = topicPage.getTopicPollItemsField();
-			for (String option : poll.getOptions()) {
-				optionsField.sendKeys(option + "\n");
-			}
-            setPollsEndDate(poll);
-		}
-
-		topicPage.getPostButton().click();
 	}
 
     private static void openBranch(String branchTitle) throws CouldNotOpenBranchException {
@@ -195,5 +152,40 @@ public class Topics {
             return new SimpleDateFormat(format).format(date);
         }
         return null;
+    }
+
+    /**
+     * Create new topic
+     *
+     * @param topic the topic representation
+     * @throws PermissionsDeniedException
+     */
+    private static void createNewTopic(Topic topic) throws PermissionsDeniedException{
+        try {
+            topicPage.getNewButton().click();
+            setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
+            setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
+        } catch (NoSuchElementException e) {
+            throw new PermissionsDeniedException();
+        }
+
+        // Fill subject and message
+        topicPage.getSubjectField().sendKeys(topic.getTitle());
+        Post firstPost = topic.getPosts().get(0);
+        topicPage.getMessageField().sendKeys(firstPost.getPostContent());
+
+        // Fill poll title, options, end date, multiple answers
+        Poll poll = topic.getPoll();
+        if (poll != null) {
+            topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
+            WebElement optionsField = topicPage.getTopicPollItemsField();
+            for (String option : poll.getOptions()) {
+                optionsField.sendKeys(option + "\n");
+            }
+            setPollsEndDate(poll);
+            setCheckboxState(topicPage.getTopicsPollMultipleChecker(),poll.isMultipleAnswers());
+        }
+
+        topicPage.getPostButton().click();
     }
 }
