@@ -24,6 +24,7 @@ import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.browserlaunchers.Sleeper;
 import org.openqa.selenium.internal.seleniumemulation.WaitForCondition;
 import org.openqa.selenium.internal.seleniumemulation.WaitForPageToLoad;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -105,8 +106,8 @@ public class Topics {
 			throws PermissionsDeniedException, CouldNotOpenBranchException,
 			InterruptedException {
 		openBranch(branchTitle);
-		choosePageWithTopics(6, topic.getTitle());
-		answerToTopic(topic.getPosts().get(0).getPostContent());
+		if (choosePageWithTopics(6, topic.getTitle()))
+			answerToTopic(topic.getPosts().get(0).getPostContent());
 	}
 
 	private static void openBranch(String branchTitle)
@@ -153,43 +154,69 @@ public class Topics {
 		LOGGER.info("Answer to topic: " + answer);
 	}
 
-	private static void choosePageWithTopics(int numberOfPagesToCheck,
+	private static boolean choosePageWithTopics(int numberOfPagesToCheck,
 			String topicToFind) throws CouldNotOpenBranchException,
 			InterruptedException {
 		boolean found = false;
-
-		while (!findTopic(topicToFind)) {
-			if (thumbToNextPage(numberOfPagesToCheck) == -1)
-				break;
-			else
+		
+		// Add here a case if no such topic exists at all
+		while (true) {
+			if (findTopic(topicToFind) == true) {
 				found = true;
+				break;
+			}
+			if (thumbToNextPage(numberOfPagesToCheck) == -1) {
+				System.out.println("Exit from thumbing page");
+				break;
+			}
 		}
 
 		if (!found) {
-			LOGGER.info("No with title [{}] topic found", topicToFind);
+			LOGGER.info("No topic with title [{}]  found", topicToFind);
+			//create new Exception
 			throw new CouldNotOpenBranchException(topicToFind);
 		}
+		return found;
 	}
 
 	private static int thumbToNextPage(int pagesToCheck) {
 		int maxPagesToCheck = pagesToCheck;
-		int max=0;
-		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
-		if (activeBtn==null) return -1;
-		ArrayList<WebElement> els = new ArrayList<WebElement>(topicPage.getTopicsButtons());
-		for (WebElement el: els) {
-			if (Integer.parseInt(el.getText().trim())>max) max = Integer.parseInt(el.getText().trim());
+		
+		int max = 0;
+		System.out.println("Entering to THUMBLING method, pages to check "+ maxPagesToCheck);
+		if (topicPage.getActiveTopicsButton().size() < 1) {
+			System.out.println("No thumbing");
+			return -1;
 		}
-		if ((Integer.parseInt(activeBtn.getText().trim()) < maxPagesToCheck) && (Integer.parseInt(activeBtn.getText().trim()) < max)) {
+		System.out.println(topicPage.getActiveTopicsButton().size()+" amount of active buttons");
+		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
+		System.out.println(activeBtn.getText() + " Page number");
+
+		ArrayList<WebElement> els = new ArrayList<WebElement>(topicPage.getTopicsButtons());
+		System.out.println(els.size());
+		for (WebElement el : els) {
+			if (Integer.parseInt(el.getText().trim()) > max)
+				max = Integer.parseInt(el.getText().trim());
+			System.out.println("Max value of button "+max);
+		}
+		
+		if ((Integer.parseInt(activeBtn.getText().trim()) < maxPagesToCheck)
+				&& (Integer.parseInt(activeBtn.getText().trim()) < max)) {
+			System.out.println("Start selecting in cycle");
 			for (WebElement el : topicPage.getTopicsButtons()) {
-				if (Integer.parseInt(el.getText().trim()) == (Integer
-						.parseInt(activeBtn.getText().trim()) + 1)) {
+				System.out.println("In cycle checking btn: "+el.getText());
+				Sleeper cl = new Sleeper();
+				cl.sleepTightInSeconds(1);
+				if (Integer.parseInt(el.getText().trim()) == (Integer.parseInt(activeBtn.getText().trim()) + 1)) {
 					el.click();
 					break;
 				}
 			}
 
-		}
+		} else
+			return -1;
+		
+System.out.println(activeBtn.getText()+ " page afger thumbling"); 
 		return Integer.parseInt(activeBtn.getText());
 	}
 
