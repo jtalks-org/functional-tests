@@ -51,7 +51,7 @@ public class TopicTest {
 
 	@Test
 	public void signUpAndCreateTopicInBranch() throws Exception {
-		Topic topic = new Topic("subject", "message");
+		Topic topic = new Topic("subject123", "message");
 		String branchTitle = "TestBranch2";
         Users.signIn(Users.signUp());
         Topics.createTopic(topic, branchTitle);
@@ -60,7 +60,7 @@ public class TopicTest {
 	@Test
 	public void signUpAndPostAnswerToTopic() throws Exception {
 		//In this test subject of Topic variable means subject of post we want to add answer to 
-		Topic topic = new Topic("abcabc", "New final test answer");
+		Topic topic = new Topic("subject123", "New final test answer");
 		String branchTitle = "TestBranch";
         Users.signIn(Users.signUp());
         Topics.postAnswer(topic, branchTitle);

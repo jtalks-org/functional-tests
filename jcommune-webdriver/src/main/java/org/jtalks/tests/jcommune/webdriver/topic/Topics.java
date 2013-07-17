@@ -104,9 +104,7 @@ public class Topics {
 	public static void postAnswer(Topic topic, String branchTitle)
 			throws PermissionsDeniedException, CouldNotOpenBranchException,
 			InterruptedException {
-			
 		openBranch(branchTitle);
-
 		choosePageWithTopics(6, topic.getTitle());
 		answerToTopic(topic.getPosts().get(0).getPostContent());
 	}
@@ -130,11 +128,9 @@ public class Topics {
 	private static boolean findTopic(String topicTitle)
 			throws CouldNotOpenBranchException {
 		boolean found = false;
-		System.out.println("Looking for topic " + topicTitle);
+
 		for (WebElement topics : topicPage.getTopicsList()) {
 			System.out.println(topics.getText());
-		}
-		for (WebElement topics : topicPage.getTopicsList()) {
 			if (topics.getText().trim().equals(topicTitle.trim())) {
 				System.out.println("Topic is found!");
 				topics.click();
@@ -143,55 +139,51 @@ public class Topics {
 			}
 		}
 
-//		if (!found) {
-//			LOGGER.info("No topic found with name [{}]", topicTitle);
-//			throw new CouldNotOpenBranchException(topicTitle);
-//		}
+		if (!found) {
+			LOGGER.info("No topic found with name [{}]", topicTitle);
+			throw new CouldNotOpenBranchException(topicTitle);
+		}
 		return found;
 	}
 
 	private static void answerToTopic(String answer) {
-		System.out.println(topicPage.getNewButton().getText());
 		topicPage.getNewButton().click();
 		topicPage.getMessageField().sendKeys(answer);
 		topicPage.getPostButton().click();
-		System.out.println("Answer given!");
 	}
 
+	
 	private static void choosePageWithTopics(int numberOfPagesToCheck,
 			String topicToFind) throws CouldNotOpenBranchException,
 			InterruptedException {
-		boolean found = false;
-		System.out.println("choosePageWithTopics searching "+topicToFind);
-				
-		for (int i = 1; i <= numberOfPagesToCheck; i++) {
-			System.out.println("Number of page to look in "+ i);
-			for (WebElement el : topicPage.getTopicsButtons()) {
-				
-				System.out.println("Seeing topic page "+el.getText());
-				
-				if (el.getText().equals(String.valueOf(i))) {
-					el.click();
-					if (findTopic(topicToFind)) {
-						found = true;
-						break;
-					}
-					if (found) break;
-			
-				}
+		boolean found=false;
 
-			}
-//			if (found)
-//				break;
-		}
-
+		while (!findTopic(topicToFind)) {
+		if (thumbToNextPage(numberOfPagesToCheck)==numberOfPagesToCheck) break; else found=true;
+		}	
+		
 		if (!found) {
 			LOGGER.info("No such topic found with title [{}]", topicToFind);
-			// throw new
-			// CouldNotOpenBranchException(String.valueOf(numberOfPagesToCheck));
+			 throw new CouldNotOpenBranchException(topicToFind);
 		}
 	}
+	
+	
 
+	private static int thumbToNextPage(int max) {
+		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
+			if (Integer.parseInt(activeBtn.getText().trim()) < max) {
+			for (WebElement el: topicPage.getTopicsButtons()) {
+				if (Integer.parseInt(el.getText().trim()) == (Integer.parseInt(activeBtn.getText().trim())+1)) {
+					el.click();
+					break;
+				}
+			}
+			
+		}
+		return Integer.parseInt(activeBtn.getText());
+	}
+	
 	/**
 	 * Sets state for checkbox element
 	 * 
@@ -201,6 +193,8 @@ public class Topics {
 	 *            the state: true - checked, false - unchecked, null - the
 	 *            element is not used
 	 */
+	
+	
 	private static void setCheckboxState(WebElement checkboxElement,
 			Boolean state) {
 		if (state == null) {

@@ -18,6 +18,9 @@ public class TopicPage {
 
     @FindBy(xpath = "//div[@class='pagination pull-right forum-pagination']/ul/li/a")
     private List<WebElement> topicsButtons;
+    
+    @FindBy(xpath = "//div[@class='pagination pull-right forum-pagination']/ul/li[@class='active']/a")
+    private List<WebElement> activeTopicsButton;
 
     @FindBy(xpath = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]")
     private WebElement profileLink;
@@ -179,6 +182,10 @@ public class TopicPage {
     public WebElement getTopicsPollMultipleChecker() {
         return topicsPollMultipleChecker;
     }
+
+	public List<WebElement> getActiveTopicsButton() {
+		return activeTopicsButton;
+	}
 
 
 }

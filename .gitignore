@@ -23,3 +23,6 @@ target
 logs
 #test-output
 test-output
+
+# TestNG local config for development purposes
+testng-local.xml
