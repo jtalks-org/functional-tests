@@ -139,10 +139,10 @@ public class Topics {
 			}
 		}
 
-		if (!found) {
-			LOGGER.info("No topic found with name [{}]", topicTitle);
-			throw new CouldNotOpenBranchException(topicTitle);
-		}
+		// if (!found) {
+		// LOGGER.info("No topic found with name [{}]", topicTitle);
+		// throw new CouldNotOpenBranchException(topicTitle);
+		// }
 		return found;
 	}
 
@@ -150,40 +150,49 @@ public class Topics {
 		topicPage.getNewButton().click();
 		topicPage.getMessageField().sendKeys(answer);
 		topicPage.getPostButton().click();
+		LOGGER.info("Answer to topic: " + answer);
 	}
 
-	
 	private static void choosePageWithTopics(int numberOfPagesToCheck,
 			String topicToFind) throws CouldNotOpenBranchException,
 			InterruptedException {
-		boolean found=false;
+		boolean found = false;
 
 		while (!findTopic(topicToFind)) {
-		if (thumbToNextPage(numberOfPagesToCheck)==numberOfPagesToCheck) break; else found=true;
-		}	
-		
+			if (thumbToNextPage(numberOfPagesToCheck) == -1)
+				break;
+			else
+				found = true;
+		}
+
 		if (!found) {
-			LOGGER.info("No such topic found with title [{}]", topicToFind);
-			 throw new CouldNotOpenBranchException(topicToFind);
+			LOGGER.info("No with title [{}] topic found", topicToFind);
+			throw new CouldNotOpenBranchException(topicToFind);
 		}
 	}
-	
-	
 
-	private static int thumbToNextPage(int max) {
+	private static int thumbToNextPage(int pagesToCheck) {
+		int maxPagesToCheck = pagesToCheck;
+		int max=0;
 		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
-			if (Integer.parseInt(activeBtn.getText().trim()) < max) {
-			for (WebElement el: topicPage.getTopicsButtons()) {
-				if (Integer.parseInt(el.getText().trim()) == (Integer.parseInt(activeBtn.getText().trim())+1)) {
+		if (activeBtn==null) return -1;
+		ArrayList<WebElement> els = new ArrayList<WebElement>(topicPage.getTopicsButtons());
+		for (WebElement el: els) {
+			if (Integer.parseInt(el.getText().trim())>max) max = Integer.parseInt(el.getText().trim());
+		}
+		if ((Integer.parseInt(activeBtn.getText().trim()) < maxPagesToCheck) && (Integer.parseInt(activeBtn.getText().trim()) < max)) {
+			for (WebElement el : topicPage.getTopicsButtons()) {
+				if (Integer.parseInt(el.getText().trim()) == (Integer
+						.parseInt(activeBtn.getText().trim()) + 1)) {
 					el.click();
 					break;
 				}
 			}
-			
+
 		}
 		return Integer.parseInt(activeBtn.getText());
 	}
-	
+
 	/**
 	 * Sets state for checkbox element
 	 * 
@@ -193,8 +202,7 @@ public class Topics {
 	 *            the state: true - checked, false - unchecked, null - the
 	 *            element is not used
 	 */
-	
-	
+
 	private static void setCheckboxState(WebElement checkboxElement,
 			Boolean state) {
 		if (state == null) {
