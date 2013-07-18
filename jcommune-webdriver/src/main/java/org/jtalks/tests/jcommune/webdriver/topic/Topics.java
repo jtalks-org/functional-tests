@@ -182,39 +182,62 @@ public class Topics {
 	private static boolean thumbToNextPage(int pagesToCheck) {
 		int maxPagesToCheck = pagesToCheck;
 		
-		int max = 0;
-		System.out.println("Entering to THUMBLING method, pages to check "+ maxPagesToCheck);
-		if (topicPage.getActiveTopicsButton().size() < 1) {
-			System.out.println("No thumbing");
-			return false;
-		}
-		System.out.println(topicPage.getActiveTopicsButton().size()+" amount of active buttons");
+//		int max = 0;
+//		System.out.println("Entering to THUMBLING method, pages to check "+ maxPagesToCheck);
+//		if (topicPage.getActiveTopicsButton().size() < 1) {
+//			System.out.println("No thumbing");
+//			return false;
+//		} 
+//		System.out.println(topicPage.getActiveTopicsButton().size()+" amount of active buttons");
 		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
-		System.out.println(activeBtn.getText() + " Page number");
-
-		ArrayList<WebElement> els = new ArrayList<WebElement>(topicPage.getTopicsButtons());
-		System.out.println(els.size());
-		for (WebElement el : els) {
-			if (Integer.parseInt(el.getText().trim()) > max)
-				max = Integer.parseInt(el.getText().trim());
-			System.out.println("Max value of button "+max);
-		}
-		
-		if ((Integer.parseInt(activeBtn.getText().trim()) < maxPagesToCheck)
-				&& (Integer.parseInt(activeBtn.getText().trim()) < max)) {
-			System.out.println("Start selecting in cycle");
+		int active = Integer.parseInt(activeBtn.getText().trim()); 
+//		System.out.println(active + " Page number");
+//		
+//
+//		ArrayList<WebElement> els = new ArrayList<WebElement>(topicPage.getTopicsButtons());
+//		System.out.println(els.size());
+//		for (WebElement el : els) {
+//			if (Integer.parseInt(el.getText().trim()) > max)
+//				max = Integer.parseInt(el.getText().trim());
+//			System.out.println("Max value of button "+max);
+//		}
+//		
+//		if ((active < maxPagesToCheck)
+//				&& (active < max)) {
+//		
+//			System.out.println("Start selecting in cycle");
+//			System.out.println(topicPage.getTopicsButtons().size());
 			for (WebElement elem : topicPage.getTopicsButtons()) {
+				
 				System.out.println("In cycle checking btn: "+elem.getText());
-				if (Integer.parseInt(elem.getText().trim()) == (Integer.parseInt(activeBtn.getText().trim()) + 1)) {
+				if (Integer.parseInt(elem.getText().trim()) == (active + 1)) {
+			//	if (Integer.parseInt(elem.getText().trim()) == 3) {
+					System.out.println(elem.toString());
+					System.out.println(elem.getAttribute("href"));
+					System.out.println(elem.getText());
+					WaitForPageToLoad w = new WaitForPageToLoad();
+					try {
+						w.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					elem.click();
+					WaitForPageToLoad x = new WaitForPageToLoad();
+					try {
+						x.wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					break;
 				}
 			}
 
-		} else
-			return false;
+		//} else
+			//return false;
 		
-System.out.println(activeBtn.getText()+ " page afger thumbling"); 
+//System.out.println(activeBtn.getText()+ " page afger thumbling"); 
 		return true;
 	}
 
