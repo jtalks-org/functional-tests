@@ -15,19 +15,33 @@
 
 package org.jtalks.tests.jcommune.webdriver.topic;
 
-
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.browserlaunchers.Sleeper;
+import org.openqa.selenium.internal.seleniumemulation.WaitForCondition;
+import org.openqa.selenium.internal.seleniumemulation.WaitForPageToLoad;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.thoughtworks.selenium.Wait;
+
+import java.text.SimpleDateFormat;
+import java.util.AbstractSequentialList;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.TreeSet;
+import java.lang.Integer;
+
 
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
@@ -38,7 +52,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  * @author Guram Savinov
  */
 public class Topics {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
+
 
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
@@ -47,6 +62,13 @@ public class Topics {
      *
      * @param topic
      *            the topic representation
+	private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
+
+	/**
+	 * Sign-up new user and create new topic
+	 * 
+	 * @param topic
+	 *            the topic representation
 	 * @throws ValidationException
 	 * @throws PermissionsDeniedException
 	 */
@@ -69,47 +91,125 @@ public class Topics {
 		// Open first branch from the main page top
 		branchPage.getBranchList().get(0).click();
 		createNewTopic(topic);
-	}
-
-    /**
-     * Creates new topic in branch.
-     *
-     * @param topic the topic representation.
-     * @param branchTitle the title of branch.
-     * @throws PermissionsDeniedException
-     * @throws CouldNotOpenPageException
-     */
-    public static void createTopic(Topic topic, String branchTitle) throws PermissionsDeniedException,
-            CouldNotOpenPageException {
-        openBranch(branchTitle);
-        createNewTopic(topic);
 
 	}
 
-    private static void openBranch(String branchTitle) throws CouldNotOpenPageException {
-        boolean found = false;
-        for (WebElement branch : branchPage.getBranchList()) {
-            if (branch.getText().equals(branchTitle)) {
-                branch.click();
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            LOGGER.info("No branch found with name [{}]", branchTitle);
-            throw new CouldNotOpenPageException(branchTitle);
-        }
-    }
+	/**
+	 * Creates new topic in branch.
+	 * 
+	 * @param topic
+	 *            the topic representation.
+	 * @param branchTitle
+	 *            the title of branch.
+	 * @throws PermissionsDeniedException
+	 * @throws CouldNotOpenBranchException
+	 */
+	
+	public static void createTopic(Topic topic, String branchTitle)
+			throws PermissionsDeniedException, CouldNotOpenPageException {
+		openBranch(branchTitle);
+		createNewTopic(topic);
+	}
 
-    /**
-     * Sets state for checkbox element
-     *
-     * @param checkboxElement
-     *            the checkbox web element
+	public static void postAnswer(Topic topic, String branchTitle)
+			throws PermissionsDeniedException, CouldNotOpenPageException,
+			InterruptedException {
+		openBranch(branchTitle);
+		if (choosePageWithTopics(6, topic.getTitle())){
+			answerToTopic(topic.getPosts().get(0).getPostContent());
+			LOGGER.info("postAnswerToTopic {}", topic.getTitle());
+		}
+	}
+
+	private static void openBranch(String branchTitle)
+			throws CouldNotOpenPageException {
+		boolean found = false;
+		for (WebElement branch : branchPage.getBranchList()) {
+			if (branch.getText().equals(branchTitle)) {
+				branch.click();
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			LOGGER.info("No branch found with name [{}]", branchTitle);
+			throw new CouldNotOpenPageException(branchTitle);
+		}
+	}
+
+	private static boolean findTopic(String topicTitle)
+			throws CouldNotOpenPageException {
+		boolean found = false;
+
+		for (WebElement topics : topicPage.getTopicsList()) {
+			if (topics.getText().trim().equals(topicTitle.trim())) {
+				topics.click();
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	private static void answerToTopic(String answer) {
+		topicPage.getNewButton().click();
+		topicPage.getMessageField().sendKeys(answer);
+		topicPage.getPostButton().click();
+	}
+
+
+
+    
+	private static boolean choosePageWithTopics(int numberOfPagesToCheck,
+			String topicToFind) throws CouldNotOpenPageException,
+			InterruptedException {
+		boolean found = false;
+		while (!(found=findTopic(topicToFind))) {
+			if (!thumbToNextPage(numberOfPagesToCheck)) break;
+		}
+		if (!found) {
+			LOGGER.info("No topic with title [{}]  found", topicToFind);
+			throw new CouldNotOpenPageException(topicToFind);
+		}
+		return found;
+	}
+
+
+
+	private static boolean thumbToNextPage(int pagesToCheck)
+			throws InterruptedException {
+		int maxPagesToCheck = pagesToCheck;
+		int max = 0;
+		if (topicPage.getActiveTopicsButton().size() < 1) {
+			return false;
+		}
+		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
+		int active = Integer.parseInt(activeBtn.getText().trim());
+		for (WebElement el : topicPage.getTopicsButtons()) {
+			if (Integer.parseInt(el.getText().trim()) > max)
+				max = Integer.parseInt(el.getText().trim());
+		}
+		if ((active < maxPagesToCheck) && (active < max)) {
+			for (WebElement elem : topicPage.getTopicsButtons()) {
+				if (Integer.parseInt(elem.getText().trim()) == (active + 1)) {
+					elem.click();
+					return true;
+				}
+			}
+		} 
+		return false;
+	}
+
+	/**
+	 * Sets state for checkbox element
+	 * 
+	 * @param checkboxElement
+	 *            the checkbox web element
 	 * @param state
 	 *            the state: true - checked, false - unchecked, null - the
 	 *            element is not used
 	 */
+
 	private static void setCheckboxState(WebElement checkboxElement,
 			Boolean state) {
 		if (state == null) {
@@ -121,6 +221,7 @@ public class Topics {
 			checkboxElement.click();
 		}
 	}
+
 
     /**
      * Sets the end date in the poll.
@@ -143,12 +244,7 @@ public class Topics {
      * @param format the format of date in string.
      * @return the date in the string.
      */
-    private static String dateToString(Date date, String format){
-        if(date != null){
-            return new SimpleDateFormat(format).format(date);
-        }
-        return null;
-    }
+
 
     /**
      * Create new topic
@@ -184,4 +280,35 @@ public class Topics {
 
         topicPage.getPostButton().click();
     }
+    
+  
+
+
+
+	/**
+	 * Returns date in string type.
+	 * 
+	 * @param date
+	 *            the date.
+	 * @param format
+	 *            the format of date in string.
+	 * @return the date in the string.
+	 */
+	private static String dateToString(Date date, String format) {
+		if (date != null) {
+			return new SimpleDateFormat(format).format(date);
+		}
+		return null;
+	}
+	
+   
+
+	/**
+	 * Create new topic
+	 * 
+	 * @param topic
+	 *            the topic representation
+	 * @throws PermissionsDeniedException
+	 */
+	
 }
