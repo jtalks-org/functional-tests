@@ -131,19 +131,12 @@ public class Topics {
 		boolean found = false;
 
 		for (WebElement topics : topicPage.getTopicsList()) {
-			System.out.println(topics.getText());
 			if (topics.getText().trim().equals(topicTitle.trim())) {
-				System.out.println("Topic is found!");
 				topics.click();
 				found = true;
 				break;
 			}
 		}
-
-		// if (!found) {
-		// LOGGER.info("No topic found with name [{}]", topicTitle);
-		// throw new CouldNotOpenBranchException(topicTitle);
-		// }
 		return found;
 	}
 
@@ -151,94 +144,45 @@ public class Topics {
 		topicPage.getNewButton().click();
 		topicPage.getMessageField().sendKeys(answer);
 		topicPage.getPostButton().click();
-		LOGGER.info("Answer to topic: " + answer);
 	}
 
 	private static boolean choosePageWithTopics(int numberOfPagesToCheck,
 			String topicToFind) throws CouldNotOpenBranchException,
 			InterruptedException {
 		boolean found = false;
-		
-		// Add here a case if no such topic exists at all
-		while (true) {
-			if (findTopic(topicToFind) == true) {
-				found = true;
-				break;
-			}
-			if (!thumbToNextPage(numberOfPagesToCheck)) {
-				System.out.println("Exit from thumbing page");
-				break;
-			}
+		while (!(found=findTopic(topicToFind))) {
+			if (!thumbToNextPage(numberOfPagesToCheck)) break;
 		}
-
 		if (!found) {
 			LOGGER.info("No topic with title [{}]  found", topicToFind);
-			//create new Exception
 			throw new CouldNotOpenBranchException(topicToFind);
 		}
 		return found;
 	}
 
-	private static boolean thumbToNextPage(int pagesToCheck) {
+	private static boolean thumbToNextPage(int pagesToCheck)
+			throws InterruptedException {
 		int maxPagesToCheck = pagesToCheck;
-		
-//		int max = 0;
-//		System.out.println("Entering to THUMBLING method, pages to check "+ maxPagesToCheck);
-//		if (topicPage.getActiveTopicsButton().size() < 1) {
-//			System.out.println("No thumbing");
-//			return false;
-//		} 
-//		System.out.println(topicPage.getActiveTopicsButton().size()+" amount of active buttons");
+		int max = 0;
+		if (topicPage.getActiveTopicsButton().size() < 1) {
+			return false;
+		}
 		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
-		int active = Integer.parseInt(activeBtn.getText().trim()); 
-//		System.out.println(active + " Page number");
-//		
-//
-//		ArrayList<WebElement> els = new ArrayList<WebElement>(topicPage.getTopicsButtons());
-//		System.out.println(els.size());
-//		for (WebElement el : els) {
-//			if (Integer.parseInt(el.getText().trim()) > max)
-//				max = Integer.parseInt(el.getText().trim());
-//			System.out.println("Max value of button "+max);
-//		}
-//		
-//		if ((active < maxPagesToCheck)
-//				&& (active < max)) {
-//		
-//			System.out.println("Start selecting in cycle");
-//			System.out.println(topicPage.getTopicsButtons().size());
+		int active = Integer.parseInt(activeBtn.getText().trim());
+		for (WebElement el : topicPage.getTopicsButtons()) {
+			if (Integer.parseInt(el.getText().trim()) > max)
+				max = Integer.parseInt(el.getText().trim());
+		}
+		if ((active < maxPagesToCheck) && (active < max)) {
 			for (WebElement elem : topicPage.getTopicsButtons()) {
-				
-				System.out.println("In cycle checking btn: "+elem.getText());
 				if (Integer.parseInt(elem.getText().trim()) == (active + 1)) {
-			//	if (Integer.parseInt(elem.getText().trim()) == 3) {
-					System.out.println(elem.toString());
-					System.out.println(elem.getAttribute("href"));
-					System.out.println(elem.getText());
-					WaitForPageToLoad w = new WaitForPageToLoad();
-					try {
-						w.wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					elem.click();
-					WaitForPageToLoad x = new WaitForPageToLoad();
-					try {
-						x.wait();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					break;
+					return true;
 				}
 			}
 
-		//} else
-			//return false;
-		
-//System.out.println(activeBtn.getText()+ " page afger thumbling"); 
-		return true;
+		} 
+		return false;
 	}
 
 	/**
