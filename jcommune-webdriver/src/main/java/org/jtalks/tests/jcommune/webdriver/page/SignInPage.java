@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
+
 public class SignInPage {
 
     public static final String usernameFieldSel = "j_username";
@@ -34,6 +36,8 @@ public class SignInPage {
     public static final String notValidEmailErrorMessageSel = "userEmail.errors";
 
     public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
+
+    public static final String errorFormElementsSel = "div.control-group.error";
 
 
     @FindBy(id = usernameFieldSel)
@@ -74,6 +78,9 @@ public class SignInPage {
 
     @FindBy(xpath = closeSignInWindowButtonSel)
     WebElement closeSignInWindowButton;
+
+    @FindBy(css = errorFormElementsSel)
+    List<WebElement> errorFormElements;
 
     public SignInPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -129,5 +136,9 @@ public class SignInPage {
 
     public WebElement getSignInPageForm() {
         return signInPageForm;
+    }
+
+    public List<WebElement> getErrorFormElements() {
+        return errorFormElements;
     }
 }

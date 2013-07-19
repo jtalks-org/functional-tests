@@ -19,7 +19,6 @@ package org.jtalks.tests.jcommune.webdriver.topic;
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenBranchException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.openqa.selenium.NoSuchElementException;
@@ -49,12 +48,9 @@ public class Topics {
      * @param topic
      *            the topic representation
 	 * @throws ValidationException
-	 * @throws CouldNotSignInUserException
 	 * @throws PermissionsDeniedException
 	 */
-	public static void signUpAndСreateTopic(Topic topic)
-			throws ValidationException, CouldNotSignInUserException,
-			PermissionsDeniedException {
+	public static void signUpAndСreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
 		User user = Users.signUp();
 		Users.signIn(user);
 		createTopic(topic);
