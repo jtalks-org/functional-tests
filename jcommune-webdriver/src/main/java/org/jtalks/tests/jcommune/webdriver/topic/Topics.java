@@ -18,7 +18,7 @@ package org.jtalks.tests.jcommune.webdriver.topic;
 
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.Users;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenBranchException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.openqa.selenium.NoSuchElementException;
@@ -77,16 +77,16 @@ public class Topics {
      * @param topic the topic representation.
      * @param branchTitle the title of branch.
      * @throws PermissionsDeniedException
-     * @throws CouldNotOpenBranchException
+     * @throws CouldNotOpenPageException
      */
     public static void createTopic(Topic topic, String branchTitle) throws PermissionsDeniedException,
-            CouldNotOpenBranchException {
+            CouldNotOpenPageException {
         openBranch(branchTitle);
         createNewTopic(topic);
 
 	}
 
-    private static void openBranch(String branchTitle) throws CouldNotOpenBranchException {
+    private static void openBranch(String branchTitle) throws CouldNotOpenPageException {
         boolean found = false;
         for (WebElement branch : branchPage.getBranchList()) {
             if (branch.getText().equals(branchTitle)) {
@@ -97,7 +97,7 @@ public class Topics {
         }
         if (!found) {
             LOGGER.info("No branch found with name [{}]", branchTitle);
-            throw new CouldNotOpenBranchException(branchTitle);
+            throw new CouldNotOpenPageException(branchTitle);
         }
     }
 
