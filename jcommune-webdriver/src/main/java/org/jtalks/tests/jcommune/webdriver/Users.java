@@ -18,6 +18,7 @@ package org.jtalks.tests.jcommune.webdriver;
 
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
@@ -177,12 +178,12 @@ public class Users {
                 userForRegistration.getEmail());
     }
 
-    private static void waitForEmailActivationInfoShowsUp() throws ValidationException {
+    private static void waitForEmailActivationInfoShowsUp() {
         try {
             new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
                     ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
         } catch (org.openqa.selenium.TimeoutException e) {
-            throw new ValidationException();
+            throw new TimeoutException("waiting for email activation info message", e);
         }
     }
 
