@@ -81,6 +81,9 @@ public class Users {
             }
             throw new ValidationException(failedFields);
         }
+        if (!mainPage.userIsLoggedIn()) {
+            throw new CouldNotOpenPageException("profile page for the user: " + user.getEmail());
+        }
     }
 
     /**
