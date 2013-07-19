@@ -106,8 +106,10 @@ public class Topics {
 			throws PermissionsDeniedException, CouldNotOpenBranchException,
 			InterruptedException {
 		openBranch(branchTitle);
-		if (choosePageWithTopics(6, topic.getTitle()))
+		if (choosePageWithTopics(6, topic.getTitle())){
 			answerToTopic(topic.getPosts().get(0).getPostContent());
+			LOGGER.info("postAnswerToTopic {}", topic.getTitle());
+		}
 	}
 
 	private static void openBranch(String branchTitle)
