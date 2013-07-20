@@ -15,11 +15,11 @@
 
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
-import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
-import org.jtalks.tests.jcommune.webdriver.action.Topics;
+import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -43,18 +43,15 @@ public class TopicTest {
 
 	@Test
 	public void signUpAndCreateTopic() throws Exception {
-		    Topic topic;
-			
-		topic = new Topic("subject", "message");
+		Topic topic = new Topic("subject", "message");
 		Topics.signUpAndCreateTopic(topic);
 	}
 
 	@Test
 	public void signUpAndCreateTopicInBranch() throws Exception {
-		Topic topic = new Topic("subject123", "message");
-		String branchTitle = "TestBranch2";
+        Topic topic = new Topic("subject123", "message").withBranch("TestBranch2");
         Users.signIn(Users.signUp());
-        Topics.createTopic(topic, branchTitle);
+        Topics.createTopic(topic);
     }
 	
 	@Test
@@ -65,8 +62,6 @@ public class TopicTest {
         Users.signIn(Users.signUp());
         Topics.postAnswer(topic, branchTitle);
     }
-	
-	
 
     @Test(expectedExceptions = PermissionsDeniedException.class)
 	public void createTopicAsAnonymous() throws Exception {

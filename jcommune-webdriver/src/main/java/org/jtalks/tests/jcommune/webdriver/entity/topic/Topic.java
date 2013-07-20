@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
 import org.joda.time.DateTime;
+import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.Set;
  * Jcommune topic representation.
  */
 public class Topic {
-
+    private Branch branch;
     private DateTime creationDate;
     private DateTime modificationDate;
     private User topicStarter;
@@ -35,8 +36,9 @@ public class Topic {
         return creationDate;
     }
 
-    public void setCreationDate(DateTime creationDate) {
+    public Topic withCreationDate(DateTime creationDate) {
         this.creationDate = creationDate;
+        return this;
     }
 
     public DateTime getModificationDate() {
@@ -51,8 +53,9 @@ public class Topic {
         return topicStarter;
     }
 
-    public void setTopicStarter(User topicStarter) {
+    public Topic withTopicStarter(User topicStarter) {
         this.topicStarter = topicStarter;
+        return this;
     }
 
     public String getTitle() {
@@ -125,5 +128,19 @@ public class Topic {
 
     public void setSubscribers(Set<User> subscribers) {
         this.subscribers = subscribers;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public Topic withBranch(Branch branch) {
+        this.branch = branch;
+        return this;
+    }
+
+    public Topic withBranch(String branchTitle) {
+        this.branch = new Branch(branchTitle);
+        return this;
     }
 }

@@ -3,14 +3,14 @@
 	<parameter name="appUrl" value="http://autotests.jtalks.org/jcommune/" />
 	<parameter name="webDriverUrl" value="http://jtalks.org:4444/wd/hub" />
 	<listeners>
-		<listener
-			class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener" />
+		<listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener" />
 	</listeners>
 	<test name="JCommune">
 		<classes>
-			<class name="org.jtalks.tests.jcommune.SignIn" />
-			<class name="org.jtalks.tests.jcommune.SignUp" />
-		</classes>
-	</test>
+      <class name="org.jtalks.tests.jcommune.SignIn" />
+      <class name="org.jtalks.tests.jcommune.SignUp" />
+      <class name="org.jtalks.tests.jcommune.TopicTest"/>
+    </classes>
+  </test>
 </suite>
 
