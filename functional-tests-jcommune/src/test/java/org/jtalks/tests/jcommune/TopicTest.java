@@ -15,11 +15,11 @@
 
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.webdriver.Users;
+import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
-import org.jtalks.tests.jcommune.webdriver.topic.Poll;
-import org.jtalks.tests.jcommune.webdriver.topic.Topic;
-import org.jtalks.tests.jcommune.webdriver.topic.Topics;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;

@@ -13,13 +13,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.webdriver.topic;
+package org.jtalks.tests.jcommune.webdriver.action;
 
-import org.jtalks.tests.jcommune.webdriver.User;
-import org.jtalks.tests.jcommune.webdriver.Users;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -206,8 +208,7 @@ public class Topics {
      * @param poll the poll.
      */
     private static void setPollsEndDate(Poll poll){
-        if(poll==null){return;}
-        String date = null;
+        String date;
         if((date=dateToString(poll.getEndDate(),POLL_END_DATE_FORMAT))!=null){
             topicPage.getTopicsPollEndDateField().sendKeys(date);
         }

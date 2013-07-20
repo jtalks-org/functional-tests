@@ -14,7 +14,7 @@ import java.util.List;
  * @author masyan
  * @author yacov
  */
-public class PMPage {
+public class PrivateMessagesPage {
 
     public static final String pmInboxLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/inbox']";
 
@@ -155,7 +155,7 @@ public class PMPage {
     private List<WebElement> recepientsList;
 
 
-    public PMPage(WebDriver driver) {
+    public PrivateMessagesPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 

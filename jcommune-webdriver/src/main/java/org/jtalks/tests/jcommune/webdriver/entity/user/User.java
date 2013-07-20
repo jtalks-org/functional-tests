@@ -13,9 +13,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.webdriver;
+package org.jtalks.tests.jcommune.webdriver.entity.user;
 
-import org.apache.commons.lang.builder.StandardToStringStyle;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.jtalks.tests.jcommune.utils.StringHelp;

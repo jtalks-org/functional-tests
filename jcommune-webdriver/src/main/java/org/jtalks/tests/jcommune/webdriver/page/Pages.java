@@ -11,7 +11,7 @@ public class Pages {
     public static PostPage postPage;
     public static SectionPage sectionPage;
     public static BranchPage branchPage;
-    public static PMPage pmPage;
+    public static PrivateMessagesPage pmPage;
     public static ProfilePage profilePage;
 
 
@@ -23,7 +23,7 @@ public class Pages {
         postPage = new PostPage(driver);
         sectionPage = new SectionPage(driver);
         branchPage = new BranchPage(driver);
-        pmPage = new PMPage(driver);
+        pmPage = new PrivateMessagesPage(driver);
         profilePage = new ProfilePage(driver);
     }
 }

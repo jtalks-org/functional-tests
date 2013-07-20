@@ -16,9 +16,9 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.StringHelp;
-import org.jtalks.tests.jcommune.webdriver.User;
-import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
-import org.jtalks.tests.jcommune.webdriver.Users;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
+import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
+import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.*;
 

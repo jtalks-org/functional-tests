@@ -13,10 +13,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.webdriver;
+package org.jtalks.tests.jcommune.webdriver.action;
 
 
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
+import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
