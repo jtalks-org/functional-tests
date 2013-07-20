@@ -20,28 +20,13 @@ import org.jtalks.tests.jcommune.webdriver.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.browserlaunchers.Sleeper;
-import org.openqa.selenium.internal.seleniumemulation.WaitForCondition;
-import org.openqa.selenium.internal.seleniumemulation.WaitForPageToLoad;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.thoughtworks.selenium.Wait;
-
-import java.text.SimpleDateFormat;
-import java.util.AbstractSequentialList;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.TreeSet;
-import java.lang.Integer;
-
 
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
@@ -65,56 +50,47 @@ public class Topics {
 	private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
 	/**
-	 * Sign-up new user and create new topic
-	 * 
-	 * @param topic
-	 *            the topic representation
-	 * @throws ValidationException
-	 * @throws PermissionsDeniedException
-	 */
-	public static void signUpAndСreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-		User user = Users.signUp();
-		Users.signIn(user);
-		createTopic(topic);
+     * Signs-up up a new random user and creates the topic in the first available branch.
+     *
+     * @throws ValidationException if specified topic does not pass forum validation
+     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
+     */
+    public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        createTopic(topic);
+    }
+
+    /**
+     * Creates new topic in the first visible branch.
+     *
+     * @param topic the topic representation
+     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
+     */
+    public static void createTopic(Topic topic) throws PermissionsDeniedException {
+        branchPage.getBranchList().get(0).click();
+        createNewTopic(topic);
+
+    }
+
+    /**
+     * Creates new topic in the specified branch.
+     *
+     * @param branchTitle the title of branch to post in it. If there are 2 or more branches with the same name, then
+     *                    only first one is taken
+     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
+     * @throws CouldNotOpenPageException if user was not able to find and open a branch with the specified name
+     */
+
+    public static void createTopic(Topic topic, String branchTitle) throws PermissionsDeniedException,
+            CouldNotOpenPageException {
+        openBranch(branchTitle);
+        createNewTopic(topic);
 	}
 
-	/**
-	 * Create new topic
-	 * 
-	 * @param topic
-	 *            the topic representation
-	 * @throws PermissionsDeniedException
-	 */
-	public static void createTopic(Topic topic)
-			throws PermissionsDeniedException {
-
-		// Open first branch from the main page top
-		branchPage.getBranchList().get(0).click();
-		createNewTopic(topic);
-
-	}
-
-	/**
-	 * Creates new topic in branch.
-	 * 
-	 * @param topic
-	 *            the topic representation.
-	 * @param branchTitle
-	 *            the title of branch.
-	 * @throws PermissionsDeniedException
-	 * @throws CouldNotOpenBranchException
-	 */
-	
-	public static void createTopic(Topic topic, String branchTitle)
-			throws PermissionsDeniedException, CouldNotOpenPageException {
-		openBranch(branchTitle);
-		createNewTopic(topic);
-	}
-
-	public static void postAnswer(Topic topic, String branchTitle)
-			throws PermissionsDeniedException, CouldNotOpenPageException,
-			InterruptedException {
-		openBranch(branchTitle);
+    public static void postAnswer(Topic topic, String branchTitle)
+            throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
+        openBranch(branchTitle);
 		if (choosePageWithTopics(6, topic.getTitle())){
 			answerToTopic(topic.getPosts().get(0).getPostContent());
 			LOGGER.info("postAnswerToTopic {}", topic.getTitle());

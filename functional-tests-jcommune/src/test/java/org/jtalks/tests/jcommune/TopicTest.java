@@ -46,7 +46,7 @@ public class TopicTest {
 		    Topic topic;
 			
 		topic = new Topic("subject", "message");
-		Topics.signUpAndСreateTopic(topic);
+		Topics.signUpAndCreateTopic(topic);
 	}
 
 	@Test
@@ -78,14 +78,14 @@ public class TopicTest {
 	public void createStickedTopic() throws Exception {
 		Topic topic = new Topic("subject", "message");
 		topic.setSticked(true);
-		Topics.signUpAndСreateTopic(topic);
+		Topics.signUpAndCreateTopic(topic);
 	}
 
 	@Test
 	public void createAnnouncementTopic() throws Exception {
 		Topic topic = new Topic("subject", "message");
 		topic.setAnnouncement(true);
-		Topics.signUpAndСreateTopic(topic);
+		Topics.signUpAndCreateTopic(topic);
 	}
 
 	@Test
@@ -93,7 +93,7 @@ public class TopicTest {
 		Topic topic = new Topic("subject", "message");
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         topic.setPoll(poll);
-        Topics.signUpAndСreateTopic(topic);
+        Topics.signUpAndCreateTopic(topic);
 	}
 
     @Test
@@ -102,7 +102,7 @@ public class TopicTest {
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         poll.setEndDate(new Date(System.currentTimeMillis()+86400000));
         topic.setPoll(poll);
-        Topics.signUpAndСreateTopic(topic);
+        Topics.signUpAndCreateTopic(topic);
     }
 
     @Test
@@ -111,7 +111,7 @@ public class TopicTest {
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         poll.setMultipleAnswers(true);
         topic.setPoll(poll);
-        Topics.signUpAndСreateTopic(topic);
+        Topics.signUpAndCreateTopic(topic);
     }
 
 }
