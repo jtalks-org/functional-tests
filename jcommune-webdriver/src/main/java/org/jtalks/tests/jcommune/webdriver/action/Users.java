@@ -51,30 +51,44 @@ public class Users {
     private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 30;
 
     /**
-     * Sign in user by dialog. Action should by started from any page of JCommune.
+     * Sign in user by dialog. Action can by started from any page of JCommune.
      *
      * @param user the {@code User} instance with sign in form data
-     * @throws CouldNotOpenPageException
+     * @throws ValidationException
      */
-    public static void signIn(User user) throws CouldNotOpenPageException, ValidationException {
+    public static void signIn(User user) throws ValidationException {
+        openAndFillSignInDialog(user);
+        checkFormValidation(signInPage.getErrorFormElements());
+
+        // Check that link to the user profile present on the page
+        if (!mainPage.userIsLoggedIn()) {
+            throw new CouldNotOpenPageException("profile page for the user: " + user.getEmail());
+        }
+    }
+
+    private static void openAndFillSignInDialog(User user) {
         mainPage.clickLogin();
+        // Check that sign-in dialog have been opened (JCommune open sign-in page instead dialog if JavaScript disabled)
         try {
             driver.findElement(By.id(SignInPage.signInDialogFormSel));
         } catch (NoSuchElementException e) {
-            throw new CouldNotOpenPageException("sign in dialog form", e);
+            throw new CouldNotOpenPageException(
+                    "sign in dialog form; may be JavaScript disabled in browser settings", e);
         }
 
         LOGGER.info("Sign in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButton().click();
+    }
 
-        // Check  sign-in form validation results, throw ValidationException if form data is not valid
-        List<WebElement> errorFormElements = signInPage.getErrorFormElements();
-        if (!errorFormElements.isEmpty()) {
+    private static void checkFormValidation(List<WebElement> errorElements) throws ValidationException {
+        if (!errorElements.isEmpty()) {
             String failedFields = "";
-            for (WebElement element : errorFormElements) {
+            for (WebElement element : errorElements) {
+                // Failed form field name
                 failedFields += element.findElement(By.tagName("input")).getAttribute("placeholder") + ": ";
+                // Add validator text if it present for this failed field
                 try {
                     failedFields += element.findElement(By.className("help-inline")).getText() + "\n";
                 } catch (NoSuchElementException e) {
@@ -82,9 +96,6 @@ public class Users {
                 }
             }
             throw new ValidationException(failedFields);
-        }
-        if (!mainPage.userIsLoggedIn()) {
-            throw new CouldNotOpenPageException("profile page for the user: " + user.getEmail());
         }
     }
 
@@ -165,16 +176,7 @@ public class Users {
         signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
         signUpPage.getSubmitButton().click();
 
-        // Check  sign-up form validation results, throw ValidationException if form data is not valid
-        List<WebElement> errorFormElements = signUpPage.getErrorFormElements();
-        if (!errorFormElements.isEmpty()) {
-            String failedFields = "";
-            for (WebElement element : errorFormElements) {
-                failedFields += element.findElement(By.tagName("input")).getAttribute("placeholder") + ": ";
-                failedFields += element.findElement(By.className("help-inline")).getText() + "\n";
-            }
-            throw new ValidationException(failedFields);
-        }
+        checkFormValidation(signUpPage.getErrorFormElements());
 
         waitForEmailActivationInfoShowsUp();
         signUpPage.getOkButtonOnInfoWindow().click();
