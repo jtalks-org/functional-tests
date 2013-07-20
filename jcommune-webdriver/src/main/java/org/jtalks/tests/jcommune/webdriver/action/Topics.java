@@ -77,7 +77,25 @@ public class Topics {
         createNewTopic(topic);
     }
 
-    public static void postAnswer(Topic topic, String branchTitle)
+    public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+        if (topic.getBranch() == null) {
+            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
+            topic.withBranch(branch);
+        }
+        openBranch(topic.getBranch().getTitle());
+        createNewCodeReview(topic);
+    }
+    
+    private static void createNewCodeReview(Topic topic) {
+    	 topicPage.getNewCodeReviewButton().click();
+    	 topicPage.getSubjectField().sendKeys(topic.getTitle());
+         Post firstPost = topic.getPosts().get(0);
+         topicPage.getCodeField().sendKeys(firstPost.getPostContent());
+         topicPage.getPostButton().click();
+		
+	}
+
+	public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
         openBranch(branchTitle);
         if (openTopicInCurrentBranch(6, topic.getTitle())) {

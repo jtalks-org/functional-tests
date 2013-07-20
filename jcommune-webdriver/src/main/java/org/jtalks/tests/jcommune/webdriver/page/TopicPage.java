@@ -28,6 +28,9 @@ public class TopicPage {
     @FindBy(id = "new-topic-btn")
     private WebElement newButton;
 
+    @FindBy(xpath = "//a[@id='new-topic-btn' and contains(@href, 'reviews')]")
+    private WebElement newCodeReviewButton;
+    
     @FindBy(id = "topic.sticked1")
     private WebElement topicSticked;
 
@@ -40,6 +43,9 @@ public class TopicPage {
     @FindBy(id = "tbMsg")
     private WebElement messageField;
 
+    @FindBy(xpath = "//textarea[@id='body']")
+    private WebElement codeField;
+    
     @FindBy(id = "post")
     private WebElement postButton;
 
@@ -185,6 +191,14 @@ public class TopicPage {
 
 	public List<WebElement> getActiveTopicsButton() {
 		return activeTopicsButton;
+	}
+
+	public WebElement getNewCodeReviewButton() {
+		return newCodeReviewButton;
+	}
+
+	public WebElement getCodeField() {
+		return codeField;
 	}
 
 
