@@ -143,4 +143,12 @@ public class Topic {
         this.branch = new Branch(branchTitle);
         return this;
     }
+
+    public Post getFirstPost() {
+        return getPosts().get(0);
+    }
+
+    public Post getLastPost() {
+        return getPosts().get(getPosts().size() - 1);
+    }
 }

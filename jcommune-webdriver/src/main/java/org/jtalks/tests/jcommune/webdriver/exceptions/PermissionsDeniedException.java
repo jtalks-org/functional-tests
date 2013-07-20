@@ -24,4 +24,8 @@ public class PermissionsDeniedException extends Exception {
     public PermissionsDeniedException() {
         super("User hasn't permissions for the current action");
     }
+
+    public PermissionsDeniedException(String message) {
+        super(message);
+    }
 }

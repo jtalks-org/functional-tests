@@ -73,7 +73,6 @@ public class Topics {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
         }
-        openBranch(topic.getBranch().getTitle());
         createNewTopic(topic);
     }
 
@@ -82,7 +81,7 @@ public class Topics {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
         }
-        openBranch(topic.getBranch().getTitle());
+        Branches.openBranch(topic.getBranch().getTitle());
         createNewCodeReview(topic);
     }
     
@@ -97,30 +96,14 @@ public class Topics {
 
 	public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
-        openBranch(branchTitle);
+        Branches.openBranch(branchTitle);
         if (openTopicInCurrentBranch(6, topic.getTitle())) {
-            answerToTopic(topic.getPosts().get(0).getPostContent());
+            answerToTopic(topic, topic.getLastPost().getPostContent());
             LOGGER.info("postAnswerToTopic {}", topic.getTitle());
         }
     }
 
-    private static void openBranch(String branchTitle) throws CouldNotOpenPageException {
-        boolean found = false;
-        for (WebElement branch : branchPage.getBranchList()) {
-            if (branch.getText().equals(branchTitle)) {
-                branch.click();
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            LOGGER.info("No branch found with name [{}]", branchTitle);
-            throw new CouldNotOpenPageException(branchTitle);
-        }
-    }
-
-    private static boolean findTopic(String topicTitle)
-            throws CouldNotOpenPageException {
+    private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
         boolean found = false;
 
         for (WebElement topics : topicPage.getTopicsList()) {
@@ -133,10 +116,10 @@ public class Topics {
         return found;
     }
 
-    private static void answerToTopic(String answer) {
+    private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
         topicPage.getNewButton().click();
         topicPage.getMessageField().sendKeys(answer);
-        topicPage.getPostButton().click();
+        clickAnswerToTopicButton(topic);
     }
 
     /**
@@ -192,8 +175,7 @@ public class Topics {
      * @param state           the state: true - checked, false - unchecked, null - the element is not used
      */
 
-    private static void setCheckboxState(WebElement checkboxElement,
-                                         Boolean state) {
+    private static void setCheckboxState(WebElement checkboxElement, Boolean state) {
         if (state == null) {
             return;
         }
@@ -234,21 +216,23 @@ public class Topics {
      * @throws PermissionsDeniedException
      */
     private static void createNewTopic(Topic topic) throws PermissionsDeniedException {
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+    }
+
+    private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
         try {
-            topicPage.getNewButton().click();
-            setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
-            setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
+            topicPage.getPostButton().click();
         } catch (NoSuchElementException e) {
-            throw new PermissionsDeniedException();
+            throw new PermissionsDeniedException("User does not have permissions to leave posts in branch "
+                    + topic.getBranch().getTitle());
         }
+    }
 
-        // Fill subject and message
-        topicPage.getSubjectField().sendKeys(topic.getTitle());
-        Post firstPost = topic.getPosts().get(0);
-        topicPage.getMessageField().sendKeys(firstPost.getPostContent());
-
-        // Fill poll title, options, end date, multiple answers
-        Poll poll = topic.getPoll();
+    private static void fillPollSpecificFields(Poll poll) {
         if (poll != null) {
             topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
             WebElement optionsField = topicPage.getTopicPollItemsField();
@@ -258,8 +242,21 @@ public class Topics {
             setPollsEndDate(poll);
             setCheckboxState(topicPage.getTopicsPollMultipleChecker(), poll.isMultipleAnswers());
         }
+    }
 
-        topicPage.getPostButton().click();
+    private static void fillTopicFields(Topic topic) {
+        setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
+        setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
+        topicPage.getSubjectField().sendKeys(topic.getTitle());
+        topicPage.getMessageField().sendKeys(topic.getFirstPost().getPostContent());
+    }
+
+    private static void clickCreateTopic() throws PermissionsDeniedException {
+        try {
+            topicPage.getNewButton().click();
+        } catch (NoSuchElementException e) {
+            throw new PermissionsDeniedException();
+        }
     }
 
 

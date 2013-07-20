@@ -61,21 +61,20 @@ public class TopicTest {
         Topics.createCodeReview(topic);
     }
 	
-	
-	@Test
-	public void signUpAndPostAnswerToTopic() throws Exception {
-		//In this test title of topic variable means subject of post we want to add answer to, and the answer, actually 
-		Topic topic = new Topic("subject123", "New final test answer");
-		String branchTitle = "TestBranch"; 
+	@Test 
+    public void postValidAnswerToTopicShouldSucceed() throws Exception {
+        //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
+        Topic topic = new Topic("subject123", "New final test answer");
+        String branchTitle = "TestBranch";
         Users.signIn(Users.signUp());
         Topics.postAnswer(topic, branchTitle);
     }
 
     @Test(expectedExceptions = PermissionsDeniedException.class)
-	public void createTopicAsAnonymous() throws Exception {
-    	Topic topic = new Topic("subject", "message");
-		Topics.createTopic(topic);
-	}
+    public void createTopicAsAnonymousShouldFail() throws Exception {
+        Topic topic = new Topic("subject", "message");
+        Topics.createTopic(topic);
+    }
 
 	@Test
 	public void createStickedTopic() throws Exception {
