@@ -15,16 +15,13 @@
 
 package org.jtalks.tests.jcommune.webdriver.exceptions;
 
-import org.jtalks.tests.jcommune.webdriver.User;
-
 /**
- * The exception for case when user could not be signed in.
+ * This exception should be thrown when time is out for an operation
  *
  * @author Guram Savinov
  */
-public class CouldNotSignInUserException extends Exception {
-    public CouldNotSignInUserException(User user, String pageSource) {
-        super("User with username: '" + user.getUsername() + "' and password: '" + user.getPassword() +
-                "' could not be signed in. Current page source: \n" + pageSource);
+public class TimeoutException extends RuntimeException {
+    public TimeoutException(String operation, Throwable cause) {
+        super("Time is out for this operation: " + operation, cause);
     }
 }

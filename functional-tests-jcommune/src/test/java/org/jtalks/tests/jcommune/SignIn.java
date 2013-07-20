@@ -19,7 +19,7 @@ import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.Users;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.*;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
@@ -36,7 +36,7 @@ public class SignIn {
         mainPage.logOutIfLoggedIn();
     }
 
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void signUpWithoutActivationCausesError_JC_564() throws Exception {
         User user = Users.signUpWithoutActivation();
         Users.signIn(user);
@@ -48,27 +48,27 @@ public class SignIn {
         Users.signIn(user);
     }
 
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void emptyUsernameCausesError_JC_21() throws Exception {
         String password = StringHelp.getRandomString(9);
         Users.signIn(new User("", password));
     }
 
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void incorrectUsernameCausesError_JC_21() throws Exception {
         User user = Users.signUp();
         user.setUsername(StringHelp.getRandomString(8));
         Users.signIn(user);
     }
 
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void incorrectPassword_JC_22() throws Exception {
         User user = Users.signUp();
         user.setPassword(user.getPassword() + "a");
         Users.signIn(user);
     }
 
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void incorrectUsernameAndPassword() throws Exception {
         String username = StringHelp.getRandomString(8);
         String password = StringHelp.getRandomString(9);
@@ -82,7 +82,7 @@ public class SignIn {
         Users.signIn(user);
     }
 
-    @Test(expectedExceptions = CouldNotSignInUserException.class)
+    @Test(expectedExceptions = ValidationException.class)
     public void checkPasswordIsnotCaseInsensitive() throws Exception {
         User user = Users.signUp();
         user.setPassword(user.getPassword().toUpperCase());

@@ -18,7 +18,6 @@ package org.jtalks.tests.jcommune;
 import org.jtalks.tests.jcommune.webdriver.User;
 import org.jtalks.tests.jcommune.webdriver.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.Users;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.*;
 
@@ -175,4 +174,27 @@ public class SignUp {
         UserForRegistration duplicatedUser = UserForRegistration.withEmail(uniqueUser.getEmail());
         Users.signUp(duplicatedUser);
     }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = "Имя пользователя: Не может быть пустым\n")
+    public void emptyLoginShouldFailRegistration() throws ValidationException {
+        UserForRegistration user = new UserForRegistration();
+        user.setUsername("");
+        Users.signUpWithoutActivation(user);
+    }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = "Пароль: Не может быть пустым\n" +
+            "Подтвердите пароль: Пароль и подтверждение пароля не совпадают\n")
+    public void emptyPasswordFieldShouldFailRegistration() throws ValidationException {
+        UserForRegistration user = new UserForRegistration();
+        user.setPassword("");
+        Users.signUpWithoutActivation(user);
+    }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = "Адрес электронной почты: Не может быть пустым\n")
+    public void emptyEmailFieldShouldFailRegistration() throws ValidationException {
+        UserForRegistration user = new UserForRegistration();
+        user.setEmail("");
+        Users.signUpWithoutActivation(user);
+    }
+
 }

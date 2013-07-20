@@ -18,7 +18,7 @@ package org.jtalks.tests.jcommune.webdriver;
 
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotSignInUserException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
@@ -53,9 +53,8 @@ public class Users {
      *
      * @param user the {@code User} instance with sign in form data
      * @throws CouldNotOpenPageException
-     * @throws CouldNotSignInUserException
      */
-    public static void signIn(User user) throws CouldNotOpenPageException, CouldNotSignInUserException {
+    public static void signIn(User user) throws CouldNotOpenPageException, ValidationException {
         mainPage.clickLogin();
         try {
             driver.findElement(By.id(SignInPage.signInDialogFormSel));
@@ -67,31 +66,23 @@ public class Users {
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButton().click();
-        if (!mainPage.userIsLoggedIn()) {
-            throw new CouldNotSignInUserException(user, driver.getPageSource());
-        }
-    }
 
-    /**
-     * Sign in user by page. Action should be started from sign in page of JCommune.
-     *
-     * @param user the {@code User} instance with sign in form data
-     * @throws CouldNotOpenPageException
-     * @throws CouldNotSignInUserException
-     */
-    public static void signInByPage(User user) throws CouldNotOpenPageException, CouldNotSignInUserException {
-        try {
-            driver.findElement(By.id(SignInPage.signInPageFormSel));
-        } catch (NoSuchElementException e) {
-            throw new CouldNotOpenPageException("sign in page form", e);
+        // Check  sign-in form validation results, throw ValidationException if form data is not valid
+        List<WebElement> errorFormElements = signInPage.getErrorFormElements();
+        if (!errorFormElements.isEmpty()) {
+            String failedFields = "";
+            for (WebElement element : errorFormElements) {
+                failedFields += element.findElement(By.tagName("input")).getAttribute("placeholder") + ": ";
+                try {
+                    failedFields += element.findElement(By.className("help-inline")).getText() + "\n";
+                } catch (NoSuchElementException e) {
+                    failedFields += "\n";
+                }
+            }
+            throw new ValidationException(failedFields);
         }
-
-        LOGGER.info("Sign in {}", user);
-        signInPage.getUsernameField().sendKeys(user.getUsername());
-        signInPage.getPasswordField().sendKeys(user.getPassword());
-        signInPage.getSubmitButtonAfterRegistration().click();
         if (!mainPage.userIsLoggedIn()) {
-            throw new CouldNotSignInUserException(user, driver.getPageSource());
+            throw new CouldNotOpenPageException("profile page for the user: " + user.getEmail());
         }
     }
 
@@ -190,12 +181,12 @@ public class Users {
                 userForRegistration.getEmail());
     }
 
-    private static void waitForEmailActivationInfoShowsUp() throws ValidationException {
+    private static void waitForEmailActivationInfoShowsUp() {
         try {
             new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
                     ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
         } catch (org.openqa.selenium.TimeoutException e) {
-            throw new ValidationException();
+            throw new TimeoutException("waiting for email activation info message", e);
         }
     }
 
