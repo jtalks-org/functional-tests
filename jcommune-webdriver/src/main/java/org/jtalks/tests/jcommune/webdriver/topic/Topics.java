@@ -91,18 +91,17 @@ public class Topics {
     public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
         openBranch(branchTitle);
-		if (choosePageWithTopics(6, topic.getTitle())){
-			answerToTopic(topic.getPosts().get(0).getPostContent());
-			LOGGER.info("postAnswerToTopic {}", topic.getTitle());
-		}
-	}
+        if (openTopicInCurrentBranch(6, topic.getTitle())) {
+            answerToTopic(topic.getPosts().get(0).getPostContent());
+            LOGGER.info("postAnswerToTopic {}", topic.getTitle());
+        }
+    }
 
-	private static void openBranch(String branchTitle)
-			throws CouldNotOpenPageException {
-		boolean found = false;
-		for (WebElement branch : branchPage.getBranchList()) {
-			if (branch.getText().equals(branchTitle)) {
-				branch.click();
+    private static void openBranch(String branchTitle) throws CouldNotOpenPageException {
+        boolean found = false;
+        for (WebElement branch : branchPage.getBranchList()) {
+            if (branch.getText().equals(branchTitle)) {
+                branch.click();
 				found = true;
 				break;
 			}
@@ -133,45 +132,47 @@ public class Topics {
 		topicPage.getPostButton().click();
 	}
 
-
-
-    
-	private static boolean choosePageWithTopics(int numberOfPagesToCheck,
-			String topicToFind) throws CouldNotOpenPageException,
-			InterruptedException {
-		boolean found = false;
-		while (!(found=findTopic(topicToFind))) {
-			if (!thumbToNextPage(numberOfPagesToCheck)) break;
-		}
-		if (!found) {
-			LOGGER.info("No topic with title [{}]  found", topicToFind);
-			throw new CouldNotOpenPageException(topicToFind);
-		}
+    /**
+     * Looks through several pages of the branch in order to find the topic with the specified id.
+     * @param numberOfPagesToCheck since the topic might not be on the first page (either someone simultaneously
+     *                             creates a lot of topics, or there are a lot of sticked topics),
+     *                             we have to iteration through this number of pages to search for the topic
+     * @param topicToFind a topic id to look for
+     * @return true if the specified topic was found
+     * @throws CouldNotOpenPageException if specified topic was not found
+     */
+    private static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
+            throws CouldNotOpenPageException {
+        boolean found;
+        while (!(found = findTopic(topicToFind))) {
+            if (!openNextPage(numberOfPagesToCheck)) break;
+        }
+        if (!found) {
+            LOGGER.info("No topic with title [{}]  found", topicToFind);
+            throw new CouldNotOpenPageException(topicToFind);
+        }
 		return found;
 	}
 
 
-
-	private static boolean thumbToNextPage(int pagesToCheck)
-			throws InterruptedException {
-		int maxPagesToCheck = pagesToCheck;
-		int max = 0;
-		if (topicPage.getActiveTopicsButton().size() < 1) {
-			return false;
-		}
-		WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
+    private static boolean openNextPage(int pagesToCheck) {
+        int max = 0;
+        if (topicPage.getActiveTopicsButton().size() < 1) {
+            return false;
+        }
+        WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
 		int active = Integer.parseInt(activeBtn.getText().trim());
 		for (WebElement el : topicPage.getTopicsButtons()) {
 			if (Integer.parseInt(el.getText().trim()) > max)
 				max = Integer.parseInt(el.getText().trim());
 		}
-		if ((active < maxPagesToCheck) && (active < max)) {
-			for (WebElement elem : topicPage.getTopicsButtons()) {
-				if (Integer.parseInt(elem.getText().trim()) == (active + 1)) {
-					elem.click();
-					return true;
-				}
-			}
+        if ((active < pagesToCheck) && (active < max)) {
+            for (WebElement elem : topicPage.getTopicsButtons()) {
+                if (Integer.parseInt(elem.getText().trim()) == (active + 1)) {
+                    elem.click();
+                    return true;
+                }
+            }
 		} 
 		return false;
 	}
