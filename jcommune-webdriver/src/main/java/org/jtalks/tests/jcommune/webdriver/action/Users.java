@@ -73,9 +73,10 @@ public class Users {
             driver.findElement(By.id(SignInPage.signInDialogFormSel));
         } catch (NoSuchElementException e) {
             throw new CouldNotOpenPageException(
-                    "sign in dialog form; may be JavaScript disabled in browser settings", e);
+                    "sign-in dialog form; may be JavaScript disabled in browser settings", e);
         }
 
+        // Fill form values and submit
         LOGGER.info("Sign in {}", user);
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
@@ -100,74 +101,76 @@ public class Users {
     }
 
     /**
-     * Sign up new user with random data by dialog. Action should be started from any page of JCommune.
+     * Sign up new user with random data. Action can be started from any page of JCommune.
      *
      * @return the {@code User} instance that contains registered user data
-     * @throws CouldNotOpenPageException
      * @throws ValidationException
      */
-    public static User signUp() throws CouldNotOpenPageException, ValidationException {
+    public static User signUp() throws ValidationException {
         User user = signUpWithoutActivation();
         activateUserByMail(user.getEmail());
         return user;
     }
 
     /**
-     * Sign up new user by dialog. Action should be started from any page of JCommune.
+     * Sign up new user. Action can be started from any page of JCommune.
      *
      * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
      * @return the {@code User} instance that contains registered user data
-     * @throws CouldNotOpenPageException
      * @throws ValidationException
      */
-    public static User signUp(UserForRegistration userForRegistration) throws CouldNotOpenPageException,
-            ValidationException {
+    public static User signUp(UserForRegistration userForRegistration) throws ValidationException {
         User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
         return user;
     }
 
     /**
-     * Sign up new user without activation by dialog. Form fields will be filled by randomly valid values. Action should
-     * be started from any page of JCommune.
+     * Sign up new user without activation. Form fields will be filled by random valid values. Action can be started
+     * from any page of JCommune.
      *
      * @return the {@code User} instance that contains registered user data
-     * @throws CouldNotOpenPageException
      * @throws ValidationException
      *
      */
-    public static User signUpWithoutActivation() throws CouldNotOpenPageException, ValidationException {
+    public static User signUpWithoutActivation() throws ValidationException {
         return signUpWithoutActivation(new UserForRegistration());
     }
 
     /**
-     * Sign up new user by dialog without activation. Properties with null value will be set by random valid value.
-     * Action should be started from any page of JCommune.
+     * Sign up new user without activation. Properties with null value will be set by random valid values.
+     * Action can be started from any page of JCommune.
      *
      * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
      * @return the {@code User} instance that contains registered user data
-     * @throws CouldNotOpenPageException
      * @throws ValidationException
      */
-    public static User signUpWithoutActivation(UserForRegistration userForRegistration)
-            throws CouldNotOpenPageException, ValidationException {
-        // Check opening sign up form
+    public static User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
+        openAndFillSignUpDialog(userForRegistration);
+        checkFormValidation(signUpPage.getErrorFormElements());
+        waitForEmailActivationInfoShowsUp();
+        return userForRegistration;
+    }
+
+    private static void openAndFillSignUpDialog(UserForRegistration userForRegistration) {
         signUpPage.getSignUpButton().click();
+        // Check that sign-up dialog have been opened (JCommune open sign-up page instead dialog if JavaScript disabled)
         try {
-            driver.findElement(By.id(SignUpPage.signUpFormSel));
+            driver.findElement(By.id(SignUpPage.signUpDialogFormSel));
         } catch (NoSuchElementException e) {
-            throw new CouldNotOpenPageException("sign up form", e);
+            throw new CouldNotOpenPageException(
+                    "sign-up dialog form; may be JavaScript disabled in browser settings", e);
         }
 
-        // JCommune add captcha value to session on image request. Because HtmlUnit doesn't load images, captcha image
-        // should be requested manually.
+        // JCommune add captcha value to the session on image request. Because HtmlUnit doesn't load images, captcha
+        // image should be requested manually.
         if ("htmlunit".equalsIgnoreCase(webdriverType)) {
             driver.get(signUpPage.getCaptchaImage().getAttribute("src"));
             driver.navigate().back();
             signUpPage.getSignUpButton().click();
         }
 
-        // Fill sign up form and submit
+        // Fill form values and submit
         LOGGER.info("Sign Up {}", userForRegistration);
         signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
         signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
@@ -175,14 +178,6 @@ public class Users {
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
         signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
         signUpPage.getSubmitButton().click();
-
-        checkFormValidation(signUpPage.getErrorFormElements());
-
-        waitForEmailActivationInfoShowsUp();
-        signUpPage.getOkButtonOnInfoWindow().click();
-
-        return new User(userForRegistration.getUsername(), userForRegistration.getPassword(),
-                userForRegistration.getEmail());
     }
 
     private static void waitForEmailActivationInfoShowsUp() {
@@ -192,6 +187,7 @@ public class Users {
         } catch (org.openqa.selenium.TimeoutException e) {
             throw new TimeoutException("waiting for email activation info message", e);
         }
+        signUpPage.getOkButtonOnInfoWindow().click();
     }
 
     /**

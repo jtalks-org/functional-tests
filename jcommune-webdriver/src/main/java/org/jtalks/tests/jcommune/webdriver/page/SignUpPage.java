@@ -18,7 +18,8 @@ public class SignUpPage {
      * register users without writing a tool to break our own captcha
      */
     public static final String VALID_CAPTCHA_VALUE = "0000";
-    public static final String signUpFormSel = "signup-modal-dialog";
+
+    public static final String signUpDialogFormSel = "signup-modal-dialog";
 
     public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user/new']";
 
@@ -53,8 +54,8 @@ public class SignUpPage {
     public static final String errorFormElementsSel = "div.control-group.error";
 
 
-    @FindBy(id = signUpFormSel)
-    WebElement signUpForm;
+    @FindBy(id = signUpDialogFormSel)
+    WebElement signUpDialogForm;
 
     @FindBy(xpath = signUpButtonSel)
     WebElement signUpButton;
@@ -152,8 +153,8 @@ public class SignUpPage {
         return captchaField;
     }
 
-    public WebElement getSignUpForm() {
-        return signUpForm;
+    public WebElement getSignUpDialogForm() {
+        return signUpDialogForm;
     }
 
     public WebElement getCaptchaImage() {
