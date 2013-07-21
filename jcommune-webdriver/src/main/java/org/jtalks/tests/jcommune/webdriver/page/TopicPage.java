@@ -28,7 +28,7 @@ public class TopicPage {
     @FindBy(id = "new-topic-btn")
     private WebElement newButton;
 
-    @FindBy(xpath = "//a[@id='new-topic-btn' and contains(@href, 'reviews')]")
+    @FindBy(id = "new-code-review-btn")
     private WebElement newCodeReviewButton;
     
     @FindBy(id = "topic.sticked1")
@@ -40,11 +40,8 @@ public class TopicPage {
     @FindBy(id = "subject")
     private WebElement subjectField;
 
-    @FindBy(id = "tbMsg")
-    private WebElement messageField;
-
-    @FindBy(xpath = "//textarea[@id='body']")
-    private WebElement codeField;
+    @FindBy(id = "postBody")
+    private WebElement mainBodyArea;
     
     @FindBy(id = "post")
     private WebElement postButton;
@@ -105,8 +102,8 @@ public class TopicPage {
         return subjectField;
     }
 
-    public WebElement getMessageField() {
-        return messageField;
+    public WebElement getMainBodyArea() {
+        return mainBodyArea;
     }
 
     public WebElement getPostButton() {
@@ -196,10 +193,5 @@ public class TopicPage {
 	public WebElement getNewCodeReviewButton() {
 		return newCodeReviewButton;
 	}
-
-	public WebElement getCodeField() {
-		return codeField;
-	}
-
 
 }

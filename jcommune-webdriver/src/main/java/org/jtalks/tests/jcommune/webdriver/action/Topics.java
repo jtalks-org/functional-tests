@@ -89,7 +89,7 @@ public class Topics {
     	 topicPage.getNewCodeReviewButton().click();
     	 topicPage.getSubjectField().sendKeys(topic.getTitle());
          Post firstPost = topic.getPosts().get(0);
-         topicPage.getCodeField().sendKeys(firstPost.getPostContent());
+         topicPage.getMainBodyArea().sendKeys(firstPost.getPostContent());
          topicPage.getPostButton().click();
 		
 	}
@@ -118,7 +118,7 @@ public class Topics {
 
     private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
         topicPage.getNewButton().click();
-        topicPage.getMessageField().sendKeys(answer);
+        topicPage.getMainBodyArea().sendKeys(answer);
         clickAnswerToTopicButton(topic);
     }
 
@@ -248,7 +248,7 @@ public class Topics {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
         topicPage.getSubjectField().sendKeys(topic.getTitle());
-        topicPage.getMessageField().sendKeys(topic.getFirstPost().getPostContent());
+        topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
     private static void clickCreateTopic() throws PermissionsDeniedException {
