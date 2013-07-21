@@ -1,7 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,8 +19,6 @@ public class SignUpPage {
     public static final String VALID_CAPTCHA_VALUE = "0000";
 
     public static final String signUpDialogFormSel = "signup-modal-dialog";
-
-    public static final String signUpButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user/new']";
 
     public static final String passwordFieldSel = "password";
 
@@ -57,7 +54,7 @@ public class SignUpPage {
     @FindBy(id = signUpDialogFormSel)
     WebElement signUpDialogForm;
 
-    @FindBy(xpath = signUpButtonSel)
+    @FindBy(id = "signup")
     WebElement signUpButton;
 
     @FindBy(id = passwordFieldSel)

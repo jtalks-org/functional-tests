@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author erik
  */
@@ -89,11 +91,14 @@ public class MainPage {
         return profileLink;
     }
 
-    public void logOutIfLoggedIn() {
+    public void logOutIfLoggedIn(WebDriver driver) {
         try {
+            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
             clickLogout();
         } catch (NoSuchElementException e) {
             //we don't care if user already is logged out
+        } finally {
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
     }
 
