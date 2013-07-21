@@ -9,7 +9,7 @@
 		<classes>
       <class name="org.jtalks.tests.jcommune.SignIn" />
       <class name="org.jtalks.tests.jcommune.SignUp" />
-      <class name="org.jtalks.tests.jcommune.TopicTest" />
+      <!--<class name="org.jtalks.tests.jcommune.TopicTest" />-->
     </classes>
   </test>
 </suite>
