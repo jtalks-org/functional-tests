@@ -33,7 +33,7 @@ public class SignIn {
     @Parameters("appUrl")
     public void setup(String appUrl) {
         driver.get(appUrl);
-        mainPage.logOutIfLoggedIn();
+        mainPage.logOutIfLoggedIn(driver);
     }
 
     @Test(expectedExceptions = ValidationException.class)

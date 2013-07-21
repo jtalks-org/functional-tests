@@ -31,7 +31,7 @@ public class SignUp {
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) {
         driver.get(appUrl);
-        mainPage.logOutIfLoggedIn();
+        mainPage.logOutIfLoggedIn(driver);
     }
 
     @Test

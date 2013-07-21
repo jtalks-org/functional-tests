@@ -38,7 +38,7 @@ public class TopicTest {
     @Parameters({ "appUrl" })
     public void setupCase(String appUrl) {
         driver.get(appUrl);
-        mainPage.logOutIfLoggedIn();
+        mainPage.logOutIfLoggedIn(driver);
     }
 
 	@Test
@@ -53,15 +53,15 @@ public class TopicTest {
         Users.signIn(Users.signUp());
         Topics.createTopic(topic);
     }
-	
+
 	@Test
 	public void signUpAndCreateCodeReviewInBranch() throws Exception {
         Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("TestBranch");
         Users.signIn(Users.signUp());
         Topics.createCodeReview(topic);
     }
-	
-	@Test 
+
+	@Test
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         Topic topic = new Topic("subject123", "New final test answer");
