@@ -12,3 +12,9 @@ Paste path to Maven folder in textbox.
 Add new configuration for type "TestNG". Fill **Name** and **Suite** fields with path to testng.xml,
 i.e. %path_to_project%/functional-tests-jcommune/src/test/resources/testng.xml.
 Fill "Working directory" field with %path_to_project%. Press "Ok".
+
+###Functional Tests Best Practices
+* Do not use XPath if possible, use IDs or CSS. XPaths depend on all the elements in the hierarchy of HTML. If you need
+  to find a link and you're doing something like this `//tbody/tr/td/a[contains(@href,'branches')]` you'll get in
+  trouble when at least one of the elements `tbody`, `tr`, `td`, `a` changes. The less elements to be changed,
+  the better. Moreover XPath usually is a bit complicated.
