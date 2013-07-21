@@ -49,9 +49,8 @@ public class MailtrapClient {
     public static String getMessages() throws CouldNotGetMessagesException {
         RestTemplate client = new RestTemplate();
         try {
-            String data = client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM),
+            return client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM),
                     String.class);
-            return data;
         } catch (Exception e) {
             throw new CouldNotGetMessagesException(e);
         }
@@ -67,9 +66,8 @@ public class MailtrapClient {
     public static String getMessage(String id) {
         RestTemplate client = new RestTemplate();
         try {
-            String data = client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM),
+            return client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM),
                     String.class);
-            return data;
         } catch (Exception e) {
             throw new CouldNotGetMessageException(e);
         }
