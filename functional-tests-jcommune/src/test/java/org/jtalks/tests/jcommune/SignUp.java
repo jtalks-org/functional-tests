@@ -19,6 +19,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.testng.annotations.*;
 
 import static org.jtalks.tests.jcommune.utils.StringHelp.getRandomString;
@@ -92,8 +93,8 @@ public class SignUp {
         Users.signUp(user);
     }
 
-    @Test(expectedExceptions = ValidationException.class)
-    public void emptyEmailShouldFailRegistration_JC_5() throws Exception {
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.emptyEmailErrorMessage)
+    public void emptyEmailShouldFailRegistration_JC_5() throws ValidationException {
         UserForRegistration user = UserForRegistration.withEmail("");
         Users.signUp(user);
     }
@@ -104,7 +105,7 @@ public class SignUp {
         Users.signUp(user);
     }
 
-    @Test(expectedExceptions = ValidationException.class)
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.emptyPasswordErrorMessage)
     public void emptyPasswordShoulFailRegistration_JC_7() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPassword("");
@@ -175,26 +176,11 @@ public class SignUp {
         Users.signUp(duplicatedUser);
     }
 
-    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = "Имя пользователя: Не может быть пустым\n")
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.emptyLoginErrorMessage)
     public void emptyLoginShouldFailRegistration() throws ValidationException {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("");
-        Users.signUpWithoutActivation(user);
-    }
-
-    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = "Пароль: Не может быть пустым\n" +
-            "Подтвердите пароль: Пароль и подтверждение пароля не совпадают\n")
-    public void emptyPasswordFieldShouldFailRegistration() throws ValidationException {
-        UserForRegistration user = new UserForRegistration();
-        user.setPassword("");
-        Users.signUpWithoutActivation(user);
-    }
-
-    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = "Адрес электронной почты: Не может быть пустым\n")
-    public void emptyEmailFieldShouldFailRegistration() throws ValidationException {
-        UserForRegistration user = new UserForRegistration();
-        user.setEmail("");
-        Users.signUpWithoutActivation(user);
+        Users.signUp(user);
     }
 
     @Test

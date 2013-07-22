@@ -50,6 +50,13 @@ public class SignUpPage {
 
     public static final String errorFormElementsSel = "div.control-group.error";
 
+    public static final String emptyLoginErrorMessage= "Имя пользователя: Не может быть пустым\\n";
+
+    public static final String emptyPasswordErrorMessage = "Пароль: Не может быть пустым\n" +
+            "Подтвердите пароль: Пароль и подтверждение пароля не совпадают\n";
+
+    public static final String emptyEmailErrorMessage = "Адрес электронной почты: Не может быть пустым\n";
+
 
     @FindBy(id = signUpDialogFormSel)
     WebElement signUpDialogForm;
