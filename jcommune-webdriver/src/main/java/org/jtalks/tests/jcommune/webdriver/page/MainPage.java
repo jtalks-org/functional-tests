@@ -93,7 +93,7 @@ public class MainPage {
 
     public void logOutIfLoggedIn(WebDriver driver) {
         try {
-            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             clickLogout();
         } catch (NoSuchElementException e) {
             //we don't care if user already is logged out
