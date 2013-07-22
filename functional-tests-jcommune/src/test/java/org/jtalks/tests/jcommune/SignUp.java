@@ -197,4 +197,18 @@ public class SignUp {
         Users.signUpWithoutActivation(user);
     }
 
+    @Test
+    public void slashInUsernameShouldPassRegistration_JC_4() throws Exception {
+        UserForRegistration user = new UserForRegistration();
+        user.setUsername("/" + getRandomString(8));
+        Users.signUp(user);
+    }
+
+    @Test
+    public void backslashInUsernameShouldPassRegistration_JC_4() throws Exception {
+        UserForRegistration user = new UserForRegistration();
+        user.setUsername("\\" + getRandomString(8));
+        Users.signUp(user);
+    }
+
 }
