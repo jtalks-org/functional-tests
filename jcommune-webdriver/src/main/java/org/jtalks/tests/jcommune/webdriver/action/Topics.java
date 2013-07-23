@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
@@ -57,6 +58,12 @@ public class Topics {
     public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
+        createTopic(topic);
+    }
+
+    public static void loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
+       User existantUser = new User("P_10hkgd", "123456");
+        Users.signIn(existantUser);
         createTopic(topic);
     }
 
@@ -247,7 +254,9 @@ public class Topics {
     private static void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        topicPage.getSubjectField().sendKeys(topic.getTitle());
+        String test = topic.getTitle() != null ? topic.getTitle() : StringHelp.getRandomString(15);
+        topicPage.getSubjectField().sendKeys(test);
+        System.out.println(test);
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
