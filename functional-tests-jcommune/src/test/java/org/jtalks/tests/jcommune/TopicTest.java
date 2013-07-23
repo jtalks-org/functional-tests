@@ -43,9 +43,15 @@ public class TopicTest {
 
 	@Test
 	public void signUpAndCreateTopic() throws Exception {
-		Topic topic = new Topic("subject", "message");
+		Topic topic = new Topic("smth_to_say", "message");
 		Topics.signUpAndCreateTopic(topic);
 	}
+
+    @Test
+    public void LoginAndCreateTopic() throws Exception {
+        Topic topic = new Topic("smth_to_say", "message");
+        Topics.loginAndCreateTopic(topic);
+    }
 
 	@Test
 	public void signUpAndCreateTopicInBranch() throws Exception {
