@@ -37,60 +37,60 @@ public class SignIn {
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void signUpWithoutActivationCausesError_JC_564() throws Exception {
+    public void  signInWithoutActivationRegistrationShouldFailLogin_JC_564() throws Exception {
         User user = Users.signUpWithoutActivation();
         Users.signIn(user);
     }
 
     @Test
-    public void correctUsernameAndPassword_JC_20() throws Exception {
+    public void usernameAndPasswordCorrectShouldLogin_JC_20() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void emptyUsernameCausesError_JC_21() throws Exception {
+    public void usernameEmptyShouldFailLogin_JC_21() throws Exception {
         String password = StringHelp.getRandomString(9);
         Users.signIn(new User("", password));
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void incorrectUsernameCausesError_JC_21() throws Exception {
+    public void usernameNotExistShouldFailLogin_JC_21() throws Exception {
         User user = Users.signUp();
         user.setUsername(StringHelp.getRandomString(8));
         Users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void incorrectPassword_JC_22() throws Exception {
+    public void passwordIncorrectShouldFailLogIn_JC_22() throws Exception {
         User user = Users.signUp();
         user.setPassword(user.getPassword() + "a");
         Users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void incorrectUsernameAndPassword() throws Exception {
+    public void usernameAndPasswordNotExistShouldFailLogin() throws Exception {
         String username = StringHelp.getRandomString(8);
         String password = StringHelp.getRandomString(9);
         Users.signIn(new User(username, password));
     }
 
     @Test
-    public void checkUsernameIsCaseInsensitive() throws Exception {
+    public void  usernameIsCaseInsensitiveShouldLogin() throws Exception {
         User user = Users.signUp();
         user.setUsername(user.getUsername().toUpperCase());
         Users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void checkPasswordIsnotCaseInsensitive() throws Exception {
+    public void passwordIsCaseInsensitiveShouldFailLogin() throws Exception {
         User user = Users.signUp();
         user.setPassword(user.getPassword().toUpperCase());
         Users.signIn(user);
     }
 
     @Test
-    public void shouldLoginIfUsernameContainsSlash() throws Exception {
+    public void usernameContainsSlashShouldLogin() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername(StringHelp.getRandomString(10) + "/");
         User registeredUser = Users.signUp(user);
