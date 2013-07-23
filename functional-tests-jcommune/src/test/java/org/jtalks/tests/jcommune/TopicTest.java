@@ -43,13 +43,13 @@ public class TopicTest {
 
 	@Test
 	public void signUpAndCreateTopic() throws Exception {
-		Topic topic = new Topic("smth_to_say", "message");
+		Topic topic = new Topic("subject", "message");
 		Topics.signUpAndCreateTopic(topic);
 	}
 
     @Test(enabled = false)
     public void LoginAndCreateTopic() throws Exception {
-        Topic topic = new Topic("smth_to_say", "message");
+        Topic topic = new Topic("", "message");
         Topics.loginAndCreateTopic(topic);
     }
 
@@ -64,7 +64,8 @@ public class TopicTest {
 	public void signUpAndCreateCodeReviewInBranch() throws Exception {
         Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("TestBranch");
         Users.signIn(Users.signUp());
-        Topics.createCodeReview(topic);
+      //  Topics.createCodeReview(topic);
+        Topics.createTopic(topic);
     }
 
 	@Test
