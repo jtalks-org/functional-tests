@@ -104,7 +104,7 @@ public class Topics {
 	public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
         Branches.openBranch(branchTitle);
-        if (openTopicInCurrentBranch(30, topic.getTitle())) {
+        if (openTopicInCurrentBranch(100, topic.getTitle())) {
             answerToTopic(topic, topic.getLastPost().getPostContent());
             LOGGER.info("postAnswerToTopic {}", topic.getTitle());
         }
