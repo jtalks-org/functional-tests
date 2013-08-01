@@ -103,11 +103,13 @@ public class Topics {
 
 	public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
-        Branches.openBranch(branchTitle);
-        if (openTopicInCurrentBranch(100, topic.getTitle())) {
+        //TODO: this might need to be uncommented, but right now we're not on the main page when we answer to the
+        // topic - we are on the topic page already!
+//        Branches.openBranch(branchTitle);
+//        if (openTopicInCurrentBranch(100, topic.getTitle())) {
             answerToTopic(topic, topic.getLastPost().getPostContent());
             LOGGER.info("postAnswerToTopic {}", topic.getTitle());
-        }
+//        }
     }
 
     private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
