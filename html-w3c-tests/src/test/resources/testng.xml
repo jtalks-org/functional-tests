@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="JCommune">
+	<parameter name="appUrl" value="http://autotests.jtalks.org/jcommune/" />
+	<parameter name="webDriverUrl" value="http://jtalks.org:4444/wd/hub" />
+	<listeners>
+		<listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener" />
+	</listeners>
+	<test name="JCommune">
+		<classes>
+      <class name="org.jtalks.tests.jcommune.PagesW3CValidationTest" />
+    </classes>
+  </test>
+</suite>
+

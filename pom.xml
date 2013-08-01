@@ -9,6 +9,7 @@
   <version>0.1-SNAPSHOT</version>
   <name>${project.artifactId}</name>
   <modules>
+    <module>html-w3c-tests</module>
     <module>functional-tests-jcommune</module>
     <module>load-tests</module>
     <module>jcommune-webdriver</module>

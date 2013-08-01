@@ -46,6 +46,9 @@ public class MainPage {
     @FindBy(id = "signin")
     private WebElement loginLink;
 
+    @FindBy(id = "signup")
+    private WebElement registrationLink;
+
     @FindBy(xpath = errorPageSel)
     private WebElement errorPage;
 
@@ -100,6 +103,10 @@ public class MainPage {
         } finally {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
+    }
+
+    public void clickRegistration() {
+        registrationLink.click();
     }
 
     public void clickLogin() {
