@@ -52,18 +52,22 @@ public class MailtrapMail {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailtrapMail.class);
     private static final String NOT_FOUND_ID = "no message with this ID";
+    private static final int MAILTRAP_TIMEOUT_SECS = 15;
     private String activationLink;
 
     /**
      * Get activation link sent by JCommune for the not activated user. Because Mailtrap need any time to receive
-     * message getting activation link repeats for 15 seconds with 500 milliseconds interval.
+     * message getting activation link repeats for {@link #MAILTRAP_TIMEOUT_SECS} seconds with 500 milliseconds
+     * interval.
+     *
      * @param recipient the recipient email
-     * @throws MailWasNotReceivedException
      * @return the activation link, that user should open to confirm registration
+     * @throws MailWasNotReceivedException
      */
     public String getActivationLink(final String recipient) {
         try {
-            await().dontCatchUncaughtExceptions().atMost(15, TimeUnit.SECONDS).pollInterval(500, TimeUnit.MILLISECONDS)
+            await().dontCatchUncaughtExceptions().atMost(MAILTRAP_TIMEOUT_SECS, TimeUnit.SECONDS)
+                    .pollInterval(500, TimeUnit.MILLISECONDS)
                     .until(new Callable<Boolean>() {
                         public Boolean call() throws Exception {
                             LOGGER.debug("Trying to get activation link for email [{}]", recipient);
@@ -88,7 +92,7 @@ public class MailtrapMail {
         MessageDto[] messages;
         String link = null;
 
-        messages = gson.fromJson(MailtrapClient.getMessages(),MessageDto[].class);
+        messages = gson.fromJson(MailtrapClient.getMessages(), MessageDto[].class);
 
         List<Metadata> metadataList = getMetadataList(messages);
 
@@ -106,7 +110,7 @@ public class MailtrapMail {
             return link;
         }
 
-        MessageDto messageDto = gson.fromJson(MailtrapClient.getMessage(id),MessageDto.class);
+        MessageDto messageDto = gson.fromJson(MailtrapClient.getMessage(id), MessageDto.class);
 
         try {
             String source = messageDto.getMessage().getSource();
@@ -119,7 +123,7 @@ public class MailtrapMail {
             String escapedText = (String) multipart2.getBodyPart(0).getContent();
             String text = StringEscapeUtils.unescapeHtml(escapedText);
             Matcher matcher = Pattern.compile("(http://.*/activate/.*)[\\s]").matcher(text);
-            if(matcher.find()){
+            if (matcher.find()) {
                 link = matcher.group(1);
             }
         } catch (MessagingException e) {
