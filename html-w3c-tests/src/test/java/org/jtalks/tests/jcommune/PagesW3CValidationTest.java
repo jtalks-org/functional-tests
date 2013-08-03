@@ -7,14 +7,12 @@ import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.jtalks.tests.jcommune.webdriver.page.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.PageHtmlValidator.validatePage;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-import static org.jtalks.tests.jcommune.webdriver.action.Topics.openTopicInCurrentBranch;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
