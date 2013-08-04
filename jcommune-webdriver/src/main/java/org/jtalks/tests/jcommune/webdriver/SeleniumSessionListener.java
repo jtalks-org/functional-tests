@@ -14,7 +14,7 @@ import java.util.Date;
  */
 public class SeleniumSessionListener implements ITestListener, IInvokedMethodListener {
 
-    long startTime;
+    ThreadLocal<Long> startTime = new ThreadLocal<Long>();
 
     @Override
     public void onTestFailure(ITestResult result) {
@@ -62,7 +62,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
         Class testClassToBeInvoked = testClass.getRealClass();
         if (testClassToBeInvoked != currentTestClass) {
             currentTestClass = testClassToBeInvoked;
-            startTime = System.currentTimeMillis();
+            startTime.set(System.currentTimeMillis());
             logger.info("STARTING TEST CLASS [{}] >>> >>>", currentTestClass.getSimpleName());
             if (seleniumConfig != null) {
                 seleniumConfig.destroy();
@@ -96,7 +96,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
     private String getTimeOnVideo(long startTimeOfMethod) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
-            Date date = new Date(startTimeOfMethod - startTime);
+            Date date = new Date(startTimeOfMethod - startTime.get());
             return sdf.format(date);
         } catch (Exception e) {
             logger.error("TEST METHOD. fail on getting video time >>> >>>");
