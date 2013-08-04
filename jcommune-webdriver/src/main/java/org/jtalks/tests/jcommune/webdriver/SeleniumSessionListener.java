@@ -5,17 +5,27 @@ import org.slf4j.LoggerFactory;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
 
-/** @author stanislav bashkirtsev */
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+/**
+ * @author stanislav bashkirtsev
+ */
 public class SeleniumSessionListener implements ITestListener, IInvokedMethodListener {
+
+    long startTime;
 
     @Override
     public void onTestFailure(ITestResult result) {
-        logger.info("TEST FAIL [{}] >>>", result.getMethod().getMethodName());
+        logger.info("TEST FAIL [{}, time on video {}] >>>", result.getMethod().getMethodName(),
+                getTimeOnVideo(System.currentTimeMillis()));
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        logger.info("TEST START [{}] >>>", result.getMethod().getMethodName());
+        logger.info("TEST START [{}, time on video {}] >>>", result.getMethod().getMethodName(),
+                getTimeOnVideo(result.getStartMillis()));
     }
 
     @Override
@@ -52,6 +62,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
         Class testClassToBeInvoked = testClass.getRealClass();
         if (testClassToBeInvoked != currentTestClass) {
             currentTestClass = testClassToBeInvoked;
+            startTime = System.currentTimeMillis();
             logger.info("STARTING TEST CLASS [{}] >>> >>>", currentTestClass.getSimpleName());
             if (seleniumConfig != null) {
                 seleniumConfig.destroy();
@@ -81,4 +92,15 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
      */
     private Class currentTestClass;
     private final Logger logger = LoggerFactory.getLogger(SeleniumSessionListener.class);
+
+    private String getTimeOnVideo(long startTimeOfMethod) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+            Date date = new Date(startTimeOfMethod - startTime);
+            return sdf.format(date);
+        } catch (Exception e) {
+            logger.error("TEST METHOD. fail on getting video time >>> >>>");
+        }
+        return null;
+    }
 }
