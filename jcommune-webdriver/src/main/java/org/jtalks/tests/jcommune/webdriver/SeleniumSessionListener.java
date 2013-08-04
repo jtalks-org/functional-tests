@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,9 +12,6 @@ import java.util.Date;
  * @author stanislav bashkirtsev
  */
 public class SeleniumSessionListener implements ITestListener, IInvokedMethodListener {
-
-    ThreadLocal<Long> startTime = new ThreadLocal<Long>();
-
     @Override
     public void onTestFailure(ITestResult result) {
         logger.info("TEST FAIL [{}, time on video {}] >>>", result.getMethod().getMethodName(),
@@ -84,14 +80,6 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
 
     }
 
-    private JCommuneSeleniumConfig seleniumConfig;
-    /**
-     * TestNG runs tests in groups split by class name. So first it runs all the tests in class 1, then in class 2. We
-     * change the value of this field when first method of class 2 is invoked - this is a sign that we need to start a
-     * new selenium session.
-     */
-    private Class currentTestClass;
-    private final Logger logger = LoggerFactory.getLogger(SeleniumSessionListener.class);
 
     private String getTimeOnVideo(long startTimeOfMethod) {
         try {
@@ -103,4 +91,14 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
         }
         return null;
     }
+
+    private JCommuneSeleniumConfig seleniumConfig;
+    private final ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+    /**
+     * TestNG runs tests in groups split by class name. So first it runs all the tests in class 1, then in class 2. We
+     * change the value of this field when first method of class 2 is invoked - this is a sign that we need to start a
+     * new selenium session.
+     */
+    private Class currentTestClass;
+    private final Logger logger = LoggerFactory.getLogger(SeleniumSessionListener.class);
 }
