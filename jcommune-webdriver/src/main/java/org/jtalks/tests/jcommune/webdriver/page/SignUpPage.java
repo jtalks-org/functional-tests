@@ -52,10 +52,14 @@ public class SignUpPage {
 
     public static final String emptyLoginErrorMessage= "Имя пользователя: Не может быть пустым\\n";
 
-    public static final String emptyPasswordErrorMessage = "Пароль: Не может быть пустым\n" +
+    public static final String WRONG_PASSWORD_CONFIRMATION_ERROR_MESSAGE =
             "Подтвердите пароль: Пароль и подтверждение пароля не совпадают\n";
-
-    public static final String emptyEmailErrorMessage = "Адрес электронной почты: Не может быть пустым\n";
+    public static final String EMPTY_PASSWORD_ERROR_MESSAGE = "Пароль: Не может быть пустым\n" +
+            WRONG_PASSWORD_CONFIRMATION_ERROR_MESSAGE;
+    public static final String TOO_LONG_PASSWORD_ERROR_MESSAGE = "Пароль: Размер должен быть между 1 и 50\n";
+    public static final String EMPTY_EMAIL_ERROR_MESSAGE = "Адрес электронной почты: Не может быть пустым\n";
+    public static final String NOT_UNIQUE_USERNAME_ERROR =
+            "Имя пользователя: Пользователь с таким именем пользователя уже существует\n";
 
 
     @FindBy(id = signUpDialogFormSel)
