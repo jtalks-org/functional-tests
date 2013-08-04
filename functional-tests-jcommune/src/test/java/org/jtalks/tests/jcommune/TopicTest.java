@@ -20,6 +20,7 @@ import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -52,21 +53,26 @@ public class TopicTest {
     public void LoginAndCreateTopic() throws Exception {
         Topic topic = new Topic("", "message");
         Topics.loginAndCreateTopic(topic);
+
     }
 
 	@Test
 	public void signUpAndCreateTopicInBranch() throws Exception {
         Topic topic = new Topic("subject123", "message").withBranch("TestBranch2");
-        Users.signIn(Users.signUp());
+        User user = Users.signUp();
+        Users.signIn(user);
+        topic.withTopicStarter(user);
         Topics.createTopic(topic);
     }
 
 	@Test
 	public void signUpAndCreateCodeReviewInBranch() throws Exception {
         Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("TestBranch");
-        Users.signIn(Users.signUp());
-      //  Topics.createCodeReview(topic);
-        Topics.createTopic(topic);
+        User user = Users.signUp();
+        Users.signIn(user);
+        topic.withTopicStarter(user);
+        Topics.createCodeReview(topic);
+
     }
 
 	@Test
@@ -74,7 +80,9 @@ public class TopicTest {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         Topic topic = new Topic(StringHelp.getRandomString(40), StringHelp.getRandomString(100));
         String branchTitle = "TestBranch";
-        Users.signIn(Users.signUp());
+        User user = Users.signUp();
+        Users.signIn(user);
+        topic.withTopicStarter(user);
         Topics.createTopic(topic);
         Topics.postAnswer(topic, branchTitle);
     }
