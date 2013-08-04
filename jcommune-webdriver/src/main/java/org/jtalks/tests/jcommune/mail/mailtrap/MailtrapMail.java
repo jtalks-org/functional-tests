@@ -52,7 +52,7 @@ public class MailtrapMail {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MailtrapMail.class);
     private static final String NOT_FOUND_ID = "no message with this ID";
-    private static final int MAILTRAP_TIMEOUT_SECS = 15;
+    private static final int MAILTRAP_TIMEOUT_SECS = 120;
     private String activationLink;
 
     /**
