@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import org.joda.time.DateTime;
 import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -58,13 +59,15 @@ public class Topics {
     public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
+        topic.withTopicStarter(user);
         createTopic(topic);
     }
 
-    public static void loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-       User existantUser = new User("P_10hkgd", "123456");
-        Users.signIn(existantUser);
-        createTopic(topic);
+    public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
+       User existentUser = new User("P_10hkgd", "123456");
+        topic.withTopicStarter(existentUser);
+        Users.signIn(existentUser);
+        return createTopic(topic);
     }
 
     /**
@@ -75,12 +78,12 @@ public class Topics {
      * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
      */
 
-    public static void createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
         }
-        createNewTopic(topic);
+          return createNewTopic(topic);
     }
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
@@ -221,15 +224,18 @@ public class Topics {
     /**
      * Create new topic
      *
+     *
      * @param topic the topic representation
      * @throws PermissionsDeniedException
      */
-    private static void createNewTopic(Topic topic) throws PermissionsDeniedException {
+    private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException {
         Branches.openBranch(topic.getBranch().getTitle());
         clickCreateTopic();
         fillTopicFields(topic);
         fillPollSpecificFields(topic.getPoll());
         clickAnswerToTopicButton(topic);
+        topic.setModificationDate(DateTime.now().plusMinutes(1));
+        return topic;
     }
 
     private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
@@ -256,7 +262,7 @@ public class Topics {
     private static void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        topicPage.getSubjectField().sendKeys(topic.getTitle() != "" ? topic.getTitle() : StringHelp.getRandomString(15));
+        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals ("") ? topic.getTitle() : StringHelp.getRandomString(15));
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
