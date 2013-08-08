@@ -22,6 +22,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -37,27 +38,34 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 public class TopicTest {
 
     @BeforeMethod
-    @Parameters({ "appUrl" })
+    @Parameters({"appUrl"})
     public void setupCase(String appUrl) {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
     }
 
-	@Test
-	public void signUpAndCreateTopic() throws Exception {
-		Topic topic = new Topic("subject", "message");
-		Topics.signUpAndCreateTopic(topic);
-	}
+    @Test
+    public void signUpAndCreateTopic() throws Exception {
+        Topic topic = new Topic("subject", "message");
+        Topics.signUpAndCreateTopic(topic);
+    }
 
     @Test(enabled = false)
     public void LoginAndCreateTopic() throws Exception {
         Topic topic = new Topic("", "message");
         Topics.loginAndCreateTopic(topic);
-
+        Topics.isBranch(topic);
     }
 
-	@Test
-	public void signUpAndCreateTopicInBranch() throws Exception {
+    @Test(enabled = true)
+    public void LoginAndCreateTopicValidateBrnanch() throws Exception {
+        Topic topic = new Topic("subject123", "message").withBranch("TestBranch");
+        Topics.loginAndCreateTopic(topic);
+        Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
+    }
+
+    @Test
+    public void signUpAndCreateTopicInBranch() throws Exception {
         Topic topic = new Topic("subject123", "message").withBranch("TestBranch2");
         User user = Users.signUp();
         Users.signIn(user);
@@ -65,8 +73,8 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-	@Test
-	public void signUpAndCreateCodeReviewInBranch() throws Exception {
+    @Test
+    public void signUpAndCreateCodeReviewInBranch() throws Exception {
         Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("TestBranch");
         User user = Users.signUp();
         Users.signIn(user);
@@ -75,7 +83,7 @@ public class TopicTest {
 
     }
 
-	@Test
+    @Test
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         Topic topic = new Topic(StringHelp.randomString(40), StringHelp.randomString(100));
@@ -93,33 +101,33 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-	@Test
-	public void createStickedTopic() throws Exception {
-		Topic topic = new Topic("subject", "message");
-		topic.setSticked(true);
-		Topics.signUpAndCreateTopic(topic);
-	}
+    @Test
+    public void createStickedTopic() throws Exception {
+        Topic topic = new Topic("subject", "message");
+        topic.setSticked(true);
+        Topics.signUpAndCreateTopic(topic);
+    }
 
-	@Test
-	public void createAnnouncementTopic() throws Exception {
-		Topic topic = new Topic("subject", "message");
-		topic.setAnnouncement(true);
-		Topics.signUpAndCreateTopic(topic);
-	}
+    @Test
+    public void createAnnouncementTopic() throws Exception {
+        Topic topic = new Topic("subject", "message");
+        topic.setAnnouncement(true);
+        Topics.signUpAndCreateTopic(topic);
+    }
 
-	@Test
-	public void createTopicWithPoll() throws Exception {
-		Topic topic = new Topic("subject", "message");
+    @Test
+    public void createTopicWithPoll() throws Exception {
+        Topic topic = new Topic("subject", "message");
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         topic.setPoll(poll);
         Topics.signUpAndCreateTopic(topic);
-	}
+    }
 
     @Test
     public void createTopicWithPollEndDate() throws Exception {
         Topic topic = new Topic("subject", "message");
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
-        poll.setEndDate(new Date(System.currentTimeMillis()+86400000));
+        poll.setEndDate(new Date(System.currentTimeMillis() + 86400000));
         topic.setPoll(poll);
         Topics.signUpAndCreateTopic(topic);
     }

@@ -16,6 +16,8 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -25,6 +27,8 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -64,10 +68,40 @@ public class Topics {
     }
 
     public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-       User existentUser = new User("P_10hkgd", "123456");
+        User existentUser = new User("P_10hkgd", "123456");
         topic.withTopicStarter(existentUser);
         Users.signIn(existentUser);
         return createTopic(topic);
+    }
+
+    public static Boolean isBranch(Topic topic) {
+        boolean isBranch = false;
+
+        Branches.openBranch(topic.getBranch().getTitle());
+        openTopicInCurrentBranch(100, topic.getTitle());
+
+        return isBranch;
+
+    }
+
+    public static boolean isInCorrectBranch(Topic topic) {
+        return topicPage.getBranchName().getText().trim().equals(topic.getBranch().getTitle());
+    }
+
+    public static boolean isTopicNewer(DateTime topicDate, String dateFromLastRow) {
+        DateTimeFormatter mask = new DateTimeFormatterBuilder()
+                .appendDayOfMonth(2)
+                .appendLiteral(' ')
+                .appendMonthOfYearShortText()
+                .appendLiteral(' ')
+                .appendYear(4, 4)
+                .appendLiteral(' ')
+                .appendHourOfDay(2)
+                .appendLiteral(':')
+                .appendMinuteOfHour(2)
+                .toFormatter();
+        DateTime dat = DateTime.parse(dateFromLastRow, mask);
+        return topicDate.isAfter(dat.getMillis());
     }
 
     /**
@@ -83,7 +117,7 @@ public class Topics {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
         }
-          return createNewTopic(topic);
+        return createNewTopic(topic);
     }
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
@@ -94,24 +128,24 @@ public class Topics {
         Branches.openBranch(topic.getBranch().getTitle());
         createNewCodeReview(topic);
     }
-    
-    private static void createNewCodeReview(Topic topic) {
-    	 topicPage.getNewCodeReviewButton().click();
-    	 topicPage.getSubjectField().sendKeys(topic.getTitle());
-         Post firstPost = topic.getPosts().get(0);
-         topicPage.getMainBodyArea().sendKeys(firstPost.getPostContent());
-         topicPage.getPostButton().click();
-		
-	}
 
-	public static void postAnswer(Topic topic, String branchTitle)
+    private static void createNewCodeReview(Topic topic) {
+        topicPage.getNewCodeReviewButton().click();
+        topicPage.getSubjectField().sendKeys(topic.getTitle());
+        Post firstPost = topic.getPosts().get(0);
+        topicPage.getMainBodyArea().sendKeys(firstPost.getPostContent());
+        topicPage.getPostButton().click();
+
+    }
+
+    public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
         //TODO: this might need to be uncommented, but right now we're not on the main page when we answer to the
         // topic - we are on the topic page already!
 //        Branches.openBranch(branchTitle);
 //        if (openTopicInCurrentBranch(100, topic.getTitle())) {
-            answerToTopic(topic, topic.getLastPost().getPostContent());
-            LOGGER.info("postAnswerToTopic {}", topic.getTitle());
+        answerToTopic(topic, topic.getLastPost().getPostContent());
+        LOGGER.info("postAnswerToTopic {}", topic.getTitle());
 //        }
     }
 
@@ -127,6 +161,20 @@ public class Topics {
         }
         return found;
     }
+
+    private static boolean findTopic(Topic topic) throws CouldNotOpenPageException {
+        boolean found = false;
+
+        for (WebElement topics : topicPage.getTopicsList()) {
+            if (topics.getText().trim().equals(topic.getTitle().trim())) {
+                topics.click();
+                found = true;
+                break;
+            }
+        }
+        return found;
+    }
+
 
     private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
         topicPage.getNewButton().click();
@@ -180,6 +228,18 @@ public class Topics {
         return false;
     }
 
+
+    public static boolean senseToPageNext(Topic topic) {
+        WebElement bottomRowOfTopics = topicPage.getLastTopicLine();
+        System.out.println(bottomRowOfTopics.getText());
+        System.out.println(bottomRowOfTopics.findElement(By.className("sticky")).getText());
+        System.out.println("Topic date is " + topic.getModificationDate());
+        //if (bottomRowOfTopics.findElements(By.xpath("*/span[contains(@class,'sticky')]")).size()>0) return true;
+        String dateFromBottomRowOfTopics = bottomRowOfTopics.findElement(By.xpath("*/a[contains(@class,'date')]")).getText().trim();
+        return isTopicNewer(DateTime.now(), dateFromBottomRowOfTopics);
+    }
+
+
     /**
      * Sets state for checkbox element
      *
@@ -224,7 +284,6 @@ public class Topics {
     /**
      * Create new topic
      *
-     *
      * @param topic the topic representation
      * @throws PermissionsDeniedException
      */
@@ -234,7 +293,7 @@ public class Topics {
         fillTopicFields(topic);
         fillPollSpecificFields(topic.getPoll());
         clickAnswerToTopicButton(topic);
-        topic.setModificationDate(DateTime.now().plusMinutes(1));
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
         return topic;
     }
 
@@ -262,7 +321,7 @@ public class Topics {
     private static void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals ("") ? topic.getTitle() : StringHelp.randomString(15));
+        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : StringHelp.getRandomString(15));
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
