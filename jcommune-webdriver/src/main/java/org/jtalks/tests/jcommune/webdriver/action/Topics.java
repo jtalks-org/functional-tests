@@ -18,7 +18,6 @@ package org.jtalks.tests.jcommune.webdriver.action;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
-import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
@@ -27,7 +26,6 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -37,6 +35,7 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
@@ -321,7 +320,7 @@ public class Topics {
     private static void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : StringHelp.getRandomString(15));
+        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
