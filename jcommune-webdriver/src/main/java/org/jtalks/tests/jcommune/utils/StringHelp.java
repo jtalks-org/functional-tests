@@ -23,7 +23,7 @@ public class StringHelp {
      *
      * @return String  contains random characters (count=length)
      */
-    public static String getRandomString(int length) {
+    public static String randomString(int length) {
         Random random = new Random((new Date()).getTime());
         char[] values = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
@@ -55,7 +55,7 @@ public class StringHelp {
      */
     public static String getRandomEmail() {
         String eMail = "";
-        eMail += getRandomString(12) + "@jtalks.org";
+        eMail += randomString(12) + "@jtalks.org";
         return eMail;
     }
 

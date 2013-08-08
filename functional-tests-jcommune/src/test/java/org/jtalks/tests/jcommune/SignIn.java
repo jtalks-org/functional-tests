@@ -52,7 +52,7 @@ public class SignIn {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameEmptyShouldFailLogin_JC_21() throws Exception {
-        String password = StringHelp.getRandomString(9);
+        String password = StringHelp.randomString(9);
         Users.signIn(new User("", password));
     }
 
@@ -60,7 +60,7 @@ public class SignIn {
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameNotExistShouldFailLogin_JC_21() throws Exception {
         User user = Users.signUp();
-        user.setUsername(StringHelp.getRandomString(8));
+        user.setUsername(StringHelp.randomString(8));
         Users.signIn(user);
     }
 
@@ -75,8 +75,8 @@ public class SignIn {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameAndPasswordNotExistShouldFailLogin() throws Exception {
-        String username = StringHelp.getRandomString(8);
-        String password = StringHelp.getRandomString(9);
+        String username = StringHelp.randomString(8);
+        String password = StringHelp.randomString(9);
         Users.signIn(new User(username, password));
     }
 
@@ -98,7 +98,7 @@ public class SignIn {
     @Test
     public void usernameContainsSlashShouldLogin() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        user.setUsername(StringHelp.getRandomString(10) + "/");
+        user.setUsername(StringHelp.randomString(10) + "/");
         User registeredUser = Users.signUp(user);
         Users.signIn(registeredUser);
     }

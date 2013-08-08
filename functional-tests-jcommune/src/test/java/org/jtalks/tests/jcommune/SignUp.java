@@ -24,7 +24,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.jtalks.tests.jcommune.utils.StringHelp.getRandomString;
+import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -69,32 +69,32 @@ public class SignUp {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.TOO_LONG_LOGIN_ERROR)
     public void usernameTooLongShouldFailRegistration_JC_3() throws Exception {
-        UserForRegistration user = UserForRegistration.withUsername(getRandomString((26)));
+        UserForRegistration user = UserForRegistration.withUsername(randomString((26)));
         Users.signUp(user);
     }
 
     @Test
     public void usernameBetween1and25CharsShouldPassRegistration_JC_4() throws Exception {
-        UserForRegistration user = UserForRegistration.withUsername(getRandomString(24));
+        UserForRegistration user = UserForRegistration.withUsername(randomString(24));
         Users.signUp(user);
     }
 
     @Test
     public void usernameWithSpacesShouldPassRegistration_JC_4() throws Exception {
-        UserForRegistration user = UserForRegistration.withUsername(getRandomString(8) + " " + getRandomString(8));
+        UserForRegistration user = UserForRegistration.withUsername(randomString(8) + " " + randomString(8));
         Users.signUp(user);
     }
 
     @Test
     public void usernameMaxAllowCharsShouldPassRegistration_JC_4() throws Exception {
-        UserForRegistration user = UserForRegistration.withUsername(getRandomString(25));
+        UserForRegistration user = UserForRegistration.withUsername(randomString(25));
         Users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.WRONG_EMAIL_FORMAT_ERROR)
     public void emailInvalidFormatShouldFailRegistration_JC_5() throws Exception {
-        UserForRegistration user = UserForRegistration.withEmail(getRandomString(8) + "@" + "jtalks");
+        UserForRegistration user = UserForRegistration.withEmail(randomString(8) + "@" + "jtalks");
         Users.signUp(user);
     }
 
@@ -114,7 +114,7 @@ public class SignUp {
     @Test
     public void passwordValidShouldPassRegistration_JC_8() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        user.setPassword(getRandomString(49));
+        user.setPassword(randomString(49));
         user.setPasswordConfirmation(user.getPassword());
         Users.signUp(user);
     }
@@ -131,7 +131,7 @@ public class SignUp {
             expectedExceptionsMessageRegExp = SignUpPage.TOO_LONG_PASSWORD_ERROR)
     public void passwordTooLongShouldFailRegistration_JC_7() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        user.setPassword(getRandomString(51));
+        user.setPassword(randomString(51));
         user.setPasswordConfirmation(user.getPassword());
         Users.signUp(user);
     }
@@ -195,14 +195,14 @@ public class SignUp {
     @Test
     public void usernameContainsSlashShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        user.setUsername("/" + getRandomString(8));
+        user.setUsername("/" + randomString(8));
         Users.signUp(user);
     }
 
     @Test
     public void usernameContainsBackslashShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        user.setUsername("\\" + getRandomString(8));
+        user.setUsername("\\" + randomString(8));
         Users.signUp(user);
     }
 

@@ -78,7 +78,7 @@ public class TopicTest {
 	@Test
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
-        Topic topic = new Topic(StringHelp.getRandomString(40), StringHelp.getRandomString(100));
+        Topic topic = new Topic(StringHelp.randomString(40), StringHelp.randomString(100));
         String branchTitle = "TestBranch";
         User user = Users.signUp();
         Users.signIn(user);

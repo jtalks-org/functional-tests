@@ -26,7 +26,7 @@ import org.jtalks.tests.jcommune.utils.StringHelp;
  * @author Guram Savinov
  */
 public class User {
-    private String username = StringHelp.getRandomString(15);
+    private String username = StringHelp.randomString(15);
     private String email = StringHelp.getRandomEmail();
     private String password = username;
 
@@ -41,6 +41,10 @@ public class User {
     public User(String username, String password, String email) {
         this(username, password);
         this.email = email;
+    }
+
+    public static User admin() {
+        return new User("admin", "admin", "admin@jtalks.org");
     }
 
     public String getUsername() {
