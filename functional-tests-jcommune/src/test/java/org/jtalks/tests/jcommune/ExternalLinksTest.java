@@ -8,9 +8,7 @@ import org.testng.annotations.Test;
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.testng.Assert.assertTrue;
 
-/**
- * @author stanislav bashkirtsev
- */
+/** @author stanislav bashkirtsev */
 public class ExternalLinksTest {
     @BeforeClass
     public void signInAsAdmin() {
@@ -88,6 +86,16 @@ public class ExternalLinksTest {
 
         ExternalLinks.createExternalLink(link);
         assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+
+        ExternalLinks.removeExternalLink(link);
+    }
+
+    @Test(expectedExceptions = UnsupportedOperationException.class)
+    public void hintShouldBeTrimmed() {
+        ExternalLink link = new ExternalLink().withHint("  ");
+
+        ExternalLinks.createExternalLink(link);
+        assertTrue(ExternalLinks.isVisibleOnMainPage(link.withHint("")));
 
         ExternalLinks.removeExternalLink(link);
     }
