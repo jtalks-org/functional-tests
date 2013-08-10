@@ -52,7 +52,7 @@ public class ExternalLinksTest {
 
     @Test(expectedExceptions = UnsupportedOperationException.class)
     public void hrefMaxValueShouldPassValidation() {
-        ExternalLink link = new ExternalLink().withHref(randomString(256));
+        ExternalLink link = new ExternalLink().withHref(randomString(255));
 
         ExternalLinks.createExternalLink(link);
         assertTrue(ExternalLinks.isVisibleOnMainPage(link));
