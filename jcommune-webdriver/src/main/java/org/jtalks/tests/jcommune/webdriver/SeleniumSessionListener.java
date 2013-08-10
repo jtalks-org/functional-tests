@@ -45,6 +45,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
 
     }
 
+
     @Override
     public void onFinish(ITestContext context) {
         if (seleniumConfig != null) {
@@ -78,7 +79,6 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-        MDC.remove("testClass");
         MDC.remove("testMethod");
     }
 
