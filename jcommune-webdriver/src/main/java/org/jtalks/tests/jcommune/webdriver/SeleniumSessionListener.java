@@ -78,7 +78,8 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-
+        MDC.remove("testClass");
+        MDC.remove("testMethod");
     }
 
 
