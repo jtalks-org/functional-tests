@@ -20,7 +20,7 @@
   <appender name="consoleAppender" class="org.apache.log4j.ConsoleAppender">
     <param name="Encoding" value="utf8"/>
     <layout class="org.apache.log4j.PatternLayout">
-      <param name="ConversionPattern" value="%d{ISO8601} [%-5p][%-10.10t][%32.32c] - %m%n"/>
+      <param name="ConversionPattern" value="[%d{ISO8601}][%p][%X{testClass}][%X{testMethod}][%c{3}] - %m%n"/>
     </layout>
   </appender>
   <logger name="org.restlet" additivity="false">
