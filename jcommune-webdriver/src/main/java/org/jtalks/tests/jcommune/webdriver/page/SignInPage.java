@@ -39,6 +39,9 @@ public class SignInPage {
 
     public static final String errorFormElementsSel = "div.control-group.error";
 
+    public static final String LOGIN_ERROR = "Имя пользователя: \n" +
+            "Пароль: Попытка выполнить вход не удалась, попробуйте еще раз\n";
+
 
     @FindBy(id = usernameFieldSel)
     WebElement usernameField;

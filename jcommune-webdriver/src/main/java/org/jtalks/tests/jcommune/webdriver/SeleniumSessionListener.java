@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune.webdriver;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.testng.*;
 import org.testng.xml.XmlSuite;
 
@@ -14,14 +15,13 @@ import java.util.Date;
 public class SeleniumSessionListener implements ITestListener, IInvokedMethodListener {
     @Override
     public void onTestFailure(ITestResult result) {
-        logger.info("TEST FAIL [{}, time on video {}] >>>", result.getMethod().getMethodName(),
-                getTimeOnVideo(System.currentTimeMillis()));
+        logger.info("TEST FAIL [time on video {}] >>>", getTimeOnVideo(System.currentTimeMillis()));
     }
 
     @Override
     public void onTestStart(ITestResult result) {
-        logger.info("TEST START [{}, time on video {}] >>>", result.getMethod().getMethodName(),
-                getTimeOnVideo(result.getStartMillis()));
+        MDC.put("testMethod", result.getMethod().getMethodName());
+        logger.info("TEST START [time on video {}] >>>", getTimeOnVideo(result.getStartMillis()));
     }
 
     @Override
@@ -45,6 +45,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
 
     }
 
+
     @Override
     public void onFinish(ITestContext context) {
         if (seleniumConfig != null) {
@@ -59,7 +60,8 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
         if (testClassToBeInvoked != currentTestClass) {
             currentTestClass = testClassToBeInvoked;
             startTime.set(System.currentTimeMillis());
-            logger.info("STARTING TEST CLASS [{}] >>> >>>", currentTestClass.getSimpleName());
+            MDC.put("testClass", currentTestClass.getSimpleName());
+            logger.info("STARTING TEST CLASS");
             if (seleniumConfig != null) {
                 seleniumConfig.destroy();
             }
@@ -77,7 +79,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
 
     @Override
     public void afterInvocation(IInvokedMethod method, ITestResult testResult) {
-
+        MDC.remove("testMethod");
     }
 
 

@@ -1,7 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
@@ -26,7 +25,7 @@ public class TopicPage {
 
     @FindBy(xpath = "//div[@class='pagination pull-right forum-pagination']/ul/li/a")
     private List<WebElement> topicsButtons;
-    
+
     @FindBy(xpath = "//div[@class='pagination pull-right forum-pagination']/ul/li[@class='active']/a")
     private List<WebElement> activeTopicsButton;
 
@@ -36,9 +35,12 @@ public class TopicPage {
     @FindBy(id = "new-topic-btn")
     private WebElement newButton;
 
+    @FindBy(xpath = "//ul[@class='breadcrumb']/li[last()]")
+    private WebElement branchName;
+
     @FindBy(id = "new-code-review-btn")
     private WebElement newCodeReviewButton;
-    
+
     @FindBy(id = "topic.sticked1")
     private WebElement topicSticked;
 
@@ -50,7 +52,7 @@ public class TopicPage {
 
     @FindBy(id = "postBody")
     private WebElement mainBodyArea;
-    
+
     @FindBy(id = "post")
     private WebElement postButton;
 
@@ -95,6 +97,9 @@ public class TopicPage {
 
     @FindBy(id = "multipleChecker")
     WebElement topicsPollMultipleChecker;
+
+    @FindBy(xpath = "//*[@id='topics-table']/tbody/tr[last()]")
+    WebElement lastTopicLine;
 
 
     public TopicPage(WebDriver driver) {
@@ -186,7 +191,7 @@ public class TopicPage {
     public List<WebElement> getTopicsButtons() {
         return topicsButtons;
     }
-    
+
     public WebElement getButtonTopicsPageLink(int pageNum) {
         return topicsButtons.get(pageNum - 1);
     }
@@ -215,12 +220,20 @@ public class TopicPage {
         return topicsPollMultipleChecker;
     }
 
-	public List<WebElement> getActiveTopicsButton() {
-		return activeTopicsButton;
-	}
+    public List<WebElement> getActiveTopicsButton() {
+        return activeTopicsButton;
+    }
 
-	public WebElement getNewCodeReviewButton() {
-		return newCodeReviewButton;
-	}
+    public WebElement getNewCodeReviewButton() {
+        return newCodeReviewButton;
+    }
+
+    public WebElement getLastTopicLine() {
+        return lastTopicLine;
+    }
+
+    public WebElement getBranchName() {
+        return branchName;
+    }
 
 }
