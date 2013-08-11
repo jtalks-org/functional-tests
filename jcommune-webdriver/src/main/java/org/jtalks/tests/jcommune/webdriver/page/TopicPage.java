@@ -3,12 +3,20 @@ package org.jtalks.tests.jcommune.webdriver.page;
 
 
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
+import org.jtalks.tests.jcommune.webdriver.action.Branches;
+import org.jtalks.tests.jcommune.webdriver.action.Users;
+import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
+
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
 
 /**
@@ -91,6 +99,27 @@ public class TopicPage {
 
     public TopicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+    }
+
+    public void goToTopicPage() throws ValidationException {
+        Users.signIn(Users.signUp());
+
+        Topic topic = new Topic("subject123", "New final test answer");
+        if (topic.getBranch() == null) {
+            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
+            topic.withBranch(branch);
+        }
+        Branches.openBranch(topic.getBranch().getTitle());
+    }
+
+    public void goToTopicCreatePage() throws ValidationException {
+        topicPage.goToTopicPage();
+        topicPage.getNewButton().click();
+    }
+
+    public void goToReviewCreatePage() throws ValidationException {
+        topicPage.goToTopicPage();
+        topicPage.getNewCodeReviewButton().click();
     }
 
     //Getters

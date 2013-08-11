@@ -24,8 +24,7 @@ public final class PageHtmlValidator {
     private PageHtmlValidator(){
     }
 
-    public static void validatePage() {
-        String pageSource = driver.getPageSource();
+    public static void validatePage(String pageSource) {
         Validator htmlValidator = new ValidatorBuilder().html();
         ValidationResponse response = htmlValidator.validate(pageSource);
 
