@@ -17,7 +17,7 @@ import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
  */
 public final class PageHtmlValidator {
     private static final int ALLOWED_ERROR_COUNT = 0;
-    private static final int ALLOWED_WARNING_COUNT = 0;
+    private static final int ALLOWED_WARNING_COUNT = 1;
     private static final Logger logger = LoggerFactory.getLogger(PageHtmlValidator.class);
 
 
@@ -35,9 +35,9 @@ public final class PageHtmlValidator {
             logger.info("W3C validation errors: {}", errors);
         }
         Set<Defect> warnings = response.warnings();
-        int warningCount = errors.size();
+        int warningCount = warnings.size();
         logger.info("W3C validation warnings count: {}", warningCount);
-        if (errorCount > 0) {
+        if (warningCount > 0) {
             logger.info("W3C validation warnings: {}", warnings);
         }
 
