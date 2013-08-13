@@ -32,13 +32,13 @@ public class TopicPage {
     @FindBy(xpath = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]")
     private WebElement profileLink;
 
-    @FindBy(id = "new-topic-btn")
+    @FindBy(xpath = "//a[@class='new-topic-btn']")
     private WebElement newButton;
 
     @FindBy(xpath = "//ul[@class='breadcrumb']/li[last()]")
     private WebElement branchName;
 
-    @FindBy(id = "new-code-review-btn")
+    @FindBy(xpath = "//a[@class='new-code-review-btn']")
     private WebElement newCodeReviewButton;
 
     @FindBy(id = "topic.sticked1")
