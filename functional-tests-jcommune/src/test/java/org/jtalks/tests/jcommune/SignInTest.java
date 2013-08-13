@@ -29,7 +29,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 /**
  * @author Guram Savinov
  */
-public class SignIn {
+public class SignInTest {
     @BeforeMethod
     @Parameters("appUrl")
     public void setup(String appUrl) {
@@ -38,7 +38,7 @@ public class SignIn {
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void  signInWithoutActivationRegistrationShouldFailLogin_JC_564() throws Exception {
+    public void signInWithoutActivationRegistrationShouldFailLogin_JC_564() throws Exception {
         User user = Users.signUpWithoutActivation();
         Users.signIn(user);
     }
@@ -81,7 +81,7 @@ public class SignIn {
     }
 
     @Test
-    public void  usernameIsCaseInsensitiveShouldLogin() throws Exception {
+    public void usernameIsCaseInsensitiveShouldLogin() throws Exception {
         User user = Users.signUp();
         user.setUsername(user.getUsername().toUpperCase());
         Users.signIn(user);

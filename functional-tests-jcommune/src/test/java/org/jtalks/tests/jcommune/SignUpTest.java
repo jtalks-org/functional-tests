@@ -28,8 +28,10 @@ import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
-/** @author Guram Savinov */
-public class SignUp {
+/**
+ * @author Guram Savinov
+ */
+public class SignUpTest {
     @BeforeMethod
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) {
@@ -162,7 +164,7 @@ public class SignUp {
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.WRONG_PASSWORD_CONFIRMATION_ERROR)
-    public void passwordConfirmationSpaceAtTheEndShouldFailRegistration_JC_9()  throws Exception {
+    public void passwordConfirmationSpaceAtTheEndShouldFailRegistration_JC_9() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPasswordConfirmation(user.getPassword() + " ");
         Users.signUp(user);
@@ -170,7 +172,7 @@ public class SignUp {
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.NOT_UNIQUE_USERNAME_ERROR)
-    public void  usernameNotUniqueShouldFailRegistration_JC_11() throws Exception {
+    public void usernameNotUniqueShouldFailRegistration_JC_11() throws Exception {
         UserForRegistration uniqueUser = new UserForRegistration();
         Users.signUp(uniqueUser);
         UserForRegistration duplicatedUser = UserForRegistration.withUsername(uniqueUser.getUsername());
