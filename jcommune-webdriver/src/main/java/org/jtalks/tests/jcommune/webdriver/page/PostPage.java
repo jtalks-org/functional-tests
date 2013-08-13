@@ -41,9 +41,9 @@ public class PostPage {
 
     public static final String postsMessagesSel = "//div[@class='post']/table/tbody/tr/td[@class='post-content-td']/div";
 
-    public static final String editPostButtonSel = "//a[@id='edit_button' and contains(@href, 'posts')]";
+    public static final String editPostButtonSel = "//a[contains(@class,'edit_button') and contains(@href, 'posts')]";
 
-    public static final String editTopicButtonSel = "//a[@id='edit_button' and contains(@href, 'topics')]";
+    public static final String editTopicButtonSel = "//a[contains(@class,'edit_button') and contains(@href, 'topics')]";
 
     public static final String permanentUrlToPostSel = "//div[@class='jqimessage']";
 
