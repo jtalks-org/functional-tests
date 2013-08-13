@@ -1,8 +1,10 @@
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.BeforeMethod;
@@ -11,6 +13,7 @@ import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.PageHtmlValidator.validatePage;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
@@ -68,9 +71,12 @@ public class PagesW3CValidationTest {
 
     @Test
     public void postPage_Test() throws ValidationException, PermissionsDeniedException, InterruptedException {
-        Topic topic = new Topic("subject123", "New final test answer");
+        Topic topic = new Topic(StringHelp.randomString(40), StringHelp.randomString(100));
         String branchTitle = "TestBranch";
-        Users.signIn(Users.signUp());
+        User user = Users.signUp();
+        Users.signIn(user);
+        topic.withTopicStarter(user);
+        Topics.createTopic(topic);
         Topics.postAnswer(topic, branchTitle);
         String pageSource = driver.getPageSource();
         validatePage(pageSource);
