@@ -41,10 +41,10 @@ public class TopicPage {
     @FindBy(xpath = "//a[@class='new-code-review-btn'][1]")
     private WebElement newCodeReviewButton;
 
-    @FindBy(id = "topic.sticked1")
+    @FindBy(id = "sticked")
     private WebElement topicSticked;
 
-    @FindBy(id = "topic.announcement1")
+    @FindBy(id = "announcement")
     private WebElement topicAnnouncement;
 
     @FindBy(id = "subject")
