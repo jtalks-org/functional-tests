@@ -37,6 +37,7 @@ import java.util.Date;
 
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
 /**
@@ -176,7 +177,7 @@ public class Topics {
 
 
     private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
-        topicPage.getNewButton().click();
+        postPage.getNewButton().click();
         topicPage.getMainBodyArea().sendKeys(answer);
         clickAnswerToTopicButton(topic);
     }
