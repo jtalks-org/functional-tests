@@ -58,7 +58,7 @@ public class TopicTest {
     }
 
     @Test(enabled = true)
-    public void LoginAndCreateTopicValidateBrnanch() throws Exception {
+    public void LoginAndCreateTopicValidateBranch() throws Exception {
         Topic topic = new Topic("subject123", "message").withBranch("TestBranch");
         Topics.loginAndCreateTopic(topic);
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
@@ -140,5 +140,20 @@ public class TopicTest {
         topic.setPoll(poll);
         Topics.signUpAndCreateTopic(topic);
     }
+
+    @Test
+    public void checkTheEmailNotificationAboutAnswersWhenAutoSubscribeIsTrue_JC_221() throws Exception {
+//        String branchTitle = "TestBranch";
+//        Topic topic = Topics.loginAndCreateTopic(new Topic("Test", "message").withBranch(branchTitle));
+//
+//        new MainPage(driver).clickLogout();
+//
+//        User user = Users.signUp();
+//        Users.signIn(user);
+//        Topics.postAnswer(topic, branchTitle);
+
+
+    }
+
 
 }
