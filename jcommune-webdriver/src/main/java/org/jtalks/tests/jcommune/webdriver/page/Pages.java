@@ -13,6 +13,7 @@ public class Pages {
     public static BranchPage branchPage;
     public static PrivateMessagesPage pmPage;
     public static ProfilePage profilePage;
+    public static ExternalLinksPage externalLinksPage;
 
 
     public static void createAllPages(WebDriver driver) {
@@ -25,5 +26,6 @@ public class Pages {
         branchPage = new BranchPage(driver);
         pmPage = new PrivateMessagesPage(driver);
         profilePage = new ProfilePage(driver);
+        externalLinksPage = new ExternalLinksPage(driver);
     }
 }

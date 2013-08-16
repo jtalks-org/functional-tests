@@ -27,6 +27,14 @@ public class MainPage {
     public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
     public static final String languageSwitcherSel = "//div[@id='lang-selector-toggle']/a/img";
     public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
+    public static final String onAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/enter']";
+    public static final String offAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/exit']";
+
+    @FindBy(xpath = onAdminModeSel)
+    private WebElement onAdminModeBut;
+
+    @FindBy(xpath = offAdminModeSel)
+    private WebElement offAdminModeBut;
 
     @FindBy(xpath = languageDropdownMenuSel)
     private WebElement languageDropdownMenu;
@@ -160,5 +168,21 @@ public class MainPage {
 
     public WebElement getGuestsUsersOnlineCount() {
         return guestsUsersOnlineCount;
+    }
+
+    public WebElement getOnAdminModeBut() {
+        return onAdminModeBut;
+    }
+
+    public void setOnAdminModeBut(WebElement onAdminModeBut) {
+        this.onAdminModeBut = onAdminModeBut;
+    }
+
+    public WebElement getOffAdminModeBut() {
+        return offAdminModeBut;
+    }
+
+    public void setOffAdminModeBut(WebElement offAdminModeBut) {
+        this.offAdminModeBut = offAdminModeBut;
     }
 }

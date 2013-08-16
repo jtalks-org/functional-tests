@@ -44,7 +44,7 @@ public class User {
     }
 
     public static User admin() {
-        return new User("admin", "admin", "admin@jtalks.org");
+        return new User("jadmin", "jadmin", "jadmin@jtalks.org");
     }
 
     public String getUsername() {
