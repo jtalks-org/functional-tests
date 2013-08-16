@@ -6,9 +6,9 @@ import org.jtalks.tests.jcommune.utils.StringHelp;
  * @author stanislav bashkirtsev
  */
 public class ExternalLink {
-    private String title = StringHelp.randomString(35);
-    private String href = StringHelp.randomString(35);
-    private String hint = StringHelp.randomString(35);
+    private String title = StringHelp.randomString(30);
+    private String href = StringHelp.randomUrl(30);
+    private String hint = StringHelp.randomString(30);
 
     public ExternalLink() {
     }

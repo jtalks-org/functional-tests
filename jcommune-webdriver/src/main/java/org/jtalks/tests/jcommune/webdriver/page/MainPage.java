@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,6 +30,12 @@ public class MainPage {
     public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
     public static final String onAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/enter']";
     public static final String offAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/exit']";
+
+    @FindBy(className = "modal-body")
+    private List<WebElement> modalDialog;
+
+    @FindBy(id = "user-dropdown-administration-link")
+    private WebElement administrationDropdownMenu;
 
     @FindBy(xpath = onAdminModeSel)
     private WebElement onAdminModeBut;
@@ -184,5 +191,21 @@ public class MainPage {
 
     public void setOffAdminModeBut(WebElement offAdminModeBut) {
         this.offAdminModeBut = offAdminModeBut;
+    }
+
+    public WebElement getAdministrationDropdownMenu() {
+        return administrationDropdownMenu;
+    }
+
+    public void setAdministrationDropdownMenu(WebElement administrationDropdownMenu) {
+        this.administrationDropdownMenu = administrationDropdownMenu;
+    }
+
+    public List<WebElement> getModalDialog() {
+        return modalDialog;
+    }
+
+    public void setModalDialog(List<WebElement> modalDialog) {
+        this.modalDialog = modalDialog;
     }
 }

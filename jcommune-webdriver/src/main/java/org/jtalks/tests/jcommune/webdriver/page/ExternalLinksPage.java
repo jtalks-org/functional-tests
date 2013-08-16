@@ -11,6 +11,15 @@ import java.util.List;
 public class ExternalLinksPage {
     public static final String externalLinksSel = "//span[@id='externalLinks']/span/a";
 
+    public static final String externalLinksFromDialogSel = "//div[@class='modal-body']/table/tbody/tr";
+
+    public static final String externalLinksHrefFromDialogSel = "td[@class='link-url']";
+
+    //class name
+    public static final String externalLinksRemoveIconFromDialogSel = "icon-trash";
+
+    public static final String externalLinksEditIconFromDialogSel = "td/a[@class='icon-pencil']";
+
     @FindBy(id = "links_editor")
     private WebElement linksEditorBut;
 
@@ -37,6 +46,9 @@ public class ExternalLinksPage {
 
     @FindBy(xpath = externalLinksSel)
     private List<WebElement> externalLinks;
+
+    @FindBy(xpath = externalLinksFromDialogSel)
+    private List<WebElement> externalLinksFromDialog;
 
     public ExternalLinksPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);
@@ -112,5 +124,13 @@ public class ExternalLinksPage {
 
     public void setExternalLinks(List<WebElement> externalLinks) {
         this.externalLinks = externalLinks;
+    }
+
+    public List<WebElement> getExternalLinksFromDialog() {
+        return externalLinksFromDialog;
+    }
+
+    public void setExternalLinksFromDialog(List<WebElement> externalLinksFromDialog) {
+        this.externalLinksFromDialog = externalLinksFromDialog;
     }
 }
