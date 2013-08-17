@@ -21,6 +21,7 @@ public class ExternalLinksTest {
     @Parameters({"appUrl"})
     public void signInAsAdmin(String appUrl) {
         driver.get(appUrl);
+        mainPage.logOutIfLoggedIn(driver);
         try {
             Users.signIn(User.admin());
         } catch (ValidationException e) {

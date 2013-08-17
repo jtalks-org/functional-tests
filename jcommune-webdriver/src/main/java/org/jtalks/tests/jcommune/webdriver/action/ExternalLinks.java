@@ -24,9 +24,13 @@ public class ExternalLinks {
 
     public static boolean isVisibleOnMainPage(ExternalLink externalLink) {
         for (WebElement link : externalLinksPage.getExternalLinks()) {
-            //in browser href ends of "/"
+            /*
+            *in browser href ends of "/"
+            * if href is empty string than equal Title
+            */
             if (externalLink.getHref().equalsIgnoreCase(link.getAttribute("href").replaceAll("/$", "")) ||
-                    externalLink.getHref().equalsIgnoreCase(link.getAttribute("href"))) {
+                    externalLink.getHref().equalsIgnoreCase(link.getAttribute("href")) ||
+                    externalLink.getTitle().equals(link.getText())) {
                 return true;
             }
         }
@@ -52,11 +56,11 @@ public class ExternalLinks {
         boolean visible = false;
 
         for (WebElement webElement : checkDialog) {
-            if(webElement.isDisplayed()){
-              visible = true;
+            if (webElement.isDisplayed()) {
+                visible = true;
             }
         }
-        if(!visible){
+        if (!visible) {
             mainPage.getAdministrationDropdownMenu().click();
             mainPage.getOnAdminModeBut().click();
             externalLinksPage.getLinksEditorBut().click();
@@ -65,8 +69,11 @@ public class ExternalLinks {
 
     private static WebElement getLinkLine(ExternalLink externalLink) {
         for (WebElement link : externalLinksPage.getExternalLinksFromDialog()) {
+            //equal with "innerHTML" for browser and equal with "getText" for htmlunit
             if (link.findElement(By.xpath(externalLinksPage.externalLinksHrefFromDialogSel))
-                    .getAttribute("innerHTML").equalsIgnoreCase(externalLink.getHref())) {
+                    .getText().equalsIgnoreCase(externalLink.getHref()) ||
+                    link.findElement(By.xpath(externalLinksPage.externalLinksHrefFromDialogSel))
+                            .getAttribute("innerHTML").equalsIgnoreCase(externalLink.getHref())) {
                 return link;
             }
         }
