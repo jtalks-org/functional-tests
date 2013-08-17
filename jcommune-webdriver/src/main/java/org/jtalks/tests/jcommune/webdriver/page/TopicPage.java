@@ -101,6 +101,66 @@ public class TopicPage {
     @FindBy(xpath = "//*[@id='topics-table']/tbody/tr[last()]")
     WebElement lastTopicLine;
 
+    //TODO: Move to the separate class
+    @FindBy(xpath = "//a[parent::div[@class='btn-group']]")
+    List<WebElement> buttonsForFormatting;
+
+    @FindBy(id = "format_b")
+    WebElement formatBoldButton;
+
+    @FindBy(id = "format_i")
+    WebElement formatItalicButton;
+
+    @FindBy(id = "format_u")
+    WebElement formatUnderlineButton;
+
+    @FindBy(id = "format_s")
+    WebElement formatStrikedButton;
+
+    @FindBy(id = "format_highlight")
+    WebElement formatHighlightButton;
+
+    @FindBy(id = "format_left")
+    WebElement formatLeftButton;
+
+    @FindBy(id = "format_center")
+    WebElement formatCenterButton;
+
+    @FindBy(id = "format_right")
+    WebElement formatRightButton;
+
+    @FindBy(id = "format_list")
+    WebElement formatListButton;
+
+    @FindBy(id = "format_listeq")
+    WebElement formatListeqButton;
+
+    @FindBy(id = "select_color")
+    WebElement formatSelectColorButton;
+
+    @FindBy(xpath = "//a[@class='btn dropdown-toggle'][following-sibling::ul[@id='select_size']]")
+    WebElement formatSelectFontSizeButton;
+
+    @FindBy(id = "format_img")
+    WebElement formatImageButton;
+
+    @FindBy(id = "format_url")
+    WebElement formatUrlButton;
+
+
+    @FindBy(xpath = "//a[@class='btn dropdown-toggle'][following-sibling::ul[@id='select_code']]")
+    WebElement formatSyntaxHightLightButton;
+
+    @FindBy(id = "format_quote")
+    WebElement formatQuoteButton;
+
+    @FindBy(xpath = "//a[@class='btn dropdown-toggle'][following-sibling::ul[@id='select_indent']]")
+    WebElement formatSizeOfMarginButton;
+
+    @FindBy(xpath = "//a[contains(@onclick,'closeTags()')][parent::div[@class='btn-group']]")
+    WebElement formatCloseTagsButton;
+
+
 
     public TopicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -236,4 +296,87 @@ public class TopicPage {
         return branchName;
     }
 
+    public List<WebElement> getButtonsForFormatting() {
+        return buttonsForFormatting;
+    }
+
+    public WebElement getTopicsPollTitleField() {
+        return topicsPollTitleField;
+    }
+
+    public WebElement getTopicsPollItemsField() {
+        return topicsPollItemsField;
+    }
+
+    public WebElement getFormatBoldButton() {
+        return formatBoldButton;
+    }
+
+    public WebElement getFormatItalicButton() {
+        return formatItalicButton;
+    }
+
+    public WebElement getFormatUnderlineButton() {
+        return formatUnderlineButton;
+    }
+
+    public WebElement getFormatStrikedButton() {
+        return formatStrikedButton;
+    }
+
+    public WebElement getFormatHighlightButton() {
+        return formatHighlightButton;
+    }
+
+    public WebElement getFormatLeftButton() {
+        return formatLeftButton;
+    }
+
+    public WebElement getFormatCenterButton() {
+        return formatCenterButton;
+    }
+
+    public WebElement getFormatRightButton() {
+        return formatRightButton;
+    }
+
+    public WebElement getFormatListButton() {
+        return formatListButton;
+    }
+
+    public WebElement getFormatListeqButton() {
+        return formatListeqButton;
+    }
+
+    public WebElement getFormatSelectColorButton() {
+        return formatSelectColorButton;
+    }
+
+    public WebElement getFormatSelectFontSizeButton() {
+        return formatSelectFontSizeButton;
+    }
+
+    public WebElement getFormatImageButton() {
+        return formatImageButton;
+    }
+
+    public WebElement getFormatUrlButton() {
+        return formatUrlButton;
+    }
+
+    public WebElement getFormatSyntaxHightLightButton() {
+        return formatSyntaxHightLightButton;
+    }
+
+    public WebElement getFormatQuoteButton() {
+        return formatQuoteButton;
+    }
+
+    public WebElement getFormatSizeOfMarginButton() {
+        return formatSizeOfMarginButton;
+    }
+
+    public WebElement getFormatCloseTagsButton() {
+        return formatCloseTagsButton;
+    }
 }

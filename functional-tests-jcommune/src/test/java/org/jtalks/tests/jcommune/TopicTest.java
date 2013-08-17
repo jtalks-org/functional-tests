@@ -16,6 +16,7 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -31,6 +32,7 @@ import java.util.Date;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
 /**
  * @author Guram Savinov
@@ -141,19 +143,29 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
-    @Test
-    public void checkTheEmailNotificationAboutAnswersWhenAutoSubscribeIsTrue_JC_221() throws Exception {
-//        String branchTitle = "TestBranch";
-//        Topic topic = Topics.loginAndCreateTopic(new Topic("Test", "message").withBranch(branchTitle));
-//
-//        new MainPage(driver).clickLogout();
-//
-//        User user = Users.signUp();
-//        Users.signIn(user);
-//        Topics.postAnswer(topic, branchTitle);
-
-
+    @Test(enabled = true)
+    public void checkTheTheButtonForFormattingOnCreateTopicPage_JC_264() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Branches.openBranch("TestBranch");
+        Topics.clickCreateTopic();
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatBoldButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatItalicButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatUnderlineButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatStrikedButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatHighlightButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatLeftButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatCenterButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatRightButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatListButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatListeqButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatSelectColorButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatSelectFontSizeButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatImageButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatUrlButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatSyntaxHightLightButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatQuoteButton()));
+        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatCloseTagsButton()));
     }
-
 
 }

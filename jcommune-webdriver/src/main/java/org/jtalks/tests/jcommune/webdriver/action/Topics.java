@@ -36,9 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 /**
  * Contain topic actions like creating, deleting etc.
@@ -325,7 +323,7 @@ public class Topics {
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
-    private static void clickCreateTopic() throws PermissionsDeniedException {
+    public static void clickCreateTopic() throws PermissionsDeniedException {
         try {
             topicPage.getNewButton().click();
         } catch (NoSuchElementException e) {
@@ -346,6 +344,16 @@ public class Topics {
             return new SimpleDateFormat(format).format(date);
         }
         return null;
+    }
+
+    public static boolean checkTheButtonForFormatting(WebElement element) throws PermissionsDeniedException {
+        if (topicPage.getButtonsForFormatting().size() == 0) {
+            return false;
+        }
+        if (topicPage.getButtonsForFormatting().contains(element)) {
+            return true;
+        }
+        return  false;
     }
 
 
