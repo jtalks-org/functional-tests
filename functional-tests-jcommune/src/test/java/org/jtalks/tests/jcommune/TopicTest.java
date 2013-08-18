@@ -16,7 +16,6 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.StringHelp;
-import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -147,8 +146,7 @@ public class TopicTest {
     public void checkTheTheButtonForFormattingOnCreateTopicPage_JC_264() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
-        Branches.openBranch("TestBranch");
-        Topics.clickCreateTopic();
+        Topics.openCreateTopicPageInBranch("TestBranch");
         Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatBoldButton()));
         Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatItalicButton()));
         Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatUnderlineButton()));

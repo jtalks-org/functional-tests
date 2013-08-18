@@ -323,7 +323,7 @@ public class Topics {
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
-    public static void clickCreateTopic() throws PermissionsDeniedException {
+    private static void clickCreateTopic() throws PermissionsDeniedException {
         try {
             topicPage.getNewButton().click();
         } catch (NoSuchElementException e) {
@@ -355,6 +355,12 @@ public class Topics {
         }
         return  false;
     }
+
+    public static void openCreateTopicPageInBranch (String branchTitle) throws PermissionsDeniedException {
+        Branches.openBranch(branchTitle);
+        clickCreateTopic();
+    }
+
 
 
     /**
