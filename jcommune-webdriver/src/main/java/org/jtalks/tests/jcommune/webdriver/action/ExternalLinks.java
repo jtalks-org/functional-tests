@@ -1,8 +1,8 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
 import org.openqa.selenium.By;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
@@ -45,6 +45,16 @@ public class ExternalLinks {
         externalLinksPage.getRemoveLinkBut().click();
     }
 
+    public static void exitFromAdministrationMode() {
+        mainPage.getAdministrationDropdownMenu().click();
+        mainPage.getOffAdminModeBut().click();
+    }
+
+    public static void enterAdministrationMode() {
+        mainPage.getAdministrationDropdownMenu().click();
+        mainPage.getOnAdminModeBut().click();
+    }
+
     private static void fillLinkFields(ExternalLink externalLink) {
         externalLinksPage.getTitleField().sendKeys(externalLink.getTitle());
         externalLinksPage.getUrlField().sendKeys(externalLink.getHref());
@@ -61,19 +71,15 @@ public class ExternalLinks {
             }
         }
         if (!visible) {
-            mainPage.getAdministrationDropdownMenu().click();
-            mainPage.getOnAdminModeBut().click();
+            enterAdministrationMode();
             externalLinksPage.getLinksEditorBut().click();
         }
     }
 
     private static WebElement getLinkLine(ExternalLink externalLink) {
         for (WebElement link : externalLinksPage.getExternalLinksFromDialog()) {
-            //equal with "innerHTML" for browser and equal with "getText" for htmlunit
-            if (link.findElement(By.xpath(externalLinksPage.externalLinksHrefFromDialogSel))
-                    .getText().equalsIgnoreCase(externalLink.getHref()) ||
-                    link.findElement(By.xpath(externalLinksPage.externalLinksHrefFromDialogSel))
-                            .getAttribute("innerHTML").equalsIgnoreCase(externalLink.getHref())) {
+            WebElement href = link.findElement(By.xpath(externalLinksPage.externalLinksHrefFromDialogSel));
+            if (DriverMethodHelp.getTextFromTag(href).equals(externalLink.getHref())) {
                 return link;
             }
         }

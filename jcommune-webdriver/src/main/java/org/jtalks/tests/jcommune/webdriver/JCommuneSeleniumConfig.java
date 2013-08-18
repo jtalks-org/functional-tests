@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver;
 
 import org.jtalks.tests.jcommune.webdriver.page.Pages;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -77,6 +78,10 @@ public class JCommuneSeleniumConfig {
             url = defaultUrl;
         }
         return url;
+    }
+
+    public static Capabilities getCapabilities(){
+        return ((RemoteWebDriver) driver).getCapabilities();
     }
 
     public void printSeleniumSessionId(String currentTestClass) {

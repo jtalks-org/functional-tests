@@ -12,6 +12,7 @@ import org.testng.annotations.*;
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomUrl;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import static org.jtalks.tests.jcommune.webdriver.action.ExternalLinks.exitFromAdministrationMode;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 import static org.testng.Assert.assertTrue;
 
@@ -37,8 +38,7 @@ public class ExternalLinksTest {
 
     @AfterMethod
     public void destroyCase() {
-        mainPage.getAdministrationDropdownMenu().click();
-        mainPage.getOffAdminModeBut().click();
+        exitFromAdministrationMode();
     }
 
     @Test
