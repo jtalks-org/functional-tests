@@ -13,6 +13,17 @@ Add new configuration for type "TestNG". Fill **Name** and **Suite** fields with
 i.e. %path_to_project%/functional-tests-jcommune/src/test/resources/testng.xml.
 Fill "Working directory" field with %path_to_project%. Press "Ok".
 
+####Running with Local Selenium Server
+If you'd like to use your local browser to run tests, [download selenium server|http://selenium.googlecode.com/files/selenium-java-2.35.0.zip], unzip it and run as `java -jar selenium-server-standalone-2.35.0.jar`. It will start on http://localhost:4444/wd/console. Now in IntelliJ you have to specify env vars: **Edit Configuration -> Environment Variables**:
+- SELENIUM_VERSION - your browser version (e.g. 20)
+- SELENIUM_BROWSER - your browser name (firefox)
+- SELENIUM_URL - http://localhost:4444/wd/hub
+
+In your testng.xml file you should also set:
+```xml
+<parameter name="webDriverUrl" value="http://localhost:4444/wd/hub"/>
+```
+
 ###Functional Tests Best Practices
 * Do not use XPath if possible, use IDs or CSS. XPaths depend on all the elements in the hierarchy of HTML. If you need
   to find a link and you're doing something like this `//tbody/tr/td/a[contains(@href,'branches')]` you'll get in
