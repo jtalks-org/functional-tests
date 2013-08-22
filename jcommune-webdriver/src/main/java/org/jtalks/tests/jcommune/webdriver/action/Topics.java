@@ -46,9 +46,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  * @author Guram Savinov
  */
 public class Topics {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
-
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(Topics.class);
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
     /**

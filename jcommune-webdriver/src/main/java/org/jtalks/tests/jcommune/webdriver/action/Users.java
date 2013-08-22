@@ -44,7 +44,6 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
  * @author Guram Savinov
  */
 public class Users {
-
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
             "подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
@@ -62,7 +61,8 @@ public class Users {
 
         // Check that link to the user profile present on the page
         if (!mainPage.userIsLoggedIn()) {
-            throw new CouldNotOpenPageException("profile page for the user: " + user.getEmail());
+            LOGGER.error("Could not find username in top right corner: {}", driver.getPageSource());
+            throw new CouldNotOpenPageException("User does not appear to be logged on: " + user.getUsername());
         }
     }
 
