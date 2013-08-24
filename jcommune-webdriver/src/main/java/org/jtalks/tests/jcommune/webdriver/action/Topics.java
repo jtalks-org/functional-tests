@@ -26,7 +26,9 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.ColorPalettePage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -36,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 /**
@@ -356,19 +359,84 @@ public class Topics {
         return  false;
     }
 
-    public static void openCreateTopicPageInBranch (String branchTitle) throws PermissionsDeniedException {
+    public static void openCreateTopicScreenInBranch(String branchTitle) throws PermissionsDeniedException {
         Branches.openBranch(branchTitle);
         clickCreateTopic();
     }
 
+    public static void openColorPalette() throws PermissionsDeniedException {
+        clickOnSelectColorButton();
+        try {
+            driver.findElement(By.xpath(ColorPalettePage.bbColorFormSel));
+        } catch (NoSuchElementException e) {
+            throw new CouldNotOpenPageException(
+                    "Color Palette form; may be JavaScript disabled in browser settings", e);
+        }
+    }
 
+    private static void clickOnSelectColorButton() {
+        if (topicPage.getFormatSelectColorButton().isDisplayed()){
+            topicPage.getFormatSelectColorButton().click();
+        }
+    }
 
     /**
-     * Create new topic
+     * Method get the color code from specific row and column of the table.
      *
-     * @param topic
-     *            the topic representation
-     * @throws PermissionsDeniedException
+     * @param row    the row of the table. Should start from 1
+     * @param column the column of the table. Should start from 1
+     * @return color code in String format
      */
+    public static WebElement getColorElementFromPalette(int row, int column) {
+        return colorPalettePage.getColorPalette().findElement(
+                new By.ByXPath("tr[" + row + "]/td[" + column + "]"));
+    }
+
+    private static WebElement getElementFromPalette(int row, int column) {
+        return colorPalettePage.getColorPalette().findElement(
+                new By.ByXPath("tr[" + row + "]/td[" + column + "]/a"));
+    }
+
+
+    public static String getColorInPalette(int row, int column) throws PermissionsDeniedException {
+        return getColorElementFromPalette(row, column).getCssValue("background-color");
+    }
+
+    public static String getSelectedColor() throws PermissionsDeniedException {
+        return colorPalettePage.getBbColorSelectedColor().getCssValue("background-color");
+    }
+
+    public static void setTitle(String title) {
+        topicPage.getSubjectField().sendKeys(title);
+    }
+
+    public static void setMessage(String test) {
+        topicPage.getMainBodyArea().sendKeys(test);
+    }
+
+    public static void selectTextInPostBody(){
+        topicPage.getMainBodyArea().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+    }
+
+    public static void confirmSelectedColor () {
+        colorPalettePage.getBbColorOkButton().click();
+    }
+
+    public static void openPreviewPage () {
+        topicPage.getPreviewButton().click();
+    }
+
+    public static void saveTopic () {
+        topicPage.getPostButton().click();
+    }
+
+    public static void selectColorInPalette(int row, int column) {
+        getElementFromPalette(row, column).click();
+    }
+
+    public static String getTextColorFromPreviewPage() throws InterruptedException {
+          return topicPage.getMessageSpanElement().getCssValue("color");
+    }
+
 
 }

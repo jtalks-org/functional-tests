@@ -31,7 +31,6 @@ import java.util.Date;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
 /**
  * @author Guram Savinov
@@ -142,28 +141,21 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
-    @Test(enabled = true)
-    public void checkTheTheButtonForFormattingOnCreateTopicPage_JC_264() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
-        Topics.openCreateTopicPageInBranch("TestBranch");
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatBoldButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatItalicButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatUnderlineButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatStrikedButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatHighlightButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatLeftButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatCenterButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatRightButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatListButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatListeqButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatSelectColorButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatSelectFontSizeButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatImageButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatUrlButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatSyntaxHightLightButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatQuoteButton()));
-        Assert.assertTrue(Topics.checkTheButtonForFormatting(topicPage.getFormatCloseTagsButton()));
+    @Test
+    public void checkBbCodeColorForNewTopicPage_JC_278() throws Exception {
+        User existentUser = new User("P_10hkgd", "123456");
+        Users.signIn(existentUser);
+        Topics.openCreateTopicScreenInBranch("TestBranch");
+        Topics.setTitle("Check BB code 'Color' JC-278");
+        Topics.setMessage("test");
+        Topics.selectTextInPostBody();
+        Topics.openColorPalette();
+        Topics.selectColorInPalette(12, 1);
+        String expectedColor = Topics.getColorInPalette(12, 1);
+        Assert.assertTrue(expectedColor.equals(Topics.getSelectedColor()));
+        Topics.confirmSelectedColor();
+        Topics.openPreviewPage();
+        Assert.assertTrue(expectedColor.equals(Topics.getTextColorFromPreviewPage()));
+        Topics.saveTopic();
     }
-
 }

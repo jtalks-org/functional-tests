@@ -23,6 +23,9 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  */
 public class TopicPage {
 
+    public static final String postBodySel = "postBody";
+    public static final String messageSpanSel = "//*[@class='word-wrap']/span[1]";
+
     @FindBy(xpath = "//div[@class='pagination pull-right forum-pagination']/ul/li/a")
     private List<WebElement> topicsButtons;
 
@@ -50,7 +53,7 @@ public class TopicPage {
     @FindBy(id = "subject")
     private WebElement subjectField;
 
-    @FindBy(id = "postBody")
+    @FindBy(id = postBodySel)
     private WebElement mainBodyArea;
 
     @FindBy(id = "post")
@@ -147,7 +150,6 @@ public class TopicPage {
     @FindBy(id = "format_url")
     WebElement formatUrlButton;
 
-
     @FindBy(xpath = "//a[@class='btn dropdown-toggle'][following-sibling::ul[@id='select_code']]")
     WebElement formatSyntaxHightLightButton;
 
@@ -160,7 +162,14 @@ public class TopicPage {
     @FindBy(xpath = "//a[contains(@onclick,'closeTags()')][parent::div[@class='btn-group']]")
     WebElement formatCloseTagsButton;
 
+    @FindBy(xpath = "//form[@role='dialog']")
+    WebElement selectColorModalForm;
 
+    @FindBy(id = "preview")
+    WebElement previewButton;
+
+    @FindBy(xpath = messageSpanSel)
+    private WebElement messageSpan;
 
     public TopicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -186,6 +195,8 @@ public class TopicPage {
         topicPage.goToTopicPage();
         topicPage.getNewCodeReviewButton().click();
     }
+
+
 
     //Getters
     public WebElement getNewButton() {
@@ -379,4 +390,21 @@ public class TopicPage {
     public WebElement getFormatCloseTagsButton() {
         return formatCloseTagsButton;
     }
+
+    public WebElement getSelectColorModalForm() {
+        return selectColorModalForm;
+    }
+
+    public String getPostBodySel() {
+        return postBodySel;
+    }
+
+    public WebElement getPreviewButton() {
+        return previewButton;
+    }
+
+    public WebElement getMessageSpanElement() {
+        return messageSpan;
+    }
+
 }
