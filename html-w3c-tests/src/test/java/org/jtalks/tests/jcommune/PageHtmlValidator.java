@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-
 /**
  * @author Leonid Kazancev
  */
@@ -21,7 +19,7 @@ public final class PageHtmlValidator {
     private static final Logger logger = LoggerFactory.getLogger(PageHtmlValidator.class);
 
 
-    private PageHtmlValidator(){
+    private PageHtmlValidator() {
     }
 
     public static void validatePage(String pageSource) {
@@ -41,7 +39,11 @@ public final class PageHtmlValidator {
             logger.info("W3C validation warnings: {}", warnings);
         }
 
+        if (errorCount > 0) {
+            logger.info("Validated page source: {}", pageSource);
+        }
+
         Assert.assertTrue("Error count exceed.", errorCount <= ALLOWED_ERROR_COUNT);
-        Assert.assertTrue("Warning count exceed.", warnings.size()  <= ALLOWED_WARNING_COUNT);
+        Assert.assertTrue("Warning count exceed.", warnings.size() <= ALLOWED_WARNING_COUNT);
     }
 }
