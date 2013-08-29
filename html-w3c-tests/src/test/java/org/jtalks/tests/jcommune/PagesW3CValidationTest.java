@@ -81,4 +81,12 @@ public class PagesW3CValidationTest {
         String pageSource = driver.getPageSource();
         validatePage(pageSource);
     }
+
+    /*
+      Last method, without asserts. Created for checking problem of empty response from getPageSource() method.
+     */
+    @Test
+    public void zzzlast_Test() throws ValidationException {
+        topicPage.goToReviewCreatePage();
+    }
 }
