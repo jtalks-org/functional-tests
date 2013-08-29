@@ -29,43 +29,43 @@ public class PagesW3CValidationTest {
     }
 
     @Test
-    public void mainPage_Test() throws ValidationException {
-        String pageSource = driver.getPageSource();
+    public void mainPage_Test() throws ValidationException, InterruptedException {
+        String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
-    public void signUpPage_Test() throws ValidationException {
+    public void signUpPage_Test() throws ValidationException, InterruptedException {
         mainPage.clickRegistration();
-        String pageSource = driver.getPageSource();
+        String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
-    public void signInPage_Test() throws ValidationException {
+    public void signInPage_Test() throws ValidationException, InterruptedException {
         mainPage.clickLogin();
-        String pageSource = driver.getPageSource();
+        String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void topicPage_Test() throws ValidationException, PermissionsDeniedException, InterruptedException {
         topicPage.goToTopicPage();
-        String pageSource = driver.getPageSource();
+        String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void topicCreatePage_Test() throws ValidationException, PermissionsDeniedException, InterruptedException {
         topicPage.goToTopicCreatePage();
-        String pageSource = driver.getPageSource();
+        String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void codeReviewCreatePage_Test() throws ValidationException, PermissionsDeniedException, InterruptedException {
         topicPage.goToReviewCreatePage();
-        String pageSource = driver.getPageSource();
+        String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
@@ -78,15 +78,12 @@ public class PagesW3CValidationTest {
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
         Topics.postAnswer(topic, branchTitle);
-        String pageSource = driver.getPageSource();
+        String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
-    /*
-      Last method, without asserts. Created for checking problem of empty response from getPageSource() method.
-     */
-    @Test
-    public void zzzlast_Test() throws ValidationException {
-        topicPage.goToReviewCreatePage();
+    private static String getPageSource() throws InterruptedException {
+        Thread.sleep(5000);
+        return driver.getPageSource();
     }
 }
