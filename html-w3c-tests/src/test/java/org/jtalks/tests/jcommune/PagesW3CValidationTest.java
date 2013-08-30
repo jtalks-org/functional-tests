@@ -83,7 +83,7 @@ public class PagesW3CValidationTest {
     }
 
     private static String getPageSource() throws InterruptedException {
-        Thread.sleep(5000);
+//        Thread.sleep(5000);
         return driver.getPageSource();
     }
 }
