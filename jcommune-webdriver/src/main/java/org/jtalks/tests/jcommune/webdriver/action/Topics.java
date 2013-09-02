@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
@@ -147,7 +148,7 @@ public class Topics {
 //        }
     }
 
-    private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
+    public static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
         boolean found = false;
 
         for (WebElement topics : topicPage.getTopicsList()) {
@@ -346,7 +347,6 @@ public class Topics {
         return null;
     }
 
-
     /**
      * Create new topic
      *
@@ -354,5 +354,7 @@ public class Topics {
      *            the topic representation
      * @throws PermissionsDeniedException
      */
+
+
 
 }

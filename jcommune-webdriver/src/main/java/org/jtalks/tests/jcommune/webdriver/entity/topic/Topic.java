@@ -26,7 +26,11 @@ public class Topic {
     private CodeReview codeReview;
     private List<Post> posts = new ArrayList<Post>();
     private Set<User> subscribers = new HashSet<User>();
+    private String firstPostContent;
 
+    public Topic() {
+
+    }
     public Topic(String title, String firstPostContent) {
         this.title = title;
         posts.add(new Post(firstPostContent));
@@ -150,5 +154,9 @@ public class Topic {
 
     public Post getLastPost() {
         return getPosts().get(getPosts().size() - 1);
+    }
+
+    public void setFirstPostContent(String firstPostContent) {
+        this.firstPostContent = firstPostContent;
     }
 }

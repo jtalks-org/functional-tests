@@ -22,6 +22,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -141,4 +142,11 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
+    @Test
+    public void createTopicWithEmptyTitleShouldFail() throws ValidationException, PermissionsDeniedException {
+        User user = new User("P_10hkgd", "123456");
+        Users.signIn(user);
+        Topic topic = new Topic("", "message");
+        Topics.createTopic(topic);
+    }
 }
