@@ -21,6 +21,7 @@ import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
+import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.Assert;
@@ -44,11 +45,21 @@ public class TopicTest {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
     }
-
+    /*
     @Test
     public void signUpAndCreateTopic() throws Exception {
         Topic topic = new Topic("subject", "message");
         Topics.signUpAndCreateTopic(topic);
+    }   */
+
+    @Test
+    public void signUpAndCreateTopic() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("subject", "message");
+        //topic.setTitle("subject");
+        //topic.setFirstPostContent("message");
+        Topics.createTopic(topic);
     }
 
     @Test(enabled = false)
