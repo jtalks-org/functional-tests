@@ -324,7 +324,8 @@ public class Topics {
     private static void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
+        //topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
+        topicPage.getSubjectField().sendKeys(topic.getTitle());
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
