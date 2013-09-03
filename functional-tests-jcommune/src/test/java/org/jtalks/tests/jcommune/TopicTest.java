@@ -24,10 +24,9 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.MainPage;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.Date;
 
@@ -38,13 +37,31 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class TopicTest {
-
+    /*
     @BeforeMethod
     @Parameters({"appUrl"})
-    public void setupCase(String appUrl) {
+    public void setupCase(String appUrl) throws ValidationException {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
+
+
     }
+    */
+
+    @BeforeSuite
+    @Parameters({"appUrl"})
+    public void setupClass(String appUrl) throws ValidationException {
+        driver.get(appUrl);
+        mainPage.logOutIfLoggedIn(driver);
+
+        //User user = Users.signUp();
+        //Users.signIn(user);
+        User user = new User("P_10hkgd", "123456");
+        Users.signIn(user);
+
+    }
+
+
     /*
     @Test
     public void signUpAndCreateTopic() throws Exception {
@@ -54,8 +71,6 @@ public class TopicTest {
 
     @Test
     public void signUpAndCreateTopic() throws ValidationException, PermissionsDeniedException {
-        User user = Users.signUp();
-        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
         //topic.setTitle("subject");
         //topic.setFirstPostContent("message");
@@ -155,8 +170,8 @@ public class TopicTest {
 
     @Test
     public void createTopicWithEmptyTitleShouldFail() throws ValidationException, PermissionsDeniedException {
-        User user = new User("P_10hkgd", "123456");
-        Users.signIn(user);
+        //User user = new User("P_10hkgd", "123456");
+        //Users.signIn(user);
         Topic topic = new Topic("", "message");
         Topics.createTopic(topic);
     }

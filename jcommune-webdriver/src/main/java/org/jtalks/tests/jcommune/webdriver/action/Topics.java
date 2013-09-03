@@ -26,6 +26,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.MainPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -40,6 +41,8 @@ import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+
 
 /**
  * Contain topic actions like creating, deleting etc.
@@ -112,6 +115,7 @@ public class Topics {
      */
 
     public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+        gotoMainPage();
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
@@ -227,7 +231,6 @@ public class Topics {
         return false;
     }
 
-
     public static boolean senseToPageNext(Topic topic) {
         WebElement bottomRowOfTopics = topicPage.getLastTopicLine();
         System.out.println(bottomRowOfTopics.getText());
@@ -287,6 +290,7 @@ public class Topics {
      * @throws PermissionsDeniedException
      */
     private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException {
+        gotoMainPage();
         Branches.openBranch(topic.getBranch().getTitle());
         clickCreateTopic();
         fillTopicFields(topic);
@@ -332,6 +336,9 @@ public class Topics {
         }
     }
 
+    private static void gotoMainPage() {
+        mainPage.clickForumsTitle();
+    }
 
     /**
      * Returns date in string type.
