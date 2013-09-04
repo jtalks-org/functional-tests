@@ -37,43 +37,19 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class TopicTest {
-    /*
+
     @BeforeMethod
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) throws ValidationException {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
-
-
     }
-    */
 
-    @BeforeSuite
-    @Parameters({"appUrl"})
-    public void setupClass(String appUrl) throws ValidationException {
-        driver.get(appUrl);
-        mainPage.logOutIfLoggedIn(driver);
-
-        //User user = Users.signUp();
-        //Users.signIn(user);
-        User user = new User("P_10hkgd", "123456");
+    @Test
+    public void createTopicWithTitleAndFirstPost() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
         Users.signIn(user);
-
-    }
-
-
-    /*
-    @Test
-    public void signUpAndCreateTopic() throws Exception {
         Topic topic = new Topic("subject", "message");
-        Topics.signUpAndCreateTopic(topic);
-    }   */
-
-    @Test
-    public void signUpAndCreateTopic() throws ValidationException, PermissionsDeniedException {
-        Topic topic = new Topic("subject", "message");
-        //topic.setTitle("subject");
-        //topic.setFirstPostContent("message");
         Topics.createTopic(topic);
     }
 
