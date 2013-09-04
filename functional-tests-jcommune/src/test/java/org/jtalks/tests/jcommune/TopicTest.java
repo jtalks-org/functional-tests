@@ -68,11 +68,11 @@ public class TopicTest {
     }
 
     @Test
-    public void signUpAndCreateTopicInBranch() throws Exception {
-        Topic topic = new Topic("subject123", "message").withBranch("TestBranch2");
+    public void createTopicInBranch() throws ValidationException, PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
-        topic.withTopicStarter(user);
+        Topic topic = new Topic("subject123", "message").withBranch("TestBranch2");
+        topic.withTopicStarter(user);//?
         Topics.createTopic(topic);
     }
 
