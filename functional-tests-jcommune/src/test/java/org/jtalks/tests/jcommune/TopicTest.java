@@ -77,7 +77,7 @@ public class TopicTest {
     }
 
     @Test
-    public void signUpAndCreateCodeReviewInBranch() throws Exception {
+    public void createCodeReviewInBranch() throws Exception {
         Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("TestBranch");
         User user = Users.signUp();
         Users.signIn(user);
@@ -144,8 +144,10 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
-    @Test
+    //@Test
     public void createTopicWithEmptyTitleShouldFail() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
         //User user = new User("P_10hkgd", "123456");
         //Users.signIn(user);
         Topic topic = new Topic("", "message");
