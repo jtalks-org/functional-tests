@@ -26,6 +26,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <testFilesDirectory>${project.basedir}/src/test/resources</testFilesDirectory>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.lazerycode.jmeter</groupId>
