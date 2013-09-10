@@ -32,6 +32,7 @@ import java.util.Date;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 
 /**
  * @author Guram Savinov
@@ -46,11 +47,12 @@ public class TopicTest {
     }
 
     @Test
-    public void createTopicWithTitleAndFirstPost() throws ValidationException, PermissionsDeniedException {
+    public void createTopicWithTitleAndMessage_JC_13() throws ValidationException, PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("subject", "message");
         Topics.createTopic(topic);
+
     }
 
     @Test(enabled = false)
@@ -61,7 +63,7 @@ public class TopicTest {
     }
 
     @Test(enabled = true)
-    public void LoginAndCreateTopicValidateBrnanch() throws Exception {
+    public void LoginAndCreateTopicValidateBranch() throws Exception {
         Topic topic = new Topic("subject123", "message").withBranch("TestBranch");
         Topics.loginAndCreateTopic(topic);
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
@@ -144,13 +146,30 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
-    //@Test
-    public void createTopicWithEmptyTitleShouldFail() throws ValidationException, PermissionsDeniedException {
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+    public void createTopicWithEmptyTitleShouldFail_JC_25() throws ValidationException, PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
-        //User user = new User("P_10hkgd", "123456");
-        //Users.signIn(user);
         Topic topic = new Topic("", "message");
         Topics.createTopic(topic);
     }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithEmptyMessageShouldFail_JC_26() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("subject", "");
+        Topics.createTopic(topic);
+
+    }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithoutData_JC_24() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("", "");
+        Topics.createTopic(topic);
+
+    }
+
 }

@@ -101,6 +101,11 @@ public class TopicPage {
     @FindBy(xpath = "//*[@id='topics-table']/tbody/tr[last()]")
     WebElement lastTopicLine;
 
+    public static final String EMPTY_SUBJECT_ERROR = "Не может быть пустым\n";
+
+    public static final String EMPTY_BODY_ERROR = "Не может быть пустым\n" +
+            "Размер должен быть между 2 и 20000";
+
 
     public TopicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);

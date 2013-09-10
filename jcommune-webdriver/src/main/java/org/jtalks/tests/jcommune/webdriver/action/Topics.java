@@ -27,6 +27,7 @@ import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.MainPage;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -114,7 +115,7 @@ public class Topics {
      * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
      */
 
-    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
         gotoMainPage();
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
@@ -209,6 +210,7 @@ public class Topics {
     }
 
 
+
     private static boolean openNextPage(int pagesToCheck) {
         int max = 0;
         if (topicPage.getActiveTopicsButton().size() < 1) {
@@ -289,15 +291,31 @@ public class Topics {
      * @param topic the topic representation
      * @throws PermissionsDeniedException
      */
-    private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException {
+    private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException, ValidationException {
         gotoMainPage();
         Branches.openBranch(topic.getBranch().getTitle());
         clickCreateTopic();
         fillTopicFields(topic);
         fillPollSpecificFields(topic.getPoll());
         clickAnswerToTopicButton(topic);
+        checkFormValidation();
         topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
         return topic;
+    }
+
+    private static void checkFormValidation() throws ValidationException {
+
+        if (topicPage.getSubjectErrorMessage().isDisplayed() || topicPage.getBodyErrorMessage().isDisplayed()) {
+            String failedFields = "";
+            try {
+                failedFields += topicPage.getSubjectErrorMessage().getText();
+                failedFields += topicPage.getBodyErrorMessage().getText();
+                } catch (NoSuchElementException e) {
+                    failedFields += "\n";
+
+            }
+            throw new ValidationException(failedFields);
+        }
     }
 
     private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
