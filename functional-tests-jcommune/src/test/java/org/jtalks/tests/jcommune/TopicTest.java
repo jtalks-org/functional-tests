@@ -51,6 +51,33 @@ public class TopicTest {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("subject", "message");
+        Topic createdTopic = Topics.createTopic(topic);
+        Assert.assertTrue(Topics.isCreated(createdTopic));
+
+    }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+    public void createTopicWithEmptyTitleShouldFail_JC_25() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("", "message");
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithEmptyMessageShouldFail_JC_26() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("subject", "");
+        Topics.createTopic(topic);
+
+    }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithoutData_JC_24() throws ValidationException, PermissionsDeniedException {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("", "");
         Topics.createTopic(topic);
 
     }
@@ -146,30 +173,5 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
-    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
-    public void createTopicWithEmptyTitleShouldFail_JC_25() throws ValidationException, PermissionsDeniedException {
-        User user = Users.signUp();
-        Users.signIn(user);
-        Topic topic = new Topic("", "message");
-        Topics.createTopic(topic);
-    }
-
-    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithEmptyMessageShouldFail_JC_26() throws ValidationException, PermissionsDeniedException {
-        User user = Users.signUp();
-        Users.signIn(user);
-        Topic topic = new Topic("subject", "");
-        Topics.createTopic(topic);
-
-    }
-
-    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithoutData_JC_24() throws ValidationException, PermissionsDeniedException {
-        User user = Users.signUp();
-        Users.signIn(user);
-        Topic topic = new Topic("", "");
-        Topics.createTopic(topic);
-
-    }
 
 }

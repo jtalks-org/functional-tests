@@ -55,6 +55,55 @@ public class Topics {
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
     /**
+     * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
+     * otherwise the topic is created in a {@link Topic#getBranch()}.
+     *
+     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
+     * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
+     */
+
+    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        gotoMainPage();
+        if (topic.getBranch() == null) {
+            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
+            topic.withBranch(branch);
+        }
+
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
+        //checkFormValidation();
+        return topic;
+    }
+
+    private static void checkFormValidation() throws ValidationException {
+        Boolean subjectErr = topicPage.getSubjectErrorMessage().isDisplayed();
+        Boolean bodyErr =  topicPage.getBodyErrorMessage().isDisplayed();
+
+        try {
+        if (subjectErr || bodyErr) {
+            String failedFields = "";
+            try {
+                failedFields += topicPage.getSubjectErrorMessage().getText();
+                failedFields += topicPage.getBodyErrorMessage().getText();
+            } catch (NoSuchElementException e) {
+                failedFields += "\n";
+
+            }
+            throw new ValidationException(failedFields);
+        }
+        } catch (NoSuchElementException e) {
+            //failedFields += "\n";
+
+        }
+        //throw new ValidationException(failedFields);
+    }
+
+
+    /**
      * Sign-up new user and create new topic
      *
      * @param topic the topic representation private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
@@ -63,6 +112,8 @@ public class Topics {
      * @throws ValidationException        if specified topic does not pass forum validation
      * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
      */
+
+
     public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
         User user = Users.signUp();
         Users.signIn(user);
@@ -107,29 +158,7 @@ public class Topics {
         return topicDate.isAfter(dat.getMillis());
     }
 
-    /**
-     * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
-     * otherwise the topic is created in a {@link Topic#getBranch()}.
-     *
-     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
-     * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
-     */
 
-    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
-        gotoMainPage();
-        if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
-            topic.withBranch(branch);
-        }
-
-        Branches.openBranch(topic.getBranch().getTitle());
-        clickCreateTopic();
-        fillTopicFields(topic);
-        fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
-        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        return topic;
-    }
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
@@ -284,20 +313,6 @@ public class Topics {
     }
 
 
-    private static void checkFormValidation() throws ValidationException {
-
-        if (topicPage.getSubjectErrorMessage().isDisplayed() || topicPage.getBodyErrorMessage().isDisplayed()) {
-            String failedFields = "";
-            try {
-                failedFields += topicPage.getSubjectErrorMessage().getText();
-                failedFields += topicPage.getBodyErrorMessage().getText();
-                } catch (NoSuchElementException e) {
-                    failedFields += "\n";
-
-            }
-            throw new ValidationException(failedFields);
-        }
-    }
 
     private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
         try {
@@ -354,4 +369,10 @@ public class Topics {
         return null;
     }
 
+    public static boolean isCreated(Topic topic) {
+        String expectedTitle = topic.getTitle();
+        String actualTitle = topicPage.getTopicSubjectAfterCreation().getText();
+
+        return actualTitle.equals(expectedTitle);
+    }
 }

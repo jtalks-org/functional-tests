@@ -59,6 +59,9 @@ public class TopicPage {
     @FindBy(xpath = "//div[@id='branch-header']/h3")
     private WebElement topicSubject;
 
+    @FindBy(xpath = "//div[@id='branch-header']/h1/a")
+    private WebElement topicSubjectAfterCreation;
+
     @FindBy(xpath = "//div[@class = 'post']/table/tbody/tr/td[@class='post-content-td']/div")
     private WebElement topicMessage;
 
@@ -151,6 +154,10 @@ public class TopicPage {
 
     public WebElement getTopicSubject() {
         return topicSubject;
+    }
+
+    public WebElement getTopicSubjectAfterCreation() {
+        return topicSubjectAfterCreation;
     }
 
     public WebElement getTopicMessage() {
