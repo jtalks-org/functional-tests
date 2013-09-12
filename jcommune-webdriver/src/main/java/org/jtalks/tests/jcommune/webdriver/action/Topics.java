@@ -121,7 +121,14 @@ public class Topics {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
         }
-        return createNewTopic(topic);
+
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
+        return topic;
     }
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
@@ -276,32 +283,6 @@ public class Topics {
 
     }
 
-    /**
-     * Returns date in string type.
-     *
-     * @param date  the date.
-     * @param format the format of date in string.
-     * @return the date in the string.
-     */
-
-
-    /**
-     * Create new topic
-     *
-     * @param topic the topic representation
-     * @throws PermissionsDeniedException
-     */
-    private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException, ValidationException {
-        gotoMainPage();
-        Branches.openBranch(topic.getBranch().getTitle());
-        clickCreateTopic();
-        fillTopicFields(topic);
-        fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
-        checkFormValidation();
-        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        return topic;
-    }
 
     private static void checkFormValidation() throws ValidationException {
 
@@ -372,15 +353,5 @@ public class Topics {
         }
         return null;
     }
-
-    /**
-     * Create new topic
-     *
-     * @param topic
-     *            the topic representation
-     * @throws PermissionsDeniedException
-     */
-
-
 
 }
