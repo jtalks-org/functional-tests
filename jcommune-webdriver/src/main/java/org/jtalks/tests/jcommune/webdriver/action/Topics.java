@@ -115,9 +115,34 @@ public class Topics {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
         }
-        return createNewTopic(topic);
+
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
+        return topic;
     }
 
+    /**
+     * Create new topic
+     *
+     * @param topic the topic representation
+     * @throws PermissionsDeniedException
+     */
+    /*
+    private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException {
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
+        return topic;
+    }
+
+*/
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
@@ -279,21 +304,7 @@ public class Topics {
      */
 
 
-    /**
-     * Create new topic
-     *
-     * @param topic the topic representation
-     * @throws PermissionsDeniedException
-     */
-    private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException {
-        Branches.openBranch(topic.getBranch().getTitle());
-        clickCreateTopic();
-        fillTopicFields(topic);
-        fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
-        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        return topic;
-    }
+
 
     private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
         try {
