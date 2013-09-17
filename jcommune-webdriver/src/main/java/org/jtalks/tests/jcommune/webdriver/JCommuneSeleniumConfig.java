@@ -4,10 +4,11 @@ import org.jtalks.tests.jcommune.webdriver.page.Pages;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
@@ -17,10 +18,15 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class JCommuneSeleniumConfig {
-    public static WebDriver driver = null;
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
+    private final static Logger LOGGER = LoggerFactory.getLogger(JCommuneSeleniumConfig.class);
     private static final int SELENIUM_TIMEOUT = 10;
+    public static WebDriver driver = null;
     public static String webdriverType;
+
+    public static Capabilities getCapabilities() {
+        return ((RemoteWebDriver) driver).getCapabilities();
+    }
 
     /**
      * Method  execute before execute Test. This method getting  driver for connect Remote Selenium Server. All values
@@ -44,6 +50,8 @@ public class JCommuneSeleniumConfig {
         capabilities.setVersion(getBrowserVersion());
 
         String seleniumUrl = getSeleniumUrl(defaultSeleniumServerUrl);
+        LOGGER.info("{}", capabilities);
+        LOGGER.info("Selenium WebDriver URL: [{}]", seleniumUrl);
         driver = new RemoteWebDriver(new URL(seleniumUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
     }
@@ -80,17 +88,15 @@ public class JCommuneSeleniumConfig {
         return url;
     }
 
-    public static Capabilities getCapabilities(){
-        return ((RemoteWebDriver) driver).getCapabilities();
-    }
-
     public void printSeleniumSessionId(String currentTestClass) {
         String sessionId = (((RemoteWebDriver) driver).getSessionId()).toString();
         String message = String.format("SauceOnDemandSessionID=%1$s job-name=%2$s", sessionId, currentTestClass);
         System.out.println(message);
     }
 
-    /** Method destroy connect with Selenium Server */
+    /**
+     * Method destroy connect with Selenium Server
+     */
     @AfterSuite(alwaysRun = true)
     public void destroy() {
         driver.quit();
