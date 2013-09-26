@@ -3,6 +3,7 @@ package org.jtalks.tests.jcommune.assertion;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 /**
@@ -10,7 +11,7 @@ import org.testng.Assert;
  *
  * @author masyan
  */
-public class Existance {
+public class Existence {
 
     /**
      * The method checks that the element does exist
@@ -24,4 +25,14 @@ public class Existance {
             Assert.fail("The element with selector=\"" + selector + "\" should exist");
         }
     }
+
+    public static boolean exists(WebDriver driver, String selector) {
+        try {
+            Existence.assertElementExistsBySelector(driver, selector);
+            return true;
+        } catch (AssertionError e) {
+            return false;
+        }
+    }
+
 }

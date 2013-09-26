@@ -32,6 +32,8 @@ import java.util.Date;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
+
 import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 
 /**
@@ -47,17 +49,16 @@ public class TopicTest {
     }
 
     @Test
-    public void createTopicWithTitleAndMessage_JC_13() throws ValidationException, PermissionsDeniedException {
+    public void createTopicWithTitleAndMessage_JC_13() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("subject", "message");
         Topic createdTopic = Topics.createTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
-
     }
 
     @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
-    public void createTopicWithEmptyTitleShouldFail_JC_25() throws ValidationException, PermissionsDeniedException {
+    public void createTopicWithEmptyTitleShouldFail_JC_25() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("", "message");
@@ -65,7 +66,7 @@ public class TopicTest {
     }
 
     @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithEmptyMessageShouldFail_JC_26() throws ValidationException, PermissionsDeniedException {
+    public void createTopicWithEmptyMessageShouldFail_JC_26() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("subject", "");
@@ -74,7 +75,7 @@ public class TopicTest {
     }
 
     @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithoutData_JC_24() throws ValidationException, PermissionsDeniedException {
+    public void createTopicWithoutData_JC_24() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("", "");

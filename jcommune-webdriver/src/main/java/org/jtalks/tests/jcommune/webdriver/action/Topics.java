@@ -15,9 +15,13 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import com.sun.tools.javac.tree.JCTree;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
+import org.jtalks.tests.jcommune.assertion.Existence;
+import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
@@ -26,19 +30,17 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.jtalks.tests.jcommune.webdriver.page.MainPage;
-import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
+//import org.junit.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
-import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
@@ -75,31 +77,27 @@ public class Topics {
         fillPollSpecificFields(topic.getPoll());
         clickAnswerToTopicButton(topic);
         topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        //checkFormValidation();
+        assertFormValid();
         return topic;
     }
 
-    private static void checkFormValidation() throws ValidationException {
-        Boolean subjectErr = topicPage.getSubjectErrorMessage().isDisplayed();
-        Boolean bodyErr =  topicPage.getBodyErrorMessage().isDisplayed();
-
+    public static void assertFormValid() throws ValidationException {
+        String failedFields = "";
         try {
-        if (subjectErr || bodyErr) {
-            String failedFields = "";
-            try {
-                failedFields += topicPage.getSubjectErrorMessage().getText();
-                failedFields += topicPage.getBodyErrorMessage().getText();
-            } catch (NoSuchElementException e) {
-                failedFields += "\n";
-
-            }
+            WebElement subjectError = topicPage.getSubjectErrorMessage();
+            failedFields += subjectError.getText() + "\n";
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        try {
+            WebElement bodyError = topicPage.getBodyErrorMessage();
+            failedFields += bodyError.getText();
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        if (failedFields != "") {
             throw new ValidationException(failedFields);
         }
-        } catch (NoSuchElementException e) {
-            //failedFields += "\n";
-
-        }
-        //throw new ValidationException(failedFields);
     }
 
 
