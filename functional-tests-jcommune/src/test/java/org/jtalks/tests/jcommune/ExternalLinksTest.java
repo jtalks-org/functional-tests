@@ -5,6 +5,7 @@ import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
@@ -38,7 +39,11 @@ public class ExternalLinksTest {
 
     @AfterMethod
     public void destroyCase() {
-        exitAdminMode();
+        try {
+            exitAdminMode();
+        } catch (WebDriverException e) {
+            logger.error("Could not exit admin mode after the test.", e);
+        }
     }
 
     @Test
