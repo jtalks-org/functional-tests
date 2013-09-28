@@ -17,6 +17,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
+
 public class JCommuneSeleniumConfig {
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private final static Logger LOGGER = LoggerFactory.getLogger(JCommuneSeleniumConfig.class);
@@ -75,13 +77,16 @@ public class JCommuneSeleniumConfig {
     private String getSeleniumUrl(String defaultUrl) {
         String url;
         String sauceDriver = System.getenv("SELENIUM_DRIVER");
-        if (sauceDriver != null) {
+        String seleniumUrl = System.getenv("SELENIUM_URL");
+        if (isNotEmpty(sauceDriver)) {
             String sauceUsername = sauceDriver.substring(sauceDriver.indexOf("username"),
                     sauceDriver.lastIndexOf("&")).split("=")[1];
             String sauceApiKey = sauceDriver.substring(sauceDriver.indexOf("access-key"),
                     sauceDriver.length()).split("=")[1];
             String sauceHost = "@ondemand.saucelabs.com:80/wd/hub";
             url = "http://" + sauceUsername + ":" + sauceApiKey + sauceHost;
+        } else if (isNotEmpty(seleniumUrl)) {
+            url = seleniumUrl;
         } else {
             url = defaultUrl;
         }
