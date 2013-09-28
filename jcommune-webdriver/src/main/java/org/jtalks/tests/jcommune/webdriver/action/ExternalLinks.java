@@ -8,7 +8,8 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.externalLinksPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
  * @author stanislav bashkirtsev
@@ -43,7 +44,9 @@ public class ExternalLinks {
         openExternalLinksDialog();
         WebElement link = getLinkLine(externalLink);
         link.findElement(By.className(ExternalLinksPage.externalLinksRemoveIconFromDialogSel)).click();
+        sleep(500);
         externalLinksPage.getRemoveLinkBut().click();
+        externalLinksPage.getCloseDialogButton().submit();
     }
 
     public static void exitAdminMode() {
@@ -74,6 +77,15 @@ public class ExternalLinks {
         if (!visible) {
             enterAdministrationMode();
             externalLinksPage.getLinksEditorBut().click();
+            sleep(500);
+        }
+    }
+
+    private static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
         }
     }
 

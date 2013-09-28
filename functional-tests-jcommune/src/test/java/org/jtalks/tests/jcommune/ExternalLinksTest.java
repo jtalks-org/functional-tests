@@ -5,7 +5,6 @@ import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.openqa.selenium.WebDriverException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
@@ -17,8 +16,12 @@ import static org.jtalks.tests.jcommune.webdriver.action.ExternalLinks.exitAdmin
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 import static org.testng.Assert.assertTrue;
 
-/** @author stanislav bashkirtsev */
+/**
+ * @author stanislav bashkirtsev
+ */
 public class ExternalLinksTest {
+    private static final Logger logger = LoggerFactory.getLogger(Users.class);
+
     @BeforeClass
     @Parameters({"appUrl"})
     public void signInAsAdmin(String appUrl) {
@@ -39,11 +42,7 @@ public class ExternalLinksTest {
 
     @AfterMethod
     public void destroyCase() {
-        try {
-            exitAdminMode();
-        } catch (WebDriverException e) {
-            logger.error("Could not exit admin mode after the test.", e);
-        }
+        exitAdminMode();
     }
 
     @Test
@@ -128,7 +127,5 @@ public class ExternalLinksTest {
 
         ExternalLinks.removeExternalLink(link);
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(Users.class);
 
 }
