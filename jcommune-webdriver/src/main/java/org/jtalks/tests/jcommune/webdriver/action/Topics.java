@@ -154,6 +154,15 @@ public class Topics {
 //        }
     }
 
+    /**
+     * This is just stub which doesn't actually find any topics
+     */
+    public static Topic findTopic(String branchTitle, String topicTitle) {
+        Topic topic = new Topic(topicTitle, topicTitle);
+        topic.setHasNewMessages(true);
+        return topic;
+    }
+
     private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
         boolean found = false;
 
