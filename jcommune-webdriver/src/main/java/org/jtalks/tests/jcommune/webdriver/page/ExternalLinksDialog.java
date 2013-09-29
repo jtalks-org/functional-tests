@@ -7,14 +7,12 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class ExternalLinksPage {
+public class ExternalLinksDialog {
     public static final String externalLinksSel = "//span[@id='externalLinks']/span/a";
     public static final String externalLinksFromDialogSel = "//div[@class='modal-body']/table/tbody/tr";
     public static final String externalLinksHrefFromDialogSel = "td[@class='link-url']";
     //class name
     public static final String externalLinksRemoveIconFromDialogSel = "icon-trash";
-    @FindBy(id = "links_editor")
-    private WebElement linksEditorBut;
     @FindBy(id = "addMainLink")
     private WebElement addLinkBut;
     @FindBy(id = "linkTitle")
@@ -36,12 +34,8 @@ public class ExternalLinksPage {
     @FindBy(xpath = externalLinksFromDialogSel)
     private List<WebElement> externalLinksFromDialog;
 
-    public ExternalLinksPage(WebDriver driver) {
+    public ExternalLinksDialog(WebDriver driver) {
         PageFactory.initElements(driver, this);
-    }
-
-    public WebElement getLinksEditorBut() {
-        return linksEditorBut;
     }
 
     public WebElement getCloseDialogButton() {

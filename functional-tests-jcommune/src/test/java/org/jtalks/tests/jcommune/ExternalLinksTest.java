@@ -41,7 +41,9 @@ public class ExternalLinksTest {
     }
 
     @AfterMethod
-    public void destroyCase() {
+    @Parameters({"appUrl"})
+    public void destroyCase(String appUrl) {
+        driver.get(appUrl);//in case some dialogs are not closed
         exitAdminMode();
     }
 
@@ -89,11 +91,13 @@ public class ExternalLinksTest {
     }
 
     @Test
-    public void emptyHrefShouldPassValidation() {
+    @Parameters({"appUrl"})
+    public void emptyHrefShouldPassValidation(String appUrl) {
         ExternalLink link = new ExternalLink().withHref("");
 
-        ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.assertLinkVisible(link));
+        //if href is empty, browser sets it to the current page instead of just empty URL
+        ExternalLink expectedLink = ExternalLinks.createExternalLink(link).withHref(appUrl);
+        assertTrue(ExternalLinks.assertLinkVisible(expectedLink));
 
         ExternalLinks.removeExternalLink(link);
     }
