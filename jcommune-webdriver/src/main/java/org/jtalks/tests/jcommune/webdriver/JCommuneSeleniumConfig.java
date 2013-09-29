@@ -25,6 +25,7 @@ public class JCommuneSeleniumConfig {
     private static final int SELENIUM_TIMEOUT = 10;
     public static WebDriver driver = null;
     public static String webdriverType;
+    private static String appUrl;
 
     public static Capabilities getCapabilities() {
         return ((RemoteWebDriver) driver).getCapabilities();
@@ -38,8 +39,9 @@ public class JCommuneSeleniumConfig {
      *                     with SauceLabs integration on Jenkins)
      */
     @BeforeSuite(alwaysRun = true)
-    @Parameters({"webDriverUrl", "appUrl"})
+    @Parameters({"webDriverUrl"})
     public void init(String webDriverUrl, String appUrl) throws Exception {
+        JCommuneSeleniumConfig.appUrl = appUrl;
         webdriverType = getBrowser();
         initDriver(webDriverUrl);
         Pages.createAllPages(driver);
@@ -105,5 +107,9 @@ public class JCommuneSeleniumConfig {
     @AfterSuite(alwaysRun = true)
     public void destroy() {
         driver.quit();
+    }
+
+    public static String getAppUrl(){
+        return appUrl;
     }
 }

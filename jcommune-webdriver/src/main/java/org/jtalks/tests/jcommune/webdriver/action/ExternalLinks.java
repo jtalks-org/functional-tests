@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune.webdriver.action;
 
 import junit.framework.AssertionFailedError;
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
 import org.jtalks.tests.jcommune.webdriver.page.ExternalLinksDialog;
 import org.openqa.selenium.By;
@@ -34,12 +35,29 @@ public class ExternalLinks {
     public static boolean assertLinkVisible(ExternalLink externalLink) {
         List<ExternalLink> linksFromPage = ExternalLink.fromForm(externalLinksDialog.getExternalLinks());
         for (ExternalLink link : linksFromPage) {
+            if (externalLink.getHref().isEmpty()) {//in other cases the Href is correct even returned by HtmlUnit
+                normalizeHtmlUnitHref(link);
+            }
             if (externalLink.equals(link)) {
                 return true;
             }
         }
         LOGGER.info("Expected Link not found: {}. \nActual Links From page: {}", externalLink, linksFromPage);
         throw new AssertionFailedError("The links is not present on the page");
+    }
+
+    /**
+     * HtmlUnit and other browsers work differently - HtmlUnit tends to return the appUrl if href is empty while real
+     * browsers return an empty value. If HtmlUnit is our case, the URL is changed to empty to mimic real browsers.
+     *
+     * @param link a real link got from Selenium that has to be normalized
+     */
+    private static void normalizeHtmlUnitHref(ExternalLink link) {
+        if (JCommuneSeleniumConfig.getCapabilities().getBrowserName().equalsIgnoreCase("htmlunit")) {
+            if (link.getHref().equalsIgnoreCase(JCommuneSeleniumConfig.getAppUrl().replaceAll("/$", ""))) {
+                link.withHref("");
+            }
+        }
     }
 
     public static void removeExternalLink(ExternalLink externalLink) {
