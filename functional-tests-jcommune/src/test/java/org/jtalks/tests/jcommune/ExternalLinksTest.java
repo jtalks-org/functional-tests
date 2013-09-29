@@ -53,7 +53,7 @@ public class ExternalLinksTest {
                 .withHint(randomString(30));
 
         ExternalLinks.createExternalLink(externalLink);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(externalLink));
+        assertTrue(ExternalLinks.assertLinkVisible(externalLink));
 
         ExternalLinks.removeExternalLink(externalLink);
     }
@@ -63,7 +63,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withTitle(randomString(30));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        ExternalLinks.assertLinkVisible(link);
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -73,7 +73,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withTitle(randomString(1));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        assertTrue(ExternalLinks.assertLinkVisible(link));
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -83,7 +83,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHref(randomUrl(255));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        assertTrue(ExternalLinks.assertLinkVisible(link));
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -93,7 +93,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHref("");
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        assertTrue(ExternalLinks.assertLinkVisible(link));
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -103,7 +103,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHint(randomString(128));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        assertTrue(ExternalLinks.assertLinkVisible(link));
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -113,7 +113,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHint("");
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        assertTrue(ExternalLinks.assertLinkVisible(link));
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -123,7 +123,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHint("  ");
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link.withHint("")));
+        assertTrue(ExternalLinks.assertLinkVisible(link.withHint("")));
 
         ExternalLinks.removeExternalLink(link);
     }

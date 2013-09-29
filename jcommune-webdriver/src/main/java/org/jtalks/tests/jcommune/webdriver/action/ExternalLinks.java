@@ -1,10 +1,13 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import junit.framework.AssertionFailedError;
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
 import org.jtalks.tests.jcommune.webdriver.page.ExternalLinksPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -16,6 +19,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author maxim reshetov
  */
 public class ExternalLinks {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExternalLinks.class);
+
     public static ExternalLink createExternalLink(ExternalLink externalLink) {
         openExternalLinksDialog();
         externalLinksPage.getAddLinkBut().click();
@@ -24,20 +29,15 @@ public class ExternalLinks {
         return externalLink;
     }
 
-    public static boolean isVisibleOnMainPage(ExternalLink externalLink) {
-        for (WebElement link : externalLinksPage.getExternalLinks()) {
-            /*
-            *in browser href ends with "/"
-            * if href is empty string than equal Title
-            */
-            if (externalLink.getHref().equalsIgnoreCase(link.getAttribute("href").replaceAll("/$", "")) ||
-                    externalLink.getHref().equalsIgnoreCase(link.getAttribute("href")) ||
-                    externalLink.getTitle().equals(link.getText())) {
+    public static boolean assertLinkVisible(ExternalLink externalLink) {
+        List<ExternalLink> linksFromPage = ExternalLink.fromForm(externalLinksPage.getExternalLinks());
+        for (ExternalLink link : linksFromPage) {
+            if (externalLink.equals(link)) {
                 return true;
             }
         }
-
-        return false;
+        LOGGER.info("Expected Link not found: {}. \nActual Links From page: {}", externalLink, linksFromPage);
+        throw new AssertionFailedError("The links is not present on the page");
     }
 
     public static void removeExternalLink(ExternalLink externalLink) {
@@ -98,5 +98,4 @@ public class ExternalLinks {
         }
         return null;
     }
-
 }
