@@ -91,12 +91,11 @@ public class ExternalLinksTest {
     }
 
     @Test
-    @Parameters({"appUrl"})
-    public void emptyHrefShouldPassValidation(String appUrl) {
+    public void emptyHrefShouldPassValidation() {
         ExternalLink link = new ExternalLink().withHref("");
 
         //if href is empty, browser sets it to the current page instead of just empty URL
-        ExternalLink expectedLink = ExternalLinks.createExternalLink(link).withHref(appUrl);
+        ExternalLink expectedLink = ExternalLinks.createExternalLink(link);
         assertTrue(ExternalLinks.assertLinkVisible(expectedLink));
 
         ExternalLinks.removeExternalLink(link);
