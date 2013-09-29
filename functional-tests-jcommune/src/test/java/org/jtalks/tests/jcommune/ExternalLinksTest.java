@@ -12,12 +12,16 @@ import org.testng.annotations.*;
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.utils.StringHelp.randomUrl;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-import static org.jtalks.tests.jcommune.webdriver.action.ExternalLinks.exitFromAdministrationMode;
+import static org.jtalks.tests.jcommune.webdriver.action.ExternalLinks.exitAdminMode;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 import static org.testng.Assert.assertTrue;
 
-/** @author stanislav bashkirtsev */
+/**
+ * @author stanislav bashkirtsev
+ */
 public class ExternalLinksTest {
+    private static final Logger logger = LoggerFactory.getLogger(Users.class);
+
     @BeforeClass
     @Parameters({"appUrl"})
     public void signInAsAdmin(String appUrl) {
@@ -38,7 +42,7 @@ public class ExternalLinksTest {
 
     @AfterMethod
     public void destroyCase() {
-        exitFromAdministrationMode();
+        exitAdminMode();
     }
 
     @Test
@@ -123,7 +127,5 @@ public class ExternalLinksTest {
 
         ExternalLinks.removeExternalLink(link);
     }
-
-    private static final Logger logger = LoggerFactory.getLogger(Users.class);
 
 }

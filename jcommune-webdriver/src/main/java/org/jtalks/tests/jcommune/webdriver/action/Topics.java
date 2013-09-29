@@ -115,7 +115,14 @@ public class Topics {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
         }
-        return createNewTopic(topic);
+
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
+        return topic;
     }
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
@@ -145,6 +152,15 @@ public class Topics {
         answerToTopic(topic, topic.getLastPost().getPostContent());
         LOGGER.info("postAnswerToTopic {}", topic.getTitle());
 //        }
+    }
+
+    /**
+     * This is just stub which doesn't actually find any topics
+     */
+    public static Topic findTopic(String branchTitle, String topicTitle) {
+        Topic topic = new Topic(topicTitle, topicTitle);
+        topic.setHasNewMessages(true);
+        return topic;
     }
 
     private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
@@ -279,21 +295,7 @@ public class Topics {
      */
 
 
-    /**
-     * Create new topic
-     *
-     * @param topic the topic representation
-     * @throws PermissionsDeniedException
-     */
-    private static Topic createNewTopic(Topic topic) throws PermissionsDeniedException {
-        Branches.openBranch(topic.getBranch().getTitle());
-        clickCreateTopic();
-        fillTopicFields(topic);
-        fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
-        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        return topic;
-    }
+
 
     private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
         try {

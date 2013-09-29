@@ -26,4 +26,8 @@ public class Branches {
         }
     }
 
+    public static void clickMarkAllAsRead() {
+        throw new UnsupportedOperationException("This is just stub method. Implementation will be created in the future");
+    }
+
 }

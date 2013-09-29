@@ -2,12 +2,14 @@ package org.jtalks.tests.jcommune.webdriver.action;
 
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
+import org.jtalks.tests.jcommune.webdriver.page.ExternalLinksPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.externalLinksPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
  * @author stanislav bashkirtsev
@@ -25,7 +27,7 @@ public class ExternalLinks {
     public static boolean isVisibleOnMainPage(ExternalLink externalLink) {
         for (WebElement link : externalLinksPage.getExternalLinks()) {
             /*
-            *in browser href ends of "/"
+            *in browser href ends with "/"
             * if href is empty string than equal Title
             */
             if (externalLink.getHref().equalsIgnoreCase(link.getAttribute("href").replaceAll("/$", "")) ||
@@ -41,11 +43,13 @@ public class ExternalLinks {
     public static void removeExternalLink(ExternalLink externalLink) {
         openExternalLinksDialog();
         WebElement link = getLinkLine(externalLink);
-        link.findElement(By.className(externalLinksPage.externalLinksRemoveIconFromDialogSel)).click();
+        link.findElement(By.className(ExternalLinksPage.externalLinksRemoveIconFromDialogSel)).click();
+        sleep(500);
         externalLinksPage.getRemoveLinkBut().click();
+        externalLinksPage.getCloseDialogButton().submit();
     }
 
-    public static void exitFromAdministrationMode() {
+    public static void exitAdminMode() {
         mainPage.getAdministrationDropdownMenu().click();
         mainPage.getOffAdminModeBut().click();
     }
@@ -73,12 +77,21 @@ public class ExternalLinks {
         if (!visible) {
             enterAdministrationMode();
             externalLinksPage.getLinksEditorBut().click();
+            sleep(500);
+        }
+    }
+
+    private static void sleep(int millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new IllegalStateException(e);
         }
     }
 
     private static WebElement getLinkLine(ExternalLink externalLink) {
         for (WebElement link : externalLinksPage.getExternalLinksFromDialog()) {
-            WebElement href = link.findElement(By.xpath(externalLinksPage.externalLinksHrefFromDialogSel));
+            WebElement href = link.findElement(By.xpath(ExternalLinksPage.externalLinksHrefFromDialogSel));
             if (DriverMethodHelp.getTextFromTag(href).equals(externalLink.getHref())) {
                 return link;
             }
