@@ -14,7 +14,6 @@ import static org.jtalks.tests.jcommune.utils.StringHelp.randomUrl;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.action.ExternalLinks.exitAdminMode;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
-import static org.testng.Assert.assertTrue;
 
 /**
  * @author stanislav bashkirtsev
@@ -41,7 +40,9 @@ public class ExternalLinksTest {
     }
 
     @AfterMethod
-    public void destroyCase() {
+    @Parameters({"appUrl"})
+    public void destroyCase(String appUrl) {
+        driver.get(appUrl);//in case some dialogs are not closed
         exitAdminMode();
     }
 
@@ -53,7 +54,7 @@ public class ExternalLinksTest {
                 .withHint(randomString(30));
 
         ExternalLinks.createExternalLink(externalLink);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(externalLink));
+        ExternalLinks.assertLinkVisible(externalLink);
 
         ExternalLinks.removeExternalLink(externalLink);
     }
@@ -63,7 +64,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withTitle(randomString(30));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        ExternalLinks.assertLinkVisible(link);
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -73,7 +74,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withTitle(randomString(1));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        ExternalLinks.assertLinkVisible(link);
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -83,7 +84,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHref(randomUrl(255));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        ExternalLinks.assertLinkVisible(link);
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -92,8 +93,9 @@ public class ExternalLinksTest {
     public void emptyHrefShouldPassValidation() {
         ExternalLink link = new ExternalLink().withHref("");
 
-        ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        //if href is empty, browser sets it to the current page instead of just empty URL
+        ExternalLink expectedLink = ExternalLinks.createExternalLink(link);
+        ExternalLinks.assertLinkVisible(expectedLink);
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -103,7 +105,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHint(randomString(128));
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        ExternalLinks.assertLinkVisible(link);
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -113,7 +115,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHint("");
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link));
+        ExternalLinks.assertLinkVisible(link);
 
         ExternalLinks.removeExternalLink(link);
     }
@@ -123,7 +125,7 @@ public class ExternalLinksTest {
         ExternalLink link = new ExternalLink().withHint("  ");
 
         ExternalLinks.createExternalLink(link);
-        assertTrue(ExternalLinks.isVisibleOnMainPage(link.withHint("")));
+        ExternalLinks.assertLinkVisible(link.withHint(""));
 
         ExternalLinks.removeExternalLink(link);
     }
