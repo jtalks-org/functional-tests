@@ -6,7 +6,13 @@
       <boolProp name="TestPlan.functional_mode">false</boolProp>
       <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-        <collectionProp name="Arguments.arguments"/>
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="TOPIC_NAME" elementType="Argument">
+            <stringProp name="Argument.name">TOPIC_NAME</stringProp>
+            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
       </elementProp>
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
@@ -15,10 +21,10 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
+          <stringProp name="LoopController.loops">2</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">1</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">15</stringProp>
         <longProp name="ThreadGroup.start_time">1342542092000</longProp>
         <longProp name="ThreadGroup.end_time">1342469610000</longProp>
         <boolProp name="ThreadGroup.scheduler">false</boolProp>
@@ -307,12 +313,12 @@
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Topic" enabled="true">
           <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
             <collectionProp name="Arguments.arguments">
-              <elementProp name="topicName" elementType="HTTPArgument">
+              <elementProp name="topic.title" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                <stringProp name="Argument.value">${login} created this topic</stringProp>
+                <stringProp name="Argument.value">${__RandomString(12,qwertyasdfghjklzxcvbnm123456789, ${TOPIC_NAME})}</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                <stringProp name="Argument.name">topicName</stringProp>
+                <stringProp name="Argument.name">topic.title</stringProp>
               </elementProp>
               <elementProp name="bodyText" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -320,6 +326,61 @@
                 <stringProp name="Argument.metadata">=</stringProp>
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">bodyText</stringProp>
+              </elementProp>
+              <elementProp name="_topic.sticked" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">on</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">_topic.sticked</stringProp>
+              </elementProp>
+              <elementProp name="_topic.announcement" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">on</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">_topic.announcement</stringProp>
+              </elementProp>
+              <elementProp name="post" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">Сохранить</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">post</stringProp>
+              </elementProp>
+              <elementProp name="topic.poll.title" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">topic.poll.title</stringProp>
+              </elementProp>
+              <elementProp name="topic.poll.pollItemsValue" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">topic.poll.pollItemsValue</stringProp>
+              </elementProp>
+              <elementProp name="_topic.poll.multipleAnswer" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">on</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">_topic.poll.multipleAnswer</stringProp>
+              </elementProp>
+              <elementProp name="topic.poll.endingDateValue" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">topic.poll.endingDateValue</stringProp>
+              </elementProp>
+              <elementProp name="" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value"></stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
               </elementProp>
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
@@ -333,55 +394,39 @@
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
           <stringProp name="HTTPSampler.path">/jcommune/topics/new?branchId=1</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-          <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+          <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
           <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
           <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
             <collectionProp name="HeaderManager.headers">
-              <elementProp name="Content-Type" elementType="Header">
-                <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/x-www-form-urlencoded; charset=UTF-8</stringProp>
-              </elementProp>
               <elementProp name="Accept-Language" elementType="Header">
                 <stringProp name="Header.name">Accept-Language</stringProp>
                 <stringProp name="Header.value">en-gb,en;q=0.7,ru;q=0.3</stringProp>
               </elementProp>
               <elementProp name="Accept" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">text/html, */*; q=0.01</stringProp>
+                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</stringProp>
               </elementProp>
               <elementProp name="User-Agent" elementType="Header">
                 <stringProp name="Header.name">User-Agent</stringProp>
                 <stringProp name="Header.value">Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20100101 Firefox/13.0.1</stringProp>
               </elementProp>
-              <elementProp name="Pragma" elementType="Header">
-                <stringProp name="Header.name">Pragma</stringProp>
-                <stringProp name="Header.value">no-cache</stringProp>
-              </elementProp>
-              <elementProp name="Cache-Control" elementType="Header">
-                <stringProp name="Header.name">Cache-Control</stringProp>
-                <stringProp name="Header.value">no-cache</stringProp>
-              </elementProp>
               <elementProp name="Accept-Encoding" elementType="Header">
                 <stringProp name="Header.name">Accept-Encoding</stringProp>
                 <stringProp name="Header.value">gzip, deflate</stringProp>
               </elementProp>
-              <elementProp name="X-Requested-With" elementType="Header">
-                <stringProp name="Header.name">X-Requested-With</stringProp>
-                <stringProp name="Header.value">XMLHttpRequest</stringProp>
-              </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
-                <stringProp name="Header.value">http://autotests.jtalks.org/jcommune/branches/1</stringProp>
+                <stringProp name="Header.value">http://autotests.jtalks.org/jcommune/topics/new?branchId=1</stringProp>
               </elementProp>
             </collectionProp>
           </HeaderManager>
@@ -397,15 +442,29 @@
                 <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 <stringProp name="Argument.name">bodyText</stringProp>
               </elementProp>
+              <elementProp name="topicId" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                <stringProp name="Argument.value">0</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">topicId</stringProp>
+              </elementProp>
+              <elementProp name="post" elementType="HTTPArgument">
+                <boolProp name="HTTPArgument.always_encode">true</boolProp>
+                <stringProp name="Argument.value">Ответить</stringProp>
+                <stringProp name="Argument.metadata">=</stringProp>
+                <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                <stringProp name="Argument.name">post</stringProp>
+              </elementProp>
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain"></stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
-          <stringProp name="HTTPSampler.protocol"></stringProp>
-          <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">/posts/new?topicId=24&amp;branchId=1</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
+          <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
+          <stringProp name="HTTPSampler.path">/jcommune/posts/new?topicId=15479&amp;page=&amp;branchId=1</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -419,7 +478,7 @@
             <collectionProp name="HeaderManager.headers">
               <elementProp name="Content-Type" elementType="Header">
                 <stringProp name="Header.name">Content-Type</stringProp>
-                <stringProp name="Header.value">application/x-www-form-urlencoded; charset=UTF-8</stringProp>
+                <stringProp name="Header.value">application/x-www-form-urlencoded8</stringProp>
               </elementProp>
               <elementProp name="Accept-Language" elementType="Header">
                 <stringProp name="Header.name">Accept-Language</stringProp>
@@ -427,27 +486,15 @@
               </elementProp>
               <elementProp name="Accept" elementType="Header">
                 <stringProp name="Header.name">Accept</stringProp>
-                <stringProp name="Header.value">text/html, */*; q=0.01</stringProp>
+                <stringProp name="Header.value">text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.80.01</stringProp>
               </elementProp>
               <elementProp name="User-Agent" elementType="Header">
                 <stringProp name="Header.name">User-Agent</stringProp>
-                <stringProp name="Header.value">Mozilla/5.0 (Windows NT 5.1; rv:13.0) Gecko/20100101 Firefox/13.0.1</stringProp>
-              </elementProp>
-              <elementProp name="Pragma" elementType="Header">
-                <stringProp name="Header.name">Pragma</stringProp>
-                <stringProp name="Header.value">no-cache</stringProp>
-              </elementProp>
-              <elementProp name="Cache-Control" elementType="Header">
-                <stringProp name="Header.name">Cache-Control</stringProp>
-                <stringProp name="Header.value">no-cache</stringProp>
+                <stringProp name="Header.value">Mozilla/5.0 (Windows NT 6.1; WOW64; rv:24.0) Gecko/20100101 Firefox/</stringProp>
               </elementProp>
               <elementProp name="Accept-Encoding" elementType="Header">
                 <stringProp name="Header.name">Accept-Encoding</stringProp>
                 <stringProp name="Header.value">gzip, deflate</stringProp>
-              </elementProp>
-              <elementProp name="X-Requested-With" elementType="Header">
-                <stringProp name="Header.name">X-Requested-With</stringProp>
-                <stringProp name="Header.value">XMLHttpRequest</stringProp>
               </elementProp>
               <elementProp name="Referer" elementType="Header">
                 <stringProp name="Header.name">Referer</stringProp>
