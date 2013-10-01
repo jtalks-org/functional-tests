@@ -30,64 +30,46 @@ public class MainPage {
     public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
     public static final String onAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/enter']";
     public static final String offAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/exit']";
-
-    @FindBy(className = "modal-body")
-    private List<WebElement> modalDialog;
-
+    @FindBy(id = "mainLinksEditor")
+    private WebElement modalDialog;
+    @FindBy(id = "links_editor")
+    private WebElement editExternalLinksControl;
     @FindBy(id = "user-dropdown-administration-link")
     private WebElement administrationDropdownMenu;
-
     @FindBy(xpath = onAdminModeSel)
     private WebElement onAdminModeBut;
-
     @FindBy(xpath = offAdminModeSel)
     private WebElement offAdminModeBut;
-
     @FindBy(xpath = languageDropdownMenuSel)
     private WebElement languageDropdownMenu;
-
     @FindBy(xpath = languageSwitcherSel)
     private WebElement languageSwitcher;
-
     @FindBy(xpath = profileLinkSel)
     private WebElement profileLink;
-
     @FindBy(xpath = logOutButtonSel)
     private WebElement logOutButton;
-
     @FindBy(id = "user-dropdown-menu-link")
     private WebElement userMenuLink;
-
     @FindBy(id = "signin")
     private WebElement loginLink;
-
     @FindBy(id = "signup")
     private WebElement registrationLink;
-
     @FindBy(xpath = errorPageSel)
     private WebElement errorPage;
-
     @FindBy(xpath = breadCrumbsForumLinkSel)
     private WebElement breadCrumbsForumLink;
-
     @FindBy(xpath = iconLinkToMainPageSel)
     private WebElement iconLinkToMainPage;
-
     @FindBy(xpath = recentActivityLinkSel)
     private WebElement recentActivityLink;
-
     @FindBy(xpath = messagesCountSel)
     private WebElement messagesCount;
-
     @FindBy(xpath = usersCountSel)
     private WebElement usersCount;
-
     @FindBy(xpath = usersOnlineCountSel)
     private WebElement usersOnlineCount;
-
     @FindBy(xpath = registeredUsersOnlineCountSel)
     private WebElement registeredUsersOnlineCount;
-
     @FindBy(xpath = guestsUsersOnlineCountSel)
     private WebElement guestsUsersOnlineCount;
 
@@ -101,6 +83,18 @@ public class MainPage {
     //Getters
     public WebElement getLanguageDropdownMenu() {
         return languageDropdownMenu;
+    }
+
+    public boolean isAdminModeOn() {
+        try {
+            return editExternalLinksControl.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
+
+    public void pressOpenExternalLinksDialog() {
+        editExternalLinksControl.click();
     }
 
     public WebElement getLanguageSwitcher() {
@@ -207,11 +201,7 @@ public class MainPage {
         this.administrationDropdownMenu = administrationDropdownMenu;
     }
 
-    public List<WebElement> getModalDialog() {
+    public WebElement getModalDialog() {
         return modalDialog;
-    }
-
-    public void setModalDialog(List<WebElement> modalDialog) {
-        this.modalDialog = modalDialog;
     }
 }

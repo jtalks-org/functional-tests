@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
 import org.joda.time.DateTime;
+import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
@@ -17,7 +18,7 @@ public class Topic {
     private DateTime creationDate;
     private DateTime modificationDate;
     private User topicStarter;
-    private String title;
+    private String title = StringHelp.randomString(30);
     private Boolean sticked;
     private Boolean announcement;
     private Boolean closed;
@@ -26,11 +27,12 @@ public class Topic {
     private CodeReview codeReview;
     private List<Post> posts = new ArrayList<Post>();
     private Set<User> subscribers = new HashSet<User>();
-    private String firstPostContent;
+    private boolean hasNewMessages;
 
     public Topic() {
-
+        posts.add(new Post(StringHelp.randomString(200)));
     }
+
     public Topic(String title, String firstPostContent) {
         this.title = title;
         posts.add(new Post(firstPostContent));
@@ -156,7 +158,11 @@ public class Topic {
         return getPosts().get(getPosts().size() - 1);
     }
 
-    public void setFirstPostContent(String firstPostContent) {
-        this.firstPostContent = firstPostContent;
+    public boolean hasNewMessages() {
+        return hasNewMessages;
+    }
+
+    public void setHasNewMessages(boolean hasNewMessages) {
+        this.hasNewMessages = hasNewMessages;
     }
 }
