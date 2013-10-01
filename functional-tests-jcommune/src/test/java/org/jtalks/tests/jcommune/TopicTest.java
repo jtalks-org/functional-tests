@@ -174,5 +174,4 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
-
 }
