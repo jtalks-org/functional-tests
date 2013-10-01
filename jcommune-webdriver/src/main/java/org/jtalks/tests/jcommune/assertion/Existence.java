@@ -35,4 +35,13 @@ public class Existence {
         }
     }
 
+    public static boolean isElementPresent(WebDriver driver, WebElement element) {
+        try {
+            element.isDisplayed();
+            return true;  // Success!
+        } catch (NoSuchElementException ignored) {
+            return false;
+        }
+    }
+
 }

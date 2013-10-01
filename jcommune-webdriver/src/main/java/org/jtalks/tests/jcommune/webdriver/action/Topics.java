@@ -30,6 +30,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -37,6 +38,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 //import org.junit.Assert;
+import org.testng.AssertJUnit;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -84,18 +86,24 @@ public class Topics {
     public static void assertFormValid() throws ValidationException {
         String failedFields = "";
         try {
-            WebElement subjectError = topicPage.getSubjectErrorMessage();
-            failedFields += subjectError.getText() + "\n";
+            if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.SUBJECT_ERR_MSG_XPATH)) {
+                WebElement subjectError = topicPage.getSubjectErrorMessage();
+                failedFields += subjectError.getText() + "\n";
+            }
+
         } catch (NoSuchElementException e) {
             e.printStackTrace();
         }
         try {
-            WebElement bodyError = topicPage.getBodyErrorMessage();
-            failedFields += bodyError.getText();
+            if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.BODY_ERR_MSG_XPATH)) {
+                WebElement bodyError = topicPage.getBodyErrorMessage();
+                failedFields += bodyError.getText();
+            }
+
         } catch (NoSuchElementException e) {
             e.printStackTrace();
         }
-        if (failedFields != "") {
+        if (!failedFields.equals("")) {
             throw new ValidationException(failedFields);
         }
     }

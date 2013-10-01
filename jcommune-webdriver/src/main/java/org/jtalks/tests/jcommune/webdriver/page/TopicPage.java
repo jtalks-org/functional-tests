@@ -71,8 +71,12 @@ public class TopicPage {
     @FindBy(xpath = "//span[@id='subject']")
     WebElement subjectErrorMessage;
 
+    public static String SUBJECT_ERR_MSG_XPATH = "//span[@id='subject']";
+
     @FindBy(xpath = "//span[@id='bodyText.errors']")
     WebElement bodyErrorMessage;
+
+    public static String BODY_ERR_MSG_XPATH = "//span[@id='bodyText.errors']";
 
     @FindBy(xpath = "//a[@class='back-btn']")
     WebElement backButtonOnEditForm;
