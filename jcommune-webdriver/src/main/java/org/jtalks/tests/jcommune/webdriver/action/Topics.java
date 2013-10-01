@@ -206,7 +206,7 @@ public class Topics {
      * @return true if the specified topic was found
      * @throws CouldNotOpenPageException if specified topic was not found
      */
-    private static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
+    public static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
             throws CouldNotOpenPageException {
         boolean found;
         while (!(found = findTopic(topicToFind))) {
