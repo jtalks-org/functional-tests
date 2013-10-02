@@ -52,14 +52,14 @@ public class TopicTest {
 
     @Test(enabled = true)
     public void LoginAndCreateTopicValidateBrnanch() throws Exception {
-        Topic topic = new Topic("subject123", "message").withBranch("TestBranch");
+        Topic topic = new Topic("subject123", "message").withBranch("Micro level");
         Topics.loginAndCreateTopic(topic);
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
     }
 
     @Test
     public void signUpAndCreateTopicInBranch() throws Exception {
-        Topic topic = new Topic("subject123", "message").withBranch("TestBranch2");
+        Topic topic = new Topic("subject123", "message").withBranch("Classical Mechanics");
         User user = Users.signUp();
         Users.signIn(user);
         topic.withTopicStarter(user);
@@ -68,7 +68,7 @@ public class TopicTest {
 
     @Test
     public void signUpAndCreateCodeReviewInBranch() throws Exception {
-        Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("TestBranch");
+        Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("Acids and Bases");
         User user = Users.signUp();
         Users.signIn(user);
         topic.withTopicStarter(user);
