@@ -59,14 +59,15 @@ public class Topics {
      * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
      */
     public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-        User user = Users.signUp();
+        User user = User.admin();
         Users.signIn(user);
         topic.withTopicStarter(user);
         createTopic(topic);
     }
 
     public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-        User user = Users.signUpAndSignIn();
+        User user = User.admin();
+        Users.signIn(user);
         topic.withTopicStarter(user);
         return createTopic(topic);
     }
