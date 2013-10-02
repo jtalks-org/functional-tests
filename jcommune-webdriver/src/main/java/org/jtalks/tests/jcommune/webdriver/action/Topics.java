@@ -66,9 +66,8 @@ public class Topics {
     }
 
     public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-        User existentUser = new User("P_10hkgd", "123456");
-        topic.withTopicStarter(existentUser);
-        Users.signIn(existentUser);
+        User user = Users.signUpAndSignIn();
+        topic.withTopicStarter(user);
         return createTopic(topic);
     }
 
@@ -285,17 +284,6 @@ public class Topics {
         }
 
     }
-
-    /**
-     * Returns date in string type.
-     *
-     * @param date  the date.
-     * @param format the format of date in string.
-     * @return the date in the string.
-     */
-
-
-
 
     private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
         try {

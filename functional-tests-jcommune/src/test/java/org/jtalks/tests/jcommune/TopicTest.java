@@ -50,13 +50,6 @@ public class TopicTest {
         Topics.signUpAndCreateTopic(topic);
     }
 
-    @Test(enabled = false)
-    public void LoginAndCreateTopic() throws Exception {
-        Topic topic = new Topic("", "message");
-        Topics.loginAndCreateTopic(topic);
-        Topics.isBranch(topic);
-    }
-
     @Test(enabled = true)
     public void LoginAndCreateTopicValidateBrnanch() throws Exception {
         Topic topic = new Topic("subject123", "message").withBranch("TestBranch");
