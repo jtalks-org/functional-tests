@@ -59,6 +59,9 @@ public class TopicPage {
     @FindBy(xpath = "//div[@id='branch-header']/h3")
     private WebElement topicSubject;
 
+    @FindBy(xpath = "//div[@id='branch-header']/h1/a")
+    private WebElement topicSubjectAfterCreation;
+
     @FindBy(xpath = "//div[@class = 'post']/table/tbody/tr/td[@class='post-content-td']/div")
     private WebElement topicMessage;
 
@@ -68,8 +71,12 @@ public class TopicPage {
     @FindBy(xpath = "//span[@id='subject']")
     WebElement subjectErrorMessage;
 
+    public static String SUBJECT_ERR_MSG_XPATH = "//span[@id='subject']";
+
     @FindBy(xpath = "//span[@id='bodyText.errors']")
     WebElement bodyErrorMessage;
+
+    public static String BODY_ERR_MSG_XPATH = "//span[@id='bodyText.errors']";
 
     @FindBy(xpath = "//a[@class='back-btn']")
     WebElement backButtonOnEditForm;
@@ -100,6 +107,11 @@ public class TopicPage {
 
     @FindBy(xpath = "//*[@id='topics-table']/tbody/tr[last()]")
     WebElement lastTopicLine;
+
+    public static final String EMPTY_SUBJECT_ERROR = "Не может быть пустым\n";
+
+    public static final String EMPTY_BODY_ERROR = "Не может быть пустым\n" +
+            "Размер должен быть между 2 и 20000";
 
 
     public TopicPage(WebDriver driver) {
@@ -146,6 +158,10 @@ public class TopicPage {
 
     public WebElement getTopicSubject() {
         return topicSubject;
+    }
+
+    public WebElement getTopicSubjectAfterCreation() {
+        return topicSubjectAfterCreation;
     }
 
     public WebElement getTopicMessage() {

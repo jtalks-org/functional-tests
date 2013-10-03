@@ -73,6 +73,8 @@ public class MainPage {
     @FindBy(xpath = guestsUsersOnlineCountSel)
     private WebElement guestsUsersOnlineCount;
 
+    @FindBy(xpath = "//a[@class='brand']")
+    private WebElement forumsTitle;
 
     public MainPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -133,6 +135,10 @@ public class MainPage {
         } catch (NoSuchElementException e) {
             return false;
         }
+    }
+
+    public void clickForumsTitle() {
+        forumsTitle.click();
     }
 
     public WebElement getErrorPage() {

@@ -21,16 +21,20 @@ import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
+import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.MainPage;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import java.util.Date;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
+
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 
 /**
  * @author Guram Savinov
@@ -39,15 +43,44 @@ public class TopicTest {
 
     @BeforeMethod
     @Parameters({"appUrl"})
-    public void setupCase(String appUrl) {
+    public void setupCase(String appUrl) throws ValidationException {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
     }
 
     @Test
-    public void signUpAndCreateTopic() throws Exception {
+    public void createTopicWithTitleAndMessage_JC_13() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
-        Topics.signUpAndCreateTopic(topic);
+        Topic createdTopic = Topics.createTopic(topic);
+        Assert.assertTrue(Topics.isCreated(createdTopic));
+    }
+
+    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+    public void createTopicWithEmptyTitleShouldFail_JC_25() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("", "message");
+        Topics.createTopic(topic);
+    }
+
+    @Test(enabled = false, expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithEmptyMessageShouldFail_JC_26() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("subject", "");
+        Topics.createTopic(topic);
+
+    }
+
+    @Test(enabled = false, expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithoutData_JC_24() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
+        Topic topic = new Topic("", "");
+        Topics.createTopic(topic);
+
     }
 
     @Test(enabled = true)
@@ -62,7 +95,7 @@ public class TopicTest {
         Topic topic = new Topic("subject123", "message").withBranch("Classical Mechanics");
         User user = Users.signUp();
         Users.signIn(user);
-        topic.withTopicStarter(user);
+        topic.withTopicStarter(user);//?
         Topics.createTopic(topic);
     }
 

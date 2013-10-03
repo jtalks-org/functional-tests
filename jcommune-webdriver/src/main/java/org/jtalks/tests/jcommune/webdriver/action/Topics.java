@@ -15,9 +15,13 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import com.sun.tools.javac.tree.JCTree;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
+import org.jtalks.tests.jcommune.assertion.Existence;
+import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
@@ -26,19 +30,24 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
+//import org.junit.Assert;
+import org.testng.AssertJUnit;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+
 
 /**
  * Contain topic actions like creating, deleting etc.
@@ -50,6 +59,57 @@ public class Topics {
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
     /**
+     * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
+     * otherwise the topic is created in a {@link Topic#getBranch()}.
+     *
+     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
+     * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
+     */
+
+    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        gotoMainPage();
+        if (topic.getBranch() == null) {
+            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
+            topic.withBranch(branch);
+        }
+
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
+        assertFormValid();
+        return topic;
+    }
+
+    public static void assertFormValid() throws ValidationException {
+        String failedFields = "";
+        try {
+            if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.SUBJECT_ERR_MSG_XPATH)) {
+                WebElement subjectError = topicPage.getSubjectErrorMessage();
+                failedFields += subjectError.getText() + "\n";
+            }
+
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        try {
+            if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.BODY_ERR_MSG_XPATH)) {
+                WebElement bodyError = topicPage.getBodyErrorMessage();
+                failedFields += bodyError.getText();
+            }
+
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        if (!failedFields.equals("")) {
+            throw new ValidationException(failedFields);
+        }
+    }
+
+
+    /**
      * Sign-up new user and create new topic
      *
      * @param topic the topic representation private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
@@ -58,6 +118,8 @@ public class Topics {
      * @throws ValidationException        if specified topic does not pass forum validation
      * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
      */
+
+
     public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
         User user = User.admin();
         Users.signIn(user);
@@ -102,28 +164,7 @@ public class Topics {
         return topicDate.isAfter(dat.getMillis());
     }
 
-    /**
-     * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
-     * otherwise the topic is created in a {@link Topic#getBranch()}.
-     *
-     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
-     * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
-     */
 
-    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
-        if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
-            topic.withBranch(branch);
-        }
-
-        Branches.openBranch(topic.getBranch().getTitle());
-        clickCreateTopic();
-        fillTopicFields(topic);
-        fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
-        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        return topic;
-    }
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
@@ -153,6 +194,7 @@ public class Topics {
         LOGGER.info("postAnswerToTopic {}", topic.getTitle());
 //        }
     }
+
 
     /**
      * This is just stub which doesn't actually find any topics
@@ -220,6 +262,7 @@ public class Topics {
     }
 
 
+
     private static boolean openNextPage(int pagesToCheck) {
         int max = 0;
         if (topicPage.getActiveTopicsButton().size() < 1) {
@@ -241,7 +284,6 @@ public class Topics {
         }
         return false;
     }
-
 
     public static boolean senseToPageNext(Topic topic) {
         WebElement bottomRowOfTopics = topicPage.getLastTopicLine();
@@ -310,7 +352,8 @@ public class Topics {
     private static void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
+        //topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
+        topicPage.getSubjectField().sendKeys(topic.getTitle());
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
@@ -322,6 +365,9 @@ public class Topics {
         }
     }
 
+    private static void gotoMainPage() {
+        mainPage.clickForumsTitle();
+    }
 
     /**
      * Returns date in string type.
@@ -337,13 +383,10 @@ public class Topics {
         return null;
     }
 
+    public static boolean isCreated(Topic topic) {
+        String expectedTitle = topic.getTitle();
+        String actualTitle = topicPage.getTopicSubjectAfterCreation().getText();
 
-    /**
-     * Create new topic
-     *
-     * @param topic
-     *            the topic representation
-     * @throws PermissionsDeniedException
-     */
-
+        return actualTitle.equals(expectedTitle);
+    }
 }

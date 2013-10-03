@@ -1,7 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.assertion.Existance;
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -271,9 +271,9 @@ public class PrivateMessagesPage {
      */
     public void assertOneOfPmMessagesIsChecked(WebDriver driver) {
         try {
-            Existance.assertElementExistsBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
+            Existence.assertElementExistsBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
         } catch (AssertionError e) {
-            Existance.assertElementExistsBySelector(driver, PM_CHECKED_READ_CHECKBOX);
+            Existence.assertElementExistsBySelector(driver, PM_CHECKED_READ_CHECKBOX);
         }
     }
 }
