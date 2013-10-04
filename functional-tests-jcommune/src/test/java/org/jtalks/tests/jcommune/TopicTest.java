@@ -55,7 +55,8 @@ public class TopicTest {
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
 
-    @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
     public void createTopicWithEmptyTitleShouldFail_JC_25() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
@@ -63,7 +64,8 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(enabled = false, expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    @Test(enabled = false, expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithEmptyMessageShouldFail_JC_26() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
@@ -72,7 +74,8 @@ public class TopicTest {
 
     }
 
-    @Test(enabled = false, expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
+    @Test(enabled = false, expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithoutData_JC_24() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);

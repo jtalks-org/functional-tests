@@ -79,23 +79,13 @@ public class Topics {
 
     public static void assertFormValid() throws ValidationException {
         String failedFields = "";
-        try {
-            if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.SUBJECT_ERR_MSG_XPATH)) {
-                WebElement subjectError = topicPage.getSubjectErrorMessage();
-                failedFields += subjectError.getText() + "\n";
-            }
-
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
+        if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.SUBJECT_ERR_MSG_XPATH)) {
+            WebElement subjectError = topicPage.getSubjectErrorMessage();
+            failedFields += subjectError.getText() + "\n";
         }
-        try {
-            if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.BODY_ERR_MSG_XPATH)) {
-                WebElement bodyError = topicPage.getBodyErrorMessage();
-                failedFields += bodyError.getText();
-            }
-
-        } catch (NoSuchElementException e) {
-            e.printStackTrace();
+        if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.BODY_ERR_MSG_XPATH)) {
+            WebElement bodyError = topicPage.getBodyErrorMessage();
+            failedFields += bodyError.getText();
         }
         if (!failedFields.equals("")) {
             throw new ValidationException(failedFields);
