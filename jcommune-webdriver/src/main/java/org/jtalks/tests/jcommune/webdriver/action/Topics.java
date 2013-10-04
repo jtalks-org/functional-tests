@@ -15,12 +15,10 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
-import com.sun.tools.javac.tree.JCTree;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.jtalks.tests.jcommune.assertion.Existence;
-import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -36,17 +34,13 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
-//import org.junit.Assert;
-import org.testng.AssertJUnit;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
+
+//import org.junit.Assert;
 
 
 /**
@@ -108,7 +102,6 @@ public class Topics {
         }
     }
 
-
     /**
      * Sign-up new user and create new topic
      *
@@ -164,8 +157,6 @@ public class Topics {
         return topicDate.isAfter(dat.getMillis());
     }
 
-
-
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
@@ -194,7 +185,6 @@ public class Topics {
         LOGGER.info("postAnswerToTopic {}", topic.getTitle());
 //        }
     }
-
 
     /**
      * This is just stub which doesn't actually find any topics
@@ -231,7 +221,6 @@ public class Topics {
         return found;
     }
 
-
     private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
         postPage.getNewButton().click();
         topicPage.getMainBodyArea().sendKeys(answer);
@@ -260,8 +249,6 @@ public class Topics {
         }
         return found;
     }
-
-
 
     private static boolean openNextPage(int pagesToCheck) {
         int max = 0;
@@ -295,7 +282,6 @@ public class Topics {
         return isTopicNewer(DateTime.now(), dateFromBottomRowOfTopics);
     }
 
-
     /**
      * Sets state for checkbox element
      *
@@ -313,7 +299,6 @@ public class Topics {
             checkboxElement.click();
         }
     }
-
 
     /**
      * Sets the end date in the poll.
