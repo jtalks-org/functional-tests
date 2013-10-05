@@ -17,12 +17,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
+import static org.apache.commons.lang.StringUtils.isNotEmpty;
+
 public class JCommuneSeleniumConfig {
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private final static Logger LOGGER = LoggerFactory.getLogger(JCommuneSeleniumConfig.class);
     private static final int SELENIUM_TIMEOUT = 10;
     public static WebDriver driver = null;
     public static String webdriverType;
+    private static String appUrl;
 
     public static Capabilities getCapabilities() {
         return ((RemoteWebDriver) driver).getCapabilities();
@@ -36,8 +39,9 @@ public class JCommuneSeleniumConfig {
      *                     with SauceLabs integration on Jenkins)
      */
     @BeforeSuite(alwaysRun = true)
-    @Parameters({"webDriverUrl", "appUrl"})
+    @Parameters({"webDriverUrl"})
     public void init(String webDriverUrl, String appUrl) throws Exception {
+        JCommuneSeleniumConfig.appUrl = appUrl;
         webdriverType = getBrowser();
         initDriver(webDriverUrl);
         Pages.createAllPages(driver);
@@ -75,13 +79,16 @@ public class JCommuneSeleniumConfig {
     private String getSeleniumUrl(String defaultUrl) {
         String url;
         String sauceDriver = System.getenv("SELENIUM_DRIVER");
-        if (sauceDriver != null) {
+        String seleniumUrl = System.getenv("SELENIUM_URL");
+        if (isNotEmpty(sauceDriver)) {
             String sauceUsername = sauceDriver.substring(sauceDriver.indexOf("username"),
                     sauceDriver.lastIndexOf("&")).split("=")[1];
             String sauceApiKey = sauceDriver.substring(sauceDriver.indexOf("access-key"),
                     sauceDriver.length()).split("=")[1];
             String sauceHost = "@ondemand.saucelabs.com:80/wd/hub";
             url = "http://" + sauceUsername + ":" + sauceApiKey + sauceHost;
+        } else if (isNotEmpty(seleniumUrl)) {
+            url = seleniumUrl;
         } else {
             url = defaultUrl;
         }
@@ -100,5 +107,9 @@ public class JCommuneSeleniumConfig {
     @AfterSuite(alwaysRun = true)
     public void destroy() {
         driver.quit();
+    }
+
+    public static String getAppUrl(){
+        return appUrl;
     }
 }

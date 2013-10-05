@@ -66,6 +66,18 @@ public class Users {
         }
     }
 
+    public static User signUpAndSignIn() {
+        User user;
+        try {
+            user = Users.signUp();
+            Users.signIn(user);
+        } catch (ValidationException e) {
+            throw new IllegalStateException("Can't sign up new user.", e);
+        }
+
+        return  user;
+    }
+
     private static void openAndFillSignInDialog(User user) {
         mainPage.clickLogin();
         // Check that sign-in dialog have been opened (JCommune open sign-in page instead dialog if JavaScript disabled)

@@ -18,6 +18,8 @@ package org.jtalks.tests.jcommune.webdriver.action;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
+import org.jtalks.tests.jcommune.assertion.Existence;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
@@ -26,6 +28,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -35,10 +38,10 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
+
+//import org.junit.Assert;
+
 
 /**
  * Contain topic actions like creating, deleting etc.
@@ -50,6 +53,46 @@ public class Topics {
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
     /**
+     * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
+     * otherwise the topic is created in a {@link Topic#getBranch()}.
+     *
+     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
+     * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
+     */
+
+    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        gotoMainPage();
+        if (topic.getBranch() == null) {
+            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
+            topic.withBranch(branch);
+        }
+
+        Branches.openBranch(topic.getBranch().getTitle());
+        clickCreateTopic();
+        fillTopicFields(topic);
+        fillPollSpecificFields(topic.getPoll());
+        clickAnswerToTopicButton(topic);
+        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
+        assertFormValid();
+        return topic;
+    }
+
+    public static void assertFormValid() throws ValidationException {
+        String failedFields = "";
+        if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.SUBJECT_ERR_MSG_XPATH)) {
+            WebElement subjectError = topicPage.getSubjectErrorMessage();
+            failedFields += subjectError.getText() + "\n";
+        }
+        if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.BODY_ERR_MSG_XPATH)) {
+            WebElement bodyError = topicPage.getBodyErrorMessage();
+            failedFields += bodyError.getText();
+        }
+        if (!failedFields.equals("")) {
+            throw new ValidationException(failedFields);
+        }
+    }
+
+    /**
      * Sign-up new user and create new topic
      *
      * @param topic the topic representation private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
@@ -58,17 +101,19 @@ public class Topics {
      * @throws ValidationException        if specified topic does not pass forum validation
      * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
      */
+
+
     public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-        User user = Users.signUp();
+        User user = User.admin();
         Users.signIn(user);
         topic.withTopicStarter(user);
         createTopic(topic);
     }
 
     public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-        User existentUser = new User("P_10hkgd", "123456");
-        topic.withTopicStarter(existentUser);
-        Users.signIn(existentUser);
+        User user = User.admin();
+        Users.signIn(user);
+        topic.withTopicStarter(user);
         return createTopic(topic);
     }
 
@@ -102,29 +147,6 @@ public class Topics {
         return topicDate.isAfter(dat.getMillis());
     }
 
-    /**
-     * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
-     * otherwise the topic is created in a {@link Topic#getBranch()}.
-     *
-     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
-     * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
-     */
-
-    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
-        if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
-            topic.withBranch(branch);
-        }
-
-        Branches.openBranch(topic.getBranch().getTitle());
-        clickCreateTopic();
-        fillTopicFields(topic);
-        fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
-        topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        return topic;
-    }
-
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
@@ -154,6 +176,15 @@ public class Topics {
 //        }
     }
 
+    /**
+     * This is just stub which doesn't actually find any topics
+     */
+    public static Topic findTopic(String branchTitle, String topicTitle) {
+        Topic topic = new Topic(topicTitle, topicTitle);
+        topic.setHasNewMessages(true);
+        return topic;
+    }
+
     private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
         boolean found = false;
 
@@ -180,7 +211,6 @@ public class Topics {
         return found;
     }
 
-
     private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
         postPage.getNewButton().click();
         topicPage.getMainBodyArea().sendKeys(answer);
@@ -197,7 +227,7 @@ public class Topics {
      * @return true if the specified topic was found
      * @throws CouldNotOpenPageException if specified topic was not found
      */
-    private static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
+    public static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
             throws CouldNotOpenPageException {
         boolean found;
         while (!(found = findTopic(topicToFind))) {
@@ -209,7 +239,6 @@ public class Topics {
         }
         return found;
     }
-
 
     private static boolean openNextPage(int pagesToCheck) {
         int max = 0;
@@ -233,7 +262,6 @@ public class Topics {
         return false;
     }
 
-
     public static boolean senseToPageNext(Topic topic) {
         WebElement bottomRowOfTopics = topicPage.getLastTopicLine();
         System.out.println(bottomRowOfTopics.getText());
@@ -243,7 +271,6 @@ public class Topics {
         String dateFromBottomRowOfTopics = bottomRowOfTopics.findElement(By.xpath("*/a[contains(@class,'date')]")).getText().trim();
         return isTopicNewer(DateTime.now(), dateFromBottomRowOfTopics);
     }
-
 
     /**
      * Sets state for checkbox element
@@ -263,7 +290,6 @@ public class Topics {
         }
     }
 
-
     /**
      * Sets the end date in the poll.
      *
@@ -276,17 +302,6 @@ public class Topics {
         }
 
     }
-
-    /**
-     * Returns date in string type.
-     *
-     * @param date  the date.
-     * @param format the format of date in string.
-     * @return the date in the string.
-     */
-
-
-
 
     private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
         try {
@@ -312,7 +327,8 @@ public class Topics {
     private static void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
+        //topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
+        topicPage.getSubjectField().sendKeys(topic.getTitle());
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
@@ -324,6 +340,9 @@ public class Topics {
         }
     }
 
+    private static void gotoMainPage() {
+        mainPage.clickForumsTitle();
+    }
 
     /**
      * Returns date in string type.
@@ -339,22 +358,10 @@ public class Topics {
         return null;
     }
 
+    public static boolean isCreated(Topic topic) {
+        String expectedTitle = topic.getTitle();
+        String actualTitle = topicPage.getTopicSubjectAfterCreation().getText();
 
-    /**
-     * Create new topic
-     *
-     * @param topic
-     *            the topic representation
-     * @throws PermissionsDeniedException
-     */
-
-    /**
-     * Delete topic by User
-     * @param topic
-     * @param user
-     * @return
-     */
-    public static void deleteByUser(Topic topic, User user)
-    {
+        return actualTitle.equals(expectedTitle);
     }
 }
