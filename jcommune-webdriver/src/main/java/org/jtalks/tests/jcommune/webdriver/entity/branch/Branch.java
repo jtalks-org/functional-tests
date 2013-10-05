@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.entity.branch;
 
+import com.google.common.collect.Sets;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
 import java.util.Set;
@@ -9,9 +10,7 @@ import java.util.Set;
  * @author andrey ivanov
  */
 public class Branch {
-
     private String title;
-    private Set<User> subscribers;
 
     public Branch() {
     }
@@ -26,12 +25,6 @@ public class Branch {
 
     public Branch withTitle(String title) {
         this.title = title;
-        return this;
-    }
-
-    public Branch withSubscribers(Set<User> subscribers) {
-        this.subscribers = subscribers;
-
         return this;
     }
 }

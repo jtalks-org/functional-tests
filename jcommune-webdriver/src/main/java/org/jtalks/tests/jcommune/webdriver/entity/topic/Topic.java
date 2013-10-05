@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
+import com.google.common.collect.Sets;
 import org.joda.time.DateTime;
 import org.jtalks.tests.jcommune.utils.StringHelp;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
@@ -26,7 +27,6 @@ public class Topic {
     private Poll poll;
     private CodeReview codeReview;
     private List<Post> posts = new ArrayList<Post>();
-    private Set<User> subscribers = new HashSet<User>();
     private boolean hasNewMessages;
 
     public Topic() {
@@ -128,14 +128,6 @@ public class Topic {
         this.posts = posts;
     }
 
-    public Set<User> getSubscribers() {
-        return subscribers;
-    }
-
-    public void setSubscribers(Set<User> subscribers) {
-        this.subscribers = subscribers;
-    }
-
     public Branch getBranch() {
         return branch;
     }
@@ -164,10 +156,5 @@ public class Topic {
 
     public void setHasNewMessages(boolean hasNewMessages) {
         this.hasNewMessages = hasNewMessages;
-    }
-
-    public Topic withSubscribers(Set<User> subscribers) {
-        this.setSubscribers(subscribers);
-        return this;
     }
 }

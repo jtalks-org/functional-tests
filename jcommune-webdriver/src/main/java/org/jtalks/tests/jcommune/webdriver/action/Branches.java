@@ -1,5 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -30,4 +32,7 @@ public class Branches {
         throw new UnsupportedOperationException("This is just stub method. Implementation will be created in the future");
     }
 
+    public static void subscribe(Branch branch, User user) {
+        throw new UnsupportedOperationException();
+    }
 }

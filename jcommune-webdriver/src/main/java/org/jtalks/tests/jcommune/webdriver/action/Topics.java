@@ -365,13 +365,11 @@ public class Topics {
         return actualTitle.equals(expectedTitle);
     }
 
-    /**
-     * Delete topic by User
-     * @param topic
-     * @param user
-     * @return
-     */
-    public static void deleteByUser(Topic topic, User user)
-    {
+    public static void deleteByUser(Topic topic, User user) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void subscribe(Topic topic, User user) {
+        throw new UnsupportedOperationException();
     }
 }
