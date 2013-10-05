@@ -364,4 +364,14 @@ public class Topics {
 
         return actualTitle.equals(expectedTitle);
     }
+
+    /**
+     * Delete topic by User
+     * @param topic
+     * @param user
+     * @return
+     */
+    public static void deleteByUser(Topic topic, User user)
+    {
+    }
 }
