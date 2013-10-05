@@ -76,7 +76,7 @@ public class TopicNotificationTest {
         Topics.subscribe(topic, user);
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.deleteByUser(topic, Users.signUpAndSignIn());
+        Topics.moveByUser(topic, Users.signUpAndSignIn());
         Notifications.assertTopicNotificationSent(topic, user);
     }
 
@@ -88,7 +88,7 @@ public class TopicNotificationTest {
         Topics.subscribe(topic, user);
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.deleteByUser(topic, Users.signUpAndSignIn());
+        Topics.moveByUser(topic, Users.signUpAndSignIn());
         Notifications.assertBranchNotificationNotSentTo(topic.getBranch(), user);
     }
 
@@ -99,7 +99,7 @@ public class TopicNotificationTest {
         Topic topic = Topics.createTopic(new Topic());
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.deleteByUser(topic, Users.signUpAndSignIn());
+        Topics.moveByUser(topic, Users.signUpAndSignIn());
         Notifications.assertBranchNotificationNotSentTo(topic.getBranch(), user);
     }
 
@@ -110,16 +110,16 @@ public class TopicNotificationTest {
         Topic topic = Topics.createTopic(new Topic());
         Topics.subscribe(topic, user);
 
-        Topics.deleteByUser(topic, Users.signUpAndSignIn());
+        Topics.moveByUser(topic, Users.signUpAndSignIn());
         Notifications.assertTopicNotificationSent(topic, user);
     }
 
     @Test
-    public void movingTopic_ifSubscribedUserDeletesTopic_shouldNotReceiveTopicNotification() throws Exception {
+    public void movingTopic_ifSubscribedUserMoveTopic_shouldNotReceiveTopicNotification() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
 
-        Topics.deleteByUser(topic, user);
+        Topics.moveByUser(topic, user);
         Notifications.assertTopicNotificationNotSent(topic, user);
     }
 }

@@ -372,4 +372,8 @@ public class Topics {
     public static void subscribe(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
+
+    public static void moveByUser(Topic topic, User user) {
+        throw new UnsupportedOperationException();
+    }
 }
