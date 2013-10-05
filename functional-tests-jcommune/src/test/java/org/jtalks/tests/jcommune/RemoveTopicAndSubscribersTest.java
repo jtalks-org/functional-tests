@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune;
 
+import com.google.common.collect.Sets;
 import org.jtalks.tests.jcommune.webdriver.action.Notifications;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
@@ -9,7 +10,6 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -20,28 +20,26 @@ public class RemoveTopicAndSubscribersTest
     public void oneUserIsSubscribeForBranchAndTopicAndOtherUserDeleteTopicInBranch() throws ValidationException {
 
         User user = new User();
-        Set<User> subscribers = new HashSet();
-        subscribers.add(user);
+        Set<User> subscribers = Sets.newHashSet(user);
 
-        Branch branch = new Branch().withTitle("Test title").withSubscribers(subscribers);
-        Topic topic = new Topic("Topic title", "First topic content").withBranch(branch).withSubscribers(subscribers);
+        Branch branch = new Branch().withSubscribers(subscribers);
+        Topic topic = new Topic().withBranch(branch).withSubscribers(subscribers);
 
         User deleteTopicUser = Users.signUp();
         Users.signIn(deleteTopicUser);
 
         Topics.deleteByUser(topic, deleteTopicUser);
         Notifications.sendFor(topic, user);
-        Notifications.notSendFor(branch, user);
+        Notifications.assertBranchNotificationNotSentTo(branch, user);
     }
 
     public void oneUserIsSubscribeForBranchOnlyAndOtherUserDeleteTopicInBranch() throws ValidationException {
 
         User user = new User();
-        Set<User> subscribers = new HashSet();
-        subscribers.add(user);
+        Set<User> subscribers = Sets.newHashSet(user);
 
-        Branch branch = new Branch().withTitle("Test title").withSubscribers(subscribers);
-        Topic topic = new Topic("Topic title", "First topic content").withBranch(branch);
+        Branch branch = new Branch().withSubscribers(subscribers);
+        Topic topic = new Topic().withBranch(branch);
 
         User deleteTopicUser = Users.signUp();
         Users.signIn(deleteTopicUser);
@@ -53,11 +51,9 @@ public class RemoveTopicAndSubscribersTest
     public void oneUserIsSubscribeForTopicOnlyAndOtherUserDeleteTopic() throws ValidationException {
 
         User user = new User();
-        Set<User> subscribers = new HashSet();
-        subscribers.add(user);
+        Set<User> subscribers = Sets.newHashSet(user);
 
-        Topic topic =
-                new Topic("Topic title", "First topic content").withBranch("Test branch").withSubscribers(subscribers);
+        Topic topic = new Topic().withBranch("Test branch").withSubscribers(subscribers);
 
         User deleteTopicUser = Users.signUp();
         Users.signIn(deleteTopicUser);
@@ -72,7 +68,7 @@ public class RemoveTopicAndSubscribersTest
         User user = Users.signUp();
         Users.signIn(user);
 
-        Topic topic = new Topic("Topic title", "First topic content").withBranch("Test branch").withTopicStarter(user);
+        Topic topic = new Topic().withBranch("Test branch").withTopicStarter(user);
         Topics.createTopic(topic);
 
         Topics.deleteByUser(topic, user);

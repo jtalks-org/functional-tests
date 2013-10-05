@@ -17,7 +17,7 @@ public class Notifications
         //To change body of created methods use File | Settings | File Templates.
     }
 
-    public static void notSendFor(Branch branch, User user) {
+    public static void assertBranchNotificationNotSentTo(Branch branch, User user) {
         //To change body of created methods use File | Settings | File Templates.
     }
 }
