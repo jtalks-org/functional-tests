@@ -151,4 +151,9 @@ public class Topic {
     public Post getLastPost() {
         return getPosts().get(getPosts().size() - 1);
     }
+
+    public Topic withSubscribers(Set<User> subscribers) {
+        this.setSubscribers(subscribers);
+        return this;
+    }
 }
