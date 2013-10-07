@@ -208,4 +208,11 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
+    @Test (enabled = false, expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.WRONG_CAPTCHA)
+    public void emptyCaptchaFieldWithoutLoadingCaptchaImageShouldFailRegistration() throws Exception {
+        UserForRegistration user = new UserForRegistration();
+        user.setCaptchaState(false);
+        Users.signUp(user);
+    }
+
 }

@@ -71,6 +71,8 @@ public class SignUpPage {
 
     public static final String WRONG_EMAIL_FORMAT_ERROR = "Адрес электронной почты: Допустимый формат email- mail@mail.ru\n";
 
+    public static final String WRONG_CAPTCHA = "Введено неверное значение капчи\n";
+
     @FindBy(id = signUpDialogFormSel)
     WebElement signUpDialogForm;
 
