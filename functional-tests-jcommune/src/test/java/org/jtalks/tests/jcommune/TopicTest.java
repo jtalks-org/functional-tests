@@ -47,7 +47,7 @@ public class TopicTest {
     }
 
     @Test
-    public void createTopicWithTitleAndMessage_JC_13() throws Exception {
+    public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("subject", "message");
@@ -57,7 +57,7 @@ public class TopicTest {
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
-    public void createTopicWithEmptyTitleShouldFail_JC_25() throws Exception {
+    public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("", "message");
@@ -66,7 +66,7 @@ public class TopicTest {
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithEmptyMessageShouldFail_JC_26() throws Exception {
+    public void createTopicWithEmptyMessage_ShouldFail_JC_26() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("subject", "");
@@ -76,7 +76,7 @@ public class TopicTest {
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithoutData_JC_24() throws Exception {
+    public void createTopicWithoutData_ShouldFail_JC_24() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
         Topic topic = new Topic("", "");
@@ -85,7 +85,7 @@ public class TopicTest {
     }
 
     @Test(enabled = true)
-    public void LoginAndCreateTopicValidateBrnanch() throws Exception {
+    public void loginAndCreateTopicValidateBranch_ShouldPass() throws Exception {
         Topic topic = new Topic("subject123", "message").withBranch("Micro level");
         Topics.loginAndCreateTopic(topic);
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
