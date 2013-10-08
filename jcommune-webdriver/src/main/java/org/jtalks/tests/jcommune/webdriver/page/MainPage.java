@@ -17,7 +17,6 @@ public class MainPage {
     public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout']";
     public static final String errorPageSel = "//div[@class='text_errorpage']";
     public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections']";
-    public static final String iconLinkToMainPageSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/']";
     public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/recent']";
     public static final String messagesCountSel = "//span[@class='test-messages']";
     public static final String usersCountSel = "//span[@class='test-registered-users']";
@@ -57,7 +56,7 @@ public class MainPage {
     private WebElement errorPage;
     @FindBy(xpath = breadCrumbsForumLinkSel)
     private WebElement breadCrumbsForumLink;
-    @FindBy(xpath = iconLinkToMainPageSel)
+    @FindBy(className = "brand")
     private WebElement iconLinkToMainPage;
     @FindBy(xpath = recentActivityLinkSel)
     private WebElement recentActivityLink;
