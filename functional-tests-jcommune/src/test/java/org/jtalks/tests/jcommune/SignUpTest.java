@@ -209,7 +209,7 @@ public class SignUpTest {
     }
 
     @Test (enabled = false, expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = SignUpPage.WRONG_CAPTCHA)
+            expectedExceptionsMessageRegExp = SignUpPage.WRONG_CAPTCHA, groups = "manual")
     public void emptyCaptchaFieldWithoutLoadingCaptchaImage_ShouldFailRegistration() throws Exception {
         UserForRegistration user = new UserForRegistration();
         //Whether the image should be loaded in the browser or not

@@ -6,6 +6,9 @@
     <listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener"/>
   </listeners>
   <test name="JCommune">
+    <groups>
+      <define name="manual"/>
+    </groups>
     <classes>
       <class name="org.jtalks.tests.jcommune.SignInTest"/>
       <class name="org.jtalks.tests.jcommune.SignUpTest"/>
