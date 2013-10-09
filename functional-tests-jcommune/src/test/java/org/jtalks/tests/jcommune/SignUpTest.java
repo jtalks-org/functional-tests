@@ -202,16 +202,18 @@ public class SignUpTest {
     }
 
     @Test
-    public void usernameContainsBackslashShouldPassRegistration_JC_4() throws Exception {
+    public void usernameContainsBackSlashShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("\\" + randomString(8));
         Users.signUp(user);
     }
 
-    @Test (enabled = false, expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.WRONG_CAPTCHA)
-    public void emptyCaptchaFieldWithoutLoadingCaptchaImageShouldFailRegistration() throws Exception {
+    @Test (enabled = false, expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = SignUpPage.WRONG_CAPTCHA)
+    public void emptyCaptchaFieldWithoutLoadingCaptchaImage_ShouldFailRegistration() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        user.setCaptchaState(false);
+        //Whether the image should be loaded in the browser or not
+        user.loadCaptchaImage(false);
         Users.signUp(user);
     }
 
