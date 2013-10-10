@@ -44,8 +44,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
  * @author Guram Savinov
  */
 public class Users {
-    private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для " +
-            "подтверждения регистрации.";
+    private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
     private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 60;
 
@@ -158,6 +157,7 @@ public class Users {
      * @throws ValidationException
      */
     public static User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
+        mainPage.logOutIfLoggedIn(driver);
         openAndFillSignUpDialog(userForRegistration);
         checkFormValidation(signUpPage.getErrorFormElements());
         waitForEmailActivationInfoShowsUp();
