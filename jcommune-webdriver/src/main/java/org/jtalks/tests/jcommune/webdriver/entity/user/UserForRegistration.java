@@ -22,17 +22,17 @@ package org.jtalks.tests.jcommune.webdriver.entity.user;
  */
 public class UserForRegistration extends User {
     private String passwordConfirmation = super.getPassword();//same as password by default
-    private boolean captchaIsLoaded = true;
+    private boolean loadCaptcha = true;
 
     public UserForRegistration() {
     }
 
-    public boolean getCaptchaState() {
-        return captchaIsLoaded;
-    }
-
-    public void setCaptchaState(boolean captchaIsLoaded) {
-        this.captchaIsLoaded = captchaIsLoaded;
+    /**
+     * Whether the image should be loaded in the browser or not, this is needed e.g. for security testing.
+     * @param captchaIsLoaded false if image should not be loaded, true by default
+     */
+    public void loadCaptchaImage(boolean captchaIsLoaded) {
+        this.loadCaptcha = captchaIsLoaded;
     }
 
     public String getPasswordConfirmation() {

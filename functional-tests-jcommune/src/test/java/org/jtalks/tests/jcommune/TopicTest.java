@@ -48,39 +48,31 @@ public class TopicTest {
 
     @Test
     public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
-        Topic createdTopic = Topics.createTopic(topic);
+        Topic createdTopic = Topics.signUpAndCreateTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
     public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
         Topic topic = new Topic("", "message");
-        Topics.createTopic(topic);
+        Topics.signUpAndCreateTopic(topic);
     }
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithEmptyMessage_ShouldFail_JC_26() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
         Topic topic = new Topic("subject", "");
-        Topics.createTopic(topic);
+        Topics.signUpAndCreateTopic(topic);
 
     }
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithoutData_ShouldFail_JC_24() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
         Topic topic = new Topic("", "");
-        Topics.createTopic(topic);
+        Topics.signUpAndCreateTopic(topic);
 
     }
 
@@ -94,10 +86,7 @@ public class TopicTest {
     @Test
     public void signUpAndCreateTopicInBranch() throws Exception {
         Topic topic = new Topic("subject123", "message").withBranch("Classical Mechanics");
-        User user = Users.signUp();
-        Users.signIn(user);
-        topic.withTopicStarter(user);//?
-        Topics.createTopic(topic);
+        Topics.signUpAndCreateTopic(topic);
     }
 
     @Test
@@ -107,19 +96,14 @@ public class TopicTest {
         Users.signIn(user);
         topic.withTopicStarter(user);
         Topics.createCodeReview(topic);
-
     }
 
     @Test
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         Topic topic = new Topic(StringHelp.randomString(40), StringHelp.randomString(100));
-        String branchTitle = "TestBranch";
-        User user = Users.signUp();
-        Users.signIn(user);
-        topic.withTopicStarter(user);
-        Topics.createTopic(topic);
-        Topics.postAnswer(topic, branchTitle);
+        Topics.signUpAndCreateTopic(topic);
+        Topics.postAnswer(topic, topic.getBranch().getTitle());
     }
 
     @Test(expectedExceptions = PermissionsDeniedException.class)

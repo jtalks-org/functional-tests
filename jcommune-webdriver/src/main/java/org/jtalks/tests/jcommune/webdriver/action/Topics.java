@@ -103,11 +103,11 @@ public class Topics {
      */
 
 
-    public static void signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
+    public static Topic signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
         User user = User.admin();
         Users.signIn(user);
         topic.withTopicStarter(user);
-        createTopic(topic);
+        return createTopic(topic);
     }
 
     public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
@@ -162,7 +162,6 @@ public class Topics {
         Post firstPost = topic.getPosts().get(0);
         topicPage.getMainBodyArea().sendKeys(firstPost.getPostContent());
         topicPage.getPostButton().click();
-
     }
 
     public static void postAnswer(Topic topic, String branchTitle)
