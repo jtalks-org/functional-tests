@@ -68,7 +68,7 @@ public class TopicPage {
     private WebElement topicSticked;
     @FindBy(id = "announcement")
     private WebElement topicAnnouncement;
-    @FindBy(id = "subjectText")
+    @FindBy(id = "subject")
     private WebElement subjectField;
     @FindBy(id = "postBody")
     private WebElement mainBodyArea;
