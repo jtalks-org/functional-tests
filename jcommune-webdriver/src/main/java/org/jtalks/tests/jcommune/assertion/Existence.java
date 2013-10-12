@@ -17,7 +17,9 @@ public class Existence {
      * The method checks that the element does exist
      *
      * @param selector Selector to find element
+     * @deprecated use {@link #assertElementExistsBySelector(org.openqa.selenium.WebDriver, org.openqa.selenium.By)}
      */
+    @Deprecated
     public static void assertElementExistsBySelector(WebDriver driver, String selector) {
         try {
             driver.findElement(By.xpath(selector));
@@ -26,7 +28,20 @@ public class Existence {
         }
     }
 
-    public static boolean exists(WebDriver driver, String selector) {
+    /**
+     * The method asserts that the element exists, otherwise throws exception.
+     *
+     * @param selector selector to find element
+     */
+    public static void assertElementExistsBySelector(WebDriver driver, By selector) {
+        try {
+            driver.findElement(selector);
+        } catch (NoSuchElementException e) {
+            Assert.fail("The element with selector=\"" + selector + "\" should exist");
+        }
+    }
+
+    public static boolean exists(WebDriver driver, By selector) {
         try {
             Existence.assertElementExistsBySelector(driver, selector);
             return true;
@@ -35,10 +50,10 @@ public class Existence {
         }
     }
 
-    public static boolean isElementPresent(WebDriver driver, WebElement element) {
+    public static boolean exists(WebElement element) {
         try {
             element.isDisplayed();
-            return true;  // Success!
+            return true;
         } catch (NoSuchElementException ignored) {
             return false;
         }

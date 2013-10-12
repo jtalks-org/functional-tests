@@ -22,15 +22,12 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  * @author masyan
  */
 public class TopicPage {
-
     public static final String EMPTY_SUBJECT_ERROR = "Не может быть пустым\n";
     public static final String EMPTY_BODY_ERROR = "Не может быть пустым\n" +
             "Размер должен быть между 2 и 20000";
-    public static String SUBJECT_ERR_MSG_XPATH = "//span[@id='subject']";
-    public static String BODY_ERR_MSG_XPATH = "//span[@id='bodyText.errors']";
-    @FindBy(xpath = "//span[@id='subject']")
+    @FindBy(id = "subjectError")
     private WebElement subjectErrorMessage;
-    @FindBy(xpath = "//span[@id='bodyText.errors']")
+    @FindBy(id = "bodyText.errors")
     private WebElement bodyErrorMessage;
     @FindBy(xpath = "//a[@class='back-btn']")
     private WebElement backButtonOnEditForm;
@@ -126,16 +123,8 @@ public class TopicPage {
         return postButton;
     }
 
-    public WebElement getTopicSubject() {
-        return topicSubject;
-    }
-
     public WebElement getTopicSubjectAfterCreation() {
         return topicSubjectAfterCreation;
-    }
-
-    public WebElement getTopicMessage() {
-        return topicMessage;
     }
 
     public List<WebElement> getTopicsList() {
@@ -150,36 +139,8 @@ public class TopicPage {
         return bodyErrorMessage;
     }
 
-    public WebElement getBackButtonOnEditForm() {
-        return backButtonOnEditForm;
-    }
-
-    public List<WebElement> getTopicLinksFromDateInLastColumn() {
-        return topicLinksFromDateInLastColumn;
-    }
-
-    public List<WebElement> getTopicLinksFromRecentActivity() {
-        return topicLinksFromRecentActivity;
-    }
-
-    public List<WebElement> getAmountsOfViewTopics() {
-        return amountsOfViewTopics;
-    }
-
-    public List<WebElement> getWhoBrowsingTopic() {
-        return whoBrowsingTopic;
-    }
-
-    public WebElement getProfileLink() {
-        return profileLink;
-    }
-
     public List<WebElement> getTopicsButtons() {
         return topicsButtons;
-    }
-
-    public WebElement getButtonTopicsPageLink(int pageNum) {
-        return topicsButtons.get(pageNum - 1);
     }
 
     public WebElement getTopicSticked() {

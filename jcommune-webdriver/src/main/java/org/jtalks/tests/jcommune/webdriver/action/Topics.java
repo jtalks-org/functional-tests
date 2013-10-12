@@ -19,7 +19,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
 import org.jtalks.tests.jcommune.assertion.Existence;
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
@@ -28,7 +27,6 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -79,11 +77,11 @@ public class Topics {
 
     public static void assertFormValid() throws ValidationException {
         String failedFields = "";
-        if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.SUBJECT_ERR_MSG_XPATH)) {
+        if (Existence.exists(topicPage.getSubjectErrorMessage())) {
             WebElement subjectError = topicPage.getSubjectErrorMessage();
             failedFields += subjectError.getText() + "\n";
         }
-        if (Existence.exists(JCommuneSeleniumConfig.driver, TopicPage.BODY_ERR_MSG_XPATH)) {
+        if (Existence.exists(topicPage.getBodyErrorMessage())) {
             WebElement bodyError = topicPage.getBodyErrorMessage();
             failedFields += bodyError.getText();
         }
@@ -115,16 +113,6 @@ public class Topics {
         Users.signIn(user);
         topic.withTopicStarter(user);
         return createTopic(topic);
-    }
-
-    public static Boolean isBranch(Topic topic) {
-        boolean isBranch = false;
-
-        Branches.openBranch(topic.getBranch().getTitle());
-        openTopicInCurrentBranch(100, topic.getTitle());
-
-        return isBranch;
-
     }
 
     public static boolean isInCorrectBranch(Topic topic) {
