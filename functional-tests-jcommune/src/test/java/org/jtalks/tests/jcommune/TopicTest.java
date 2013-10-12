@@ -15,7 +15,7 @@
 
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -101,7 +101,7 @@ public class TopicTest {
     @Test
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
-        Topic topic = new Topic(StringHelp.randomString(40), StringHelp.randomString(100));
+        Topic topic = new Topic(TestStringUtils.randomString(40), TestStringUtils.randomString(100));
         Topics.signUpAndCreateTopic(topic);
         Topics.postAnswer(topic, topic.getBranch().getTitle());
     }

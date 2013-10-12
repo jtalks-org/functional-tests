@@ -1,7 +1,8 @@
 package org.jtalks.tests.jcommune.webdriver.entity.externallink;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
-import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
@@ -11,9 +12,9 @@ import java.util.List;
  * @author stanislav bashkirtsev
  */
 public class ExternalLink {
-    private String title = StringHelp.randomString(30);
-    private String href = StringHelp.randomUrl(30);
-    private String hint = StringHelp.randomString(30);
+    private String title = RandomStringUtils.randomAlphanumeric(30);
+    private String href = TestStringUtils.randomUrl(40);
+    private String hint = RandomStringUtils.randomAlphanumeric(30);
 
     public ExternalLink() {
     }

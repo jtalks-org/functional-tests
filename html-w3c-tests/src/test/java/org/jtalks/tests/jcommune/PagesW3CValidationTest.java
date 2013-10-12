@@ -1,6 +1,6 @@
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
@@ -73,7 +73,7 @@ public class PagesW3CValidationTest {
 
     @Test
     public void postPage_Test() throws Exception {
-        Topic topic = new Topic(StringHelp.randomString(40), StringHelp.randomString(100));
+        Topic topic = new Topic(TestStringUtils.randomString(40), TestStringUtils.randomString(100));
         String branchTitle = "TestBranch";
         User user = Users.signUp();
         Users.signIn(user);

@@ -9,8 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.annotations.*;
 
-import static org.jtalks.tests.jcommune.utils.StringHelp.randomString;
-import static org.jtalks.tests.jcommune.utils.StringHelp.randomUrl;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.jtalks.tests.jcommune.utils.TestStringUtils.randomUrl;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.action.ExternalLinks.exitAdminMode;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -48,10 +48,7 @@ public class ExternalLinksTest {
 
     @Test
     public void externalLinkWithValidDataShouldBeCreated() throws Exception {
-        ExternalLink externalLink = new ExternalLink()
-                .withTitle(randomString(25))
-                .withHref(randomUrl(50))
-                .withHint(randomString(30));
+        ExternalLink externalLink = new ExternalLink();
 
         ExternalLinks.createExternalLink(externalLink);
         ExternalLinks.assertLinkVisible(externalLink);
@@ -61,7 +58,7 @@ public class ExternalLinksTest {
 
     @Test
     public void titleMaxValueShouldPassValidation() {
-        ExternalLink link = new ExternalLink().withTitle(randomString(30));
+        ExternalLink link = new ExternalLink().withTitle(randomAlphanumeric(30));
 
         ExternalLinks.createExternalLink(link);
         ExternalLinks.assertLinkVisible(link);
@@ -71,7 +68,7 @@ public class ExternalLinksTest {
 
     @Test
     public void titleMinValueShouldPassValidation() {
-        ExternalLink link = new ExternalLink().withTitle(randomString(1));
+        ExternalLink link = new ExternalLink().withTitle(randomAlphanumeric(1));
 
         ExternalLinks.createExternalLink(link);
         ExternalLinks.assertLinkVisible(link);
@@ -102,7 +99,7 @@ public class ExternalLinksTest {
 
     @Test
     public void hintMaxValueShouldPassValidation() {
-        ExternalLink link = new ExternalLink().withHint(randomString(128));
+        ExternalLink link = new ExternalLink().withHint(randomAlphanumeric(128));
 
         ExternalLinks.createExternalLink(link);
         ExternalLinks.assertLinkVisible(link);

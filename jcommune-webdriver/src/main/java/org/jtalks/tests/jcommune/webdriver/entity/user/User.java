@@ -17,7 +17,7 @@ package org.jtalks.tests.jcommune.webdriver.entity.user;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
-import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  * Jcommune user representation. Contains username, password and e-mail. If nothing is changed, all the fields
@@ -26,8 +26,8 @@ import org.jtalks.tests.jcommune.utils.StringHelp;
  * @author Guram Savinov
  */
 public class User {
-    private String username = StringHelp.randomString(15);
-    private String email = StringHelp.getRandomEmail();
+    private String username = RandomStringUtils.randomAlphanumeric(25);
+    private String email = username + "@jtalks.org";
     private String password = username;
 
     public User() {

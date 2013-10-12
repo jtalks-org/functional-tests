@@ -1,15 +1,12 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
-import com.google.common.collect.Sets;
 import org.joda.time.DateTime;
-import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Jcommune topic representation.
@@ -19,7 +16,7 @@ public class Topic {
     private DateTime creationDate;
     private DateTime modificationDate;
     private User topicStarter;
-    private String title = StringHelp.randomString(30);
+    private String title = TestStringUtils.randomString(30);
     private Boolean sticked;
     private Boolean announcement;
     private Boolean closed;
@@ -30,7 +27,7 @@ public class Topic {
     private boolean hasNewMessages;
 
     public Topic() {
-        posts.add(new Post(StringHelp.randomString(200)));
+        posts.add(new Post(TestStringUtils.randomString(200)));
     }
 
     public Topic(String title, String firstPostContent) {

@@ -15,7 +15,7 @@
 
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.utils.StringHelp;
+import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
@@ -52,7 +52,7 @@ public class SignInTest {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameEmptyShouldFailLogin_JC_21() throws Exception {
-        String password = StringHelp.randomString(9);
+        String password = TestStringUtils.randomString(9);
         Users.signIn(new User("", password));
     }
 
@@ -60,7 +60,7 @@ public class SignInTest {
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameNotExistShouldFailLogin_JC_21() throws Exception {
         User user = Users.signUp();
-        user.setUsername(StringHelp.randomString(8));
+        user.setUsername(TestStringUtils.randomString(8));
         Users.signIn(user);
     }
 
@@ -75,8 +75,8 @@ public class SignInTest {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameAndPasswordNotExistShouldFailLogin() throws Exception {
-        String username = StringHelp.randomString(8);
-        String password = StringHelp.randomString(9);
+        String username = TestStringUtils.randomString(8);
+        String password = TestStringUtils.randomString(9);
         Users.signIn(new User(username, password));
     }
 
@@ -98,7 +98,7 @@ public class SignInTest {
     @Test
     public void usernameContainsSlashShouldLogin() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        user.setUsername(StringHelp.randomString(10) + "/");
+        user.setUsername(TestStringUtils.randomString(10) + "/");
         User registeredUser = Users.signUp(user);
         Users.signIn(registeredUser);
     }
