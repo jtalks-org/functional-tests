@@ -18,6 +18,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 /**
  * @author stanislav bashkirtsev
  */
+@Test(groups = "htmlunit-incompatible")
 public class ExternalLinksTest {
     private static final Logger logger = LoggerFactory.getLogger(Users.class);
 
