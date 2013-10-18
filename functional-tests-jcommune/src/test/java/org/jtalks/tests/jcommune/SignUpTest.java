@@ -207,14 +207,4 @@ public class SignUpTest {
         user.setUsername("\\" + randomString(8));
         Users.signUp(user);
     }
-
-    @Test (enabled = false, expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = SignUpPage.WRONG_CAPTCHA, groups = "manual")
-    public void emptyCaptchaFieldWithoutLoadingCaptchaImage_ShouldFailRegistration() throws Exception {
-        UserForRegistration user = new UserForRegistration();
-        //Whether the image should be loaded in the browser or not
-        user.loadCaptchaImage(false);
-        Users.signUp(user);
-    }
-
 }

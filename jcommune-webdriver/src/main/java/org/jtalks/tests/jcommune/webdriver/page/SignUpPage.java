@@ -16,7 +16,6 @@ public class SignUpPage {
      * JCommune instance for functional should be configured to use only 0000 as captcha so that we can actually
      * register users without writing a tool to break our own captcha
      */
-    public static final String VALID_CAPTCHA_VALUE = "0000";
 
     public static final String signUpDialogFormSel = "signup-modal-dialog";
 
@@ -44,10 +43,6 @@ public class SignUpPage {
 
     public static final String okButtonOnInfoWindowSel = "btn-primary";
 
-    public static final String captchaFieldSel = "captcha";
-
-    public static final String captchaImageSel = "captcha-img";
-
     public static final String errorFormElementsSel = "div.control-group.error";
 
     public static final String EMPTY_LOGIN_ERROR = "Имя пользователя: Не может быть пустым\n";
@@ -70,8 +65,6 @@ public class SignUpPage {
     public static final String NOT_UNIQUE_EMAIL_ERROR = "Адрес электронной почты: Пользователь с таким email уже существует\n";
 
     public static final String WRONG_EMAIL_FORMAT_ERROR = "Адрес электронной почты: Допустимый формат email- mail@mail.ru\n";
-
-    public static final String WRONG_CAPTCHA = "Введено неверное значение капчи\n";
 
     @FindBy(id = signUpDialogFormSel)
     WebElement signUpDialogForm;
@@ -108,12 +101,6 @@ public class SignUpPage {
 
     @FindBy(className = okButtonOnInfoWindowSel)
     WebElement okButtonOnInfoWindow;
-
-    @FindBy(id = captchaFieldSel)
-    WebElement captchaField;
-
-    @FindBy(id = captchaImageSel)
-    WebElement captchaImage;
 
     @FindBy(css = errorFormElementsSel)
     List<WebElement> errorFormElements;
@@ -168,16 +155,8 @@ public class SignUpPage {
         return okButtonOnInfoWindow;
     }
 
-    public WebElement getCaptchaField() {
-        return captchaField;
-    }
-
     public WebElement getSignUpDialogForm() {
         return signUpDialogForm;
-    }
-
-    public WebElement getCaptchaImage() {
-        return captchaImage;
     }
 
     public List<WebElement> getErrorFormElements() {

@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.webdriverType;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 /**
@@ -174,21 +173,12 @@ public class Users {
                     "sign-up dialog form; may be JavaScript disabled in browser settings", e);
         }
 
-        // JCommune add captcha value to the session on image request. Because HtmlUnit doesn't load images, captcha
-        // image should be requested manually.
-        if ("htmlunit".equalsIgnoreCase(webdriverType)) {
-            driver.get(signUpPage.getCaptchaImage().getAttribute("src"));
-            driver.navigate().back();
-            signUpPage.getSignUpButton().click();
-        }
-
         // Fill form values and submit
         LOGGER.info("Sign Up {}", userForRegistration);
         signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
         signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
         signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
         signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
-        signUpPage.getCaptchaField().sendKeys(SignUpPage.VALID_CAPTCHA_VALUE);
         signUpPage.getSubmitButton().click();
     }
 
