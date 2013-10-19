@@ -514,7 +514,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-          <stringProp name="HTTPSampler.path">/jcommune/posts/new?topicId=${TOPIC_ID}&amp;page=&amp;branchId=1</stringProp>
+          <stringProp name="HTTPSampler.path">/jcommune/posts/new?topicId=${TOPIC_ID}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
