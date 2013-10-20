@@ -37,6 +37,15 @@
           <boolProp name="CookieManager.clearEachIteration">false</boolProp>
         </CookieManager>
         <hashTree/>
+        <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="GenerateRandomNumber" enabled="true">
+          <stringProp name="variableName">RANDOM_NUMBER</stringProp>
+          <stringProp name="outputFormat"></stringProp>
+          <stringProp name="minimumValue">1</stringProp>
+          <stringProp name="maximumValue">5000</stringProp>
+          <stringProp name="randomSeed"></stringProp>
+          <boolProp name="perThread">true</boolProp>
+        </RandomVariableConfig>
+        <hashTree/>
         <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments">
             <elementProp name="LOCAL_SERVER" elementType="Argument">
@@ -61,7 +70,22 @@
             </elementProp>
             <elementProp name="TOPIC_ID" elementType="Argument">
               <stringProp name="Argument.name">TOPIC_ID</stringProp>
-              <stringProp name="Argument.value"></stringProp>
+              <stringProp name="Argument.value">1</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="BRANCH_COUNT" elementType="Argument">
+              <stringProp name="Argument.name">BRANCH_COUNT</stringProp>
+              <stringProp name="Argument.value">1</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="BRANCH_LINK" elementType="Argument">
+              <stringProp name="Argument.name">BRANCH_LINK</stringProp>
+              <stringProp name="Argument.value">/jcommune/branches/1</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="BRANCH_ID" elementType="Argument">
+              <stringProp name="Argument.name">BRANCH_ID</stringProp>
+              <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
@@ -328,30 +352,37 @@
           <hashTree/>
           <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="CalculateBranchCount" enabled="true">
             <stringProp name="XPathExtractor.default">2</stringProp>
-            <stringProp name="XPathExtractor.refname">branchCount</stringProp>
+            <stringProp name="XPathExtractor.refname">BRANCH_COUNT</stringProp>
             <stringProp name="XPathExtractor.xpathQuery">count(descendant::a[@class=&apos;branch-title&apos;])</stringProp>
             <boolProp name="XPathExtractor.validate">false</boolProp>
             <boolProp name="XPathExtractor.tolerant">true</boolProp>
             <boolProp name="XPathExtractor.namespace">false</boolProp>
           </XPathExtractor>
           <hashTree/>
-          <RandomVariableConfig guiclass="TestBeanGUI" testclass="RandomVariableConfig" testname="GenerateRandomNumber" enabled="true">
-            <stringProp name="variableName">randomNumber</stringProp>
-            <stringProp name="outputFormat"></stringProp>
-            <stringProp name="minimumValue">1</stringProp>
-            <stringProp name="maximumValue">5000</stringProp>
-            <stringProp name="randomSeed"></stringProp>
-            <boolProp name="perThread">true</boolProp>
-          </RandomVariableConfig>
-          <hashTree/>
           <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="GetBranchLink" enabled="true">
             <stringProp name="XPathExtractor.default">/jcommune/</stringProp>
-            <stringProp name="XPathExtractor.refname">branchLink</stringProp>
-            <stringProp name="XPathExtractor.xpathQuery">descendant::a[@class=&apos;branch-title&apos;][${randomNumber} mod ${branchCount} + 1]/@href</stringProp>
+            <stringProp name="XPathExtractor.refname">BRANCH_LINK</stringProp>
+            <stringProp name="XPathExtractor.xpathQuery">descendant::a[@class=&apos;branch-title&apos;][${RANDOM_NUMBER} mod ${BRANCH_COUNT} + 1]/@href</stringProp>
             <boolProp name="XPathExtractor.validate">false</boolProp>
             <boolProp name="XPathExtractor.tolerant">true</boolProp>
             <boolProp name="XPathExtractor.namespace">false</boolProp>
           </XPathExtractor>
+          <hashTree/>
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="setRandomBranch(BeanShell PostProcessor)" enabled="true">
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <boolProp name="resetInterpreter">false</boolProp>
+            <stringProp name="script">    public void setRandomBranch() {
+        String branchCount = vars.get(&quot;BRANCH_COUNT&quot;);
+        Random random = new Random();        
+        int branchId = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
+        vars.put(&quot;BRANCH_ID&quot;, String.valueOf(branchId));
+    }
+
+setRandomBranch();
+
+</stringProp>
+          </BeanShellPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Create Topic" enabled="true">
@@ -428,7 +459,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">UTF-8</stringProp>
-          <stringProp name="HTTPSampler.path">/jcommune/topics/new?branchId=1</stringProp>
+          <stringProp name="HTTPSampler.path">/jcommune/topics/new?branchId=${BRANCH_ID}</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -551,7 +582,7 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-          <stringProp name="HTTPSampler.path">${branchLink}</stringProp>
+          <stringProp name="HTTPSampler.path">${BRANCH_LINK}</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
