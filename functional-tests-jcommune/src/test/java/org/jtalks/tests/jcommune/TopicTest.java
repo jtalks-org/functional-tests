@@ -48,32 +48,38 @@ public class TopicTest {
 
     @Test
     public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
-        Topic createdTopic = Topics.signUpAndCreateTopic(topic);
+        Topic createdTopic = Topics.createTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
     public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
         Topic topic = new Topic("", "message");
-        Topics.signUpAndCreateTopic(topic);
+        Topics.createTopic(topic);
     }
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithEmptyMessage_ShouldFail_JC_26() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "");
-        Topics.signUpAndCreateTopic(topic);
-
+        Topics.createTopic(topic);
     }
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithoutData_ShouldFail_JC_24() throws Exception {
+        User user = Users.signUp();
+        Users.signIn(user);
         Topic topic = new Topic("", "");
-        Topics.signUpAndCreateTopic(topic);
-
+        Topics.createTopic(topic);
     }
 
     @Test(enabled = true)
