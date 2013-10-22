@@ -5,17 +5,14 @@ import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * @author erik
- */
 public class MainPage {
     public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout']";
-    public static final String errorPageSel = "//div[@class='text_errorpage']";
     public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections']";
     public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/recent']";
     public static final String messagesCountSel = "//span[@class='test-messages']";
@@ -26,18 +23,14 @@ public class MainPage {
     public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
     public static final String languageSwitcherSel = "//div[@id='lang-selector-toggle']/a/img";
     public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
-    public static final String onAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/enter']";
-    public static final String offAdminModeSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/admin/exit']";
     @FindBy(id = "mainLinksEditor")
     private WebElement modalDialog;
-    @FindBy(id = "links_editor")
+    @FindAll({@FindBy(id = "links_editor"), @FindBy(id = "links_editor_top")})
     private WebElement editExternalLinksControl;
     @FindBy(id = "user-dropdown-administration-link")
     private WebElement administrationDropdownMenu;
-    @FindBy(xpath = onAdminModeSel)
-    private WebElement onAdminModeBut;
-    @FindBy(xpath = offAdminModeSel)
-    private WebElement offAdminModeBut;
+    @FindBy(id = "Administration")
+    private WebElement toggleAdmineModeLink;
     @FindBy(xpath = languageDropdownMenuSel)
     private WebElement languageDropdownMenu;
     @FindBy(xpath = languageSwitcherSel)
@@ -52,7 +45,7 @@ public class MainPage {
     private WebElement loginLink;
     @FindBy(id = "signup")
     private WebElement registrationLink;
-    @FindBy(xpath = errorPageSel)
+    @FindBy(className = "text_errorpage")
     private WebElement errorPage;
     @FindBy(xpath = breadCrumbsForumLinkSel)
     private WebElement breadCrumbsForumLink;
@@ -77,11 +70,6 @@ public class MainPage {
         PageFactory.initElements(driver, this);
     }
 
-    //Getters
-    public WebElement getLanguageDropdownMenu() {
-        return languageDropdownMenu;
-    }
-
     public boolean isAdminModeOn() {
         try {
             return editExternalLinksControl.isDisplayed();
@@ -92,14 +80,6 @@ public class MainPage {
 
     public void pressOpenExternalLinksDialog() {
         editExternalLinksControl.click();
-    }
-
-    public WebElement getLanguageSwitcher() {
-        return languageSwitcher;
-    }
-
-    public WebElement getProfileLink() {
-        return profileLink;
     }
 
     public void logOutIfLoggedIn(WebDriver driver) {
@@ -138,64 +118,16 @@ public class MainPage {
         forumsTitle.click();
     }
 
-    public WebElement getErrorPage() {
-        return errorPage;
-    }
-
-    public WebElement getBreadCrumbsForumLink() {
-        return breadCrumbsForumLink;
-    }
-
     public WebElement getIconLinkToMainPage() {
         return iconLinkToMainPage;
     }
 
-    public WebElement getRecentActivityLink() {
-        return recentActivityLink;
-    }
-
-    public WebElement getMessagesCount() {
-        return messagesCount;
-    }
-
-    public WebElement getUsersCount() {
-        return usersCount;
-    }
-
-    public WebElement getUsersOnlineCount() {
-        return usersOnlineCount;
-    }
-
-    public WebElement getRegisteredUsersOnlineCount() {
-        return registeredUsersOnlineCount;
-    }
-
-    public WebElement getGuestsUsersOnlineCount() {
-        return guestsUsersOnlineCount;
-    }
-
-    public WebElement getOnAdminModeBut() {
-        return onAdminModeBut;
-    }
-
-    public void setOnAdminModeBut(WebElement onAdminModeBut) {
-        this.onAdminModeBut = onAdminModeBut;
-    }
-
-    public WebElement getOffAdminModeBut() {
-        return offAdminModeBut;
-    }
-
-    public void setOffAdminModeBut(WebElement offAdminModeBut) {
-        this.offAdminModeBut = offAdminModeBut;
+    public WebElement getToggleAdmineModeLink() {
+        return toggleAdmineModeLink;
     }
 
     public WebElement getAdministrationDropdownMenu() {
         return administrationDropdownMenu;
-    }
-
-    public void setAdministrationDropdownMenu(WebElement administrationDropdownMenu) {
-        this.administrationDropdownMenu = administrationDropdownMenu;
     }
 
     public WebElement getModalDialog() {

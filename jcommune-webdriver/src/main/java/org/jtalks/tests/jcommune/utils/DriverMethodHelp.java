@@ -1,9 +1,8 @@
 package org.jtalks.tests.jcommune.utils;
 
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.*;
-
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.getCapabilities;
 
 /**
  * Utils class. Contains methods to find method by driver
@@ -12,14 +11,15 @@ import org.openqa.selenium.WebElement;
  */
 public class DriverMethodHelp {
 
-  public static String getTextFromTag(WebElement element){
-    switch(getCapabilities().getBrowserName()){
-        case "firefox":
-        case "chrome":
-          return element.getAttribute("innerHTML");
-        //htmlunit
-        default :
-          return element.getText();
+    public static String getTextFromTag(WebElement element) {
+        switch (getCapabilities().getBrowserName().toLowerCase()) {
+            case "firefox":
+            case "ipad":
+            case "chrome":
+                return element.getAttribute("innerHTML");
+            //htmlunit
+            default:
+                return element.getText();
+        }
     }
-  }
 }

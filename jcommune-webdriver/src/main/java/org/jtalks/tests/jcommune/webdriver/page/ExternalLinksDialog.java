@@ -2,13 +2,14 @@ package org.jtalks.tests.jcommune.webdriver.page;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
 public class ExternalLinksDialog {
-    public static final String externalLinksSel = "//span[@id='externalLinks']/span/a";
     public static final String externalLinksFromDialogSel = "//div[@class='modal-body']/table/tbody/tr";
     public static final String externalLinksHrefFromDialogSel = "td[@class='link-url']";
     //class name
@@ -27,7 +28,7 @@ public class ExternalLinksDialog {
     private WebElement cancelLinkBut;
     @FindBy(id = "removeLink")
     private WebElement removeLinkBut;
-    @FindBy(xpath = externalLinksSel)
+    @FindAll({@FindBy(css = "[id^=big-screen-external-link]"), @FindBy(css = "[id^=small-screen-external-link]")})
     private List<WebElement> externalLinks;
     @FindBy(className = "close")
     private WebElement closeDialogButton;
@@ -60,10 +61,6 @@ public class ExternalLinksDialog {
 
     public WebElement getSaveLinkBut() {
         return saveLinkBut;
-    }
-
-    public WebElement getCancelLinkBut() {
-        return cancelLinkBut;
     }
 
     public WebElement getRemoveLinkBut() {

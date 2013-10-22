@@ -43,7 +43,7 @@ public class ExternalLinks {
             }
         }
         LOGGER.info("Expected Link not found: {}. \nActual Links From page: {}", externalLink, linksFromPage);
-        throw new AssertionFailedError("The links is not present on the page");
+        throw new AssertionFailedError("The links is not present on the page: " + externalLink);
     }
 
     /**
@@ -72,14 +72,14 @@ public class ExternalLinks {
     public static void exitAdminMode() {
         if (mainPage.isAdminModeOn()) {
             mainPage.getAdministrationDropdownMenu().click();
-            mainPage.getOffAdminModeBut().click();
+            mainPage.getToggleAdmineModeLink().click();
         }
     }
 
     public static void enterAdministrationMode() {
         if (!mainPage.isAdminModeOn()) {
             mainPage.getAdministrationDropdownMenu().click();
-            mainPage.getOnAdminModeBut().click();
+            mainPage.getToggleAdmineModeLink().click();
         }
     }
 
