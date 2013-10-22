@@ -84,15 +84,21 @@ public class TopicTest {
 
     @Test(enabled = true)
     public void loginAndCreateTopicValidateBranch_ShouldPass() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic("subject123", "message").withBranch("Micro level");
-        Topics.loginAndCreateTopic(topic);
+        topic.withTopicStarter(user);
+        Topics.createTopic(topic);
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
     }
 
     @Test
     public void signUpAndCreateTopicInBranch() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic("subject123", "message").withBranch("Classical Mechanics");
-        Topics.signUpAndCreateTopic(topic);
+        topic.withTopicStarter(user);
+        Topics.createTopic(topic);
     }
 
     @Test
@@ -107,8 +113,11 @@ public class TopicTest {
     @Test
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic(TestStringUtils.randomString(40), TestStringUtils.randomString(100));
-        Topics.signUpAndCreateTopic(topic);
+        topic.withTopicStarter(user);
+        Topics.createTopic(topic);
         Topics.postAnswer(topic, topic.getBranch().getTitle());
     }
 
@@ -120,42 +129,57 @@ public class TopicTest {
 
     @Test
     public void createStickedTopic() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
+        topic.withTopicStarter(user);
         topic.setSticked(true);
-        Topics.signUpAndCreateTopic(topic);
+        Topics.createTopic(topic);
     }
 
     @Test
     public void createAnnouncementTopic() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
+        topic.withTopicStarter(user);
         topic.setAnnouncement(true);
-        Topics.signUpAndCreateTopic(topic);
+        Topics.createTopic(topic);
     }
 
     @Test
     public void createTopicWithPoll() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
+        topic.withTopicStarter(user);
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         topic.setPoll(poll);
-        Topics.signUpAndCreateTopic(topic);
+        Topics.createTopic(topic);
     }
 
     @Test
     public void createTopicWithPollEndDate() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
+        topic.withTopicStarter(user);
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         poll.setEndDate(new Date(System.currentTimeMillis() + 86400000));
         topic.setPoll(poll);
-        Topics.signUpAndCreateTopic(topic);
+        Topics.createTopic(topic);
     }
 
     @Test
     public void createTopicWithPollMultipleAnswers() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
         Topic topic = new Topic("subject", "message");
+        topic.withTopicStarter(user);
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         poll.setMultipleAnswers(true);
         topic.setPoll(poll);
-        Topics.signUpAndCreateTopic(topic);
+        Topics.createTopic(topic);
     }
 
 }
