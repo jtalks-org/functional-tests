@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import net.thucydides.core.pages.PageObject;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.concurrent.TimeUnit;
 
-public class MainPage {
+public class MainPage extends PageObject {
     public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout']";
     public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections']";
     public static final String recentActivityLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/recent']";
@@ -67,6 +68,7 @@ public class MainPage {
     private WebElement forumsTitle;
 
     public MainPage(WebDriver driver) {
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 
@@ -82,14 +84,14 @@ public class MainPage {
         editExternalLinksControl.click();
     }
 
-    public void logOutIfLoggedIn(WebDriver driver) {
+    public void logOutIfLoggedIn() {
         try {
-            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+            getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             clickLogout();
         } catch (NoSuchElementException e) {
             //we don't care if user already is logged out
         } finally {
-            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            getDriver().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
     }
 

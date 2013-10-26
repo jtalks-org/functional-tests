@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import net.thucydides.core.annotations.Steps;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
@@ -49,6 +50,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 public class Topics {
     private static final Logger LOGGER = LoggerFactory.getLogger(Topics.class);
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
+    @Steps
+    private Users users;
 
     /**
      * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
@@ -101,16 +104,16 @@ public class Topics {
      */
 
 
-    public static Topic signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
+    public Topic signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         topic.withTopicStarter(user);
         return createTopic(topic);
     }
 
-    public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
+    public Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         topic.withTopicStarter(user);
         return createTopic(topic);
     }

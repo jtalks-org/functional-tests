@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune;
 
+import net.thucydides.core.annotations.Steps;
 import org.jtalks.tests.jcommune.webdriver.action.ExternalLinks;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
@@ -20,15 +21,17 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 @Test(groups = "htmlunit-incompatible")
 public class ExternalLinksTest {
-    private static final Logger logger = LoggerFactory.getLogger(Users.class);
+    private static final Logger logger = LoggerFactory.getLogger(ExternalLinksTest.class);
+    @Steps
+    private Users users;
 
     @BeforeClass
     @Parameters({"appUrl"})
     public void signInAsAdmin(String appUrl) {
         driver.get(appUrl);
-        mainPage.logOutIfLoggedIn(driver);
+        users.logOutIfLoggedIn();
         try {
-            Users.signIn(User.admin());
+            users.signIn(User.admin());
         } catch (ValidationException e) {
             logger.error("Can't login by user [{}]", User.admin().getUsername());
         }

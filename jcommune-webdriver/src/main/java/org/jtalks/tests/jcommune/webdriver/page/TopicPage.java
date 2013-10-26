@@ -3,7 +3,6 @@ package org.jtalks.tests.jcommune.webdriver.page;
 
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.action.Branches;
-import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
@@ -86,8 +85,6 @@ public class TopicPage {
     }
 
     public void goToTopicPage() throws ValidationException {
-        Users.signIn(Users.signUp());
-
         Topic topic = new Topic("subject123", "New final test answer");
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());

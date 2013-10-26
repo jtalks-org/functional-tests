@@ -15,6 +15,8 @@
 
 package org.jtalks.tests.jcommune;
 
+import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.annotations.Title;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
@@ -32,23 +34,26 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class SignUpTest {
+    @Steps
+    public Users users;
     @BeforeMethod
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) {
         driver.get(appUrl);
-        mainPage.logOutIfLoggedIn(driver);
+        users.logOutIfLoggedIn();
     }
 
     @Test
     public void registrationWithActivationSignInValidShouldLogin_JC_112() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = users.signUp();
+        users.signIn(user);
     }
 
     @Test
+    @Title("Registration and activation with valid inputs should pass")
     public void registrationValidShouldPassRegistration_JC_1() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class)
@@ -58,59 +63,59 @@ public class SignUpTest {
         user.setPassword("");
         user.setPasswordConfirmation("");
         user.setEmail("");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.EMPTY_LOGIN_ERROR)
     public void usernameAsSpaceShouldFailRegistration_JC_3() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(" ");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.TOO_LONG_LOGIN_ERROR)
     public void usernameTooLongShouldFailRegistration_JC_3() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(randomString((26)));
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test
     public void usernameBetween1and25CharsShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(randomString(24));
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test
     public void usernameWithSpacesShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(randomString(8) + " " + randomString(8));
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test
     public void usernameMaxAllowCharsShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(randomString(25));
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.WRONG_EMAIL_FORMAT_ERROR)
     public void emailInvalidFormatShouldFailRegistration_JC_5() throws Exception {
         UserForRegistration user = UserForRegistration.withEmail(randomString(8) + "@" + "jtalks");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.EMPTY_EMAIL_ERROR)
     public void emailEmptyShouldFailRegistration_JC_5() throws ValidationException {
         UserForRegistration user = UserForRegistration.withEmail("");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test
     public void emailValidShouldPassRegistration_JC_6() throws Exception {
         UserForRegistration user = new UserForRegistration();
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test
@@ -118,7 +123,7 @@ public class SignUpTest {
         UserForRegistration user = new UserForRegistration();
         user.setPassword(randomString(49));
         user.setPasswordConfirmation(user.getPassword());
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -126,7 +131,7 @@ public class SignUpTest {
     public void passwordEmptyShouldFailRegistration_JC_7() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPassword("");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -135,7 +140,7 @@ public class SignUpTest {
         UserForRegistration user = new UserForRegistration();
         user.setPassword(randomString(51));
         user.setPasswordConfirmation(user.getPassword());
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -143,7 +148,7 @@ public class SignUpTest {
     public void passwordConfirmationEmptyShouldFailRegistration_JC_9() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPasswordConfirmation("");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -151,7 +156,7 @@ public class SignUpTest {
     public void passwordConfirmationWrongLetterCaseInShouldFailRegistration_JC_9() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPasswordConfirmation(user.getPassword().toUpperCase());
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -159,7 +164,7 @@ public class SignUpTest {
     public void passwordConfirmationSpaceAtTheBeginShouldFailRegistration_JC_9() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPasswordConfirmation(" " + user.getPassword());
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -167,44 +172,44 @@ public class SignUpTest {
     public void passwordConfirmationSpaceAtTheEndShouldFailRegistration_JC_9() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPasswordConfirmation(user.getPassword() + " ");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.NOT_UNIQUE_USERNAME_ERROR)
     public void usernameNotUniqueShouldFailRegistration_JC_11() throws Exception {
         UserForRegistration uniqueUser = new UserForRegistration();
-        Users.signUp(uniqueUser);
+        users.signUp(uniqueUser);
         UserForRegistration duplicatedUser = UserForRegistration.withUsername(uniqueUser.getUsername());
-        Users.signUp(duplicatedUser);
+        users.signUp(duplicatedUser);
     }
 
     @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.NOT_UNIQUE_EMAIL_ERROR)
     public void emailNotUniqueShouldFailRegistration_JC_11() throws Exception {
         UserForRegistration uniqueUser = new UserForRegistration();
-        Users.signUp(uniqueUser);
+        users.signUp(uniqueUser);
         UserForRegistration duplicatedUser = UserForRegistration.withEmail(uniqueUser.getEmail());
-        Users.signUp(duplicatedUser);
+        users.signUp(duplicatedUser);
     }
 
     @Test(expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.EMPTY_LOGIN_ERROR)
     public void loginEmptyShouldFailRegistration() throws ValidationException {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("");
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test
     public void usernameContainsSlashShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("/" + randomString(8));
-        Users.signUp(user);
+        users.signUp(user);
     }
 
     @Test
     public void usernameContainsBackSlashShouldPassRegistration_JC_4() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("\\" + randomString(8));
-        Users.signUp(user);
+        users.signUp(user);
     }
 }

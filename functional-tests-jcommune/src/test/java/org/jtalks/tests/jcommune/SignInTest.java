@@ -15,13 +15,16 @@
 
 package org.jtalks.tests.jcommune;
 
+import net.thucydides.core.annotations.Steps;
 import org.jtalks.tests.jcommune.utils.TestStringUtils;
+import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
-import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -30,46 +33,49 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class SignInTest {
+    @Steps
+    private Users users;
+
     @BeforeMethod
     @Parameters("appUrl")
     public void setup(String appUrl) {
         driver.get(appUrl);
-        mainPage.logOutIfLoggedIn(driver);
+        users.logOutIfLoggedIn();
     }
 
     @Test(expectedExceptions = ValidationException.class)
     public void signInWithoutActivationRegistrationShouldFailLogin_JC_564() throws Exception {
-        User user = Users.signUpWithoutActivation();
-        Users.signIn(user);
+        User user = users.signUpWithoutActivation();
+        users.signIn(user);
     }
 
     @Test
     public void usernameAndPasswordCorrectShouldLogin_JC_20() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = users.signUp();
+        users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameEmptyShouldFailLogin_JC_21() throws Exception {
         String password = TestStringUtils.randomString(9);
-        Users.signIn(new User("", password));
+        users.signIn(new User("", password));
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameNotExistShouldFailLogin_JC_21() throws Exception {
-        User user = Users.signUp();
+        User user = users.signUp();
         user.setUsername(TestStringUtils.randomString(8));
-        Users.signIn(user);
+        users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void passwordIncorrectShouldFailLogIn_JC_22() throws Exception {
-        User user = Users.signUp();
+        User user = users.signUp();
         user.setPassword(user.getPassword() + "a");
-        Users.signIn(user);
+        users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -77,29 +83,29 @@ public class SignInTest {
     public void usernameAndPasswordNotExistShouldFailLogin() throws Exception {
         String username = TestStringUtils.randomString(8);
         String password = TestStringUtils.randomString(9);
-        Users.signIn(new User(username, password));
+        users.signIn(new User(username, password));
     }
 
     @Test
     public void usernameIsCaseInsensitiveShouldLogin() throws Exception {
-        User user = Users.signUp();
+        User user = users.signUp();
         user.setUsername(user.getUsername().toUpperCase());
-        Users.signIn(user);
+        users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void passwordIsCaseInsensitiveShouldFailLogin() throws Exception {
-        User user = Users.signUp();
+        User user = users.signUp();
         user.setPassword(user.getPassword().toUpperCase());
-        Users.signIn(user);
+        users.signIn(user);
     }
 
     @Test
     public void usernameContainsSlashShouldLogin() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername(TestStringUtils.randomString(10) + "/");
-        User registeredUser = Users.signUp(user);
-        Users.signIn(registeredUser);
+        User registeredUser = users.signUp(user);
+        users.signIn(registeredUser);
     }
 }

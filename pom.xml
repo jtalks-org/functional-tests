@@ -34,6 +34,27 @@
       <artifactId>testng</artifactId>
       <version>6.3.1</version>
     </dependency>
+    <dependency>
+      <groupId>net.thucydides</groupId>
+      <artifactId>thucydides</artifactId>
+      <version>0.9.212</version>
+    </dependency>
+    <dependency>
+      <groupId>net.thucydides</groupId>
+      <artifactId>thucydides-report-resources</artifactId>
+      <version>0.9.212</version>
+    </dependency>
+    <dependency>
+      <groupId>net.thucydides</groupId>
+      <artifactId>thucydides-junit</artifactId>
+      <version>0.9.212</version>
+    </dependency>
+    <dependency>
+      <groupId>net.thucydides</groupId>
+      <artifactId>thucydides-extensions</artifactId>
+      <version>0.9.93</version>
+    </dependency>
+
     <!-- Logging -->
     <dependency>
       <groupId>log4j</groupId>

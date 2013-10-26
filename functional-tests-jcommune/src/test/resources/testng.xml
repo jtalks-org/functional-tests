@@ -4,6 +4,7 @@
   <parameter name="webDriverUrl" value="http://jtalks.org:4444/wd/hub"/>
   <listeners>
     <listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener"/>
+    <listener class-name="org.jtalks.tests.jcommune.webdriver.TestNgThucydidesListener"/>
   </listeners>
   <test name="JCommune">
     <groups>

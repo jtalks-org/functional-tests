@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune;
 
+import net.thucydides.core.annotations.Steps;
 import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
@@ -38,18 +39,20 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class TopicTest {
+    @Steps
+    private Users users;
 
     @BeforeMethod
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) throws ValidationException {
         driver.get(appUrl);
-        mainPage.logOutIfLoggedIn(driver);
+        users.logOutIfLoggedIn();
     }
 
     @Test
     public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = users.signUp();
+        users.signIn(user);
         Topic topic = new Topic("subject", "message");
         Topic createdTopic = Topics.createTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
@@ -58,8 +61,8 @@ public class TopicTest {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
     public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = users.signUp();
+        users.signIn(user);
         Topic topic = new Topic("", "message");
         Topics.createTopic(topic);
     }
@@ -67,8 +70,8 @@ public class TopicTest {
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithEmptyMessage_ShouldFail_JC_26() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = users.signUp();
+        users.signIn(user);
         Topic topic = new Topic("subject", "");
         Topics.createTopic(topic);
     }
@@ -76,8 +79,8 @@ public class TopicTest {
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithoutData_ShouldFail_JC_24() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = users.signUp();
+        users.signIn(user);
         Topic topic = new Topic("", "");
         Topics.createTopic(topic);
     }
@@ -85,7 +88,7 @@ public class TopicTest {
     @Test(enabled = true)
     public void loginAndCreateTopicValidateBranch_ShouldPass() throws Exception {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic("subject123", "message").withBranch("Micro level");
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
@@ -95,7 +98,7 @@ public class TopicTest {
     @Test
     public void signUpAndCreateTopicInBranch() throws Exception {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic("subject123", "message").withBranch("Classical Mechanics");
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
@@ -104,8 +107,8 @@ public class TopicTest {
     @Test
     public void signUpAndCreateCodeReviewInBranch() throws Exception {
         Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("Acids and Bases");
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = users.signUp();
+        users.signIn(user);
         topic.withTopicStarter(user);
         Topics.createCodeReview(topic);
     }
@@ -114,7 +117,7 @@ public class TopicTest {
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic(TestStringUtils.randomString(40), TestStringUtils.randomString(100));
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
@@ -130,7 +133,7 @@ public class TopicTest {
     @Test
     public void createStickedTopic() throws Exception {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic("subject", "message");
         topic.withTopicStarter(user);
         topic.setSticked(true);
@@ -140,7 +143,7 @@ public class TopicTest {
     @Test
     public void createAnnouncementTopic() throws Exception {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic("subject", "message");
         topic.withTopicStarter(user);
         topic.setAnnouncement(true);
@@ -150,7 +153,7 @@ public class TopicTest {
     @Test
     public void createTopicWithPoll() throws Exception {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic("subject", "message");
         topic.withTopicStarter(user);
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
@@ -161,7 +164,7 @@ public class TopicTest {
     @Test
     public void createTopicWithPollEndDate() throws Exception {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic("subject", "message");
         topic.withTopicStarter(user);
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
@@ -173,7 +176,7 @@ public class TopicTest {
     @Test
     public void createTopicWithPollMultipleAnswers() throws Exception {
         User user = User.admin();
-        Users.signIn(user);
+        users.signIn(user);
         Topic topic = new Topic("subject", "message");
         topic.withTopicStarter(user);
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});

@@ -16,16 +16,23 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 
+import net.thucydides.core.annotations.ManagedPages;
+import net.thucydides.core.annotations.Step;
+import net.thucydides.core.annotations.Title;
+import net.thucydides.core.pages.Pages;
+import net.thucydides.core.steps.ScenarioSteps;
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.MainPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -42,7 +49,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
  *
  * @author Guram Savinov
  */
-public class Users {
+public class Users extends ScenarioSteps {
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
     private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 60;
@@ -53,22 +60,22 @@ public class Users {
      * @param user the {@code User} instance with sign in form data
      * @throws ValidationException
      */
-    public static void signIn(User user) throws ValidationException {
+    public void signIn(User user) throws ValidationException {
         openAndFillSignInDialog(user);
         checkFormValidation(signInPage.getErrorFormElements());
 
         // Check that link to the user profile present on the page
-        if (!mainPage.userIsLoggedIn()) {
+        if (getPages().get(MainPage.class).userIsLoggedIn()) {
             LOGGER.error("Could not find username in top right corner: {}", driver.getPageSource());
             throw new CouldNotOpenPageException("User does not appear to be logged on: " + user.getUsername());
         }
     }
 
-    public static User signUpAndSignIn() {
+    public User signUpAndSignIn() {
         User user;
         try {
-            user = Users.signUp();
-            Users.signIn(user);
+            user = this.signUp();
+            this.signIn(user);
         } catch (ValidationException e) {
             throw new IllegalStateException("Can't sign up new user.", e);
         }
@@ -76,7 +83,7 @@ public class Users {
         return  user;
     }
 
-    private static void openAndFillSignInDialog(User user) {
+    private void openAndFillSignInDialog(User user) {
         mainPage.clickLogin();
         // Check that sign-in dialog have been opened (JCommune open sign-in page instead dialog if JavaScript disabled)
         try {
@@ -116,7 +123,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
-    public static User signUp() throws ValidationException {
+    public User signUp() throws ValidationException {
         User user = signUpWithoutActivation();
         activateUserByMail(user.getEmail());
         return user;
@@ -129,7 +136,8 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
-    public static User signUp(UserForRegistration userForRegistration) throws ValidationException {
+    @Step("Sign up a new user")
+    public User signUp(UserForRegistration userForRegistration) throws ValidationException {
         User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
         return user;
@@ -143,7 +151,7 @@ public class Users {
      * @throws ValidationException
      *
      */
-    public static User signUpWithoutActivation() throws ValidationException {
+    public User signUpWithoutActivation() throws ValidationException {
         return signUpWithoutActivation(new UserForRegistration());
     }
 
@@ -155,8 +163,8 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
-    public static User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
-        mainPage.logOutIfLoggedIn(driver);
+    public User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
+        getPages().get(MainPage.class).logOutIfLoggedIn();
         openAndFillSignUpDialog(userForRegistration);
         checkFormValidation(signUpPage.getErrorFormElements());
         waitForEmailActivationInfoShowsUp();
@@ -201,5 +209,11 @@ public class Users {
         MailtrapMail mailtrapMail = new MailtrapMail();
         driver.get(mailtrapMail.getActivationLink(email));
         mainPage.getIconLinkToMainPage().click();
+    }
+
+    @Step(value = "Log out if logged in", fluent = true)
+    @Title("Log out please")
+    public void logOutIfLoggedIn() {
+        getPages().get(MainPage.class).logOutIfLoggedIn();
     }
 }
