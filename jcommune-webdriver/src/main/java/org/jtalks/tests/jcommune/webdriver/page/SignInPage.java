@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import net.thucydides.core.pages.PageObject;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -9,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class SignInPage {
+public class SignInPage extends PageObject {
 
     public static final String usernameFieldSel = "j_username";
 
@@ -86,6 +87,7 @@ public class SignInPage {
     List<WebElement> errorFormElements;
 
     public SignInPage(WebDriver driver) {
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

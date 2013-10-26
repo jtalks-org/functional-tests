@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * @author masyan
  */
-public class SignUpPage {
+public class SignUpPage extends PageObject {
     /**
      * JCommune instance for functional should be configured to use only 0000 as captcha so that we can actually
      * register users without writing a tool to break our own captcha
@@ -107,6 +108,7 @@ public class SignUpPage {
 
 
     public SignUpPage(WebDriver driver) {
+        super(driver);
         PageFactory.initElements(driver, this);
     }
 

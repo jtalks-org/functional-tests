@@ -16,10 +16,7 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 
-import net.thucydides.core.annotations.ManagedPages;
 import net.thucydides.core.annotations.Step;
-import net.thucydides.core.annotations.Title;
-import net.thucydides.core.pages.Pages;
 import net.thucydides.core.steps.ScenarioSteps;
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
@@ -32,7 +29,6 @@ import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -42,7 +38,6 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 /**
  * Contain user actions like sign in, sign out etc.
@@ -60,9 +55,10 @@ public class Users extends ScenarioSteps {
      * @param user the {@code User} instance with sign in form data
      * @throws ValidationException
      */
+    @Step("Sign in a user")
     public void signIn(User user) throws ValidationException {
         openAndFillSignInDialog(user);
-        checkFormValidation(signInPage.getErrorFormElements());
+        checkFormValidation(getPages().get(SignInPage.class).getErrorFormElements());
 
         // Check that link to the user profile present on the page
         if (getPages().get(MainPage.class).userIsLoggedIn()) {
@@ -70,7 +66,7 @@ public class Users extends ScenarioSteps {
             throw new CouldNotOpenPageException("User does not appear to be logged on: " + user.getUsername());
         }
     }
-
+    @Step("Sign up a random user, then sign in")
     public User signUpAndSignIn() {
         User user;
         try {
@@ -80,11 +76,11 @@ public class Users extends ScenarioSteps {
             throw new IllegalStateException("Can't sign up new user.", e);
         }
 
-        return  user;
+        return user;
     }
 
     private void openAndFillSignInDialog(User user) {
-        mainPage.clickLogin();
+        getPages().get(MainPage.class).clickLogin();
         // Check that sign-in dialog have been opened (JCommune open sign-in page instead dialog if JavaScript disabled)
         try {
             driver.findElement(By.id(SignInPage.signInDialogFormSel));
@@ -95,12 +91,13 @@ public class Users extends ScenarioSteps {
 
         // Fill form values and submit
         LOGGER.info("Sign in {}", user);
-        signInPage.getUsernameField().sendKeys(user.getUsername());
-        signInPage.getPasswordField().sendKeys(user.getPassword());
-        signInPage.getSubmitButton().click();
+        SignInPage signIn = getPages().get(SignInPage.class);
+        signIn.getUsernameField().sendKeys(user.getUsername());
+        signIn.getPasswordField().sendKeys(user.getPassword());
+        signIn.getSubmitButton().click();
     }
 
-    private static void checkFormValidation(List<WebElement> errorElements) throws ValidationException {
+    private void checkFormValidation(List<WebElement> errorElements) throws ValidationException {
         if (!errorElements.isEmpty()) {
             String failedFields = "";
             for (WebElement element : errorElements) {
@@ -149,7 +146,6 @@ public class Users extends ScenarioSteps {
      *
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
-     *
      */
     public User signUpWithoutActivation() throws ValidationException {
         return signUpWithoutActivation(new UserForRegistration());
@@ -166,13 +162,14 @@ public class Users extends ScenarioSteps {
     public User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
         getPages().get(MainPage.class).logOutIfLoggedIn();
         openAndFillSignUpDialog(userForRegistration);
-        checkFormValidation(signUpPage.getErrorFormElements());
+        checkFormValidation(getPages().get(SignInPage.class).getErrorFormElements());
         waitForEmailActivationInfoShowsUp();
         return userForRegistration;
     }
 
-    private static void openAndFillSignUpDialog(UserForRegistration userForRegistration) {
-        signUpPage.getSignUpButton().click();
+    private void openAndFillSignUpDialog(UserForRegistration userForRegistration) {
+        SignUpPage page = getPages().get(SignUpPage.class);
+        page.getSignUpButton().click();
         // Check that sign-up dialog have been opened (JCommune open sign-up page instead dialog if JavaScript disabled)
         try {
             driver.findElement(By.id(SignUpPage.signUpDialogFormSel));
@@ -183,21 +180,21 @@ public class Users extends ScenarioSteps {
 
         // Fill form values and submit
         LOGGER.info("Sign Up {}", userForRegistration);
-        signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
-        signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
-        signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
-        signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
-        signUpPage.getSubmitButton().click();
+        page.getUsernameField().sendKeys(userForRegistration.getUsername());
+        page.getEmailField().sendKeys(userForRegistration.getEmail());
+        page.getPasswordField().sendKeys(userForRegistration.getPassword());
+        page.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
+        page.getSubmitButton().click();
     }
 
-    private static void waitForEmailActivationInfoShowsUp() {
+    private void waitForEmailActivationInfoShowsUp() {
         try {
             new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
                     ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
         } catch (org.openqa.selenium.TimeoutException e) {
             throw new TimeoutException("Waiting for email activation confirmation dialog.", e);
         }
-        signUpPage.getOkButtonOnInfoWindow().click();
+        getPages().get(SignUpPage.class).getOkButtonOnInfoWindow().click();
     }
 
     /**
@@ -205,14 +202,13 @@ public class Users extends ScenarioSteps {
      *
      * @param email the user email
      */
-    public static void activateUserByMail(String email) {
+    public void activateUserByMail(String email) {
         MailtrapMail mailtrapMail = new MailtrapMail();
         driver.get(mailtrapMail.getActivationLink(email));
-        mainPage.getIconLinkToMainPage().click();
+        getPages().get(MainPage.class).getIconLinkToMainPage().click();
     }
 
-    @Step(value = "Log out if logged in", fluent = true)
-    @Title("Log out please")
+    @Step(value = "Log out if logged in")
     public void logOutIfLoggedIn() {
         getPages().get(MainPage.class).logOutIfLoggedIn();
     }

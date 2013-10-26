@@ -16,7 +16,7 @@
 package org.jtalks.tests.jcommune;
 
 import net.thucydides.core.annotations.Steps;
-import net.thucydides.core.annotations.Title;
+import net.thucydides.core.annotations.Story;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
@@ -28,14 +28,15 @@ import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.utils.TestStringUtils.randomString;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
  * @author Guram Savinov
  */
-public class SignUpTest {
+@Story(SignUp.class)
+public class SignUp {
     @Steps
     public Users users;
+
     @BeforeMethod
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) {
@@ -49,14 +50,14 @@ public class SignUpTest {
         users.signIn(user);
     }
 
-    @Test
-    @Title("Registration and activation with valid inputs should pass")
+    @Test(description = "Registration and activation with valid inputs should pass")
     public void registrationValidShouldPassRegistration_JC_1() throws Exception {
         UserForRegistration user = new UserForRegistration();
         users.signUp(user);
     }
 
-    @Test(expectedExceptions = ValidationException.class)
+    @Test(description = "Registering a user with empty data should fail",
+            expectedExceptions = ValidationException.class)
     public void dataEmptyShouldFailRegistration_JC_2() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("");

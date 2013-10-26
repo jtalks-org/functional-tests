@@ -115,6 +115,11 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>net.thucydides.maven.plugins</groupId>
+        <artifactId>maven-thucydides-plugin</artifactId>
+        <version>0.9.210</version>
+      </plugin>
     </plugins>
   </build>
 
