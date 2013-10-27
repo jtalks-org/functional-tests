@@ -65,6 +65,10 @@ public class MainPage {
     private WebElement guestsUsersOnlineCount;
     @FindBy(xpath = "//a[@class='brand']")
     private WebElement forumsTitle;
+    @FindBy(css = ".margin-left-small.test-pm-count")
+    private WebElement mailCounter;
+
+
 
     public MainPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -132,5 +136,9 @@ public class MainPage {
 
     public WebElement getModalDialog() {
         return modalDialog;
+    }
+
+    public WebElement getMailCounter(){
+        return mailCounter;
     }
 }
