@@ -33,7 +33,6 @@ import org.testng.annotations.Test;
 import java.util.Date;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
  * @author Guram Savinov
@@ -41,6 +40,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 public class TopicTest {
     @Steps
     private Users users;
+    @Steps
+    private Topics topics;
 
     @BeforeMethod
     @Parameters({"appUrl"})
@@ -54,8 +55,8 @@ public class TopicTest {
         User user = users.signUp();
         users.signIn(user);
         Topic topic = new Topic("subject", "message");
-        Topic createdTopic = Topics.createTopic(topic);
-        Assert.assertTrue(Topics.isCreated(createdTopic));
+        Topic createdTopic = topics.createTopic(topic);
+        Assert.assertTrue(topics.isCreated(createdTopic));
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -64,7 +65,7 @@ public class TopicTest {
         User user = users.signUp();
         users.signIn(user);
         Topic topic = new Topic("", "message");
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
@@ -73,7 +74,7 @@ public class TopicTest {
         User user = users.signUp();
         users.signIn(user);
         Topic topic = new Topic("subject", "");
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
@@ -82,7 +83,7 @@ public class TopicTest {
         User user = users.signUp();
         users.signIn(user);
         Topic topic = new Topic("", "");
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test(enabled = true)
@@ -91,8 +92,8 @@ public class TopicTest {
         users.signIn(user);
         Topic topic = new Topic("subject123", "message").withBranch("Micro level");
         topic.withTopicStarter(user);
-        Topics.createTopic(topic);
-        Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
+        topics.createTopic(topic);
+        Assert.assertEquals(true, topics.isInCorrectBranch(topic));
     }
 
     @Test
@@ -101,7 +102,7 @@ public class TopicTest {
         users.signIn(user);
         Topic topic = new Topic("subject123", "message").withBranch("Classical Mechanics");
         topic.withTopicStarter(user);
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test
@@ -110,7 +111,7 @@ public class TopicTest {
         User user = users.signUp();
         users.signIn(user);
         topic.withTopicStarter(user);
-        Topics.createCodeReview(topic);
+        topics.createCodeReview(topic);
     }
 
     @Test
@@ -120,14 +121,14 @@ public class TopicTest {
         users.signIn(user);
         Topic topic = new Topic(TestStringUtils.randomString(40), TestStringUtils.randomString(100));
         topic.withTopicStarter(user);
-        Topics.createTopic(topic);
-        Topics.postAnswer(topic, topic.getBranch().getTitle());
+        topics.createTopic(topic);
+        topics.postAnswer(topic, topic.getBranch().getTitle());
     }
 
     @Test(expectedExceptions = PermissionsDeniedException.class)
     public void createTopicAsAnonymousShouldFail() throws Exception {
         Topic topic = new Topic("subject", "message");
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test
@@ -137,7 +138,7 @@ public class TopicTest {
         Topic topic = new Topic("subject", "message");
         topic.withTopicStarter(user);
         topic.setSticked(true);
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test
@@ -147,7 +148,7 @@ public class TopicTest {
         Topic topic = new Topic("subject", "message");
         topic.withTopicStarter(user);
         topic.setAnnouncement(true);
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test
@@ -158,7 +159,7 @@ public class TopicTest {
         topic.withTopicStarter(user);
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         topic.setPoll(poll);
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test
@@ -170,7 +171,7 @@ public class TopicTest {
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         poll.setEndDate(new Date(System.currentTimeMillis() + 86400000));
         topic.setPoll(poll);
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
     @Test
@@ -182,7 +183,7 @@ public class TopicTest {
         Poll poll = new Poll("poll title", new String[]{"option1", "option2", "option3"});
         poll.setMultipleAnswers(true);
         topic.setPoll(poll);
-        Topics.createTopic(topic);
+        topics.createTopic(topic);
     }
 
 }

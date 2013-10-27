@@ -32,7 +32,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 /**
  * @author Guram Savinov
  */
-public class SignInTest {
+public class SignIn {
     @Steps
     private Users users;
 

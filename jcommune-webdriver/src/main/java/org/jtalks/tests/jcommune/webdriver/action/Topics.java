@@ -15,7 +15,9 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import net.thucydides.core.annotations.ManagedPages;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.pages.PageObject;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
@@ -28,6 +30,10 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.BranchPage;
+import org.jtalks.tests.jcommune.webdriver.page.MainPage;
+import org.jtalks.tests.jcommune.webdriver.page.PostPage;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
@@ -37,21 +43,24 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
-
-//import org.junit.Assert;
-
-
 /**
  * Contain topic actions like creating, deleting etc.
  *
  * @author Guram Savinov
  */
-public class Topics {
+public class Topics extends PageObject {
     private static final Logger LOGGER = LoggerFactory.getLogger(Topics.class);
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
     @Steps
     private Users users;
+    @ManagedPages
+    private BranchPage branchPage;
+    @ManagedPages
+    private TopicPage topicPage;
+    @ManagedPages
+    private PostPage postPage;
+    @ManagedPages
+    private MainPage mainPage;
 
     /**
      * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
@@ -61,7 +70,7 @@ public class Topics {
      * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
      */
 
-    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+    public Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
         gotoMainPage();
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
@@ -78,7 +87,7 @@ public class Topics {
         return topic;
     }
 
-    public static void assertFormValid() throws ValidationException {
+    public void assertFormValid() throws ValidationException {
         String failedFields = "";
         if (Existence.exists(topicPage.getSubjectErrorMessage())) {
             WebElement subjectError = topicPage.getSubjectErrorMessage();
@@ -118,7 +127,7 @@ public class Topics {
         return createTopic(topic);
     }
 
-    public static boolean isInCorrectBranch(Topic topic) {
+    public boolean isInCorrectBranch(Topic topic) {
         return topicPage.getBranchName().getText().trim().equals(topic.getBranch().getTitle());
     }
 
@@ -138,7 +147,7 @@ public class Topics {
         return topicDate.isAfter(dat.getMillis());
     }
 
-    public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+    public void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
             topic.withBranch(branch);
@@ -147,7 +156,7 @@ public class Topics {
         createNewCodeReview(topic);
     }
 
-    private static void createNewCodeReview(Topic topic) {
+    private void createNewCodeReview(Topic topic) {
         topicPage.getNewCodeReviewButton().click();
         topicPage.getSubjectField().sendKeys(topic.getTitle());
         Post firstPost = topic.getPosts().get(0);
@@ -155,7 +164,7 @@ public class Topics {
         topicPage.getPostButton().click();
     }
 
-    public static void postAnswer(Topic topic, String branchTitle)
+    public void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
         //TODO: this might need to be uncommented, but right now we're not on the main page when we answer to the
         // topic - we are on the topic page already!
@@ -169,13 +178,13 @@ public class Topics {
     /**
      * This is just stub which doesn't actually find any topics
      */
-    public static Topic findTopic(String branchTitle, String topicTitle) {
+    public Topic findTopic(String branchTitle, String topicTitle) {
         Topic topic = new Topic(topicTitle, topicTitle);
         topic.setHasNewMessages(true);
         return topic;
     }
 
-    private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
+    private boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
         boolean found = false;
 
         for (WebElement topics : topicPage.getTopicsList()) {
@@ -188,7 +197,7 @@ public class Topics {
         return found;
     }
 
-    private static boolean findTopic(Topic topic) throws CouldNotOpenPageException {
+    private boolean findTopic(Topic topic) throws CouldNotOpenPageException {
         boolean found = false;
 
         for (WebElement topics : topicPage.getTopicsList()) {
@@ -201,7 +210,7 @@ public class Topics {
         return found;
     }
 
-    private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
+    private void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
         postPage.getNewButton().click();
         topicPage.getMainBodyArea().sendKeys(answer);
         clickAnswerToTopicButton(topic);
@@ -217,7 +226,7 @@ public class Topics {
      * @return true if the specified topic was found
      * @throws CouldNotOpenPageException if specified topic was not found
      */
-    public static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
+    public boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
             throws CouldNotOpenPageException {
         boolean found;
         while (!(found = findTopic(topicToFind))) {
@@ -230,7 +239,7 @@ public class Topics {
         return found;
     }
 
-    private static boolean openNextPage(int pagesToCheck) {
+    private boolean openNextPage(int pagesToCheck) {
         int max = 0;
         if (topicPage.getActiveTopicsButton().size() < 1) {
             return false;
@@ -252,7 +261,7 @@ public class Topics {
         return false;
     }
 
-    public static boolean senseToPageNext(Topic topic) {
+    public boolean senseToPageNext(Topic topic) {
         WebElement bottomRowOfTopics = topicPage.getLastTopicLine();
         System.out.println(bottomRowOfTopics.getText());
         System.out.println(bottomRowOfTopics.findElement(By.className("sticky")).getText());
@@ -285,7 +294,7 @@ public class Topics {
      *
      * @param poll the poll.
      */
-    private static void setPollsEndDate(Poll poll) {
+    private void setPollsEndDate(Poll poll) {
         String date;
         if ((date = dateToString(poll.getEndDate(), POLL_END_DATE_FORMAT)) != null) {
             topicPage.getTopicsPollEndDateField().sendKeys(date);
@@ -293,7 +302,7 @@ public class Topics {
 
     }
 
-    private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
+    private void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
         try {
             topicPage.getPostButton().click();
         } catch (NoSuchElementException e) {
@@ -302,7 +311,7 @@ public class Topics {
         }
     }
 
-    private static void fillPollSpecificFields(Poll poll) {
+    private void fillPollSpecificFields(Poll poll) {
         if (poll != null) {
             topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
             WebElement optionsField = topicPage.getTopicPollItemsField();
@@ -314,7 +323,7 @@ public class Topics {
         }
     }
 
-    private static void fillTopicFields(Topic topic) {
+    private void fillTopicFields(Topic topic) {
         setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
         setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
         //topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
@@ -322,7 +331,7 @@ public class Topics {
         topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
     }
 
-    private static void clickCreateTopic() throws PermissionsDeniedException {
+    private void clickCreateTopic() throws PermissionsDeniedException {
         try {
             topicPage.getNewButton().click();
         } catch (NoSuchElementException e) {
@@ -330,7 +339,7 @@ public class Topics {
         }
     }
 
-    private static void gotoMainPage() {
+    private void gotoMainPage() {
         mainPage.clickForumsTitle();
     }
 
@@ -348,22 +357,22 @@ public class Topics {
         return null;
     }
 
-    public static boolean isCreated(Topic topic) {
+    public boolean isCreated(Topic topic) {
         String expectedTitle = topic.getTitle();
         String actualTitle = topicPage.getTopicSubjectAfterCreation().getText();
 
         return actualTitle.equals(expectedTitle);
     }
 
-    public static void deleteByUser(Topic topic, User user) {
+    public void deleteByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 
-    public static void subscribe(Topic topic, User user) {
+    public void subscribe(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 
-    public static void moveByUser(Topic topic, User user) {
+    public void moveByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 }

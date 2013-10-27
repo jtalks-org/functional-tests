@@ -15,16 +15,18 @@ import org.testng.annotations.Test;
 public class TopicNotificationTest {
     @Steps
     private Users users;
+    @Steps
+    private Topics topics;
 
     @Test
     public void deletingTopic_ifSubscribedToBranchAsWell_shouldReceiveTopicNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
-        Topics.subscribe(topic, user);
+        Topic topic = topics.createTopic(new Topic());
+        topics.subscribe(topic, user);
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.deleteByUser(topic, users.signUpAndSignIn());
+        topics.deleteByUser(topic, users.signUpAndSignIn());
         Notifications.assertTopicNotificationSent(topic, user);
     }
 
@@ -32,11 +34,11 @@ public class TopicNotificationTest {
     public void deletingTopic_ifSubscribedToBranchAsWell_shouldNotReceiveBranchNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
-        Topics.subscribe(topic, user);
+        Topic topic = topics.createTopic(new Topic());
+        topics.subscribe(topic, user);
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.deleteByUser(topic, users.signUpAndSignIn());
+        topics.deleteByUser(topic, users.signUpAndSignIn());
         Notifications.assertBranchNotificationNotSentTo(topic.getBranch(), user);
     }
 
@@ -44,10 +46,10 @@ public class TopicNotificationTest {
     public void deletingTopic_ifSubscribedToBranch_shouldReceiveBranchNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
+        Topic topic = topics.createTopic(new Topic());
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.deleteByUser(topic, users.signUpAndSignIn());
+        topics.deleteByUser(topic, users.signUpAndSignIn());
         Notifications.assertBranchNotificationNotSentTo(topic.getBranch(), user);
     }
 
@@ -55,19 +57,19 @@ public class TopicNotificationTest {
     public void deletingTopic_ifSubscribedToTopicOnly_shouldReceiveTopicNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
-        Topics.subscribe(topic, user);
+        Topic topic = topics.createTopic(new Topic());
+        topics.subscribe(topic, user);
 
-        Topics.deleteByUser(topic, users.signUpAndSignIn());
+        topics.deleteByUser(topic, users.signUpAndSignIn());
         Notifications.assertTopicNotificationSent(topic, user);
     }
 
     @Test
     public void deletingTopic_ifSubscribedUserDeletesTopic_shouldNotReceiveTopicNotification() throws Exception {
         User user = users.signUpAndSignIn();
-        Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
+        Topic topic = topics.createTopic(new Topic().withTopicStarter(user));
 
-        Topics.deleteByUser(topic, user);
+        topics.deleteByUser(topic, user);
         Notifications.assertTopicNotificationNotSent(topic, user);
     }
 
@@ -75,11 +77,11 @@ public class TopicNotificationTest {
     public void movingTopic_ifSubscribedToBranchAsWell_shouldReceiveTopicNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
-        Topics.subscribe(topic, user);
+        Topic topic = topics.createTopic(new Topic());
+        topics.subscribe(topic, user);
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.moveByUser(topic, users.signUpAndSignIn());
+        topics.moveByUser(topic, users.signUpAndSignIn());
         Notifications.assertTopicNotificationSent(topic, user);
     }
 
@@ -87,11 +89,11 @@ public class TopicNotificationTest {
     public void movingTopic_ifSubscribedToBranchAsWell_shouldNotReceiveBranchNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
-        Topics.subscribe(topic, user);
+        Topic topic = topics.createTopic(new Topic());
+        topics.subscribe(topic, user);
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.moveByUser(topic, users.signUpAndSignIn());
+        topics.moveByUser(topic, users.signUpAndSignIn());
         Notifications.assertBranchNotificationNotSentTo(topic.getBranch(), user);
     }
 
@@ -99,10 +101,10 @@ public class TopicNotificationTest {
     public void movingTopic_ifSubscribedToBranch_shouldReceiveBranchNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
+        Topic topic = topics.createTopic(new Topic());
         Branches.subscribe(topic.getBranch(), user);
 
-        Topics.moveByUser(topic, users.signUpAndSignIn());
+        topics.moveByUser(topic, users.signUpAndSignIn());
         Notifications.assertBranchNotificationNotSentTo(topic.getBranch(), user);
     }
 
@@ -110,19 +112,19 @@ public class TopicNotificationTest {
     public void movingTopic_ifSubscribedToTopicOnly_shouldReceiveTopicNotification() throws Exception {
         User user = users.signUpAndSignIn();
 
-        Topic topic = Topics.createTopic(new Topic());
-        Topics.subscribe(topic, user);
+        Topic topic = topics.createTopic(new Topic());
+        topics.subscribe(topic, user);
 
-        Topics.moveByUser(topic, users.signUpAndSignIn());
+        topics.moveByUser(topic, users.signUpAndSignIn());
         Notifications.assertTopicNotificationSent(topic, user);
     }
 
     @Test
     public void movingTopic_ifSubscribedUserMoveTopic_shouldNotReceiveTopicNotification() throws Exception {
         User user = users.signUpAndSignIn();
-        Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
+        Topic topic = topics.createTopic(new Topic().withTopicStarter(user));
 
-        Topics.moveByUser(topic, user);
+        topics.moveByUser(topic, user);
         Notifications.assertTopicNotificationNotSent(topic, user);
     }
 }

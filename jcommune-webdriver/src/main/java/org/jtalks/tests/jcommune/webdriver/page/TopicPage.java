@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import net.thucydides.core.pages.PageObject;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
@@ -20,7 +21,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 /**
  * @author masyan
  */
-public class TopicPage {
+public class TopicPage extends PageObject{
     public static final String EMPTY_SUBJECT_ERROR = "Не может быть пустым\n";
     public static final String EMPTY_BODY_ERROR = "Не может быть пустым\n" +
             "Размер должен быть между 2 и 20000";

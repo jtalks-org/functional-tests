@@ -1,6 +1,9 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import net.thucydides.core.annotations.Managed;
+import net.thucydides.core.annotations.Step;
+import net.thucydides.core.annotations.Title;
 import net.thucydides.core.pages.PageObject;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.NoSuchElementException;
@@ -83,7 +86,7 @@ public class MainPage extends PageObject {
     public void pressOpenExternalLinksDialog() {
         editExternalLinksControl.click();
     }
-
+    @Step
     public void logOutIfLoggedIn() {
         try {
             getDriver().manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
@@ -98,16 +101,18 @@ public class MainPage extends PageObject {
     public void clickRegistration() {
         registrationLink.click();
     }
-
+    @Step
     public void clickLogin() {
         loginLink.click();
     }
 
+    @Step
     public void clickLogout() {
         userMenuLink.click();
         logOutButton.click();
     }
 
+    @Step
     public boolean userIsLoggedIn() {
         try {
             return userMenuLink.isDisplayed();

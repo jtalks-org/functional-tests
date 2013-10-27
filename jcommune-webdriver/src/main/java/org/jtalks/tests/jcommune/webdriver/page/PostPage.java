@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
+import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * @author masyan
  */
-public class PostPage {
+public class PostPage extends PageObject {
 
     public static final String newButtonSel = "//a[contains(@class,'new-topic-btn')][1]";
 

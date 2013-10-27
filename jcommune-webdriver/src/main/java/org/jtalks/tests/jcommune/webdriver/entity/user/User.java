@@ -74,6 +74,6 @@ public class User {
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .replace(getClass().getSimpleName(), "User");
+                .replace(getClass().getSimpleName(), "User").replaceAll(",", ", ");
     }
 }

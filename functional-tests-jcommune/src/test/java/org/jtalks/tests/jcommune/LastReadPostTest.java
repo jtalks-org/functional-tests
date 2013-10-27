@@ -20,6 +20,8 @@ import static org.testng.Assert.assertTrue;
 public class LastReadPostTest {
     @Steps
     private Users users;
+    @Steps
+    private Topics topics;
 
     @BeforeMethod
     @Parameters({"appUrl"})
@@ -31,11 +33,11 @@ public class LastReadPostTest {
     @Test
     public void createdTopicShouldBeShowedAsNotReadToAnotherUser() throws Exception {
         users.signUpAndSignIn();
-        Topic newTopic = Topics.createTopic(new Topic());
+        Topic newTopic = topics.createTopic(new Topic());
         mainPage.clickLogout();
 
         users.signUpAndSignIn();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
+        Topic topicWithNewMessages = topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
 
         assertTrue(topicWithNewMessages.hasNewMessages());
     }
@@ -43,13 +45,13 @@ public class LastReadPostTest {
     @Test
     public void createdTopicShouldBeShowedAsReadToAnotherUserAfterMarkAllAsReadClick() throws Exception {
         users.signUpAndSignIn();
-        Topic newTopic = Topics.createTopic(new Topic());
+        Topic newTopic = topics.createTopic(new Topic());
         mainPage.clickLogout();
 
         users.signUpAndSignIn();
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
+        Topic topicWithNewMessages = topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
 
         assertFalse(topicWithNewMessages.hasNewMessages());
     }
@@ -57,11 +59,11 @@ public class LastReadPostTest {
     @Test
     public void createdTopicShouldBeShowedAsReadToUserCreatedIt() throws Exception {
         users.signUpAndSignIn();
-        Topic newTopic = Topics.createTopic(new Topic());
+        Topic newTopic = topics.createTopic(new Topic());
 
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
+        Topic topicWithNewMessages = topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
 
         assertFalse(topicWithNewMessages.hasNewMessages());
     }
@@ -69,12 +71,12 @@ public class LastReadPostTest {
     @Test
     public void createdTopicShouldBeShowedAsReadToAnonymousUser() throws Exception {
         users.signUpAndSignIn();
-        Topic newTopic = Topics.createTopic(new Topic());
+        Topic newTopic = topics.createTopic(new Topic());
         mainPage.clickLogout();
 
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
+        Topic topicWithNewMessages = topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
 
         assertFalse(topicWithNewMessages.hasNewMessages());
     }
@@ -83,20 +85,20 @@ public class LastReadPostTest {
     public void createdTopicWithTwoPagesShouldBeShowedAsNotReadToAnotherUserAfterReadingFirstPage() throws Exception {
         final int postsCountOnPage = 15;
         users.signUpAndSignIn();
-        Topic newTopic = Topics.createTopic(new Topic());
+        Topic newTopic = topics.createTopic(new Topic());
 
         Branches.openBranch(newTopic.getBranch().getTitle());
         for (int i = 0; i < 2 * postsCountOnPage; ++i) {
-            Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
+            topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
         }
 
         mainPage.clickLogout();
 
         users.signUpAndSignIn();
-        Topics.openTopicInCurrentBranch(1, newTopic.getTitle());
+        topics.openTopicInCurrentBranch(1, newTopic.getTitle());
 
         Branches.openBranch(newTopic.getBranch().getTitle());
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
+        Topic topicWithNewMessages = topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
         assertTrue(topicWithNewMessages.hasNewMessages());
     }
 

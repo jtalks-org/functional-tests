@@ -16,6 +16,7 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 
+import net.thucydides.core.annotations.ManagedPages;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.steps.ScenarioSteps;
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
@@ -48,6 +49,8 @@ public class Users extends ScenarioSteps {
     private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
     private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 60;
+    @ManagedPages
+    private MainPage mainPage;
 
     /**
      * Sign in user by dialog. Action can by started from any page of JCommune.
@@ -55,13 +58,13 @@ public class Users extends ScenarioSteps {
      * @param user the {@code User} instance with sign in form data
      * @throws ValidationException
      */
-    @Step("Sign in a user")
+    @Step
     public void signIn(User user) throws ValidationException {
         openAndFillSignInDialog(user);
         checkFormValidation(getPages().get(SignInPage.class).getErrorFormElements());
 
         // Check that link to the user profile present on the page
-        if (getPages().get(MainPage.class).userIsLoggedIn()) {
+        if (!mainPage.userIsLoggedIn()) {
             LOGGER.error("Could not find username in top right corner: {}", driver.getPageSource());
             throw new CouldNotOpenPageException("User does not appear to be logged on: " + user.getUsername());
         }
@@ -80,7 +83,7 @@ public class Users extends ScenarioSteps {
     }
 
     private void openAndFillSignInDialog(User user) {
-        getPages().get(MainPage.class).clickLogin();
+        mainPage.clickLogin();
         // Check that sign-in dialog have been opened (JCommune open sign-in page instead dialog if JavaScript disabled)
         try {
             driver.findElement(By.id(SignInPage.signInDialogFormSel));
