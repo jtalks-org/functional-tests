@@ -101,6 +101,7 @@ public class MainPage extends PageObject {
     public void clickRegistration() {
         registrationLink.click();
     }
+
     @Step
     public void clickLogin() {
         loginLink.click();

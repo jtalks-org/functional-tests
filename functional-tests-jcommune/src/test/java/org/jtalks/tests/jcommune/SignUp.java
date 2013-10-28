@@ -49,8 +49,8 @@ public class SignUp {
         users.signIn(user);
     }
 
-    @Test(description = "Registration and activation with valid inputs should pass")
-    public void registrationValidShouldPassRegistration_JC_1() throws Exception {
+    @Test
+    public void registrationAndActivationWithValidDataShouldPass() throws Exception {
         UserForRegistration user = new UserForRegistration();
         users.signUp(user);
     }

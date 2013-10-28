@@ -44,7 +44,7 @@ public class SignIn {
     }
 
     @Test(expectedExceptions = ValidationException.class)
-    public void signInWithoutActivationRegistrationShouldFailLogin_JC_564() throws Exception {
+    public void signInWithNotActivatedAccountShouldFail_JC_564() throws Exception {
         User user = users.signUpWithoutActivation();
         users.signIn(user);
     }

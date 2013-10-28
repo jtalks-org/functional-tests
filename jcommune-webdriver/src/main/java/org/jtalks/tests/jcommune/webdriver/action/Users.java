@@ -123,6 +123,7 @@ public class Users extends ScenarioSteps {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
+    @Step("Sign up and Activate a random user")
     public User signUp() throws ValidationException {
         User user = signUpWithoutActivation();
         activateUserByMail(user.getEmail());
@@ -136,7 +137,7 @@ public class Users extends ScenarioSteps {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
-    @Step("Sign up a new user")
+    @Step("Sign Up and Activate a specified user")
     public User signUp(UserForRegistration userForRegistration) throws ValidationException {
         User user = signUpWithoutActivation(userForRegistration);
         activateUserByMail(user.getEmail());
@@ -150,6 +151,7 @@ public class Users extends ScenarioSteps {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
+    @Step("Sign up a random user")
     public User signUpWithoutActivation() throws ValidationException {
         return signUpWithoutActivation(new UserForRegistration());
     }
@@ -162,6 +164,7 @@ public class Users extends ScenarioSteps {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
+    @Step("Sign up a specified user")
     public User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
         getPages().get(MainPage.class).logOutIfLoggedIn();
         openAndFillSignUpDialog(userForRegistration);
@@ -205,6 +208,7 @@ public class Users extends ScenarioSteps {
      *
      * @param email the user email
      */
+    @Step("Activate a user")
     public void activateUserByMail(String email) {
         MailtrapMail mailtrapMail = new MailtrapMail();
         driver.get(mailtrapMail.getActivationLink(email));
