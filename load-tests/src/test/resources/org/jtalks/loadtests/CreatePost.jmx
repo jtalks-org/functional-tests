@@ -297,7 +297,6 @@
             <boolProp name="resetInterpreter">false</boolProp>
             <stringProp name="script">    public void setRandomBranch() {
         String branchCount = vars.get(&quot;BRANCH_COUNT&quot;);
-System.out.println(&quot;branchCount = &quot; + branchCount);
         Random random = new Random();        
         int branchId = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
         vars.put(&quot;BRANCH_ID&quot;, String.valueOf(branchId));
