@@ -13,7 +13,7 @@ import org.testng.annotations.Test;
  */
 public class TopicNotificationTest {
     @Test
-    public void deletingTopic_ifSubscribedToBranchAsWell_shouldReceiveTopicNotification() throws Exception {
+    public void deletingTopic_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotification() throws Exception {
         User user = Users.signUpAndSignIn();
 
         Topic topic = Topics.createTopic(new Topic());
@@ -25,7 +25,7 @@ public class TopicNotificationTest {
     }
 
     @Test
-    public void deletingTopic_ifSubscribedToBranchAsWell_shouldNotReceiveBranchNotification() throws Exception {
+    public void deletingTopic_ifSubscribedToBothBranchAndTopic_shouldNotReceiveBranchNotification() throws Exception {
         User user = Users.signUpAndSignIn();
 
         Topic topic = Topics.createTopic(new Topic());
@@ -37,7 +37,7 @@ public class TopicNotificationTest {
     }
 
     @Test
-    public void deletingTopic_ifSubscribedToBranch_shouldReceiveBranchNotification() throws Exception {
+    public void deletingTopic_ifSubscribedToBranchOnly_shouldReceiveBranchNotification() throws Exception {
         User user = Users.signUpAndSignIn();
 
         Topic topic = Topics.createTopic(new Topic());
@@ -69,7 +69,7 @@ public class TopicNotificationTest {
 
 
     @Test
-    public void movingTopic_ifSubscribedToBranchAsWell_shouldReceiveTopicNotification() throws Exception {
+    public void movingTopic_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotification() throws Exception {
         User user = Users.signUpAndSignIn();
 
         Topic topic = Topics.createTopic(new Topic());
@@ -81,7 +81,7 @@ public class TopicNotificationTest {
     }
 
     @Test
-    public void movingTopic_ifSubscribedToBranchAsWell_shouldNotReceiveBranchNotification() throws Exception {
+    public void movingTopic_ifSubscribedToBothBranchAndTopic_shouldNotReceiveBranchNotification() throws Exception {
         User user = Users.signUpAndSignIn();
 
         Topic topic = Topics.createTopic(new Topic());
@@ -93,7 +93,7 @@ public class TopicNotificationTest {
     }
 
     @Test
-    public void movingTopic_ifSubscribedToBranch_shouldReceiveBranchNotification() throws Exception {
+    public void movingTopic_ifSubscribedToBranchOnly_shouldReceiveBranchNotification() throws Exception {
         User user = Users.signUpAndSignIn();
 
         Topic topic = Topics.createTopic(new Topic());

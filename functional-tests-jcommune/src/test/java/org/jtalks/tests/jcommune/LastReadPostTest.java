@@ -4,8 +4,7 @@ import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -33,10 +32,22 @@ public class LastReadPostTest {
         Topic newTopic = Topics.createTopic(new Topic());
         mainPage.clickLogout();
 
-        Users.signUpAndSignIn();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
+        User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
 
-        assertTrue(topicWithNewMessages.hasNewMessages());
+        Topics.assertHasNewMessages(newTopic, userThatWantsToSeeNewMessages);
+    }
+
+    @Test (enabled = false)
+    public void topicWithAddedPostShouldBeShowedAsNotReadToAnotherUser() throws Exception {
+        User userTopicAuthor = Users.signUpAndSignIn();
+        Topic newTopic = new Topic();
+        newTopic.withTopicStarter(userTopicAuthor);
+        Topics.createTopic(newTopic);
+
+        User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
+        Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
+
+        Topics.assertHasNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
     @Test
@@ -45,24 +56,36 @@ public class LastReadPostTest {
         Topic newTopic = Topics.createTopic(new Topic());
         mainPage.clickLogout();
 
-        Users.signUpAndSignIn();
+        User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
 
-        assertFalse(topicWithNewMessages.hasNewMessages());
+        Topics.assertHasNotNewMessages(newTopic, userThatWantsToSeeNewMessages);
+    }
+
+    @Test (enabled = false)
+    public void givenTopicContainsUnreadPost_afterThatPostIsRemoved_topicBecomesRead() throws Exception{
+        Users.signUpAndSignIn();
+        Topic newTopic = Topics.createTopic(new Topic());
+        Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
+        Topics.deleteAnswer(newTopic, newTopic.getLastPost());
+
+        User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
+
+        Topics.assertHasNotNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
     @Test
     public void createdTopicShouldBeShowedAsReadToUserCreatedIt() throws Exception {
-        Users.signUpAndSignIn();
-        Topic newTopic = Topics.createTopic(new Topic());
+        User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
+        Topic newTopic = new Topic();
+        newTopic.withTopicStarter(userThatWantsToSeeNewMessages);
+        Topics.createTopic(newTopic);
 
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
 
-        assertFalse(topicWithNewMessages.hasNewMessages());
+        Topics.assertHasNotNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
     @Test
@@ -73,9 +96,9 @@ public class LastReadPostTest {
 
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
 
-        assertFalse(topicWithNewMessages.hasNewMessages());
+        //null should be changed to anonymous user representation
+        Topics.assertHasNotNewMessages(newTopic, null);
     }
 
     @Test
@@ -91,12 +114,12 @@ public class LastReadPostTest {
 
         mainPage.clickLogout();
 
-        Users.signUpAndSignIn();
+        User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
         Topics.openTopicInCurrentBranch(1, newTopic.getTitle());
 
+        //Check, do we need to open branch page.
         Branches.openBranch(newTopic.getBranch().getTitle());
-        Topic topicWithNewMessages = Topics.findTopic(newTopic.getBranch().getTitle(), newTopic.getTitle());
-        assertTrue(topicWithNewMessages.hasNewMessages());
+        Topics.assertHasNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
 }

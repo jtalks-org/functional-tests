@@ -363,4 +363,14 @@ public class Topics {
     public static void moveByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
+
+    public static void deleteAnswer(Topic topic, Post selectedPost) {
+    }
+
+    public static void assertHasNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+        //To change body of created methods use File | Settings | File Templates.
+    }
+
+    public static void assertHasNotNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+    }
 }
