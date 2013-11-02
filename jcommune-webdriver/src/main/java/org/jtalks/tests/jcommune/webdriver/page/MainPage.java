@@ -1,7 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
-import org.jtalks.tests.jcommune.utils.ReportNgLogger;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -85,6 +84,7 @@ public class MainPage {
     }
 
     public void pressOpenExternalLinksDialog() {
+        info("Clicking a button to open External Links Editor");
         editExternalLinksControl.click();
     }
 
@@ -132,12 +132,22 @@ public class MainPage {
         return iconLinkToMainPage;
     }
 
-    public WebElement getToggleAdmineModeLink() {
-        return toggleAdmineModeLink;
+    public void switchOnAdminMode() {
+        if (!isAdminModeOn()) {
+            info("Opening Administration context menu on top of the page");
+            administrationDropdownMenu.click();
+            info("Choosing Enter Admin Mode menu item");
+            toggleAdmineModeLink.click();
+        }
     }
 
-    public WebElement getAdministrationDropdownMenu() {
-        return administrationDropdownMenu;
+    public void switchOffAdminMode() {
+        if (isAdminModeOn()) {
+            info("Opening Administration context menu on top of the page");
+            administrationDropdownMenu.click();
+            info("Choosing Exit Admin Mode menu item");
+            toggleAdmineModeLink.click();
+        }
     }
 
     public WebElement getModalDialog() {

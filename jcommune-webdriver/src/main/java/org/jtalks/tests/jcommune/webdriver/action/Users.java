@@ -89,9 +89,9 @@ public class Users {
 
         // Fill form values and submit
         info("Typing User data into dialog");
-        signInPage.getUsernameField().sendKeys(user.getUsername());
-        signInPage.getPasswordField().sendKeys(user.getPassword());
-        signInPage.getSubmitButton().click();
+        signInPage.fillUsernameField(user.getUsername());
+        signInPage.fillPasswordField(user.getPassword());
+        signInPage.clickSubmitButton();
     }
 
     private static void checkFormValidation(List<WebElement> errorElements) throws ValidationException {

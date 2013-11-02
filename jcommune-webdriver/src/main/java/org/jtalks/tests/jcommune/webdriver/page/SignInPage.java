@@ -9,79 +9,46 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+
 public class SignInPage {
-
-    public static final String usernameFieldSel = "j_username";
-
-    public static final String passwordFieldSel = "j_password";
-
-    public static final String submitButtonSel = "signin-submit-button";
-
-    public static final String submitButtonAfterRegistrationSel = "//input[@type='submit']";
-
-    public static final String rememberMeCheckBoxSel = "//input[@name='_spring_security_remember_me']";
-
     public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/password/restore']";
-
     public static final String signInDialogFormSel = "signin-modal-dialog";
-
     public static final String signInPageFormSel = "login-form";
-
     public static final String errorMessageSel = "//span[@class='help-inline']";
-
     public static final String emailFieldToRestoreSel = "userEmail";
-
     public static final String sendButtonToRestoreSel = "//button[@type='submit']";
-
     public static final String notValidEmailErrorMessageSel = "userEmail.errors";
-
     public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
-
     public static final String errorFormElementsSel = "div.control-group.error";
-
     public static final String LOGIN_ERROR = "Имя пользователя: \n" +
             "Пароль: Попытка выполнить вход не удалась, попробуйте еще раз\n";
-
-
-    @FindBy(id = usernameFieldSel)
+    @FindBy(id = "j_username")
     WebElement usernameField;
-
-    @FindBy(id = passwordFieldSel)
+    @FindBy(id = "j_password")
     WebElement passwordField;
-
-    @FindBy(id = submitButtonSel)
+    @FindBy(id = "signin-submit-button")
     WebElement submitButton;
-
-    @FindBy(xpath = submitButtonAfterRegistrationSel)
+    @FindBy(xpath = "//input[@type='submit']")
     WebElement submitButtonAfterRegistration;
-
-    @FindBy(xpath = rememberMeCheckBoxSel)
+    @FindBy(xpath = "//input[@name='_spring_security_remember_me']")
     WebElement rememberMeCheckBox;
-
     @FindBy(xpath = restorePasswordLinkSel)
     WebElement restorePasswordLink;
-
     @FindBy(id = signInDialogFormSel)
     WebElement signInDialogForm;
-
     @FindBy(id = signInPageFormSel)
     WebElement signInPageForm;
-
     @FindBy(xpath = errorMessageSel)
     WebElement errorMessage;
-
     @FindBy(id = emailFieldToRestoreSel)
     WebElement emailFieldToRestore;
-
     @FindBy(xpath = sendButtonToRestoreSel)
     WebElement sendButtonToRestore;
-
     @FindBy(id = notValidEmailErrorMessageSel)
     WebElement notValidEmailErrorMessage;
-
     @FindBy(xpath = closeSignInWindowButtonSel)
     WebElement closeSignInWindowButton;
-
     @FindBy(css = errorFormElementsSel)
     List<WebElement> errorFormElements;
 
@@ -89,56 +56,19 @@ public class SignInPage {
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement getUsernameField() {
-        return usernameField;
+    public void fillUsernameField(String username) {
+        info("Fill username: " + username);
+        usernameField.sendKeys(username);
     }
 
-    public WebElement getPasswordField() {
-        return passwordField;
+    public void fillPasswordField(String password) {
+        info("Fill password: " + password);
+        passwordField.sendKeys(password);
     }
 
-    public WebElement getSubmitButton() {
-        return submitButton;
-    }
-
-    public WebElement getSubmitButtonAfterRegistration() {
-        return submitButtonAfterRegistration;
-    }
-
-    public WebElement getRememberMeCheckBox() {
-        return rememberMeCheckBox;
-    }
-
-    public WebElement getRestorePasswordLink() {
-        return restorePasswordLink;
-    }
-
-    public WebElement getSignInDialogForm() {
-        return signInDialogForm;
-    }
-
-    public WebElement getErrorMessage() {
-        return errorMessage;
-    }
-
-    public WebElement getEmailFieldToRestore() {
-        return emailFieldToRestore;
-    }
-
-    public WebElement getSendButtonToRestore() {
-        return sendButtonToRestore;
-    }
-
-    public WebElement getNotValidEmailErrorMessage() {
-        return notValidEmailErrorMessage;
-    }
-
-    public WebElement getCloseSignInWindowButton() {
-        return closeSignInWindowButton;
-    }
-
-    public WebElement getSignInPageForm() {
-        return signInPageForm;
+    public void clickSubmitButton() {
+        info("Clicking submit button");
+        submitButton.click();
     }
 
     public List<WebElement> getErrorFormElements() {

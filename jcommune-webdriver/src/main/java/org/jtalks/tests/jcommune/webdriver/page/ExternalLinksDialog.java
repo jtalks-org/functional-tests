@@ -4,10 +4,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.FindBys;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
+
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 
 public class ExternalLinksDialog {
     public static final String externalLinksFromDialogSel = "//div[@class='modal-body']/table/tbody/tr";
@@ -39,32 +40,39 @@ public class ExternalLinksDialog {
         PageFactory.initElements(driver, this);
     }
 
-    public WebElement getCloseDialogButton() {
-        return closeDialogButton;
+    public void closeDialog() {
+        info("Closing dialog by pressing Close button");
+        closeDialogButton.submit();
     }
 
-    public WebElement getAddLinkBut() {
-        return addLinkBut;
+    public void clickAddLinkButton() {
+        info("Pressing on Add Link button");
+        addLinkBut.click();
     }
 
-    public WebElement getTitleField() {
-        return titleField;
+    public void fillLinkTitleField(String title) {
+        info("Fill Link Title field: " + title);
+        titleField.sendKeys(title);
     }
 
-    public WebElement getUrlField() {
-        return urlField;
+    public void fillLinkHrefField(String url) {
+        info("Fill Link Href field: " + url);
+        urlField.sendKeys(url);
     }
 
-    public WebElement getHintField() {
-        return hintField;
+    public void fillLinkHintField(String hint) {
+        info("Fill Link Hint field: " + hint);
+        hintField.sendKeys(hint);
     }
 
-    public WebElement getSaveLinkBut() {
-        return saveLinkBut;
+    public void clickSaveLinkButton() {
+        info("Clicking Save Link button");
+        saveLinkBut.click();
     }
 
-    public WebElement getRemoveLinkBut() {
-        return removeLinkBut;
+    public void clickRemoveLinkButton() {
+        info("Clicking Remove Link button");
+        removeLinkBut.click();
     }
 
     public List<WebElement> getExternalLinks() {

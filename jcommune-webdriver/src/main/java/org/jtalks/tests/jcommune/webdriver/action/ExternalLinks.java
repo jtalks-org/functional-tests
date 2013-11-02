@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.externalLinksDialog;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -24,11 +25,12 @@ public class ExternalLinks {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternalLinks.class);
 
     public static ExternalLink createExternalLink(ExternalLink externalLink) {
+        info("Creating an External Link: " + externalLink);
         openExternalLinksDialog();
-        externalLinksDialog.getAddLinkBut().click();
+        externalLinksDialog.clickAddLinkButton();
         fillLinkFields(externalLink);
-        externalLinksDialog.getSaveLinkBut().click();
-        externalLinksDialog.getCloseDialogButton().submit();
+        externalLinksDialog.clickSaveLinkButton();
+        externalLinksDialog.closeDialog();
         return externalLink;
     }
 
@@ -65,31 +67,22 @@ public class ExternalLinks {
         WebElement link = getLinkLine(externalLink);
         link.findElement(By.className(ExternalLinksDialog.externalLinksRemoveIconFromDialogSel)).click();
         sleep(500);
-        externalLinksDialog.getRemoveLinkBut().click();
-        externalLinksDialog.getCloseDialogButton().submit();
+        externalLinksDialog.clickRemoveLinkButton();
+        externalLinksDialog.closeDialog();
     }
 
     public static void exitAdminMode() {
-        if (mainPage.isAdminModeOn()) {
-            mainPage.getAdministrationDropdownMenu().click();
-            mainPage.getToggleAdmineModeLink().click();
-        }
-    }
-
-    public static void enterAdministrationMode() {
-        if (!mainPage.isAdminModeOn()) {
-            mainPage.getAdministrationDropdownMenu().click();
-            mainPage.getToggleAdmineModeLink().click();
-        }
+        mainPage.switchOffAdminMode();
     }
 
     private static void fillLinkFields(ExternalLink externalLink) {
-        externalLinksDialog.getTitleField().sendKeys(externalLink.getTitle());
-        externalLinksDialog.getUrlField().sendKeys(externalLink.getHref());
-        externalLinksDialog.getHintField().sendKeys(externalLink.getHint());
+        externalLinksDialog.fillLinkTitleField(externalLink.getTitle());
+        externalLinksDialog.fillLinkHrefField(externalLink.getHref());
+        externalLinksDialog.fillLinkHintField(externalLink.getHint());
     }
 
     private static void openExternalLinksDialog() {
+        info("Opening External Links dialog");
         WebElement dialog = mainPage.getModalDialog();
         boolean visible;
         try {
@@ -98,7 +91,7 @@ public class ExternalLinks {
             visible = false;
         }
         if (!visible) {
-            enterAdministrationMode();
+            mainPage.switchOnAdminMode();
             mainPage.pressOpenExternalLinksDialog();
             sleep(500);
         }

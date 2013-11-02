@@ -89,10 +89,6 @@ public class ExternalLink {
 
     @Override
     public String toString() {
-        return "ExternalLink{" +
-                "title='" + title + '\'' +
-                ", href='" + href + '\'' +
-                ", hint='" + hint + '\'' +
-                '}';
+        return "ExternalLink [title='" + title + '\'' + ", href='" + href + '\'' + ", hint='" + hint + '\'' + ']';
     }
 }
