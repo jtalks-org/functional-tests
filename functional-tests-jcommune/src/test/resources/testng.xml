@@ -3,7 +3,11 @@
   <parameter name="appUrl" value="http://autotests.jtalks.org/jcommune/"/>
   <parameter name="webDriverUrl" value="http://jtalks.org:4444/wd/hub"/>
   <listeners>
+    <!--Creates a selenium session for tests to use-->
     <listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener"/>
+    <!--Creates HTML Reports with test steps that each test passes-->
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
   </listeners>
   <test name="JCommune">
     <groups>

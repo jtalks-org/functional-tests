@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
@@ -54,6 +55,7 @@ public class Users {
      * @throws ValidationException
      */
     public static void signIn(User user) throws ValidationException {
+        info("Sign in a User: " + user);
         openAndFillSignInDialog(user);
         checkFormValidation(signInPage.getErrorFormElements());
 
@@ -72,8 +74,7 @@ public class Users {
         } catch (ValidationException e) {
             throw new IllegalStateException("Can't sign up new user.", e);
         }
-
-        return  user;
+        return user;
     }
 
     private static void openAndFillSignInDialog(User user) {
@@ -87,13 +88,14 @@ public class Users {
         }
 
         // Fill form values and submit
-        LOGGER.info("Sign in {}", user);
+        info("Typing User data into dialog");
         signInPage.getUsernameField().sendKeys(user.getUsername());
         signInPage.getPasswordField().sendKeys(user.getPassword());
         signInPage.getSubmitButton().click();
     }
 
     private static void checkFormValidation(List<WebElement> errorElements) throws ValidationException {
+        info("Check there are no validation errors");
         if (!errorElements.isEmpty()) {
             String failedFields = "";
             for (WebElement element : errorElements) {
@@ -106,8 +108,10 @@ public class Users {
                     failedFields += "\n";
                 }
             }
+            info("Validation errors found");
             throw new ValidationException(failedFields);
         }
+        info("No validation errors were found");
     }
 
     /**
@@ -117,6 +121,7 @@ public class Users {
      * @throws ValidationException
      */
     public static User signUp() throws ValidationException {
+        info("Creating and activating an account for random user");
         User user = signUpWithoutActivation();
         activateUserByMail(user.getEmail());
         return user;
@@ -141,9 +146,9 @@ public class Users {
      *
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
-     *
      */
     public static User signUpWithoutActivation() throws ValidationException {
+        info("Sign up a random user");
         return signUpWithoutActivation(new UserForRegistration());
     }
 
@@ -156,6 +161,7 @@ public class Users {
      * @throws ValidationException
      */
     public static User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
+        info("Sign Up a user: " + userForRegistration);
         mainPage.logOutIfLoggedIn(driver);
         openAndFillSignUpDialog(userForRegistration);
         checkFormValidation(signUpPage.getErrorFormElements());
@@ -174,19 +180,22 @@ public class Users {
         }
 
         // Fill form values and submit
-        LOGGER.info("Sign Up {}", userForRegistration);
-        signUpPage.getUsernameField().sendKeys(userForRegistration.getUsername());
-        signUpPage.getEmailField().sendKeys(userForRegistration.getEmail());
-        signUpPage.getPasswordField().sendKeys(userForRegistration.getPassword());
-        signUpPage.getPasswordConfirmField().sendKeys(userForRegistration.getPasswordConfirmation());
-        signUpPage.getSubmitButton().click();
+        info("Sign Up " + userForRegistration);
+        signUpPage.fillUsername(userForRegistration.getUsername());
+        signUpPage.fillEmail(userForRegistration.getEmail());
+        signUpPage.fillPassword(userForRegistration.getPassword());
+        signUpPage.fillPasswordConfirmation(userForRegistration.getPasswordConfirmation());
+        signUpPage.submitForm();
     }
 
     private static void waitForEmailActivationInfoShowsUp() {
+        info("Waiting for activation email...");
         try {
             new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
                     ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
+            info("Activation email received!");
         } catch (org.openqa.selenium.TimeoutException e) {
+            info("Activation email wasn't received");
             throw new TimeoutException("Waiting for email activation confirmation dialog.", e);
         }
         signUpPage.getOkButtonOnInfoWindow().click();
@@ -198,8 +207,10 @@ public class Users {
      * @param email the user email
      */
     public static void activateUserByMail(String email) {
+        info("Activating a user by following activation link..");
         MailtrapMail mailtrapMail = new MailtrapMail();
         driver.get(mailtrapMail.getActivationLink(email));
         mainPage.getIconLinkToMainPage().click();
+        info("User was activated");
     }
 }

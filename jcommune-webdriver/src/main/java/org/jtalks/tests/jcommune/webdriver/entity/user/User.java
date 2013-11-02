@@ -73,7 +73,6 @@ public class User {
 
     @Override
     public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE)
-                .replace(getClass().getSimpleName(), "User");
+        return "[username='" + username + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'' + ']';
     }
 }

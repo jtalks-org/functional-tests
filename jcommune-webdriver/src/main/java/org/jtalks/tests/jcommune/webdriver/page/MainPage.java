@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import org.jtalks.tests.jcommune.utils.ReportNgLogger;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.concurrent.TimeUnit;
+
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 
 public class MainPage {
     public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout']";
@@ -69,7 +72,6 @@ public class MainPage {
     private WebElement mailCounter;
 
 
-
     public MainPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
@@ -87,11 +89,13 @@ public class MainPage {
     }
 
     public void logOutIfLoggedIn(WebDriver driver) {
+        info("Logging Out If Logged In");
         try {
             driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             clickLogout();
+            info("User was successfully logged out");
         } catch (NoSuchElementException e) {
-            //we don't care if user already is logged out
+            info("User was not logged in, so no one to log out");
         } finally {
             driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         }
@@ -102,10 +106,12 @@ public class MainPage {
     }
 
     public void clickLogin() {
+        info("Clicking Login");
         loginLink.click();
     }
 
     public void clickLogout() {
+        info("Clicking logout");
         userMenuLink.click();
         logOutButton.click();
     }
@@ -138,7 +144,7 @@ public class MainPage {
         return modalDialog;
     }
 
-    public WebElement getMailCounter(){
+    public WebElement getMailCounter() {
         return mailCounter;
     }
 }

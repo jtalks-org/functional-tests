@@ -104,9 +104,10 @@ public class JCommuneSeleniumConfig {
     /**
      * Method destroy connect with Selenium Server
      */
-    @AfterSuite(alwaysRun = true)
     public void destroy() {
-        driver.quit();
+        if(!driver.toString().contains("null")) { //if null, then driver already quit
+            driver.quit();
+        }
     }
 
     public static String getAppUrl(){

@@ -8,6 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+
 /**
  * @author masyan
  */
@@ -129,6 +131,31 @@ public class SignUpPage {
 
     public WebElement getPasswordConfirmErrorMessage() {
         return passwordConfirmErrorMessage;
+    }
+
+    public void fillUsername(String username){
+        info("Fill username: " + username);
+        usernameField.sendKeys(username);
+    }
+
+    public void fillEmail(String email){
+        info("Fill email: " + email);
+        emailField.sendKeys(email);
+    }
+
+    public void fillPassword(String password){
+        info("Fill password: " + password);
+        passwordField.sendKeys(password);
+    }
+
+    public void fillPasswordConfirmation(String passwordConfirmation){
+        info("Fill password confirmation: " + passwordConfirmation);
+        passwordConfirmField.sendKeys(passwordConfirmation);
+    }
+
+    public void submitForm(){
+        info("Clicking submit button...");
+        submitButton.click();
     }
 
     public WebElement getUsernameField() {
