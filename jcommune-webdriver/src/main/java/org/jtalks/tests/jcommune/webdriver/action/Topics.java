@@ -15,9 +15,6 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -27,7 +24,6 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -37,8 +33,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
-
-//import org.junit.Assert;
 
 
 /**
@@ -90,49 +84,8 @@ public class Topics {
         }
     }
 
-    /**
-     * Sign-up new user and create new topic
-     *
-     * @param topic the topic representation private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
-     *              <p/>
-     *              /** Signs-up up a new random user and creates the topic in the first available branch.
-     * @throws ValidationException        if specified topic does not pass forum validation
-     * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
-     */
-
-
-    public static Topic signUpAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-        User user = User.admin();
-        Users.signIn(user);
-        topic.withTopicStarter(user);
-        return createTopic(topic);
-    }
-
-    public static Topic loginAndCreateTopic(Topic topic) throws ValidationException, PermissionsDeniedException {
-        User user = User.admin();
-        Users.signIn(user);
-        topic.withTopicStarter(user);
-        return createTopic(topic);
-    }
-
     public static boolean isInCorrectBranch(Topic topic) {
         return topicPage.getBranchName().getText().trim().equals(topic.getBranch().getTitle());
-    }
-
-    public static boolean isTopicNewer(DateTime topicDate, String dateFromLastRow) {
-        DateTimeFormatter mask = new DateTimeFormatterBuilder()
-                .appendDayOfMonth(2)
-                .appendLiteral(' ')
-                .appendMonthOfYearShortText()
-                .appendLiteral(' ')
-                .appendYear(4, 4)
-                .appendLiteral(' ')
-                .appendHourOfDay(2)
-                .appendLiteral(':')
-                .appendMinuteOfHour(2)
-                .toFormatter();
-        DateTime dat = DateTime.parse(dateFromLastRow, mask);
-        return topicDate.isAfter(dat.getMillis());
     }
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
@@ -163,33 +116,11 @@ public class Topics {
 //        }
     }
 
-    /**
-     * This is just stub which doesn't actually find any topics
-     */
-    public static Topic findTopic(String branchTitle, String topicTitle) {
-        Topic topic = new Topic(topicTitle, topicTitle);
-        topic.setHasNewMessages(true);
-        return topic;
-    }
-
     private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
         boolean found = false;
 
         for (WebElement topics : topicPage.getTopicsList()) {
             if (topics.getText().trim().equals(topicTitle.trim())) {
-                topics.click();
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
-
-    private static boolean findTopic(Topic topic) throws CouldNotOpenPageException {
-        boolean found = false;
-
-        for (WebElement topics : topicPage.getTopicsList()) {
-            if (topics.getText().trim().equals(topic.getTitle().trim())) {
                 topics.click();
                 found = true;
                 break;
@@ -247,16 +178,6 @@ public class Topics {
             }
         }
         return false;
-    }
-
-    public static boolean senseToPageNext(Topic topic) {
-        WebElement bottomRowOfTopics = topicPage.getLastTopicLine();
-        System.out.println(bottomRowOfTopics.getText());
-        System.out.println(bottomRowOfTopics.findElement(By.className("sticky")).getText());
-        System.out.println("Topic date is " + topic.getModificationDate());
-        //if (bottomRowOfTopics.findElements(By.xpath("*/span[contains(@class,'sticky')]")).size()>0) return true;
-        String dateFromBottomRowOfTopics = bottomRowOfTopics.findElement(By.xpath("*/a[contains(@class,'date')]")).getText().trim();
-        return isTopicNewer(DateTime.now(), dateFromBottomRowOfTopics);
     }
 
     /**
@@ -368,7 +289,6 @@ public class Topics {
     }
 
     public static void assertHasNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
-        //To change body of created methods use File | Settings | File Templates.
     }
 
     public static void assertHasNotNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
