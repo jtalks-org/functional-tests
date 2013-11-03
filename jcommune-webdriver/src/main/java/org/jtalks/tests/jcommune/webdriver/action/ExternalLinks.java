@@ -28,6 +28,7 @@ public class ExternalLinks {
         info("Creating an External Link: " + externalLink);
         openExternalLinksDialog();
         externalLinksDialog.clickAddLinkButton();
+        info("Fill new link data");
         fillLinkFields(externalLink);
         externalLinksDialog.clickSaveLinkButton();
         externalLinksDialog.closeDialog();
