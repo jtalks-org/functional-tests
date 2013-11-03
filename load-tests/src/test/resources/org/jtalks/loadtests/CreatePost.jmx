@@ -33,16 +33,6 @@
         <hashTree/>
         <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
           <collectionProp name="Arguments.arguments">
-            <elementProp name="LOCAL_SERVER" elementType="Argument">
-              <stringProp name="Argument.name">LOCAL_SERVER</stringProp>
-              <stringProp name="Argument.value">127.0.0.1</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="LOCAL_SERVER_PORT" elementType="Argument">
-              <stringProp name="Argument.name">LOCAL_SERVER_PORT</stringProp>
-              <stringProp name="Argument.value">8080</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
             <elementProp name="AUTO_TEST_SERVER" elementType="Argument">
               <stringProp name="Argument.name">AUTO_TEST_SERVER</stringProp>
               <stringProp name="Argument.value">autotests.jtalks.org</stringProp>
@@ -52,31 +42,19 @@
               <stringProp name="Argument.name">TOPIC_ID</stringProp>
               <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">used in OpenRandomBranch for storing randomly choosen topic id</stringProp>
             </elementProp>
             <elementProp name="BRANCH_COUNT" elementType="Argument">
               <stringProp name="Argument.name">BRANCH_COUNT</stringProp>
               <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="BRANCH_LINK" elementType="Argument">
-              <stringProp name="Argument.name">BRANCH_LINK</stringProp>
-              <stringProp name="Argument.value">/jcommune/branches/1</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">used in AutoRedirectAfterLogin for storing branch count</stringProp>
             </elementProp>
             <elementProp name="BRANCH_ID" elementType="Argument">
               <stringProp name="Argument.name">BRANCH_ID</stringProp>
               <stringProp name="Argument.value">1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="TOPIC_COUNT" elementType="Argument">
-              <stringProp name="Argument.name">TOPIC_COUNT</stringProp>
-              <stringProp name="Argument.value">1</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-            <elementProp name="TOPIC_LINK" elementType="Argument">
-              <stringProp name="Argument.name">TOPIC_LINK</stringProp>
-              <stringProp name="Argument.value">1</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
+              <stringProp name="Argument.desc">used in AutoRedirectAfterLogin for storing randomly choosen branch id</stringProp>
             </elementProp>
           </collectionProp>
         </Arguments>
@@ -253,7 +231,7 @@
             <boolProp name="XPathExtractor.namespace">false</boolProp>
           </XPathExtractor>
           <hashTree/>
-          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="setRandomBranch(BeanShell PostProcessor)" enabled="true">
+          <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="setRandomBranch" enabled="true">
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>
             <boolProp name="resetInterpreter">false</boolProp>
