@@ -61,7 +61,7 @@
         <hashTree/>
         <UniformRandomTimer guiclass="UniformRandomTimerGui" testclass="UniformRandomTimer" testname="RandomDelay" enabled="true">
           <stringProp name="ConstantTimer.delay">0</stringProp>
-          <stringProp name="RandomTimer.range">1000</stringProp>
+          <stringProp name="RandomTimer.range">1500</stringProp>
         </UniformRandomTimer>
         <hashTree/>
         <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="JTalksHttpRequestDefaults" enabled="true">
