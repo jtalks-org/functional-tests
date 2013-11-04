@@ -88,7 +88,6 @@ public class Users {
         }
 
         // Fill form values and submit
-        info("Typing User data into dialog");
         signInPage.fillUsernameField(user.getUsername());
         signInPage.fillPasswordField(user.getPassword());
         signInPage.clickSubmitButton();

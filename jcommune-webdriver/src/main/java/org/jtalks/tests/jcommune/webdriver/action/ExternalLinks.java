@@ -28,6 +28,7 @@ public class ExternalLinks {
         info("Creating an External Link: " + externalLink);
         openExternalLinksDialog();
         externalLinksDialog.clickAddLinkButton();
+        info("Fill new link data");
         fillLinkFields(externalLink);
         externalLinksDialog.clickSaveLinkButton();
         externalLinksDialog.closeDialog();
@@ -35,12 +36,14 @@ public class ExternalLinks {
     }
 
     public static boolean assertLinkVisible(ExternalLink externalLink) {
+        info("Checking whether the link is actually visible on the page");
         List<ExternalLink> linksFromPage = ExternalLink.fromForm(externalLinksDialog.getExternalLinks());
         for (ExternalLink link : linksFromPage) {
             if (externalLink.getHref().isEmpty()) {//in other cases the Href is correct even returned by HtmlUnit
                 normalizeHtmlUnitHref(link);
             }
             if (externalLink.equals(link)) {
+                info("The link was found!");
                 return true;
             }
         }
