@@ -20,15 +20,12 @@ import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
-import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,9 +41,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
  * @author Guram Savinov
  */
 public class Users {
-    private static final String EMAIL_ACTIVATION_INFO = "На указанный e-mail отправлено письмо со ссылкой для подтверждения регистрации.";
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
-    private static final int WAIT_FOR_DIALOG_TO_OPEN_SECONDS = 60;
 
     /**
      * Sign in user by dialog. Action can by started from any page of JCommune.
@@ -164,7 +159,7 @@ public class Users {
         mainPage.logOutIfLoggedIn(driver);
         openAndFillSignUpDialog(userForRegistration);
         checkFormValidation(signUpPage.getErrorFormElements());
-        waitForEmailActivationInfoShowsUp();
+        signUpPage.closeRegistrationWasSuccessfulDialog();
         return userForRegistration;
     }
 
@@ -187,28 +182,17 @@ public class Users {
         signUpPage.submitForm();
     }
 
-    private static void waitForEmailActivationInfoShowsUp() {
-        info("Waiting for activation email...");
-        try {
-            new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
-                    ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
-            info("Activation email received!");
-        } catch (org.openqa.selenium.TimeoutException e) {
-            info("Activation email wasn't received");
-            throw new TimeoutException("Waiting for email activation confirmation dialog.", e);
-        }
-        signUpPage.getOkButtonOnInfoWindow().click();
-    }
-
     /**
      * Open activation link from message sent by JCommune to confirm user registration
      *
      * @param email the user email
      */
     public static void activateUserByMail(String email) {
-        info("Activating a user by following activation link..");
+        info("Looking up email at mailtrap. Activating a user by following activation link..");
         MailtrapMail mailtrapMail = new MailtrapMail();
-        driver.get(mailtrapMail.getActivationLink(email));
+        String activationLink = mailtrapMail.getActivationLink(email);
+        driver.get(activationLink);
+        info("Clicking on activation link..");
         mainPage.getIconLinkToMainPage().click();
         info("User was activated");
     }
