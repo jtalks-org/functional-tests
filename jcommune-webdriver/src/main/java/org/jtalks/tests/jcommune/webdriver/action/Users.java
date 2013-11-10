@@ -188,13 +188,13 @@ public class Users {
     }
 
     private static void waitForEmailActivationInfoShowsUp() {
-        info("Waiting for activation email...");
+        info("Waiting for dialog that says check your mailbox to open...");
         try {
             new WebDriverWait(driver, WAIT_FOR_DIALOG_TO_OPEN_SECONDS).until(
                     ExpectedConditions.textToBePresentInElement(By.className("modal-body"), EMAIL_ACTIVATION_INFO));
-            info("Activation email received!");
+            info("The dialog showed up!");
         } catch (org.openqa.selenium.TimeoutException e) {
-            info("Activation email wasn't received");
+            info("The dialog asked to check the mailbox");
             throw new TimeoutException("Waiting for email activation confirmation dialog.", e);
         }
         signUpPage.getOkButtonOnInfoWindow().click();
@@ -206,9 +206,11 @@ public class Users {
      * @param email the user email
      */
     public static void activateUserByMail(String email) {
-        info("Activating a user by following activation link..");
+        info("Looking up email at mailtrap. Activating a user by following activation link..");
         MailtrapMail mailtrapMail = new MailtrapMail();
-        driver.get(mailtrapMail.getActivationLink(email));
+        String activationLink = mailtrapMail.getActivationLink(email);
+        driver.get(activationLink);
+        info("Clicking on activation link..");
         mainPage.getIconLinkToMainPage().click();
         info("User was activated");
     }
