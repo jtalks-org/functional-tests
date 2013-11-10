@@ -15,6 +15,8 @@ public class ExternalLinksDialog {
     public static final String externalLinksHrefFromDialogSel = "td[@class='link-url']";
     //class name
     public static final String externalLinksRemoveIconFromDialogSel = "icon-trash";
+    public static final String externalLinksEditIconFromDialogSel = "icon-pencil";
+
     @FindBy(id = "addMainLink")
     private WebElement addLinkBut;
     @FindBy(id = "linkTitle")
@@ -29,6 +31,8 @@ public class ExternalLinksDialog {
     private WebElement cancelLinkBut;
     @FindBy(id = "removeLink")
     private WebElement removeLinkBut;
+    @FindBy(id = "editLink")
+    private WebElement editLinkBut;
     @FindAll({@FindBy(css = "[id^=big-screen-external-link]"), @FindBy(css = "[id^=small-screen-external-link]")})
     private List<WebElement> externalLinks;
     @FindBy(className = "close")
@@ -52,16 +56,19 @@ public class ExternalLinksDialog {
 
     public void fillLinkTitleField(String title) {
         info("Fill Link Title field: " + title);
+        titleField.clear();
         titleField.sendKeys(title);
     }
 
     public void fillLinkHrefField(String url) {
         info("Fill Link Href field: " + url);
+        urlField.clear();
         urlField.sendKeys(url);
     }
 
     public void fillLinkHintField(String hint) {
         info("Fill Link Hint field: " + hint);
+        hintField.clear();
         hintField.sendKeys(hint);
     }
 

@@ -128,4 +128,17 @@ public class ExternalLinksTest {
         ExternalLinks.removeExternalLink(link);
     }
 
+    @Test (enabled = false)
+    public void editTitleWithValidData_ShouldPass() {
+        ExternalLink link = new ExternalLink();
+        ExternalLinks.createExternalLink(link);
+        ExternalLinks.assertLinkVisible(link);
+
+        ExternalLink newLink = new ExternalLink();
+        ExternalLinks.editExternalLink(newLink);
+        ExternalLinks.assertLinkVisible(newLink);
+
+        ExternalLinks.removeExternalLink(link);
+        ExternalLinks.assertLinkIsNotVisible(link);
+    }
 }

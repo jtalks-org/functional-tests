@@ -35,6 +35,28 @@ public class ExternalLinks {
         return externalLink;
     }
 
+    public static void removeExternalLink(ExternalLink externalLink) {
+        info("Removing External Link: " + externalLink);
+        openExternalLinksDialog();
+        WebElement link = getLinkLine(externalLink);
+        link.findElement(By.className(ExternalLinksDialog.externalLinksRemoveIconFromDialogSel)).click();
+        sleep(500);
+        externalLinksDialog.clickRemoveLinkButton();
+        externalLinksDialog.closeDialog();
+    }
+
+    public static void editExternalLink(ExternalLink externalLink) {
+        info("Editing an External Link: " + externalLink);
+        openExternalLinksDialog();
+        WebElement link = getLinkLine(externalLink);
+        link.findElement(By.className(ExternalLinksDialog.externalLinksEditIconFromDialogSel)).click();
+        sleep(500);
+        fillLinkFields(externalLink);
+        sleep(500);
+        externalLinksDialog.clickSaveLinkButton();
+        externalLinksDialog.closeDialog();
+    }
+
     public static boolean assertLinkVisible(ExternalLink externalLink) {
         info("Checking whether the link is actually visible on the page");
         List<ExternalLink> linksFromPage = ExternalLink.fromForm(externalLinksDialog.getExternalLinks());
@@ -51,6 +73,23 @@ public class ExternalLinks {
         throw new AssertionFailedError("The links is not present on the page: " + externalLink);
     }
 
+    public static boolean assertLinkIsNotVisible(ExternalLink externalLink) {
+        info("Checking whether the link is actually NOT visible on the page");
+        List<ExternalLink> linksFromPage = ExternalLink.fromForm(externalLinksDialog.getExternalLinks());
+        for (ExternalLink link : linksFromPage) {
+            if (externalLink.getHref().isEmpty()) {//in other cases the Href is correct even returned by HtmlUnit
+                normalizeHtmlUnitHref(link);
+            }
+            if (externalLink.equals(link)) {
+                LOGGER.info("Expected Link was not deleted: {}. \nActual Links From page: {}", externalLink, linksFromPage);
+                throw new AssertionFailedError("Deleted link is present on the page: " + externalLink);
+            }
+        }
+        info("The link was NOT found, as expected");
+        return false;
+
+    }
+
     /**
      * HtmlUnit and other browsers work differently - HtmlUnit tends to return the appUrl if href is empty while real
      * browsers return an empty value. If HtmlUnit is our case, the URL is changed to empty to mimic real browsers.
@@ -65,14 +104,7 @@ public class ExternalLinks {
         }
     }
 
-    public static void removeExternalLink(ExternalLink externalLink) {
-        openExternalLinksDialog();
-        WebElement link = getLinkLine(externalLink);
-        link.findElement(By.className(ExternalLinksDialog.externalLinksRemoveIconFromDialogSel)).click();
-        sleep(500);
-        externalLinksDialog.clickRemoveLinkButton();
-        externalLinksDialog.closeDialog();
-    }
+
 
     public static void exitAdminMode() {
         mainPage.switchOffAdminMode();
