@@ -22,9 +22,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  * @author masyan
  */
 public class TopicPage {
-    public static final String EMPTY_SUBJECT_ERROR = "Не может быть пустым\n";
-    public static final String EMPTY_BODY_ERROR = "Не может быть пустым\n" +
-            "Размер должен быть между 2 и 20000";
+    public static final String EMPTY_SUBJECT_ERROR = "may not be empty\n";
+    public static final String EMPTY_BODY_ERROR = "size must be between 2 and 20000\n";
     @FindBy(id = "subjectError")
     private WebElement subjectErrorMessage;
     @FindBy(id = "bodyText.errors")
