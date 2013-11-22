@@ -111,6 +111,7 @@ public class ExternalLinks {
     }
 
     private static void fillLinkFields(ExternalLink externalLink) {
+        sleep(1000);
         externalLinksDialog.fillLinkTitleField(externalLink.getTitle());
         externalLinksDialog.fillLinkHrefField(externalLink.getHref());
         externalLinksDialog.fillLinkHintField(externalLink.getHint());

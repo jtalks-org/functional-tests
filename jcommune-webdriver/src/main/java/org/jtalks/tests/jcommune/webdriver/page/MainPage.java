@@ -2,6 +2,9 @@ package org.jtalks.tests.jcommune.webdriver.page;
 
 
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
+import org.jtalks.tests.jcommune.webdriver.page.elements.Header;
+import org.jtalks.tests.jcommune.webdriver.page.elements.SmallScreenHeader;
+import org.jtalks.tests.jcommune.webdriver.page.elements.WideScreenHeader;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +15,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.concurrent.TimeUnit;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.getCapabilities;
 
 public class MainPage {
     public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout']";
@@ -25,6 +29,8 @@ public class MainPage {
     public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
     public static final String languageSwitcherSel = "//div[@id='lang-selector-toggle']/a/img";
     public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
+    @FindBy(className = "btn-navbar")
+    protected WebElement smallScreenMenuButton;
     @FindBy(id = "mainLinksEditor")
     private WebElement modalDialog;
     @FindAll({@FindBy(id = "links_editor"), @FindBy(id = "links_editor_top")})
@@ -43,8 +49,6 @@ public class MainPage {
     private WebElement logOutButton;
     @FindBy(id = "user-dropdown-menu-link")
     private WebElement userMenuLink;
-    @FindBy(id = "signin")
-    private WebElement loginLink;
     @FindBy(id = "signup")
     private WebElement registrationLink;
     @FindBy(className = "text_errorpage")
@@ -69,23 +73,22 @@ public class MainPage {
     private WebElement forumsTitle;
     @FindBy(css = ".margin-left-small.test-pm-count")
     private WebElement mailCounter;
+    private volatile Header wideHeader;
+    private volatile Header smallHeader;
+    private WebDriver driver;
 
 
     public MainPage(WebDriver driver) {
+        this.driver = driver;
         PageFactory.initElements(driver, this);
     }
 
     public boolean isAdminModeOn() {
-        try {
-            return editExternalLinksControl.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        return getHeader().isAdminModeOn();
     }
 
     public void pressOpenExternalLinksDialog() {
-        info("Clicking a button to open External Links Editor");
-        editExternalLinksControl.click();
+        getHeader().pressOpenExternalLinksDialog();
     }
 
     public void logOutIfLoggedIn(WebDriver driver) {
@@ -106,22 +109,17 @@ public class MainPage {
     }
 
     public void clickLogin() {
-        info("Clicking Login");
-        loginLink.click();
+        info("Clicking login");
+        getHeader().clickLogin();
     }
 
     public void clickLogout() {
         info("Clicking logout");
-        userMenuLink.click();
-        logOutButton.click();
+        getHeader().clickLogout();
     }
 
     public boolean userIsLoggedIn() {
-        try {
-            return userMenuLink.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        return getHeader().userIsLoggedIn();
     }
 
     public void clickForumsTitle() {
@@ -157,4 +155,47 @@ public class MainPage {
     public WebElement getMailCounter() {
         return mailCounter;
     }
+
+    private Header getSmallHeader() {
+        if (smallHeader == null) {
+            smallHeader = new SmallScreenHeader(driver);
+        }
+        return smallHeader;
+    }
+
+    private Header getWideHeader() {
+        if (wideHeader == null) {
+            wideHeader = new WideScreenHeader(driver);
+        }
+        return wideHeader;
+    }
+
+    public Header getHeader() {
+        if (isInSmallScreenMode()) {
+            return getSmallHeader();
+        } else {
+            return getWideHeader();
+        }
+    }
+
+    public boolean isInSmallScreenMode() {
+        info("Checking whether we're in small screen mode");
+        try {
+            boolean displayed = false;
+            //htmlunit thinks we're in small screen mode while we aren't
+            if (!"htmlunit".equalsIgnoreCase(getCapabilities().getBrowserName())) {
+                displayed = smallScreenMenuButton.isDisplayed();
+            }
+            if (displayed) {
+                info("We're in a small screen mode");
+            } else {
+                info("We're in a wide screen mode");
+            }
+            return displayed;
+        } catch (NoSuchElementException e) {
+            info("We're in a wide screen mode");
+            return false;
+        }
+    }
+
 }
