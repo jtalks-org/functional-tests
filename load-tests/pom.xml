@@ -15,7 +15,7 @@
       <plugin>
         <groupId>com.lazerycode.jmeter</groupId>
         <artifactId>jmeter-maven-plugin</artifactId>
-        <version>1.6.0</version>
+        <version>1.8.1</version>
         <executions>
           <execution>
             <id>jmeter-tests</id>
@@ -45,9 +45,9 @@
         <configuration>
           <source>${project.build.directory}/jmeter/results/*</source>
           <targetDirectory>${project.build.directory}/jmeter/reports</targetDirectory>
+          <processAllFilesFound>true</processAllFilesFound>
           <generateCSVs>true</generateCSVs>
           <generateCharts>true</generateCharts>
-          <processAllFilesFound>true</processAllFilesFound>
         </configuration>
       </plugin>
     </plugins>
