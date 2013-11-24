@@ -27,6 +27,7 @@
         </executions>
         <configuration>
           <testFilesDirectory>${project.basedir}/src/test/resources</testFilesDirectory>
+          <testResultsTimestamp>false</testResultsTimestamp><!-- http://stackoverflow.com/questions/18233024/jenkins-performance-plugin-shows-only-recent-build-data-in-the-perf-report-->
         </configuration>
       </plugin>
       <plugin>
