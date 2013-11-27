@@ -16,13 +16,18 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.TestStringUtils;
+import org.jtalks.tests.jcommune.webdriver.action.Branches;
+import org.jtalks.tests.jcommune.webdriver.action.Topics;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.Pages;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.testng.annotations.*;
 
+import static junit.framework.Assert.assertEquals;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -30,6 +35,9 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class SignInTest {
+
+    public static final String BRANCH_TITLE = "Acids and Bases";
+
     @BeforeMethod
     @Parameters("appUrl")
     public void setup(String appUrl) {
@@ -101,5 +109,14 @@ public class SignInTest {
         user.setUsername(TestStringUtils.randomString(10) + "/");
         User registeredUser = Users.signUp(user);
         Users.signIn(registeredUser);
+    }
+
+    @Test
+    public void userGoToAnyPageAndSignInViaJDialogWindow() throws Exception {
+        User user = Users.signUp();
+        Branches.openBranch(BRANCH_TITLE);
+        String urlBeforeLoginIn = driver.getCurrentUrl();
+        Users.signIn(user);
+        assertEquals(urlBeforeLoginIn, driver.getCurrentUrl());
     }
 }
