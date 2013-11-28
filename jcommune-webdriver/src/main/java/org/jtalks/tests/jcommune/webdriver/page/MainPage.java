@@ -73,6 +73,8 @@ public class MainPage {
     private WebElement forumsTitle;
     @FindBy(css = ".margin-left-small.test-pm-count")
     private WebElement mailCounter;
+    @FindBy(xpath = "//a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/users')]")
+    private WebElement lastPostAuthor;
     private volatile Header wideHeader;
     private volatile Header smallHeader;
     private WebDriver driver;
@@ -198,4 +200,7 @@ public class MainPage {
         }
     }
 
+    public WebElement getLastPostAuthor() {
+        return lastPostAuthor;
+    }
 }

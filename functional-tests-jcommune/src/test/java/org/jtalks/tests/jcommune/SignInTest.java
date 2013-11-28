@@ -16,15 +16,12 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.TestStringUtils;
-import org.jtalks.tests.jcommune.webdriver.action.Branches;
-import org.jtalks.tests.jcommune.webdriver.action.Topics;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.jtalks.tests.jcommune.webdriver.page.Pages;
-import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
+import org.jtalks.tests.jcommune.webdriver.page.*;
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
 
 import static junit.framework.Assert.assertEquals;
@@ -35,8 +32,6 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Guram Savinov
  */
 public class SignInTest {
-
-    public static final String BRANCH_TITLE = "Acids and Bases";
 
     @BeforeMethod
     @Parameters("appUrl")
@@ -111,12 +106,20 @@ public class SignInTest {
         Users.signIn(registeredUser);
     }
 
-    @Test
-    public void userGoToAnyPageAndSignInViaJDialogWindow() throws Exception {
-        User user = Users.signUp();
-        Branches.openBranch(BRANCH_TITLE);
+    @Test(enabled=false)
+    public void userGoFromAnyPageAndSignInViaJDialogWindow() throws Exception {
+        new BranchPage(driver).getBranchList().get(0).click();
         String urlBeforeLoginIn = driver.getCurrentUrl();
-        Users.signIn(user);
+        Users.signIn(new User("admin", "admin"));
+        assertEquals(urlBeforeLoginIn, driver.getCurrentUrl());
+    }
+
+    @Test(enabled=false)
+    public void userGoToPageButNeedLogIn() throws Exception {
+        WebElement lastAuthorButton = new MainPage(driver).getLastPostAuthor();
+        String urlBeforeLoginIn = lastAuthorButton.getAttribute("href");
+        lastAuthorButton.click();
+        Users.fillAndSendLoginForm(new User("admin", "admin"));
         assertEquals(urlBeforeLoginIn, driver.getCurrentUrl());
     }
 }

@@ -74,4 +74,8 @@ public class SignInPage {
     public List<WebElement> getErrorFormElements() {
         return errorFormElements;
     }
+
+    public WebElement getSubmitButtonAfterRegistration() {
+        return submitButtonAfterRegistration;
+    }
 }

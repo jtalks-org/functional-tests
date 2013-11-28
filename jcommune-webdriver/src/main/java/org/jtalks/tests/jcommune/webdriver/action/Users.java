@@ -17,6 +17,7 @@ package org.jtalks.tests.jcommune.webdriver.action;
 
 
 import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
@@ -195,5 +196,19 @@ public class Users {
         info("Clicking on activation link..");
         mainPage.getIconLinkToMainPage().click();
         info("User was activated");
+    }
+
+    /**
+     * Fill and send login form
+     *
+     * @param user
+     */
+    public static void fillAndSendLoginForm(User user) throws ValidationException {
+        info("Sign in a User: " + user);
+        checkFormValidation(signInPage.getErrorFormElements());
+        //Fill form values and submit
+        signInPage.fillUsernameField(user.getUsername());
+        signInPage.fillPasswordField(user.getPassword());
+        signInPage.getSubmitButtonAfterRegistration().click();
     }
 }
