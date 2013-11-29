@@ -22,6 +22,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.MainPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
@@ -210,5 +212,18 @@ public class Users {
         signInPage.fillUsernameField(user.getUsername());
         signInPage.fillPasswordField(user.getPassword());
         signInPage.getSubmitButtonAfterRegistration().click();
+    }
+
+    public static String redirectToLogIn() {
+        WebElement lastAuthorButton = new MainPage(driver).getLastPostAuthor();
+        String referer = lastAuthorButton.getAttribute("href");
+        info("Clicking on last author link..");
+        lastAuthorButton.click();
+        info("User is redirected to login page");
+        return referer;
+    }
+
+    public static void isRedirectedToReferer(String referer) {
+        assertEquals(referer, JCommuneSeleniumConfig.driver.getCurrentUrl());
     }
 }

@@ -1,15 +1,11 @@
 package org.jtalks.tests.jcommune.webdriver.entity.branch;
 
-import com.google.common.collect.Sets;
-import org.jtalks.tests.jcommune.webdriver.entity.user.User;
-
-import java.util.Set;
-
 /**
  * @author stanislav bashkirtsev
  * @author andrey ivanov
  */
 public class Branch {
+    private long id;
     private String title;
 
     public Branch() {
@@ -25,6 +21,15 @@ public class Branch {
 
     public Branch withTitle(String title) {
         this.title = title;
+        return this;
+    }
+
+    public long getId() {
+        return this.id;
+    }
+
+    public Branch withId(long id) {
+        this.id = id;
         return this;
     }
 }

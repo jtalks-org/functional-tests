@@ -16,6 +16,8 @@
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.utils.TestStringUtils;
+import org.jtalks.tests.jcommune.webdriver.action.Branches;
+import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
@@ -30,6 +32,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
  * @author Guram Savinov
+ * @author Andrey Ivanov
  */
 public class SignInTest {
 
@@ -106,20 +109,17 @@ public class SignInTest {
         Users.signIn(registeredUser);
     }
 
-    @Test(enabled=false)
+    @Test(enabled = false)
     public void userGoFromAnyPageAndSignInViaJDialogWindow() throws Exception {
-        new BranchPage(driver).getBranchList().get(0).click();
-        String urlBeforeLoginIn = driver.getCurrentUrl();
+        Branch branch = Branches.userIsViewingRandomBranch();
         Users.signIn(new User("admin", "admin"));
-        assertEquals(urlBeforeLoginIn, driver.getCurrentUrl());
+        Branches.assertUserBrowsersBranch(branch);
     }
 
-    @Test(enabled=false)
+    @Test(enabled = false)
     public void userGoToPageButNeedLogIn() throws Exception {
-        WebElement lastAuthorButton = new MainPage(driver).getLastPostAuthor();
-        String urlBeforeLoginIn = lastAuthorButton.getAttribute("href");
-        lastAuthorButton.click();
+        String referer = Users.redirectToLogIn();
         Users.fillAndSendLoginForm(new User("admin", "admin"));
-        assertEquals(urlBeforeLoginIn, driver.getCurrentUrl());
+        Users.isRedirectedToReferer(referer);
     }
 }
