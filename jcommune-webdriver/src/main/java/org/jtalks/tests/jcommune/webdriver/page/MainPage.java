@@ -120,6 +120,11 @@ public class MainPage {
         getHeader().clickLogout();
     }
 
+    public void openPrivateMessages() {
+        info("Clicking private messages");
+        getHeader().openPrivateMessages();
+    }
+
     public boolean userIsLoggedIn() {
         return getHeader().userIsLoggedIn();
     }

@@ -27,6 +27,12 @@ public class SmallScreenHeader extends Header {
     }
 
     @Override
+    public void openPrivateMessages() {
+        openMenu();
+        privateMessagesLink.click();
+    }
+
+    @Override
     public boolean userIsLoggedIn() {
         openMenu();
         try {

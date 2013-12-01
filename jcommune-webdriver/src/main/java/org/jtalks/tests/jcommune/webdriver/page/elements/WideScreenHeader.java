@@ -21,6 +21,12 @@ public class WideScreenHeader extends Header {
         logOutButton.click();
     }
 
+    @Override
+    public void openPrivateMessages() {
+        userMenuLink.click();
+        privateMessagesLink.click();
+    }
+
     public boolean userIsLoggedIn() {
         try {
             return userMenuLink.isDisplayed();

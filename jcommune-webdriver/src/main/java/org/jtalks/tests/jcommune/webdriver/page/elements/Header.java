@@ -21,6 +21,8 @@ public abstract class Header {
     protected WebElement loginLink;
     @FindBy(xpath = "//a[@href=\'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout\']")
     protected WebElement logOutButton;
+    @FindBy(xpath = "//a[@href=\'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/inbox\']")
+    protected WebElement privateMessagesLink;
     @FindAll({@FindBy(id = "links_editor"), @FindBy(id = "links_editor_top")})
     protected WebElement editExternalLinksControl;
     @FindBy(id = "searchText")
@@ -33,6 +35,8 @@ public abstract class Header {
     public abstract void clickLogin();
 
     public abstract void clickLogout();
+
+    public abstract void openPrivateMessages();
 
     public abstract boolean userIsLoggedIn();
 
