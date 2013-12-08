@@ -56,6 +56,7 @@
             <stringProp name="Argument.name">STORE_PATH</stringProp>
             <stringProp name="Argument.value">C:\Users\Alex\AppData\Local\Temp\</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">/tmp</stringProp>
           </elementProp>
         </collectionProp>
       </Arguments>
