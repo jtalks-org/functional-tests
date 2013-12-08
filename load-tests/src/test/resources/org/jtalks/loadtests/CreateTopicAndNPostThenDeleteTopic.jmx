@@ -130,7 +130,7 @@
         <stringProp name="filename"></stringProp>
         <stringProp name="project">DEFAULT</stringProp>
         <stringProp name="uploadToken">LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ0KTUdJQ0FRQUNFUUN1WkVYTExreFRkUGdTcjlFdWFYYU5BZ01CQUFFQ0VCaDRZWUs5SUdDbFVjM2tVRDZteDlFQw0KQ1FEUzJ6U1FUMmFBM3dJSkFOTzZmQld4OE5vVEFnaENvb0dYQlhDb1V3SUpBTHhlRXZzeVBqZWxBZ2hsQUVoTw0Kay8xQjZ3PT0NCi0tLS0tRU5EIFJTQSBQUklW</stringProp>
-        <stringProp name="storeDir">${STORE-PATH}</stringProp>
+        <stringProp name="storeDir">${STORE_PATH}</stringProp>
         <stringProp name="color">none</stringProp>
         <stringProp name="title">${TEST_NAME} ${__time(HH:mm:ss dd-MM-yyyy)}</stringProp>
         <boolProp name="useOnline">true</boolProp>
@@ -354,7 +354,7 @@ setRandomBranch();
             <stringProp name="RegexExtractor.refname">TOPIC_ID</stringProp>
             <stringProp name="RegexExtractor.regex">(topics/)([0-9]+)</stringProp>
             <stringProp name="RegexExtractor.template">$2$</stringProp>
-            <stringProp name="RegexExtractor.default">TOPICID_NOTFOUND</stringProp>
+            <stringProp name="RegexExtractor.default">1</stringProp>
             <stringProp name="RegexExtractor.match_number">1</stringProp>
           </RegexExtractor>
           <hashTree/>

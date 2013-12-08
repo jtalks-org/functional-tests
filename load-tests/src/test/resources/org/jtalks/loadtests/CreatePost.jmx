@@ -54,7 +54,7 @@
           </elementProp>
           <elementProp name="STORE_PATH" elementType="Argument">
             <stringProp name="Argument.name">STORE_PATH</stringProp>
-            <stringProp name="Argument.value">.</stringProp>
+            <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -75,12 +75,50 @@
         <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
       </ConfigTestElement>
       <hashTree/>
+      <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="jp@gc - Loadosophia.org Uploader" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>false</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="project">DEFAULT</stringProp>
+        <stringProp name="uploadToken">LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ0KTUdJQ0FRQUNFUUN1WkVYTExreFRkUGdTcjlFdWFYYU5BZ01CQUFFQ0VCaDRZWUs5SUdDbFVjM2tVRDZteDlFQw0KQ1FEUzJ6U1FUMmFBM3dJSkFOTzZmQld4OE5vVEFnaENvb0dYQlhDb1V3SUpBTHhlRXZzeVBqZWxBZ2hsQUVoTw0Kay8xQjZ3PT0NCi0tLS0tRU5EIFJTQSBQUklW</stringProp>
+        <stringProp name="storeDir">${STORE_PATH}</stringProp>
+        <stringProp name="color">none</stringProp>
+        <stringProp name="title">${TEST_NAME} ${__time(HH:mm:ss dd-MM-yyyy)}</stringProp>
+        <boolProp name="useOnline">true</boolProp>
+      </kg.apc.jmeter.reporters.LoadosophiaUploader>
+      <hashTree/>
       <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - CreatePostUsers" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <stringProp name="ThreadGroup.num_threads">10</stringProp>
         <stringProp name="Threads initial delay">0</stringProp>
         <stringProp name="Start users count">1</stringProp>
-        <stringProp name="Start users count burst">0</stringProp>
+        <stringProp name="Start users count burst">1</stringProp>
         <stringProp name="Start users period">10</stringProp>
         <stringProp name="Stop users count">5</stringProp>
         <stringProp name="Stop users period">1</stringProp>
@@ -280,7 +318,7 @@ setRandomBranch();
             <stringProp name="RegexExtractor.refname">TOPIC_ID</stringProp>
             <stringProp name="RegexExtractor.regex">(topics/)([0-9]+)</stringProp>
             <stringProp name="RegexExtractor.template">$2$</stringProp>
-            <stringProp name="RegexExtractor.default">TOPICID_NOTFOUND</stringProp>
+            <stringProp name="RegexExtractor.default">1</stringProp>
             <stringProp name="RegexExtractor.match_number">0</stringProp>
           </RegexExtractor>
           <hashTree/>
@@ -321,7 +359,7 @@ setRandomBranch();
         </HTTPSamplerProxy>
         <hashTree/>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="false">
-          <boolProp name="ResultCollector.error_logging">true</boolProp>
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
             <value class="SampleSaveConfiguration">
@@ -351,44 +389,6 @@ setRandomBranch();
           </objProp>
           <stringProp name="filename"></stringProp>
         </ResultCollector>
-        <hashTree/>
-        <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="jp@gc - Loadosophia.org Uploader" enabled="true">
-          <boolProp name="ResultCollector.error_logging">false</boolProp>
-          <objProp>
-            <name>saveConfig</name>
-            <value class="SampleSaveConfiguration">
-              <time>true</time>
-              <latency>true</latency>
-              <timestamp>true</timestamp>
-              <success>true</success>
-              <label>true</label>
-              <code>true</code>
-              <message>true</message>
-              <threadName>true</threadName>
-              <dataType>true</dataType>
-              <encoding>false</encoding>
-              <assertions>true</assertions>
-              <subresults>true</subresults>
-              <responseData>false</responseData>
-              <samplerData>false</samplerData>
-              <xml>false</xml>
-              <fieldNames>false</fieldNames>
-              <responseHeaders>false</responseHeaders>
-              <requestHeaders>false</requestHeaders>
-              <responseDataOnError>false</responseDataOnError>
-              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
-              <assertionsResultsToSave>0</assertionsResultsToSave>
-              <bytes>true</bytes>
-            </value>
-          </objProp>
-          <stringProp name="filename"></stringProp>
-          <stringProp name="project">DEFAULT</stringProp>
-          <stringProp name="uploadToken">LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ0KTUdJQ0FRQUNFUUN1WkVYTExreFRkUGdTcjlFdWFYYU5BZ01CQUFFQ0VCaDRZWUs5SUdDbFVjM2tVRDZteDlFQw0KQ1FEUzJ6U1FUMmFBM3dJSkFOTzZmQld4OE5vVEFnaENvb0dYQlhDb1V3SUpBTHhlRXZzeVBqZWxBZ2hsQUVoTw0Kay8xQjZ3PT0NCi0tLS0tRU5EIFJTQSBQUklW</stringProp>
-          <stringProp name="storeDir">${STORE_PATH} </stringProp>
-          <stringProp name="color">none</stringProp>
-          <stringProp name="title">${TEST_NAME} ${__time(HH:mm:ss dd-MM-yyyy)}</stringProp>
-          <boolProp name="useOnline">true</boolProp>
-        </kg.apc.jmeter.reporters.LoadosophiaUploader>
         <hashTree/>
         <ResultCollector guiclass="GraphVisualizer" testclass="ResultCollector" testname="Graph Results" enabled="false">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
