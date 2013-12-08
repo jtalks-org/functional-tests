@@ -65,7 +65,12 @@
           </elementProp>
           <elementProp name="STORE_PATH" elementType="Argument">
             <stringProp name="Argument.name">STORE_PATH</stringProp>
-            <stringProp name="Argument.value"></stringProp>
+            <stringProp name="Argument.value">.</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="TEST_NAME" elementType="Argument">
+            <stringProp name="Argument.name">TEST_NAME</stringProp>
+            <stringProp name="Argument.value">CreateTopic</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -86,19 +91,8 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="TestPlan.comments">30 3600</stringProp>
       </kg.apc.jmeter.threads.SteppingThreadGroup>
       <hashTree>
-        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
-          <collectionProp name="Arguments.arguments">
-            <elementProp name="TEST_NAME" elementType="Argument">
-              <stringProp name="Argument.name">TEST_NAME</stringProp>
-              <stringProp name="Argument.value">CreateTopic</stringProp>
-              <stringProp name="Argument.metadata">=</stringProp>
-            </elementProp>
-          </collectionProp>
-        </Arguments>
-        <hashTree/>
         <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
         <hashTree>
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="OpenForum" enabled="true">
