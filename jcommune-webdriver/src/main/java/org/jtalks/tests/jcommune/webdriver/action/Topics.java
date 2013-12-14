@@ -130,7 +130,6 @@ public class Topics {
     }
 
     private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
-        postPage.getNewButton().click();
         topicPage.getMainBodyArea().sendKeys(answer);
         clickAnswerToTopicButton(topic);
     }

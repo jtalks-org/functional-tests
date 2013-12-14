@@ -13,8 +13,6 @@ import java.util.List;
  */
 public class PostPage {
 
-    public static final String newButtonSel = "//a[contains(@class,'new-topic-btn')][1]";
-
     public static final String messageFieldSel = "tbMsg";
 
     public static final String postButtonSel = "post";
@@ -63,9 +61,6 @@ public class PostPage {
 
     @FindBy(xpath = lastPostAuthorSel)
     private WebElement lastPostAuthor;
-
-    @FindBy(xpath = newButtonSel)
-    private WebElement newButton;
 
     @FindBy(id = messageFieldSel)
     private WebElement messageField;
@@ -144,10 +139,6 @@ public class PostPage {
 
     public WebElement getLastPostAuthor() {
         return lastPostAuthor;
-    }
-
-    public WebElement getNewButton() {
-        return newButton;
     }
 
     public WebElement getMessageField() {
