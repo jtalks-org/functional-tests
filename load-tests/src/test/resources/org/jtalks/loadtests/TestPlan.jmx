@@ -146,7 +146,7 @@
         <stringProp name="filename">${FILENAME}</stringProp>
       </ResultCollector>
       <hashTree/>
-      <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="jp@gc - Loadosophia.org Uploader" enabled="true">
+      <kg.apc.jmeter.reporters.LoadosophiaUploader guiclass="kg.apc.jmeter.reporters.LoadosophiaUploaderGui" testclass="kg.apc.jmeter.reporters.LoadosophiaUploader" testname="jp@gc - Loadosophia.org Uploader" enabled="false">
         <boolProp name="ResultCollector.error_logging">false</boolProp>
         <objProp>
           <name>saveConfig</name>
@@ -177,7 +177,7 @@
         </objProp>
         <stringProp name="filename"></stringProp>
         <stringProp name="project">DEFAULT</stringProp>
-        <stringProp name="uploadToken">LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQ0KTUdJQ0FRQUNFUUN1WkVYTExreFRkUGdTcjlFdWFYYU5BZ01CQUFFQ0VCaDRZWUs5SUdDbFVjM2tVRDZteDlFQw0KQ1FEUzJ6U1FUMmFBM3dJSkFOTzZmQld4OE5vVEFnaENvb0dYQlhDb1V3SUpBTHhlRXZzeVBqZWxBZ2hsQUVoTw0Kay8xQjZ3PT0NCi0tLS0tRU5EIFJTQSBQUklW</stringProp>
+        <stringProp name="uploadToken"></stringProp>
         <stringProp name="storeDir">${STORE_PATH}</stringProp>
         <stringProp name="color">none</stringProp>
         <stringProp name="title">${TEST_NAME} ${__time(HH:mm:ss dd-MM-yyyy)}</stringProp>
