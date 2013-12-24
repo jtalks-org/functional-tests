@@ -61,8 +61,8 @@
           </elementProp>
           <elementProp name="DURATION" elementType="Argument">
             <stringProp name="Argument.name">DURATION</stringProp>
-            <stringProp name="Argument.value">1800</stringProp>
-            <stringProp name="Argument.desc">duration in seconds for base line case</stringProp>
+            <stringProp name="Argument.value">3000</stringProp>
+            <stringProp name="Argument.desc">test plan duration in seconds</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="FILENAME" elementType="Argument">
@@ -87,7 +87,13 @@
           </elementProp>
           <elementProp name="ANONYMOUS_USER_NUMBER" elementType="Argument">
             <stringProp name="Argument.name">ANONYMOUS_USER_NUMBER</stringProp>
-            <stringProp name="Argument.value">30</stringProp>
+            <stringProp name="Argument.value">50</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="INITIAL_TIMEOUT" elementType="Argument">
+            <stringProp name="Argument.name">INITIAL_TIMEOUT</stringProp>
+            <stringProp name="Argument.value">1200</stringProp>
+            <stringProp name="Argument.desc">Timeout before test start</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -108,9 +114,9 @@
         <stringProp name="HTTPSampler.concurrentPool">4</stringProp>
       </ConfigTestElement>
       <hashTree/>
-      <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="Gaussian Random Timer 10 000/300" enabled="true">
+      <GaussianRandomTimer guiclass="GaussianRandomTimerGui" testclass="GaussianRandomTimer" testname="Gaussian Random Timer 5000/300" enabled="true">
         <stringProp name="ConstantTimer.delay">300</stringProp>
-        <stringProp name="RandomTimer.range">10000.0</stringProp>
+        <stringProp name="RandomTimer.range">5000.0</stringProp>
       </GaussianRandomTimer>
       <hashTree/>
       <ResultCollector guiclass="SimpleDataWriter" testclass="ResultCollector" testname="Simple Data Writer" enabled="false">
@@ -213,7 +219,7 @@
       <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - AnonymousUsers" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <stringProp name="ThreadGroup.num_threads">${ANONYMOUS_USER_NUMBER}</stringProp>
-        <stringProp name="Threads initial delay">0</stringProp>
+        <stringProp name="Threads initial delay">${INITIAL_TIMEOUT}</stringProp>
         <stringProp name="Start users count">5</stringProp>
         <stringProp name="Start users count burst">5</stringProp>
         <stringProp name="Start users period">7</stringProp>
@@ -391,7 +397,7 @@ setRandomBranch();
       <kg.apc.jmeter.threads.SteppingThreadGroup guiclass="kg.apc.jmeter.threads.SteppingThreadGroupGui" testclass="kg.apc.jmeter.threads.SteppingThreadGroup" testname="jp@gc - RegisteredUsers" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <stringProp name="ThreadGroup.num_threads">${USER_NUMBER}</stringProp>
-        <stringProp name="Threads initial delay">0</stringProp>
+        <stringProp name="Threads initial delay">${INITIAL_TIMEOUT}</stringProp>
         <stringProp name="Start users count">1</stringProp>
         <stringProp name="Start users count burst">0</stringProp>
         <stringProp name="Start users period">10</stringProp>
