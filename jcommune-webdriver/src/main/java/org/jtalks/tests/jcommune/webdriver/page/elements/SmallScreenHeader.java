@@ -36,8 +36,10 @@ public class SmallScreenHeader extends Header {
     public boolean userIsLoggedIn() {
         openMenu();
         try {
+            info("Check whether user menu link is shown.");
             return userMenuLink.isDisplayed();
         } catch (NoSuchElementException e) {
+            info("User menu link is not shown, the user is not logged in");
             return false;
         }
     }
@@ -60,12 +62,15 @@ public class SmallScreenHeader extends Header {
     }
 
     private void openMenu() {
+        info("Opening top menu on small screen...");
         if (isMenuHidden()) {
+            info("Clicking on the menu button to open it");
             smallScreenMenuButton.click();
         }
     }
 
     private boolean isMenuHidden() {
+        info("Checking whether search input is shown. If not - the menu is already opened.");
         //using search input because menu button itself doesn't have correct class 'collapsed' on the initial page load
         return !searchInput.isDisplayed();
     }
