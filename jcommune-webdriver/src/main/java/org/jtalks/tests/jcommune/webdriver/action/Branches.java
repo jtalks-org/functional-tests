@@ -5,12 +5,9 @@ import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -18,19 +15,15 @@ import static org.testng.Assert.assertTrue;
  * @author andrey ivanov
  */
 public class Branches {
-    private final static Logger LOGGER = LoggerFactory.getLogger(Branches.class);
-
     public static void openBranch(String branchTitle) throws CouldNotOpenPageException {
-        boolean found = false;
-        for (WebElement branch : branchPage.getBranchList()) {
-            if (branch.getText().equals(branchTitle)) {
-                branch.click();
-                found = true;
-                break;
-            }
-        }
-        if (!found) {
-            LOGGER.info("No branch found with name [{}]", branchTitle);
+        info("Opening branch: [" + branchTitle + "] to open");
+        WebElement branch = branchPage.findBranch(branchTitle);
+        if (branch != null) {
+            info("The branch was found, clicking on it..");
+            branch.click();
+        } else {
+            info(String.format("No branch found with name [%s]", branchTitle));
+            info(String.format("There were these branches available: %s", Branch.fromForm(branchPage.getBranches())));
             throw new CouldNotOpenPageException(branchTitle);
         }
     }
@@ -40,12 +33,13 @@ public class Branches {
     }
 
     public static void subscribe(Branch branch, User user) {
-        throw new UnsupportedOperationException();
+        throw new UnsupportedOperationException("To be implemented");
     }
 
     public static Branch userIsViewingRandomBranch() {
-        branchPage.getBranchList().get(0).click();
-        return new Branch().withId(1);
+        WebElement randomBranch = branchPage.getBranches().get(0);
+        randomBranch.click();
+        return Branch.fromForm(randomBranch);
     }
 
     public static void assertUserBrowsersBranch(Branch branch) {

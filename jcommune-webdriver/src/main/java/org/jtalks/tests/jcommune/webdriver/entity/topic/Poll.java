@@ -15,6 +15,7 @@
 
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -23,7 +24,7 @@ import java.util.Date;
  * @author Guram Savinov
  */
 public class Poll {
-
+    private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
     private String title;
     private String[] options;
     private Date endDate;
@@ -50,6 +51,13 @@ public class Poll {
         this.endDate = endDate;
     }
 
+    public String getEndDateAsString() {
+        if (endDate != null) {
+            return new SimpleDateFormat(POLL_END_DATE_FORMAT).format(endDate);
+        }
+        return null;
+    }
+
     public boolean isMultipleAnswers() {
         return multipleAnswers;
     }
@@ -57,4 +65,5 @@ public class Poll {
     public void setMultipleAnswers(boolean multipleAnswers) {
         this.multipleAnswers = multipleAnswers;
     }
+
 }

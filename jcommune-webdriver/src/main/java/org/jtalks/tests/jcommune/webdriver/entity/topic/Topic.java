@@ -17,8 +17,8 @@ public class Topic {
     private DateTime modificationDate;
     private User topicStarter;
     private String title = TestStringUtils.randomString(30);
-    private Boolean sticked;
-    private Boolean announcement;
+    private boolean sticked = false;
+    private boolean announcement = false;
     private Boolean closed;
     private int views;
     private Poll poll;
@@ -69,19 +69,19 @@ public class Topic {
         this.title = title;
     }
 
-    public Boolean getSticked() {
+    public boolean isSticked() {
         return sticked;
     }
 
-    public void setSticked(Boolean sticked) {
+    public void setSticked(boolean sticked) {
         this.sticked = sticked;
     }
 
-    public Boolean getAnnouncement() {
+    public boolean isAnnouncement() {
         return announcement;
     }
 
-    public void setAnnouncement(Boolean announcement) {
+    public void setAnnouncement(boolean announcement) {
         this.announcement = announcement;
     }
 
@@ -153,5 +153,10 @@ public class Topic {
 
     public void setHasNewMessages(boolean hasNewMessages) {
         this.hasNewMessages = hasNewMessages;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Topic: title=[%s]", this.title);
     }
 }
