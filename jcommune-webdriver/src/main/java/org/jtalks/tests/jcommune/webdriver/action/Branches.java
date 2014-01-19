@@ -16,7 +16,7 @@ import static org.testng.Assert.assertTrue;
  */
 public class Branches {
     public static void openBranch(String branchTitle) throws CouldNotOpenPageException {
-        info("Opening branch: [" + branchTitle + "] to open");
+        info("Opening branch: [" + branchTitle + "]");
         WebElement branch = branchPage.findBranch(branchTitle);
         if (branch != null) {
             info("The branch was found, clicking on it..");

@@ -23,7 +23,6 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,7 +61,7 @@ public class Topics {
         topicPage.clickCreateTopic();
         topicPage.fillTopicMainFields(topic);
         topicPage.fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
+        topicPage.clickAnswerToTopicButton();
         topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
         assertFormValid();
         return topic;
@@ -110,7 +109,7 @@ public class Topics {
         // topic - we are on the topic page already!
 //        Branches.openBranch(branchTitle);
 //        if (openTopicInCurrentBranch(100, topic.getTitle())) {
-        answerToTopic(topic, topic.getLastPost().getPostContent());
+        answerToTopic(topic.getLastPost().getPostContent());
         LOGGER.info("postAnswerToTopic {}", topic.getTitle());
 //        }
     }
@@ -128,9 +127,9 @@ public class Topics {
         return found;
     }
 
-    private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
+    private static void answerToTopic(String answer) throws PermissionsDeniedException {
         topicPage.getMainBodyArea().sendKeys(answer);
-        clickAnswerToTopicButton(topic);
+        topicPage.clickAnswerToTopicButton();
     }
 
     /**
@@ -178,31 +177,8 @@ public class Topics {
         return false;
     }
 
-    private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
-        try {
-            topicPage.getPostButton().click();
-        } catch (NoSuchElementException e) {
-            throw new PermissionsDeniedException("User does not have permissions to leave posts in branch "
-                    + topic.getBranch().getTitle());
-        }
-    }
-
     private static void gotoMainPage() {
         mainPage.clickForumsTitle();
-    }
-
-    /**
-     * Returns date in string type.
-     *
-     * @param date   the date.
-     * @param format the format of date in string.
-     * @return the date in the string.
-     */
-    private static String dateToString(Date date, String format) {
-        if (date != null) {
-            return new SimpleDateFormat(format).format(date);
-        }
-        return null;
     }
 
     public static boolean isCreated(Topic topic) {
