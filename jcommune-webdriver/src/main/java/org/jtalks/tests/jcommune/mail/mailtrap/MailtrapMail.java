@@ -79,7 +79,9 @@ public class MailtrapMail {
                         }
                     });
         } catch (Exception e) {
-            info("Failed to get the activation link from mail");
+            info(String.format(
+                    "Failed to get the activation link from mailtrap for user [%s]. See [%s] for the list of messages",
+                    recipient, MailtrapClient.mailtrapMessagesUri()));
             statistics.printStatistics(this);
             if (e.getClass().equals(CouldNotGetMessageException.class)) {
                 throw (CouldNotGetMessageException) e;
