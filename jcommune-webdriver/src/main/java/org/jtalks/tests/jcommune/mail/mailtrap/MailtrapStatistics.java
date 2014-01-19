@@ -12,13 +12,14 @@ import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
  * We'll decide whether to write our own implementation if the performance will not satisfy us.
  */
 public class MailtrapStatistics {
+    private final static MailtrapStatistics INSTANCE = new MailtrapStatistics();
     private final Map<Object, AtomicInteger> numberOfTrials = new ConcurrentHashMap<>();
 
     private MailtrapStatistics() {
     }
 
     public static MailtrapStatistics instance() {
-        return new MailtrapStatistics();
+        return INSTANCE;
     }
 
     public void tryToGetMail(MailtrapMail callable) {
