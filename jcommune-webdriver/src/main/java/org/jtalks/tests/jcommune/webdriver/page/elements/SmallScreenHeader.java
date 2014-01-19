@@ -1,9 +1,14 @@
 package org.jtalks.tests.jcommune.webdriver.page.elements;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 
@@ -35,6 +40,8 @@ public class SmallScreenHeader extends Header {
     @Override
     public boolean userIsLoggedIn() {
         openMenu();
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(By.className("btn-navbar")));
         try {
             info("Check whether user menu link is shown.");
             return userMenuLink.isDisplayed();
