@@ -7,15 +7,26 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
+
 public class BranchPage {
     @FindBy(className = "branch-title")
     private List<WebElement> branchList;
 
     public BranchPage(WebDriver driver) {
-		PageFactory.initElements(driver, this);
-	}
+        PageFactory.initElements(driver, this);
+    }
 
-	public List<WebElement> getBranchList() {
-		return branchList;
-	}
+    public WebElement findBranch(String branchTitle) {
+        for (WebElement branch : branchPage.getBranches()) {
+            if (branch.getText().equals(branchTitle)) {
+                return branch;
+            }
+        }
+        return null;
+    }
+
+    public List<WebElement> getBranches() {
+        return branchList;
+    }
 }

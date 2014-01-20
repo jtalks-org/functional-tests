@@ -17,14 +17,12 @@ package org.jtalks.tests.jcommune.webdriver.action;
 
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
 
@@ -42,7 +41,6 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
  */
 public class Topics {
     private static final Logger LOGGER = LoggerFactory.getLogger(Topics.class);
-    private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
 
     /**
      * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
@@ -55,15 +53,15 @@ public class Topics {
     public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
         gotoMainPage();
         if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
+            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
             topic.withBranch(branch);
         }
-
+        info("Creating " + topic + " in " + topic.getBranch());
         Branches.openBranch(topic.getBranch().getTitle());
-        clickCreateTopic();
-        fillTopicFields(topic);
-        fillPollSpecificFields(topic.getPoll());
-        clickAnswerToTopicButton(topic);
+        topicPage.clickCreateTopic();
+        topicPage.fillTopicMainFields(topic);
+        topicPage.fillPollSpecificFields(topic.getPoll());
+        topicPage.clickAnswerToTopicButton();
         topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
         assertFormValid();
         return topic;
@@ -90,7 +88,7 @@ public class Topics {
 
     public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranchList().get(0).getText());
+            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
             topic.withBranch(branch);
         }
         Branches.openBranch(topic.getBranch().getTitle());
@@ -111,7 +109,7 @@ public class Topics {
         // topic - we are on the topic page already!
 //        Branches.openBranch(branchTitle);
 //        if (openTopicInCurrentBranch(100, topic.getTitle())) {
-        answerToTopic(topic, topic.getLastPost().getPostContent());
+        answerToTopic(topic.getLastPost().getPostContent());
         LOGGER.info("postAnswerToTopic {}", topic.getTitle());
 //        }
     }
@@ -129,9 +127,9 @@ public class Topics {
         return found;
     }
 
-    private static void answerToTopic(Topic topic, String answer) throws PermissionsDeniedException {
+    private static void answerToTopic(String answer) throws PermissionsDeniedException {
         topicPage.getMainBodyArea().sendKeys(answer);
-        clickAnswerToTopicButton(topic);
+        topicPage.clickAnswerToTopicButton();
     }
 
     /**
@@ -179,90 +177,8 @@ public class Topics {
         return false;
     }
 
-    /**
-     * Sets state for checkbox element
-     *
-     * @param checkboxElement the checkbox web element
-     * @param state           the state: true - checked, false - unchecked, null - the element is not used
-     */
-
-    private static void setCheckboxState(WebElement checkboxElement, Boolean state) {
-        if (state == null) {
-            return;
-        }
-        if (state && !checkboxElement.isSelected()) {
-            checkboxElement.click();
-        } else if (!state && checkboxElement.isSelected()) {
-            checkboxElement.click();
-        }
-    }
-
-    /**
-     * Sets the end date in the poll.
-     *
-     * @param poll the poll.
-     */
-    private static void setPollsEndDate(Poll poll) {
-        String date;
-        if ((date = dateToString(poll.getEndDate(), POLL_END_DATE_FORMAT)) != null) {
-            topicPage.getTopicsPollEndDateField().sendKeys(date);
-        }
-
-    }
-
-    private static void clickAnswerToTopicButton(Topic topic) throws PermissionsDeniedException {
-        try {
-            topicPage.getPostButton().click();
-        } catch (NoSuchElementException e) {
-            throw new PermissionsDeniedException("User does not have permissions to leave posts in branch "
-                    + topic.getBranch().getTitle());
-        }
-    }
-
-    private static void fillPollSpecificFields(Poll poll) {
-        if (poll != null) {
-            topicPage.getTopicPollTitleField().sendKeys(poll.getTitle());
-            WebElement optionsField = topicPage.getTopicPollItemsField();
-            for (String option : poll.getOptions()) {
-                optionsField.sendKeys(option + "\n");
-            }
-            setPollsEndDate(poll);
-            setCheckboxState(topicPage.getTopicsPollMultipleChecker(), poll.isMultipleAnswers());
-        }
-    }
-
-    private static void fillTopicFields(Topic topic) {
-        setCheckboxState(topicPage.getTopicSticked(), topic.getSticked());
-        setCheckboxState(topicPage.getTopicAnnouncement(), topic.getAnnouncement());
-        //topicPage.getSubjectField().sendKeys(!topic.getTitle().equals("") ? topic.getTitle() : randomString(15));
-        topicPage.getSubjectField().sendKeys(topic.getTitle());
-        topicPage.getMainBodyArea().sendKeys(topic.getFirstPost().getPostContent());
-    }
-
-    private static void clickCreateTopic() throws PermissionsDeniedException {
-        try {
-            topicPage.getNewButton().click();
-        } catch (NoSuchElementException e) {
-            throw new PermissionsDeniedException();
-        }
-    }
-
     private static void gotoMainPage() {
         mainPage.clickForumsTitle();
-    }
-
-    /**
-     * Returns date in string type.
-     *
-     * @param date   the date.
-     * @param format the format of date in string.
-     * @return the date in the string.
-     */
-    private static String dateToString(Date date, String format) {
-        if (date != null) {
-            return new SimpleDateFormat(format).format(date);
-        }
-        return null;
     }
 
     public static boolean isCreated(Topic topic) {

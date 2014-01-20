@@ -22,4 +22,18 @@ public class DriverMethodHelp {
                 return element.getText();
         }
     }
+
+    /**
+     * Sets state for checkbox element
+     *
+     * @param checkboxElement the checkbox web element
+     * @param state           the state: true - checked, false - unchecked, null - the element is not used
+     */
+    public static void setCheckboxState(WebElement checkboxElement, boolean state) {
+        if (state && !checkboxElement.isSelected()) {
+            checkboxElement.click();
+        } else if (!state && checkboxElement.isSelected()) {
+            checkboxElement.click();
+        }
+    }
 }

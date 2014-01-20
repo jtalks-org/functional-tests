@@ -141,4 +141,18 @@ public class ExternalLinksTest {
         ExternalLinks.removeExternalLink(link);
         ExternalLinks.assertLinkIsNotVisible(link);
     }
+
+    @Test (enabled = false)
+    public void linkWithXssShouldPassValidation() {
+        ExternalLink externalLink = new ExternalLink();
+        String xssInLink = "<script>alert(\"Hi\")</script>";
+        externalLink.withHint(xssInLink);
+        externalLink.withHref(xssInLink);
+        externalLink.withTitle(xssInLink);
+
+        ExternalLinks.createExternalLink(externalLink);
+        ExternalLinks.assertLinkVisible(externalLink);
+
+        ExternalLinks.removeExternalLink(externalLink);
+    }
 }
