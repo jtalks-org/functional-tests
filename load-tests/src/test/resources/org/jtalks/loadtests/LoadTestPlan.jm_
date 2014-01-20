@@ -20,7 +20,7 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="AUTO_TEST_SERVER" elementType="Argument">
             <stringProp name="Argument.name">AUTO_TEST_SERVER</stringProp>
-            <stringProp name="Argument.value">autotests.jtalks.org</stringProp>
+            <stringProp name="Argument.value">localhost</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">autotests.jtalks.org</stringProp>
           </elementProp>
@@ -61,8 +61,8 @@
           </elementProp>
           <elementProp name="DURATION" elementType="Argument">
             <stringProp name="Argument.name">DURATION</stringProp>
-            <stringProp name="Argument.value">3000</stringProp>
-            <stringProp name="Argument.desc">test plan duration in seconds</stringProp>
+            <stringProp name="Argument.value">1000</stringProp>
+            <stringProp name="Argument.desc">test plan duration in seconds 3000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="FILENAME" elementType="Argument">
@@ -104,7 +104,7 @@
           <collectionProp name="Arguments.arguments"/>
         </elementProp>
         <stringProp name="HTTPSampler.domain">${AUTO_TEST_SERVER}</stringProp>
-        <stringProp name="HTTPSampler.port"></stringProp>
+        <stringProp name="HTTPSampler.port">8080</stringProp>
         <stringProp name="HTTPSampler.connect_timeout"></stringProp>
         <stringProp name="HTTPSampler.response_timeout"></stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
