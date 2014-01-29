@@ -7,7 +7,10 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.utils.TestStringUtils.randomUrl;
@@ -31,13 +34,8 @@ public class ExternalLinksTest {
             Users.signIn(User.admin());
         } catch (ValidationException e) {
             logger.error("Can't login by user [{}]", User.admin().getUsername());
+            throw new IllegalStateException("Can't login by user " + User.admin().getUsername());
         }
-    }
-
-    @BeforeMethod
-    @Parameters({"appUrl"})
-    public void setupCase(String appUrl) {
-        driver.get(appUrl);
     }
 
     @AfterMethod
@@ -128,7 +126,7 @@ public class ExternalLinksTest {
         ExternalLinks.removeExternalLink(link);
     }
 
-    @Test (enabled = false)
+    @Test(enabled = false)
     public void editTitleWithValidData_ShouldPass() {
         ExternalLink link = new ExternalLink();
         ExternalLinks.createExternalLink(link);
@@ -142,7 +140,7 @@ public class ExternalLinksTest {
         ExternalLinks.assertLinkIsNotVisible(link);
     }
 
-    @Test (enabled = false)
+    @Test(enabled = false)
     public void linkWithXssShouldPassValidation() {
         ExternalLink externalLink = new ExternalLink();
         String xssInLink = "<script>alert(\"Hi\")</script>";

@@ -72,7 +72,7 @@ public class Users {
         User user;
         try {
             user = Users.signUp();
-            Users.signIn(user);
+            Users.activate(user);
         } catch (ValidationException e) {
             throw new IllegalStateException("Can't sign up new user.", e);
         }

@@ -11,8 +11,6 @@ import org.testng.annotations.Test;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
 /**
  * @author Andrei Alikov
@@ -30,14 +28,14 @@ public class LastReadPostTest {
     public void createdTopicShouldBeShowedAsNotReadToAnotherUser() throws Exception {
         Users.signUpAndSignIn();
         Topic newTopic = Topics.createTopic(new Topic());
-        mainPage.clickLogout();
+        Users.logout();
 
         User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
 
         Topics.assertHasNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
-    @Test (enabled = false)
+    @Test(enabled = false)
     public void topicWithAddedPostShouldBeShowedAsNotReadToAnotherUser() throws Exception {
         User userTopicAuthor = Users.signUpAndSignIn();
         Topic newTopic = new Topic();
@@ -60,11 +58,11 @@ public class LastReadPostTest {
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
 
-        Topics.assertHasNotNewMessages(newTopic, userThatWantsToSeeNewMessages);
+        Topics.assertHasNoNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
-    @Test (enabled = false)
-    public void givenTopicContainsUnreadPost_afterThatPostIsRemoved_topicBecomesRead() throws Exception{
+    @Test(enabled = false)
+    public void givenTopicContainsUnreadPost_afterThatPostIsRemoved_topicBecomesRead() throws Exception {
         Users.signUpAndSignIn();
         Topic newTopic = Topics.createTopic(new Topic());
         Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
@@ -72,7 +70,7 @@ public class LastReadPostTest {
 
         User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
 
-        Topics.assertHasNotNewMessages(newTopic, userThatWantsToSeeNewMessages);
+        Topics.assertHasNoNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
     @Test
@@ -85,7 +83,7 @@ public class LastReadPostTest {
         Branches.openBranch(newTopic.getBranch().getTitle());
         Branches.clickMarkAllAsRead();
 
-        Topics.assertHasNotNewMessages(newTopic, userThatWantsToSeeNewMessages);
+        Topics.assertHasNoNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 
     @Test
@@ -98,7 +96,7 @@ public class LastReadPostTest {
         Branches.clickMarkAllAsRead();
 
         //null should be changed to anonymous user representation
-        Topics.assertHasNotNewMessages(newTopic, null);
+        Topics.assertHasNoNewMessages(newTopic, null);
     }
 
     @Test

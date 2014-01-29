@@ -27,9 +27,6 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
@@ -206,6 +203,6 @@ public class Topics {
     public static void assertHasNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
     }
 
-    public static void assertHasNotNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+    public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
     }
 }
