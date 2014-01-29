@@ -23,7 +23,6 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.*;
-import org.openqa.selenium.WebElement;
 import org.testng.annotations.*;
 
 import static junit.framework.Assert.assertEquals;
@@ -45,7 +44,7 @@ public class SignInTest {
 
     @Test(expectedExceptions = ValidationException.class)
     public void signInWithoutActivationRegistrationShouldFailLogin_JC_564() throws Exception {
-        User user = Users.signUpWithoutActivation();
+        User user = Users.signUp();
         Users.signIn(user);
     }
 
