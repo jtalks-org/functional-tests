@@ -42,7 +42,7 @@ public class Branches {
         return Branch.fromForm(randomBranch);
     }
 
-    public static void assertUserBrowsersBranch(Branch branch) {
+    public static void assertUserBrowsesBranch(Branch branch) {
         assertTrue(JCommuneSeleniumConfig.driver.getCurrentUrl().endsWith("/branches/" + branch.getId()));
     }
 }

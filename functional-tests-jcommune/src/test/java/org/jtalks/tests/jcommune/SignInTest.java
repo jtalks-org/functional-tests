@@ -15,17 +15,18 @@
 
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.jtalks.tests.jcommune.webdriver.action.Branches;
+import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
-import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.jtalks.tests.jcommune.webdriver.page.*;
-import org.testng.annotations.*;
+import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
-import static junit.framework.Assert.assertEquals;
+import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -51,13 +52,15 @@ public class SignInTest {
     @Test
     public void usernameAndPasswordCorrectShouldLogin_JC_20() throws Exception {
         User user = Users.signUp();
+        Users.activate(user);
+        Users.logout();
         Users.signIn(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameEmptyShouldFailLogin_JC_21() throws Exception {
-        String password = TestStringUtils.randomString(9);
+        String password = randomAlphanumeric(9);
         Users.signIn(new User("", password));
     }
 
@@ -65,7 +68,9 @@ public class SignInTest {
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameNotExistShouldFailLogin_JC_21() throws Exception {
         User user = Users.signUp();
-        user.setUsername(TestStringUtils.randomString(8));
+        Users.activate(user);
+        Users.logout();
+        user.setUsername(randomAlphanumeric(15));
         Users.signIn(user);
     }
 
@@ -73,6 +78,8 @@ public class SignInTest {
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void passwordIncorrectShouldFailLogIn_JC_22() throws Exception {
         User user = Users.signUp();
+        Users.activate(user);
+        Users.logout();
         user.setPassword(user.getPassword() + "a");
         Users.signIn(user);
     }
@@ -80,14 +87,16 @@ public class SignInTest {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void usernameAndPasswordNotExistShouldFailLogin() throws Exception {
-        String username = TestStringUtils.randomString(8);
-        String password = TestStringUtils.randomString(9);
+        String username = randomAlphanumeric(8);
+        String password = randomAlphanumeric(9);
         Users.signIn(new User(username, password));
     }
 
     @Test
     public void usernameIsCaseInsensitiveShouldLogin() throws Exception {
         User user = Users.signUp();
+        Users.activate(user);
+        Users.logout();
         user.setUsername(user.getUsername().toUpperCase());
         Users.signIn(user);
     }
@@ -96,29 +105,32 @@ public class SignInTest {
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void passwordIsCaseInsensitiveShouldFailLogin() throws Exception {
         User user = Users.signUp();
+        Users.activate(user);
+        Users.logout();
         user.setPassword(user.getPassword().toUpperCase());
         Users.signIn(user);
     }
 
     @Test
     public void usernameContainsSlashShouldLogin() throws Exception {
-        UserForRegistration user = new UserForRegistration();
-        user.setUsername(TestStringUtils.randomString(10) + "/");
+        UserForRegistration user = UserForRegistration.withUsername(randomAlphanumeric(10) + "/");
         User registeredUser = Users.signUp(user);
+        Users.activate(user);
+        Users.logout();
         Users.signIn(registeredUser);
     }
 
     @Test(enabled = false)
     public void userGoFromAnyPageAndSignInViaJDialogWindow() throws Exception {
         Branch branch = Branches.userIsViewingRandomBranch();
-        Users.signIn(new User("admin", "admin"));
-        Branches.assertUserBrowsersBranch(branch);
+        Users.signIn(User.admin());
+        Branches.assertUserBrowsesBranch(branch);
     }
 
     @Test(enabled = false)
     public void userGoToPageButNeedLogIn() throws Exception {
         String referer = Users.redirectToLogIn();
-        Users.fillAndSendLoginForm(new User("admin", "admin"));
+        Users.fillAndSendLoginForm(User.admin());
         Users.isRedirectedToReferer(referer);
     }
 }

@@ -64,6 +64,10 @@ public class Users {
         }
     }
 
+    public static void logout() {
+        mainPage.clickLogout();
+    }
+
     public static User signUpAndSignIn() {
         User user;
         try {
