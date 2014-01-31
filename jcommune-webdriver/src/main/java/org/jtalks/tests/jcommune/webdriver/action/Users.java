@@ -64,11 +64,15 @@ public class Users {
         }
     }
 
+    public static void logout() {
+        mainPage.clickLogout();
+    }
+
     public static User signUpAndSignIn() {
         User user;
         try {
             user = Users.signUp();
-            Users.signIn(user);
+            Users.activate(user);
         } catch (ValidationException e) {
             throw new IllegalStateException("Can't sign up new user.", e);
         }
@@ -112,41 +116,15 @@ public class Users {
     }
 
     /**
-     * Sign up new user with random data. Action can be started from any page of JCommune.
-     *
-     * @return the {@code User} instance that contains registered user data
-     * @throws ValidationException
-     */
-    public static User signUp() throws ValidationException {
-        info("Creating and activating an account for random user");
-        User user = signUpWithoutActivation();
-        activateUserByMail(user.getEmail());
-        return user;
-    }
-
-    /**
-     * Sign up new user. Action can be started from any page of JCommune.
-     *
-     * @param userForRegistration the {code UserForRegistration} instance with data for sign up form
-     * @return the {@code User} instance that contains registered user data
-     * @throws ValidationException
-     */
-    public static User signUp(UserForRegistration userForRegistration) throws ValidationException {
-        User user = signUpWithoutActivation(userForRegistration);
-        activateUserByMail(user.getEmail());
-        return user;
-    }
-
-    /**
      * Sign up new user without activation. Form fields will be filled by random valid values. Action can be started
      * from any page of JCommune.
      *
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
-    public static User signUpWithoutActivation() throws ValidationException {
+    public static User signUp() throws ValidationException {
         info("Sign up a random user");
-        return signUpWithoutActivation(new UserForRegistration());
+        return signUp(new UserForRegistration());
     }
 
     /**
@@ -157,7 +135,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
-    public static User signUpWithoutActivation(UserForRegistration userForRegistration) throws ValidationException {
+    public static User signUp(UserForRegistration userForRegistration) throws ValidationException {
         info("Sign Up a user: " + userForRegistration);
         mainPage.logOutIfLoggedIn(driver);
         openAndFillSignUpDialog(userForRegistration);
@@ -186,25 +164,25 @@ public class Users {
     }
 
     /**
-     * Open activation link from message sent by JCommune to confirm user registration
+     * Open activation link from message sent by JCommune to confirm user registration. As a side effect - this signs
+     * in the user.
      *
-     * @param email the user email
+     * @param user - a user to activate its just registered account
      */
-    public static void activateUserByMail(String email) {
+    public static void activate(User user) {
         info("Looking up email at mailtrap. Activating a user by following activation link..");
         MailtrapMail mailtrapMail = new MailtrapMail();
-        String activationLink = mailtrapMail.getActivationLink(email);
-        driver.get(activationLink);
+        String activationLink = mailtrapMail.getActivationLink(user.getEmail());
         info("Clicking on activation link..");
-        mainPage.getIconLinkToMainPage().click();
-        info("User was activated");
+        driver.get(activationLink);
+        if (mainPage.userIsLoggedIn()) {
+            info("User was activated");
+        } else {
+            info("User was not activated");
+            throw new IllegalStateException("User " + user.getUsername() + " was not activated some why!");
+        }
     }
 
-    /**
-     * Fill and send login form
-     *
-     * @param user
-     */
     public static void fillAndSendLoginForm(User user) throws ValidationException {
         info("Sign in a User: " + user);
         checkFormValidation(signInPage.getErrorFormElements());

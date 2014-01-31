@@ -15,7 +15,6 @@
 
 package org.jtalks.tests.jcommune;
 
-import org.jtalks.tests.jcommune.utils.TestStringUtils;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
@@ -31,6 +30,7 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 
+import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -48,8 +48,7 @@ public class TopicTest {
 
     @Test
     public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        Users.signUpAndSignIn();
         Topic topic = new Topic("subject", "message");
         Topic createdTopic = Topics.createTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
@@ -58,8 +57,7 @@ public class TopicTest {
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
     public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        Users.signUpAndSignIn();
         Topic topic = new Topic("", "message");
         Topics.createTopic(topic);
     }
@@ -67,8 +65,7 @@ public class TopicTest {
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithEmptyMessage_ShouldFail_JC_26() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        Users.signUpAndSignIn();
         Topic topic = new Topic("subject", "");
         Topics.createTopic(topic);
     }
@@ -76,8 +73,7 @@ public class TopicTest {
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithoutData_ShouldFail_JC_24() throws Exception {
-        User user = Users.signUp();
-        Users.signIn(user);
+        Users.signUpAndSignIn();
         Topic topic = new Topic("", "");
         Topics.createTopic(topic);
     }
@@ -104,8 +100,7 @@ public class TopicTest {
     @Test
     public void signUpAndCreateCodeReviewInBranch() throws Exception {
         Topic topic = new Topic("test_code_review1", "SomeCode").withBranch("Acids and Bases");
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = Users.signUpAndSignIn();
         topic.withTopicStarter(user);
         Topics.createCodeReview(topic);
     }
@@ -115,7 +110,7 @@ public class TopicTest {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         User user = User.admin();
         Users.signIn(user);
-        Topic topic = new Topic(TestStringUtils.randomString(40), TestStringUtils.randomString(100));
+        Topic topic = new Topic(randomAlphanumeric(40), randomAlphanumeric(100));
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
         Topics.postAnswer(topic, topic.getBranch().getTitle());

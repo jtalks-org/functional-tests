@@ -204,6 +204,17 @@ public class TopicPage {
         }
     }
 
+    public void clickAnswerToTopicButton() throws PermissionsDeniedException {
+        info("Clicking a button to post the topic/answer");
+        try {
+            postButton.click();
+            info("The button was clicked");
+        } catch (NoSuchElementException e) {
+            info("Couldn't click the button, looks like the permissions are granted");
+            throw new PermissionsDeniedException("User does not have permissions to leave posts in the branch");
+        }
+    }
+
     public WebElement getSubjectField() {
         return subjectField;
     }
@@ -236,18 +247,6 @@ public class TopicPage {
         return topicsButtons;
     }
 
-    public WebElement getTopicSticked() {
-        return topicSticked;
-    }
-
-    public WebElement getTopicAnnouncement() {
-        return topicAnnouncement;
-    }
-
-    public WebElement getTopicPollTitleField() {
-        return topicsPollTitleField;
-    }
-
     public WebElement getTopicPollItemsField() {
         return topicsPollItemsField;
     }
@@ -266,10 +265,6 @@ public class TopicPage {
 
     public WebElement getNewCodeReviewButton() {
         return newCodeReviewButton;
-    }
-
-    public WebElement getLastTopicLine() {
-        return lastTopicLine;
     }
 
     public WebElement getBranchName() {

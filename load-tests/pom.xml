@@ -12,6 +12,7 @@
 
   <build>
     <plugins>
+
       <plugin>
         <groupId>com.lazerycode.jmeter</groupId>
         <artifactId>jmeter-maven-plugin</artifactId>
@@ -46,15 +47,38 @@
               </exclusion>
             </exclusions>
           </dependency>
-
-
         </dependencies>
         <configuration>
           <testFilesDirectory>${project.basedir}/src/test/resources</testFilesDirectory>
-          <testResultsTimestamp>false</testResultsTimestamp>
-          <!-- http://stackoverflow.com/questions/18233024/jenkins-performance-plugin-shows-only-recent-build-data-in-the-perf-report-->
+          <ignoreResultFailures>true</ignoreResultFailures>
+          <testResultsTimestamp>true</testResultsTimestamp>
+          <appendResultsTimestamp>true</appendResultsTimestamp>
+          <resultsFileNameDateFormat>yyyy_MM_dd_HH_mm_ss</resultsFileNameDateFormat>
         </configuration>
       </plugin>
+
+      <!--<plugin>-->
+        <!--<groupId>com.lazerycode.jmeter</groupId>-->
+        <!--<artifactId>jmeter-analysis-maven-plugin</artifactId>-->
+        <!--<version>1.0.1</version>-->
+        <!--<executions>-->
+          <!--<execution>-->
+            <!--<id>jmeter-tests</id>-->
+            <!--<phase>verify</phase>-->
+            <!--<goals>-->
+              <!--<goal>analyze</goal>-->
+            <!--</goals>-->
+          <!--</execution>-->
+        <!--</executions>-->
+        <!--<configuration>-->
+          <!--<source>${project.build.directory}/jmeter/results/*</source>-->
+          <!--<targetDirectory>${project.build.directory}/jmeter/reports</targetDirectory>-->
+          <!--<generateCSVs>true</generateCSVs>-->
+          <!--<generateCharts>true</generateCharts>-->
+          <!--<processAllFilesFound>true</processAllFilesFound>-->
+        <!--</configuration>-->
+      <!--</plugin>-->
+
     </plugins>
   </build>
 </project>

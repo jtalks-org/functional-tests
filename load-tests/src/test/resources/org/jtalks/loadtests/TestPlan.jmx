@@ -62,7 +62,7 @@
           <elementProp name="DURATION" elementType="Argument">
             <stringProp name="Argument.name">DURATION</stringProp>
             <stringProp name="Argument.value">1800</stringProp>
-            <stringProp name="Argument.desc">duration in seconds for base line case</stringProp>
+            <stringProp name="Argument.desc">duration in seconds for base line case 1800</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="FILENAME" elementType="Argument">
@@ -84,10 +84,16 @@
             <stringProp name="Argument.name">USER_NUMBER</stringProp>
             <stringProp name="Argument.value">3</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
+            <stringProp name="Argument.desc">registered user number</stringProp>
           </elementProp>
           <elementProp name="ANONYMOUS_USER_NUMBER" elementType="Argument">
             <stringProp name="Argument.name">ANONYMOUS_USER_NUMBER</stringProp>
             <stringProp name="Argument.value">30</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="PORT" elementType="Argument">
+            <stringProp name="Argument.name">PORT</stringProp>
+            <stringProp name="Argument.value"></stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -98,7 +104,7 @@
           <collectionProp name="Arguments.arguments"/>
         </elementProp>
         <stringProp name="HTTPSampler.domain">${AUTO_TEST_SERVER}</stringProp>
-        <stringProp name="HTTPSampler.port"></stringProp>
+        <stringProp name="HTTPSampler.port">${PORT}</stringProp>
         <stringProp name="HTTPSampler.connect_timeout"></stringProp>
         <stringProp name="HTTPSampler.response_timeout"></stringProp>
         <stringProp name="HTTPSampler.protocol">http</stringProp>
@@ -679,7 +685,7 @@ setRandomBranch();
               <stringProp name="RegexExtractor.refname">TOPIC_ID</stringProp>
               <stringProp name="RegexExtractor.regex">(topics/)([0-9]+)</stringProp>
               <stringProp name="RegexExtractor.template">$2$</stringProp>
-              <stringProp name="RegexExtractor.default">TOPICID_NOTFOUND</stringProp>
+              <stringProp name="RegexExtractor.default">TOPIC_ID_NOT_FOUND</stringProp>
               <stringProp name="RegexExtractor.match_number">0</stringProp>
             </RegexExtractor>
             <hashTree/>
@@ -709,7 +715,7 @@ setRandomBranch();
             <stringProp name="HTTPSampler.response_timeout"></stringProp>
             <stringProp name="HTTPSampler.protocol"></stringProp>
             <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/jcommune/posts/new?topicId=${TOPIC_ID}</stringProp>
+            <stringProp name="HTTPSampler.path">/jcommune/topics/${TOPIC_ID}?page=</stringProp>
             <stringProp name="HTTPSampler.method">POST</stringProp>
             <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
             <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -724,7 +730,7 @@ setRandomBranch();
               <stringProp name="RegexExtractor.refname">POST_ID</stringProp>
               <stringProp name="RegexExtractor.regex">(posts/)([0-9]+)</stringProp>
               <stringProp name="RegexExtractor.template">$2$</stringProp>
-              <stringProp name="RegexExtractor.default">9999</stringProp>
+              <stringProp name="RegexExtractor.default">POST_NOT_FOUND</stringProp>
               <stringProp name="RegexExtractor.match_number">0</stringProp>
             </RegexExtractor>
             <hashTree/>

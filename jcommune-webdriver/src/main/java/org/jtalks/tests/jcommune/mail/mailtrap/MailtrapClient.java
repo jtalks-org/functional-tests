@@ -49,11 +49,15 @@ public class MailtrapClient {
     public static String getMessages() throws CouldNotGetMessagesException {
         RestTemplate client = new RestTemplate();
         try {
-            return client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM),
+            return client.getForObject(new URI(mailtrapMessagesUri()),
                     String.class);
         } catch (Exception e) {
             throw new CouldNotGetMessagesException(e);
         }
+    }
+
+    public static String mailtrapMessagesUri() {
+        return API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM;
     }
 
     /**
