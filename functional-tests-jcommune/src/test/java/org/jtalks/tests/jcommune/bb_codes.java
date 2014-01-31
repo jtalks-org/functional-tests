@@ -2,6 +2,26 @@
  * Created by Gradobik on 31.01.14.
  * заготовка для тестов по бб-коду
  */
+package org.jtalks.tests.jcommune;
+
+import org.jtalks.tests.jcommune.webdriver.action.Topics;
+import org.jtalks.tests.jcommune.webdriver.action.Users;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
+import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
+
+import java.util.Date;
+
+import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 //text attributes
 import java.swing.JTextPane;
 import java.awt.Font;
