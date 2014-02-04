@@ -91,8 +91,7 @@ public class TopicPage {
     }
 
     public void goToTopicPage() throws ValidationException {
-        Users.signIn(Users.signUp());
-
+        Users.signUpAndSignIn();
         Topic topic = new Topic("subject123", "New final test answer");
         if (topic.getBranch() == null) {
             Branch branch = new Branch(branchPage.getBranches().get(0).getText());

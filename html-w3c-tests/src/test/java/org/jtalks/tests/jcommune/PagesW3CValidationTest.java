@@ -75,8 +75,7 @@ public class PagesW3CValidationTest {
     public void postPage_Test() throws Exception {
         Topic topic = new Topic(TestStringUtils.randomString(40), TestStringUtils.randomString(100));
         String branchTitle = "TestBranch";
-        User user = Users.signUp();
-        Users.signIn(user);
+        User user = Users.signUpAndSignIn();
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
         Topics.postAnswer(topic, branchTitle);
