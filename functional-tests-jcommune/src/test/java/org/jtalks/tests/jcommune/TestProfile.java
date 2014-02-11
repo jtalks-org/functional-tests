@@ -111,7 +111,7 @@ public class ProfileTest {
         Users.editProfile(user);
     }
 
-    @Test
+    /* @Test
     public void changePageSizeAndCheckMessageInTheTopic() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic newTopic = Topics.createTopic(new Topic(new Post, "text1"));
@@ -130,7 +130,7 @@ public class ProfileTest {
                 }
             }
         }
-    }
+    } */
 
     @Test
     public void enterValidDataInFieldLocation_ShouldPass() throws Exception {
