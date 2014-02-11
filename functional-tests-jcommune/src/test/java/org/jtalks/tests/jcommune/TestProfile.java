@@ -12,6 +12,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static org.apache.commons.lang.RandomStringUtils.random;
+import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
@@ -31,6 +33,7 @@ public class ProfileTest {
     public void viewUserProfile_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         Users.viewProfile(user);
+        Users.viewProfile();
     }
 
     @Test
@@ -44,49 +47,43 @@ public class ProfileTest {
     @Test
     public void firstNameBetweenZeroAnd45Chars_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterValidFirstName();
-        Profile.saveChanges();
+        user.setFirstName(randomAlphanumeric(25));
+        Users.editProfile(user);
     }
 
     @Test(expectedExceptions = ValidationException.class)
     public void veryLongFirstName_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterVeryLongFirstName();
-        Profile.saveChanges();
+        user.setFirstName(randomAlphanumeric(46));
+        Users.editProfile(user);
     }
 
     @Test
     public void lastNameBetweenZeroAnd255Chars_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterValidLastName();
-        Profile.saveChanges();
+        user.setLastName(randomAlphanumeric(150));
+        Users.editProfile(user);
     }
 
     @Test
     public void veryLongLastName_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterVeryLongLastName();
-        Profile.saveChanges();
+        user.setLastName(randomAlphanumeric(256));
+        Users.editProfile(user);
     }
 
     @Test
     public void signatureBetweenZeroAnd255Chars_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterValidSignature();
-        Profile.saveChanges();
+        user.setSignature(randomAlphanumeric(255));
+        Users.editProfile(user);
     }
 
     @Test
     public void veryLongSignature_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterVeryLongSignature();
-        Profile.saveChanges();
+        user.setSignature(randomAlphanumeric(256));
+        Users.editProfile(user);
     }
 
     @Test
@@ -96,25 +93,22 @@ public class ProfileTest {
     @Test
     public void veryLongEmail_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterVeryLongEmail();
-        Profile.saveChanges();
+        user.setEmail(randomAlphanumeric(40));
+        Users.editProfile(user);
     }
 
     @Test
     public void incorrectEmailWithSpecialSymbols_ShouldFail throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterIncorrectEmailWithSpecailSymbols();
-        Profile.saveChanges();
+        user.setEmail();  // I'm not sure when symbols I must use
+        Users.editProfile(user);
     }
 
     @Test
     public void emptyFieldEmail_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.deletDataInFieldEmail();
-        Profile.saveChanges();
+        user.setEmail("");
+        Users.editProfile(user);
     }
 
     @Test
@@ -141,66 +135,56 @@ public class ProfileTest {
     @Test
     public void enterValidDataInFieldLocation_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterValidDataInFieldLocation();
-        Profile.saveChanges();
+        user.setLocation(randomAlphanumeric(30));
+        Users.editProfile(user);
     }
 
     @Test
     public void enterVeryLongLocation_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterVeryLongLocation();
-        Profile.saveChanges();
+        user.setLocation(randomAlphanumeric(31));
+        Users.editProfile(user);
     }
 
     @Test
     public void enterNewPasswordWithoutConfirmNewPasswordAndCurrentPassword_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterNewPassword();
-        Profile.saveChanges();
+        user.setNewPassword(randomAlphanumeric(25));
+        Users.editProfile(user);
     }
 
     @Test
     public void enterNewPasswordAndConfirmNewPasswordWithoutCurrentPassword_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile();
-        Profile.enterNewPassword();
-        Profile.enterConfirmPassword();
-        Profile.saveChanges();
+        user.setNewPassword(randomAlphanumeric(25));
+        user.setConfirmPassword(user.getNewPassword());
+        Users.editProfile(user);
     }
 
     @Test
     public void enterNewPasswordAndConfirmNewPasswordAndCurrentPassword_ShouldPass()	throws Exception {
         User user = Users.signUpAndSignIn();
-        String newPass = RandomStringUtils.randomAlphanumeric(25);
-        Users.editProfile();
-        Profile.enterNewPassword(newPass);
-        Profile.enterConfirmPassword(newPass);
-        Profile.enterCurrentPassword(user);
-        Profile.saveChanges();
+        user.setNewPassword(randomAlphanumeric(25));
+        user.setConfirmPassword(user.getNewPassword());
+        user.setCurrentPassword(user.getPassword());
+        Users.editProfile(user);
     }
 
     @Test
     public void enterNewPasswordAndCurrentPasswordAndIncorrectConfirmPassword_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        String newPass = RandomStringUtils.randomAlphanumeric(25);
-        Users.editProfile();
-        Profile.enterNewPassword(newPass);
-        Profile.enterConfirmPassword(RandomStringUtils.randomAlphanumeric(25));
-        Profile.enterCurrentPassword(user);
-        Profile.saveChanges();
+        user.setNewPassword(randomAlphanumeric(25));
+        user.setCurrentPassword(user.getNewPassword());
+        user.setConfirmPassword(randomAlphanumeric(25));
+        Users.editProfile(user);
     }
 
     @Test
     public void enterNewPasswordAndConfirmPasswordAndIncorrectCurrentPassword_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        String newPass = RandomStringUtils.randomAlphanumeric(25);
-        Users.editProfile();
-        Profile.enterNewPassword(newPass);
-        Profile.enterConfirmPassword(newPass);
-        Profile.enterIncorrectCurrentPassword();
-        Profile.saveChanges();
+        user.setNewPassword(randomAlphanumeric(25));
+        user.setCurrentPassword(randomAlphanumeric(25));
+        user.setConfirmPassword(user.getNewPassword());
+        Users.editProfile(user);
     }
 }
