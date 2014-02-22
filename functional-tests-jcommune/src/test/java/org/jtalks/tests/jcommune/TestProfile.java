@@ -87,42 +87,42 @@ public class ProfileTest {
     }
 
     @Test
-    public void validUsualEmail_1_shouldPass() throws Exception {
+    public void validUsualEmail_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "@" + "jtalks");
         Users.editProfile(user);
     }
 
     @Test
-    public void validUsualEmail_2_shouldPass() throws Exception {
+    public void emailWithOneDot_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + ".common@" + "jtalks");
         Users.editProfile(user);
     }
 
     @Test
-    public void validUsualEmail_3_shouldPass() throws Exception {
+    public void emailWithDots_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "test.test.test@" + "jtalks");
         Users.editProfile(user);
     }
 
     @Test
-    public void validUsualEmail_4_shouldPass() throws Exception {
+    public void emailWithDotAndPlus_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + ".test+test@" + "jtalks");
         Users.editProfile(user);
     }
 
     @Test
-    public void validUsualEmail_5_shouldPass() throws Exception {
+    public void emailWithDotAndDash_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "test.test-test@" + "jtalks");
         Users.editProfile(user);
     }
 
     @Test
-    public void validUsualEmail_6_shouldPass() throws Exception {
+    public void emailWithQuotesAndDot_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "\"test.test\"@" + "jtalks");
         Users.editProfile(user);
@@ -132,13 +132,6 @@ public class ProfileTest {
     public void veryLongEmail_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(40));
-        Users.editProfile(user);
-    }
-
-    @Test
-    public void incorrectEmailWithSpecialSymbols_shouldFail throws Exception {
-        User user = Users.signUpAndSignIn();
-        user.setEmail();  // I'm not sure when symbols I must use
         Users.editProfile(user);
     }
 
@@ -154,22 +147,6 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setPageSize(15);
         Users.editProfile(user);
-    }
-
-    @Test
-    public void messageInTopicEquals15_shouldPass() throws Exception {
-        User user = Users.signUpAndSignIn();
-        int pageSize = 15;
-        user.setPageSize(pageSize);
-        Users.editProfile(user);
-        Topic newTopic = Topics.createTopic(new Topic());
-        Branches.openBranch(newTopic.getBranch().getTitle());
-        for (int i = 0; i < 16; i++) {
-            Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
-        }
-        Branches.openBranch(newTopic.getBranch())
-        Topics.openTopicWithTheDesiredPage(newTopic.getTitle(), 1);
-        Topics.checkPostsInTopic(pageSize);
     }
 
     @Test
