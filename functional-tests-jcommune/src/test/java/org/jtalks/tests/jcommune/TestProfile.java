@@ -30,14 +30,14 @@ public class ProfileTest {
     }
 
     @Test
-    public void viewUserProfile_ShouldPass() throws Exception {
+    public void viewUserProfile_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         Users.viewProfile(user);
         Users.viewProfile();
     }
 
     @Test
-    public void editProfileWithNoChanges_ShouldPass() throws Exception {
+    public void editProfileWithNoChanges_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         Users.editProfile(user);
         Users.assertProfileEquals(user);
@@ -45,7 +45,7 @@ public class ProfileTest {
 
 
     @Test
-    public void firstNameBetweenZeroAnd45Chars_ShouldPass() throws Exception {
+    public void firstNameBetweenZeroAnd45Chars_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setFirstName(randomAlphanumeric(25));
         Users.editProfile(user);
@@ -59,102 +59,156 @@ public class ProfileTest {
     }
 
     @Test
-    public void lastNameBetweenZeroAnd255Chars_ShouldPass() throws Exception {
+    public void lastNameBetweenZeroAnd255Chars_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(150));
         Users.editProfile(user);
     }
 
     @Test
-    public void veryLongLastName_ShouldFail() throws Exception {
+    public void veryLongLastName_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(256));
         Users.editProfile(user);
     }
 
     @Test
-    public void signatureBetweenZeroAnd255Chars_ShouldPass() throws Exception {
+    public void signatureBetweenZeroAnd255Chars_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(255));
         Users.editProfile(user);
     }
 
     @Test
-    public void veryLongSignature_ShouldFail() throws Exception {
+    public void veryLongSignature_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(256));
         Users.editProfile(user);
     }
 
     @Test
-    public void validEmail_ShouldPass() throws Exception {
+    public void validUsualEmail_1_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(8) + "@" + "jtalks");
+        Users.editProfile(user);
     }
 
     @Test
-    public void veryLongEmail_ShouldFail() throws Exception {
+    public void validUsualEmail_2_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(8) + ".common@" + "jtalks");
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void validUsualEmail_3_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(8) + "test.test.test@" + "jtalks");
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void validUsualEmail_4_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(8) + ".test+test@" + "jtalks");
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void validUsualEmail_5_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(8) + "test.test-test@" + "jtalks");
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void validUsualEmail_6_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(8) + "\"test.test\"@" + "jtalks");
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void veryLongEmail_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(40));
         Users.editProfile(user);
     }
 
     @Test
-    public void incorrectEmailWithSpecialSymbols_ShouldFail throws Exception {
+    public void incorrectEmailWithSpecialSymbols_shouldFail throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail();  // I'm not sure when symbols I must use
         Users.editProfile(user);
     }
 
     @Test
-    public void emptyFieldEmail_ShouldFail() throws Exception {
+    public void emptyFieldEmail_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail("");
         Users.editProfile(user);
     }
 
-    /* @Test
-    public void changePageSizeAndCheckMessageInTheTopic() throws Exception {
+    @Test
+    public void changePageSizeTo15_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        Topic newTopic = Topics.createTopic(new Topic(new Post, "text1"));
-        for (int i = 0; i < 3; i++) {
-            Users.editProfile();
-            int postCount = Profile.changePageSize();
-            Profile.saveChanges();
-            Branches.openBranch(newTopic.getBranch().getTitle());
-            for (int j = postCount; j > 0; j++) {
-                int count = Profile.checkPostInTopic(j);
-                if (count == postCount) {
-                    continue;
-                }
-                else {
-                    System.out.println("Page size was choosen " + postCount + ",but in page was found " + count);
-                }
-            }
-        }
-    } */
+        user.setPageSize(15);
+        Users.editProfile(user);
+    }
 
     @Test
-    public void enterValidDataInFieldLocation_ShouldPass() throws Exception {
+    public void messageInTopicEquals15_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        int pageSize = 15;
+        user.setPageSize(pageSize);
+        Users.editProfile(user);
+        Topic newTopic = Topics.createTopic(new Topic());
+        Branches.openBranch(newTopic.getBranch().getTitle());
+        for (int i = 0; i < 16; i++) {
+            Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
+        }
+        Branches.openBranch(newTopic.getBranch())
+        Topics.openTopicWithTheDesiredPage(newTopic.getTitle(), 1);
+        Topics.checkPostsInTopic(pageSize);
+    }
+
+    @Test
+    public void changePageSizeTo25_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setPageSize(25);
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void changePageSizeTo50_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setPageSize(50);
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void enterValidDataInFieldLocation_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(30));
         Users.editProfile(user);
     }
 
     @Test
-    public void enterVeryLongLocation_ShouldFail() throws Exception {
+    public void enterVeryLongLocation_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(31));
         Users.editProfile(user);
     }
 
     @Test
-    public void enterNewPasswordWithoutConfirmNewPasswordAndCurrentPassword_ShouldFail() throws Exception {
+    public void enterNewPasswordWithoutConfirmNewPasswordAndCurrentPassword_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         Users.editProfile(user);
     }
 
     @Test
-    public void enterNewPasswordAndConfirmNewPasswordWithoutCurrentPassword_ShouldFail() throws Exception {
+    public void enterNewPasswordAndConfirmNewPasswordWithoutCurrentPassword_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
@@ -162,7 +216,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void enterNewPasswordAndConfirmNewPasswordAndCurrentPassword_ShouldPass()	throws Exception {
+    public void enterNewPasswordAndConfirmNewPasswordAndCurrentPassword_shouldPass()	throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
@@ -171,7 +225,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void enterNewPasswordAndCurrentPasswordAndIncorrectConfirmPassword_ShouldFail() throws Exception {
+    public void enterNewPasswordAndCurrentPasswordAndIncorrectConfirmPassword_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setCurrentPassword(user.getNewPassword());
@@ -180,7 +234,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void enterNewPasswordAndConfirmPasswordAndIncorrectCurrentPassword_ShouldFail() throws Exception {
+    public void enterNewPasswordAndConfirmPasswordAndIncorrectCurrentPassword_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setCurrentPassword(randomAlphanumeric(25));
