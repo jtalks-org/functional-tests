@@ -27,7 +27,6 @@ public class ProfileTest {
     public void viewUserProfile_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         Users.viewProfile(user);
-        Users.viewProfile();
     }
 
     @Test
@@ -37,9 +36,8 @@ public class ProfileTest {
         Users.assertProfileEquals(user);
     }
 
-
     @Test
-    public void firstNameBetweenZeroAnd45Chars_shouldPass() throws Exception {
+    public void firstNameWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setFirstName(randomAlphanumeric(25));
         Users.editProfile(user);
@@ -53,7 +51,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void lastNameBetweenZeroAnd255Chars_shouldPass() throws Exception {
+    public void lastNameWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(150));
         Users.editProfile(user);
@@ -67,7 +65,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void signatureBetweenZeroAnd255Chars_shouldPass() throws Exception {
+    public void signatureWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(255));
         Users.editProfile(user);
@@ -83,42 +81,42 @@ public class ProfileTest {
     @Test
     public void validUsualEmail_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(8) + "@" + "jtalks");
+        user.setEmail(randomAlphanumeric(8) + "@" + "jtalks.org");
         Users.editProfile(user);
     }
 
     @Test
-    public void emailWithOneDot_shouldPass() throws Exception {
+    public void emailWithOneDotInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(8) + ".common@" + "jtalks");
+        user.setEmail(randomAlphanumeric(8) + ".common@" + "jtalks.org");
         Users.editProfile(user);
     }
 
     @Test
-    public void emailWithDots_shouldPass() throws Exception {
+    public void emailWithMultipleDotInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(8) + "test.test.test@" + "jtalks");
+        user.setEmail(randomAlphanumeric(8) + "test.test.test@" + "jtalks.org");
         Users.editProfile(user);
     }
 
     @Test
-    public void emailWithDotAndPlus_shouldPass() throws Exception {
+    public void emailWithDotAndPlusInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(8) + ".test+test@" + "jtalks");
+        user.setEmail(randomAlphanumeric(8) + ".test+test@" + "jtalks.org");
         Users.editProfile(user);
     }
 
     @Test
-    public void emailWithDotAndDash_shouldPass() throws Exception {
+    public void emailWithDotAndDashInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(8) + "test.test-test@" + "jtalks");
+        user.setEmail(randomAlphanumeric(8) + "test.test-test@" + "jtalks.org");
         Users.editProfile(user);
     }
 
     @Test
-    public void emailWithQuotesAndDot_shouldPass() throws Exception {
+    public void emailWithQuotesAndDotInAddress_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(8) + "\"test.test\"@" + "jtalks");
+        user.setEmail(randomAlphanumeric(8) + "\"test.test\"@" + "jtalks.org");
         Users.editProfile(user);
     }
 
@@ -158,7 +156,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void enterValidDataInFieldLocation_shouldPass() throws Exception {
+    public void locationWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(30));
         Users.editProfile(user);
@@ -168,6 +166,15 @@ public class ProfileTest {
     public void enterVeryLongLocation_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(31));
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void enterNewPasswordAndConfirmNewPasswordAndCurrentPassword_shouldPass()	throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setNewPassword(randomAlphanumeric(25));
+        user.setConfirmPassword(user.getNewPassword());
+        user.setCurrentPassword(user.getPassword());
         Users.editProfile(user);
     }
 
@@ -187,15 +194,6 @@ public class ProfileTest {
     }
 
     @Test
-    public void enterNewPasswordAndConfirmNewPasswordAndCurrentPassword_shouldPass()	throws Exception {
-        User user = Users.signUpAndSignIn();
-        user.setNewPassword(randomAlphanumeric(25));
-        user.setConfirmPassword(user.getNewPassword());
-        user.setCurrentPassword(user.getPassword());
-        Users.editProfile(user);
-    }
-
-    @Test
     public void enterNewPasswordAndCurrentPasswordAndIncorrectConfirmPassword_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
@@ -210,6 +208,51 @@ public class ProfileTest {
         user.setNewPassword(randomAlphanumeric(25));
         user.setCurrentPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void enterCurrentPasswordWithoutNewPasswordAndConfirmPassword_shouldFail() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setNewPassword("");
+        user.setConfirmPassword("");
+        user.setCurrentPassword(user.getPassword());
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void enterNewPasswordAndCurrentPasswordWithoutConfirmPassword_shouldFail() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setNewPassword(randomAlphanumeric(25));
+        user.setConfirmPassword("");
+        user.setCurrentPassword(user.getPassword());
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void enterCurrentPasswordAndConfirmPasswordWithoutNewPassword_shouldFail() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setNewPassword("");
+        user.setConfirmPassword(randomAlphanumeric(25));
+        user.setCurrentPassword(user.getPassword());
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void enterConfirmPasswordWithoutNewPasswordAndCurrentPassword_shouldFail() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setNewPassword("");
+        user.setConfirmPassword(randomAlphanumeric(25));
+        user.setCurrentPassword("");
+        Users.editProfile(user);
+    }
+
+    @Test
+    public void enterCurrentPasswordAndVeryLongNewPasswordAndConfirmPassword_shouldFail() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setNewPassword(randomAlphanumeric(51));
+        user.setConfirmPassword(user.getNewPassword);
+        user.setCurrentPassword(user.getPassword());
         Users.editProfile(user);
     }
 }
