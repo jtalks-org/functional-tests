@@ -42,7 +42,7 @@ public class SignUpPage {
     public static final String TOO_LONG_PASSWORD_ERROR = "Пароль: Размер должен быть между 1 и 50\n";
     public static final String EMPTY_EMAIL_ERROR = "Адрес электронной почты: Не может быть пустым\n";
     public static final String NOT_UNIQUE_USERNAME_ERROR =
-            "Имя пользователя: Пользователь с таким именем пользователя уже существует\n";
+            "Имя пользователя: Пользователь с таким именем уже существует\n";
     public static final String NOT_UNIQUE_EMAIL_ERROR = "Адрес электронной почты: Пользователь с таким email уже существует\n";
     public static final String WRONG_EMAIL_FORMAT_ERROR = "Адрес электронной почты: Допустимый формат email- mail@mail.ru\n";
     @FindBy(id = signUpDialogFormSel)
