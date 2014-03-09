@@ -204,4 +204,13 @@ public class Users {
     public static void isRedirectedToReferer(String referer) {
         assertEquals(referer, JCommuneSeleniumConfig.driver.getCurrentUrl());
     }
+
+    public static void viewProfile(User user) {
+    }
+
+    public static void editProfile(User user) {
+    }
+
+    public static void assertProfileEquals(User user) {
+    }
 }

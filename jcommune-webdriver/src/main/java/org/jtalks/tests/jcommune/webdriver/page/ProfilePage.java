@@ -85,6 +85,25 @@ public class ProfilePage {
 
     public static final String pmLinksFromLastColumnSel = "//td[contains(@class, 'latest-by')]/p/a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/users/')]";
 
+    public static final String WRONG_CURRENT_PASSWORD = "Password does not match to the current password";
+
+    public static final String WRONG_CONFIRMATION_PASSWORD = "Password and confirmation password do not match";
+
+    public static final String TOO_LONG_PASSWORD = "size must be between 1 and 50";
+
+    public static final String TOO_LONG_FIRST_NAME = "should be 0 - 45 characters";
+
+    public static final String TOO_LONG_LAST_NAME = "should be 0 - 255 characters";
+
+    public static final String TOO_LONG_LOCATION = "length must be between 0 and 30";
+
+    public static final String TOO_LONG_SIGNATURE = "Signature length must be no more 255 characters";
+
+    public static final String TOO_LONG_EMAIL = "Email field should not contain more than 50 symbols";
+
+    public static final String INVALID_EMAIL = "An email format should be like mail@mail.ru";
+
+    public static final String EMPTY_EMAIL = "Must not be empty";
 
     @FindBy(xpath = emptyMessageInPosListSel)
     private WebElement emptyMessageInPosList;

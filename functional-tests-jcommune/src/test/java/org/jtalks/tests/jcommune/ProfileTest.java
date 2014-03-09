@@ -43,6 +43,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setFirstName(randomAlphanumeric(25));
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -58,6 +59,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(150));
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -73,6 +75,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(255));
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -88,6 +91,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "@" + "jtalks.org");
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -95,6 +99,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + ".common@" + "jtalks.org");
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -102,6 +107,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "test.test.test@" + "jtalks.org");
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -109,6 +115,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + ".test+test@" + "jtalks.org");
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -116,6 +123,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "test.test-test@" + "jtalks.org");
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -147,6 +155,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setPageSize(15);
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -154,6 +163,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setPageSize(25);
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -161,6 +171,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setPageSize(50);
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -168,6 +179,7 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(30));
         Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -268,7 +280,7 @@ public class ProfileTest {
     public void enterCurrentPasswordAndVeryLongNewPassword_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(51));
-        user.setConfirmPassword(user.getNewPassword);
+        user.setConfirmPassword(user.getNewPassword());
         user.setCurrentPassword(user.getPassword());
         Users.editProfile(user);
     }
