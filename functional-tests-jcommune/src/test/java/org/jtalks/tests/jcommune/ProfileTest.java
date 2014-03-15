@@ -9,6 +9,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static org.apache.commons.lang.RandomStringUtils.random;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -39,9 +40,25 @@ public class ProfileTest {
     }
 
     @Test
+    public void firstNameWithMinBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setFirstName("");
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
     public void firstNameWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setFirstName(randomAlphanumeric(25));
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
+    public void firstNameWithMaxBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setFirstName(randomAlphanumeric(255));
         Users.editProfile(user);
         Users.assertProfileEquals(user);
     }
@@ -55,9 +72,25 @@ public class ProfileTest {
     }
 
     @Test
+    public void lastNameWithMinBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setLastName("");
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
     public void lastNameWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(150));
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
+    public void lastNameWithMaxBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setLastName(randomAlphanumeric(255));
         Users.editProfile(user);
         Users.assertProfileEquals(user);
     }
@@ -71,7 +104,23 @@ public class ProfileTest {
     }
 
     @Test
+    public void signatureWithMinBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setSignature("");
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
     public void signatureWithAllowedLength_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setSignature(randomAlphanumeric(255));
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
+    public void signatureWithMaxBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(255));
         Users.editProfile(user);
@@ -84,6 +133,22 @@ public class ProfileTest {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(256));
         Users.editProfile(user);
+    }
+
+    @Test
+    public void emailWithMinBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(1) + "@" + "jtalks.org");
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
+    public void emailWithMaxBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(39) + "@" + "jtalks.org");
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
     }
 
     @Test
@@ -175,7 +240,23 @@ public class ProfileTest {
     }
 
     @Test
+    public void locationWithMinBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setLocation("");
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
     public void locationWithAllowedLength_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setLocation(randomAlphanumeric(30));
+        Users.editProfile(user);
+        Users.assertProfileEquals(user);
+    }
+
+    @Test
+    public void locationWithMaxBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(30));
         Users.editProfile(user);
@@ -191,16 +272,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void enterNewPasswordAndConfirmNewPasswordAndCurrentPassword_shouldPass() throws Exception {
-        User user = Users.signUpAndSignIn();
-        user.setNewPassword(randomAlphanumeric(25));
-        user.setConfirmPassword(user.getNewPassword());
-        user.setCurrentPassword(user.getPassword());
-        Users.editProfile(user);
-    }
-
-    @Test
-    public void enterCurrentPasswordWithoutNewPassword_shouldPass() throws Exception {
+    public void shouldChangePassword_ifEnterOnlyCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword("");
         user.setConfirmPassword("");
@@ -208,9 +280,18 @@ public class ProfileTest {
         Users.editProfile(user);
     }
 
+    @Test
+    public void shouldChangePassword_ifCorrectCurrentAndConfirmPassword() throws  Exception {
+        User user = Users.signUpAndSignIn();
+        user.setNewPassword(randomAlphanumeric(25));
+        user.setConfirmPassword(user.getNewPassword());
+        user.setCurrentPassword(user.getPassword());
+        Users.editProfile(user);
+    }
+
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD + ProfilePage.WRONG_CONFIRMATION_PASSWORD)
-    public void enterNewPasswordWithoutConfirmNewPasswordAndCurrentPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_withoutConfirmAndCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         Users.editProfile(user);
@@ -218,7 +299,7 @@ public class ProfileTest {
 
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD + ProfilePage.WRONG_CONFIRMATION_PASSWORD)
-    public void enterNewPasswordAndConfirmNewPasswordWithoutCurrentPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_withoutCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
@@ -227,7 +308,7 @@ public class ProfileTest {
 
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
-    public void enterNewPasswordAndCurrentPasswordAndIncorrectConfirmPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_withIncorrectConfirmPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setCurrentPassword(user.getNewPassword());
@@ -237,7 +318,7 @@ public class ProfileTest {
 
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD)
-    public void enterNewPasswordAndConfirmPasswordAndIncorrectCurrentPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_withIncorrectCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setCurrentPassword(randomAlphanumeric(25));
@@ -247,7 +328,7 @@ public class ProfileTest {
 
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
-    public void enterNewPasswordAndCurrentPasswordWithoutConfirmPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_withoutConfirmPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword("");
@@ -257,7 +338,7 @@ public class ProfileTest {
 
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
-    public void enterCurrentPasswordAndConfirmPasswordWithoutNewPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_withoutNewPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword("");
         user.setConfirmPassword(randomAlphanumeric(25));
@@ -267,7 +348,7 @@ public class ProfileTest {
 
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
-    public void enterConfirmPasswordWithoutNewPasswordAndCurrentPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_withoutCurrentAndNewPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword("");
         user.setConfirmPassword(randomAlphanumeric(25));
@@ -277,7 +358,7 @@ public class ProfileTest {
 
     @Test (expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_PASSWORD)
-    public void enterCurrentPasswordAndVeryLongNewPassword_shouldFail() throws Exception {
+    public void shouldNotChangePassword_ifNewPasswordTooLong() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(51));
         user.setConfirmPassword(user.getNewPassword());
