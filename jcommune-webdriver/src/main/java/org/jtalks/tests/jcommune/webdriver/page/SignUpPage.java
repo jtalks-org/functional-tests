@@ -44,7 +44,7 @@ public class SignUpPage {
     public static final String NOT_UNIQUE_USERNAME_ERROR =
             "Имя пользователя: Пользователь с таким именем уже существует\n";
     public static final String NOT_UNIQUE_EMAIL_ERROR = "Адрес электронной почты: Пользователь с таким email уже существует\n";
-    public static final String WRONG_EMAIL_FORMAT_ERROR = "Адрес электронной почты: Допустимый формат email- mail@mail.ru\n";
+    public static final String WRONG_EMAIL_FORMAT_ERROR = "Адрес электронной почты: Допустимый формат email: mail@mail.ru\n";
     @FindBy(id = signUpDialogFormSel)
     WebElement signUpDialogForm;
     @FindBy(id = "signup")
