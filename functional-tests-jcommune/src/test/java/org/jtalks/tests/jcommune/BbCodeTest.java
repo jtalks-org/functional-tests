@@ -6,6 +6,7 @@ import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.*;
 
 import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
@@ -37,8 +38,12 @@ public class BbCodeTest {
         driver.get(appUrl);
         try {
             driver.switchTo().alert().accept();
-        } catch (NoAlertPresentException | UnsupportedOperationException e) {
-            //nothing to do since there is no alert in the browser or WebDriver (like HtmlUnit) doesn't support alerts
+        } catch (WebDriverException e) {
+            Class<? extends Throwable> rootCause = e.getCause().getClass();
+            if (rootCause != NoAlertPresentException.class && rootCause != UnsupportedOperationException.class) {
+                throw e;
+            }
+            //else nothing to do since there is no alert in the browser or browser doesn't support alerts
         }
     }
 
