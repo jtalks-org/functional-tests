@@ -28,6 +28,15 @@ public class DriverMethodHelp {
     }
 
     /**
+     * Since HtmlUnit is kind of special case, it might be useful from time to time to check on that matter.
+     *
+     * @return true if currently HtmlUnit is used instead of real browser, false otherwise
+     */
+    public static boolean isDriverHtmlUnit() {
+        return getCapabilities().getBrowserName().equalsIgnoreCase("htmlunit");
+    }
+
+    /**
      * Sets state for checkbox element
      *
      * @param checkboxElement the checkbox web element

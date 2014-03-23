@@ -5,13 +5,12 @@ import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.openqa.selenium.NoAlertPresentException;
+import org.testng.annotations.*;
 
 import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
+import static org.jtalks.tests.jcommune.utils.DriverMethodHelp.isDriverHtmlUnit;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -28,6 +27,25 @@ public class BbCodeTest {
         Users.signUpAndSignIn();
     }
 
+    /**
+     * Previous test could've been failed on the topic page open with field data. If that's the case, then when
+     * next test will try to open another page, browser will ask whether user is sure to leave the current page and the
+     * test will fail. Therefore we've added this alert
+     */
+    @BeforeMethod
+    @Parameters({"appUrl"})
+    public void clickLeaveThePageIfPreviousTestFailed(String appUrl) {
+        driver.get(appUrl);
+        if (isDriverHtmlUnit()) {
+            return;
+        }
+        try {
+            driver.switchTo().alert().accept();
+        } catch (NoAlertPresentException e) {
+            //nothing to do since there is no alert in the browser
+        }
+    }
+
     @Test(dataProvider = "bbCodesWithMessage_thatShouldPass")
     public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
@@ -36,7 +54,7 @@ public class BbCodeTest {
         assertTrue(Topics.isCreated(createdTopic), messageIfTestFails);
     }
 
-    @Test(dataProvider = "bbCodesMessage_thatShouldFail")
+    @Test(dataProvider = "bbCodesMessage_thatShouldFail", enabled = false)
     public void bbCodesWithTextThatShouldFail(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
