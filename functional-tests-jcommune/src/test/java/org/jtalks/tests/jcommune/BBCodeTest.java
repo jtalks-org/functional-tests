@@ -1,41 +1,51 @@
 package org.jtalks.tests.jcommune;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 public class BbCodeTest {
-    @BeforeMethod
+
+    @BeforeClass
     @Parameters({"appUrl"})
-    public void setupCase(String appUrl) throws ValidationException {
+    public void signInOnlyOnce_becauseTheseTestsDoNotRequireDataIsolation(String appUrl) throws Exception {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
+        Users.signUpAndSignIn();
     }
 
     @Test(dataProvider = "bbCodesWithMessage_thatShouldPass")
-    public void bbCodesWithTextThatShouldPass(String testString, String messageIfTestFails) throws Exception {
-        Users.signUpAndSignIn();
-        Topic topic = new Topic(randomAlphanumeric(10), testString);
+    public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
+        info("Running a test case [" + messageIfTestFails + "]");
+        Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
         Topic createdTopic = Topics.createTopic(topic);
         assertTrue(Topics.isCreated(createdTopic), messageIfTestFails);
     }
 
     @Test(dataProvider = "bbCodesMessage_thatShouldFail")
-    public void bbCodesWithTextThatShouldFail(String testString, String messageIfTestFails) throws Exception {
-        Users.signUpAndSignIn();
-        Topic topic = new Topic(randomAlphanumeric(10), testString);
-        Topic createdTopic = Topics.createTopic(topic);
-        assertTrue(Topics.isCreated(createdTopic), messageIfTestFails);
+    public void bbCodesWithTextThatShouldFail(String topicBody, String messageIfTestFails) throws Exception {
+        info("Running a test case [" + messageIfTestFails + "]");
+        Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
+        try {
+            Topics.createTopic(topic);//show throw error if validation failed
+            fail(messageIfTestFails);
+        } catch (ValidationException e) {
+            //if validation error happened, then the test passed
+        }
     }
 
     @DataProvider
@@ -293,6 +303,16 @@ public class BbCodeTest {
 
         };
 
+    }
+
+    /**
+     * Adds some useful inf to the title (test case explanation) and adds a random string so that text doesn't repeat.
+     *
+     * @param testcaseName the test case description
+     * @return topic title with random part and useful part in it
+     */
+    private String topicTitleWithTestCaseName(String testcaseName) {
+        return StringUtils.left(testcaseName, 70) + "... " + randomAlphabetic(20);
     }
 
 }
