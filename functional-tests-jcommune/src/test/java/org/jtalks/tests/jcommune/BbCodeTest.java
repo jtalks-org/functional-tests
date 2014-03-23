@@ -307,8 +307,8 @@ public class BbCodeTest {
                 {"[code=css]a[/code]", "BB code [code] validation did NOT fail. " + singleVisibleCharacterIsLowerThanMinBoundaryMessage},
                 {"[code=sql][/code]", "BB code [code] validation did NOT fail. " + emptyBbCodeMessage},
                 {"[code=sql]a[/code]", "BB code [code] validation did NOT fail. " + singleVisibleCharacterIsLowerThanMinBoundaryMessage},
-                {"[size=xml][/code]", "BB code [code] validation did NOT fail. " + emptyBbCodeMessage},
-                {"[size=xml]a[/code]", "BB code [code] validation did NOT fail. " + singleVisibleCharacterIsLowerThanMinBoundaryMessage},
+                {"[code=xml][/code]", "BB code [code] validation did NOT fail. " + emptyBbCodeMessage},
+                {"[code=xml]a[/code]", "BB code [code] validation did NOT fail. " + singleVisibleCharacterIsLowerThanMinBoundaryMessage},
                 {"[quote][/quote]", "BB code [quote] validation did NOT fail. " + emptyBbCodeMessage},
                 {"[quote]a[/quote]", "BB code [quote] validation did NOT fail. " + singleVisibleCharacterIsLowerThanMinBoundaryMessage},
 
