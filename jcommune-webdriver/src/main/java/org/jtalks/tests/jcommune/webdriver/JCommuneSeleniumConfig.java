@@ -9,7 +9,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
@@ -22,7 +21,10 @@ import static org.apache.commons.lang.StringUtils.isNotEmpty;
 public class JCommuneSeleniumConfig {
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private final static Logger LOGGER = LoggerFactory.getLogger(JCommuneSeleniumConfig.class);
-    private static final int SELENIUM_TIMEOUT = 10;
+    /**
+     * Amount of time we wait for an element to appear if it's not on the screen yet.
+     */
+    public static final int SELENIUM_TIMEOUT_SEC = 10;
     public static WebDriver driver = null;
     public static String webdriverType;
     private static String appUrl;
@@ -57,7 +59,7 @@ public class JCommuneSeleniumConfig {
         LOGGER.info("{}", capabilities);
         LOGGER.info("Selenium WebDriver URL: [{}]", seleniumUrl);
         driver = new RemoteWebDriver(new URL(seleniumUrl), capabilities);
-        driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT_SEC, TimeUnit.SECONDS);
     }
 
     private String getOs() {
@@ -105,12 +107,12 @@ public class JCommuneSeleniumConfig {
      * Method destroy connect with Selenium Server
      */
     public void destroy() {
-        if(!driver.toString().contains("null")) { //if null, then driver already quit
+        if (!driver.toString().contains("null")) { //if null, then driver already quit
             driver.quit();
         }
     }
 
-    public static String getAppUrl(){
+    public static String getAppUrl() {
         return appUrl;
     }
 }

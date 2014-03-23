@@ -1,6 +1,10 @@
 package org.jtalks.tests.jcommune.utils;
 
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import java.util.concurrent.TimeUnit;
 
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.getCapabilities;
 
@@ -34,6 +38,29 @@ public class DriverMethodHelp {
             checkboxElement.click();
         } else if (!state && checkboxElement.isSelected()) {
             checkboxElement.click();
+        }
+    }
+
+    /**
+     * Checks whether element is visible on the screen <i>right now</i>. Usual Selenium's
+     * {@link org.openqa.selenium.WebElement#isDisplayed()} will wait for implicit time if the element is not there,
+     * which is set to {@link org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig#SELENIUM_TIMEOUT_SEC}. But
+     * at some places we might not want to wait that long, e.g. on the Topic Creation page the checkboxes like
+     * <i>sticked</i> are not shown most of the time since user doesn't have enough permissions, so we don't want to
+     * wait in most cases for a dozen of seconds.
+     *
+     * @param driver  webdriver that's being used to find the element to change its timeout to 0
+     * @param element a web element we'd like to check for visibility
+     * @return true if the element is visible, false if it's on the page and not visible or it's not on the page
+     */
+    public static boolean isElementDisplayedImmediately(WebDriver driver, WebElement element) {
+        driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+        try {
+            return element.isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        } finally {
+            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         }
     }
 }

@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune.webdriver.page;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
@@ -84,10 +85,12 @@ public class TopicPage {
     private WebElement topicMessage;
     @FindBy(xpath = "//table[@id='topics-table']/tbody/tr/td/a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/')]")
     private List<WebElement> topicsList;
+    private final WebDriver driver;
 
 
     public TopicPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+        this.driver = driver;
     }
 
     public void goToTopicPage() throws ValidationException {
@@ -149,13 +152,10 @@ public class TopicPage {
         } else {
             info("Marking topic as non-sticked");
         }
-        try {
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicSticked)) {
             setCheckboxState(topicSticked, topicIsSticked);
-        } catch (NoSuchElementException e) {
-            info("No sticked checkbox - user doesn't have enough permissions");
-            if (topicIsSticked) {//user was supposed to click it!
-                throw new PermissionsDeniedException("No sticked checkbox - user doesn't have enough permissions");
-            }
+        } else {
+            info("Sticked checkbox is not on the page since user doesn't have permissions, so nothing to change");
         }
     }
 
@@ -165,13 +165,10 @@ public class TopicPage {
         } else {
             info("Leaving topic as not an announcement");
         }
-        try {
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicAnnouncement)) {
             setCheckboxState(topicAnnouncement, isAnnouncement);
-        } catch (NoSuchElementException e) {
-            info("No Announcement checkbox - user doesn't have enough permissions");
-            if (isAnnouncement) {//user was supposed to click it!
-                throw new PermissionsDeniedException("No Announcement checkbox - user doesn't have enough permissions");
-            }
+        } else {
+            info("Announcement checkbox is not on the page since user doesn't have permissions, so nothing to change");
         }
     }
 
