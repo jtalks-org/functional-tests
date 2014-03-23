@@ -10,7 +10,6 @@ import org.testng.annotations.*;
 
 import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
-import static org.jtalks.tests.jcommune.utils.DriverMethodHelp.isDriverHtmlUnit;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -36,13 +35,10 @@ public class BbCodeTest {
     @Parameters({"appUrl"})
     public void clickLeaveThePageIfPreviousTestFailed(String appUrl) {
         driver.get(appUrl);
-        if (isDriverHtmlUnit()) {
-            return;
-        }
         try {
             driver.switchTo().alert().accept();
-        } catch (NoAlertPresentException e) {
-            //nothing to do since there is no alert in the browser
+        } catch (NoAlertPresentException | UnsupportedOperationException e) {
+            //nothing to do since there is no alert in the browser or WebDriver (like HtmlUnit) doesn't support alerts
         }
     }
 
