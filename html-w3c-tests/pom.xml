@@ -30,17 +30,14 @@
     <dependency>
       <groupId>org.glassfish</groupId>
       <artifactId>javax.json</artifactId>
-      <version>1.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.rexsl</groupId>
       <artifactId>rexsl-w3c</artifactId>
-      <version>0.4.14</version>
     </dependency>
     <dependency>
       <groupId>org.jtalks.functional-tests</groupId>
       <artifactId>jcommune-webdriver</artifactId>
-      <version>${project.version}</version>
     </dependency>
   </dependencies>
 
