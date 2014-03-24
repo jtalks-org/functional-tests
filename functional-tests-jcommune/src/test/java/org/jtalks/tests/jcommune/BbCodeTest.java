@@ -39,15 +39,19 @@ public class BbCodeTest {
         try {
             driver.switchTo().alert().accept();
         } catch (WebDriverException e) {
-            Class<? extends Throwable> rootCause = e.getCause().getClass();
-            if (rootCause != NoAlertPresentException.class && rootCause != UnsupportedOperationException.class) {
+            Throwable cause = e.getCause();
+            if (cause == null) {
+                throw e;
+            }
+            Class<? extends Throwable> causeClass = cause.getClass();
+            if (causeClass != NoAlertPresentException.class && causeClass != UnsupportedOperationException.class) {
                 throw e;
             }
             //else nothing to do since there is no alert in the browser or browser doesn't support alerts
         }
     }
 
-    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = true)
+    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = false)
     public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
@@ -55,7 +59,7 @@ public class BbCodeTest {
         assertTrue(Topics.isCreated(createdTopic), messageIfTestFails);
     }
 
-    @Test(dataProvider = "bbCodesMessage_thatShouldFail", enabled = true)
+    @Test(dataProvider = "bbCodesMessage_thatShouldFail", enabled = false)
     public void bbCodesWithTextThatShouldFail(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
