@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import com.google.common.base.Splitter;
 import org.apache.commons.lang3.StringUtils;
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
@@ -143,7 +144,9 @@ public class TopicPage {
 
     private void fillTopicBody(String body) {
         info("Filling topic body: [" + StringUtils.left(body, 100) + "...]");
-        this.mainBodyArea.sendKeys(body);
+        for (String token : Splitter.fixedLength(100).split(body)) {
+            this.mainBodyArea.sendKeys(token);
+        }
     }
 
     private void markTopicAsSticked(boolean topicIsSticked) throws PermissionsDeniedException {

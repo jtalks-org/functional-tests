@@ -47,7 +47,7 @@ public class BbCodeTest {
         }
     }
 
-    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = false)
+    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass")
     public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
@@ -55,7 +55,7 @@ public class BbCodeTest {
         assertTrue(Topics.isCreated(createdTopic), messageIfTestFails);
     }
 
-    @Test(dataProvider = "bbCodesMessage_thatShouldFail", enabled = false)
+    @Test(dataProvider = "bbCodesMessage_thatShouldFail")
     public void bbCodesWithTextThatShouldFail(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
@@ -170,50 +170,19 @@ public class BbCodeTest {
                 {"[code=cpp]" + randomAlphanumeric(19983) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
                 {"[code=cpp]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
                 {"[/code]", "BB code close [/code] tag validation failed! " + closingBbCodeShouldNotFailMessage},
-                {"[code=csharp]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
+//                since we don't want to duplicate tests on the same classes of data, we check only that next languages are supported
                 {"[code=csharp]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=csharp]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=csharp]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=java]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=java]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=java]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=java]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=php]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=php]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=php]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=php]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=python]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=python]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=python]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=python]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=pascal]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=pascal]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=pascal]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=pascal]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=bash]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=bash]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=bash]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=bash]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=js]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=js]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=js]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=js]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=html]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=html]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=html]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=html]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=css]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=css]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=css]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=css]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=sql]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=sql]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=sql]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=sql]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[code=xml]" + randomAlphanumeric(2) + "[/code]", "BB code [code] validation failed! " + minBoundaryMessage},
                 {"[code=xml]" + randomAlphanumeric(10) + "[/code]", "BB code [code] validation failed! " + averageBodySizeMessage},
-                {"[code=xml]" + randomAlphanumeric(20000) + "[/code]", "BB code [code] validation failed! " + maxBoundaryMessage},
-                {"[code=xml]", "BB code [code] validation failed! " + openBbCodeShouldNotFailMessage},
+
                 {"[quote]" + randomAlphanumeric(2) + "[/quote]", "BB code [quote] validation failed! " + minBoundaryMessage},
                 {"[quote]" + randomAlphanumeric(10) + "[/quote]", "BB code [quote] validation failed! " + averageBodySizeMessage},
                 {"[quote]" + randomAlphanumeric(19985) + "[/quote]", "BB code [quote] validation failed! " + maxBoundaryMessage},
@@ -225,14 +194,8 @@ public class BbCodeTest {
                 {"[indent=15]" + randomAlphanumeric(19980) + "[/indent]", "BB code [indent] validation failed! " + maxBoundaryMessage},
                 {"[indent=15]", "BB code [indent] validation failed! " + openBbCodeShouldNotFailMessage},
                 {"[/indent]", "BB code close [/indent] tag validation failed! " + closingBbCodeShouldNotFailMessage},
-                {"[indent=20]" + randomAlphanumeric(2) + "[/indent]", "BB code [indent] validation failed! " + minBoundaryMessage},
                 {"[indent=20]" + randomAlphanumeric(10) + "[/indent]", "BB code [indent] validation failed! " + averageBodySizeMessage},
-                {"[indent=20]" + randomAlphanumeric(20000) + "[/indent]", "BB code [indent] validation failed! " + maxBoundaryMessage},
-                {"[indent=20]", "BB code [indent] validation failed! " + openBbCodeShouldNotFailMessage},
-                {"[indent=25]" + randomAlphanumeric(2) + "[/indent]", "BB code [indent] validation failed! " + minBoundaryMessage},
                 {"[indent=25]" + randomAlphanumeric(10) + "[/indent]", "BB code [indent] validation failed! " + averageBodySizeMessage},
-                {"[indent=25]" + randomAlphanumeric(20000) + "[/indent]", "BB code [indent] validation failed! " + maxBoundaryMessage},
-                {"[indent=25]", "BB code [indent] validation failed! " + openBbCodeShouldNotFailMessage},
         };
     }
 
