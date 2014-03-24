@@ -47,7 +47,7 @@ public class BbCodeTest {
         }
     }
 
-    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass")
+    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = false)
     public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
@@ -55,7 +55,7 @@ public class BbCodeTest {
         assertTrue(Topics.isCreated(createdTopic), messageIfTestFails);
     }
 
-    @Test(dataProvider = "bbCodesMessage_thatShouldFail")
+    @Test(dataProvider = "bbCodesMessage_thatShouldFail", enabled = false)
     public void bbCodesWithTextThatShouldFail(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
