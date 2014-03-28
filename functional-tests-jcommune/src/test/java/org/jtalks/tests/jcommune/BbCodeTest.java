@@ -45,6 +45,7 @@ public class BbCodeTest {
             }
             Class<? extends Throwable> causeClass = cause.getClass();
             if (causeClass != NoAlertPresentException.class && causeClass != UnsupportedOperationException.class) {
+                info("Got exception when trying to close dialog: " + e);
                 throw e;
             }
             //else nothing to do since there is no alert in the browser or browser doesn't support alerts
