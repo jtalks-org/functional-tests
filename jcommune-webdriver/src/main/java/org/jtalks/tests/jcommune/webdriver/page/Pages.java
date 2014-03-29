@@ -14,6 +14,7 @@ public class Pages {
     public static PrivateMessagesPage pmPage;
     public static ProfilePage profilePage;
     public static ExternalLinksDialog externalLinksDialog;
+    public static ForumSettingsDialog forumSettingsDialog;
 
 
     public static void createAllPages(WebDriver driver) {
@@ -27,5 +28,6 @@ public class Pages {
         pmPage = new PrivateMessagesPage(driver);
         profilePage = new ProfilePage(driver);
         externalLinksDialog = new ExternalLinksDialog(driver);
+        forumSettingsDialog = new ForumSettingsDialog(driver);
     }
 }
