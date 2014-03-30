@@ -52,7 +52,7 @@ public class BbCodeTest {
         }
     }
 
-    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = true)
+    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = false)
     public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
