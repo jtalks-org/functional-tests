@@ -16,6 +16,7 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import org.jtalks.tests.jcommune.assertion.Existence;
+import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
@@ -54,8 +55,9 @@ public class Topics {
         gotoMainPage();
         if (topic.getBranch() == null) {
             List<WebElement> branches = branchPage.getBranches();
-            if(isEmpty(branches)){
-                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page");
+            if (isEmpty(branches)) {
+                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. Page source: "
+                        + JCommuneSeleniumConfig.driver);
             }
             Branch branch = new Branch(branches.get(0).getText());
             topic.withBranch(branch);
