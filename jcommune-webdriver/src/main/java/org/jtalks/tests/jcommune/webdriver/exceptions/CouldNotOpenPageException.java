@@ -20,7 +20,7 @@ package org.jtalks.tests.jcommune.webdriver.exceptions;
  *
  * @author Guram Savinov
  */
-public class CouldNotOpenPageException extends RuntimeException {
+public class CouldNotOpenPageException extends AssertionError {
 
     public CouldNotOpenPageException(String page) {
         super("Could not open page: " + page);

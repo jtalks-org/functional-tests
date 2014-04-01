@@ -20,7 +20,7 @@ package org.jtalks.tests.jcommune.webdriver.exceptions;
  *
  * @author Guram Savinov
  */
-public class ValidationException extends Exception {
+public class ValidationException extends AssertionError {
     public ValidationException() {
         super("Data did not pass validation");
     }

@@ -20,7 +20,7 @@ package org.jtalks.tests.jcommune.webdriver.exceptions;
  *
  * @author Guram Savinov
  */
-public class PermissionsDeniedException extends Exception {
+public class PermissionsDeniedException extends AssertionError {
     public PermissionsDeniedException() {
         super("User hasn't permissions for the current action");
     }

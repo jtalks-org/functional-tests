@@ -20,7 +20,7 @@ package org.jtalks.tests.jcommune.webdriver.exceptions;
  *
  * @author Guram Savinov
  */
-public class TimeoutException extends RuntimeException {
+public class TimeoutException extends AssertionError {
     public TimeoutException(String operation, Throwable cause) {
         super("Time is out for this operation: " + operation, cause);
     }
