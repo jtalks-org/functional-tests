@@ -1,7 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.entity.forumsetting;
 
 /**
- * Created by Юлия on 29.03.14.
+ * @author Yuliya
  */
 public class ForumSetting {
 

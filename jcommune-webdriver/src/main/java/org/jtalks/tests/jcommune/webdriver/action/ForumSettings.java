@@ -3,7 +3,7 @@ package org.jtalks.tests.jcommune.webdriver.action;
 import org.jtalks.tests.jcommune.webdriver.entity.forumsetting.ForumSetting;
 
 /**
- * Created by Юлия on 29.03.14.
+ * @author Yuliya
  */
 public class ForumSettings {
 
@@ -23,23 +23,23 @@ public class ForumSettings {
         //ToDo
     }
 
-    public static void editForumTitle(ForumSetting forumSetting){
+    public static void setForumTitle(ForumSetting forumSetting){
         //ToDo
     }
 
-    public static void editForumDescription(ForumSetting forumSetting){
+    public static void setForumDescription(ForumSetting forumSetting){
         //ToDo
     }
 
-    public static void editPrefix(ForumSetting forumSetting){
+    public static void setPrefix(ForumSetting forumSetting){
         //ToDo
     }
 
-    public static void editLogoTooltip(ForumSetting forumSetting){
+    public static void setLogoTooltip(ForumSetting forumSetting){
         //ToDo
     }
 
-    public static void editCopyright(ForumSetting forumSetting){
+    public static void setCopyright(ForumSetting forumSetting){
         //ToDo
     }
 

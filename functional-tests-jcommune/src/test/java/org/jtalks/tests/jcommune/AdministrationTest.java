@@ -13,7 +13,7 @@ import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
- * Created by Юлия on 22.03.14.
+ * @author Yuliya
  */
 public class AdministrationTest {
 
@@ -32,33 +32,33 @@ public class AdministrationTest {
     }
 
     @Test
-    public void adminCanEnableAdministrationMode() {
+    public void enablingAdminMode_shouldPass() {
         mainPage.switchOnAdminMode();
     }
 
     //logo tests:
 
     @Test
-    public void adminCanUploadValidLogo() {
+    public void validLogo_shouldPass() {
         ForumSetting logo = new ForumSetting().withObject("1Kb.jpg");
         ForumSettings.uploadLogo(logo);
 
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_IMAGE_SIZE_ERROR)
-    public void adminCannotUploadTooLargeLogo() throws ValidationException {
+    public void tooLargeLogo_shouldFail() throws ValidationException {
         ForumSetting logo = new ForumSetting().withObject("10Kb.jpg");
         ForumSettings.uploadLogo(logo);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_IMAGE_FORMAT_ERROR)
-    public void adminCannotUploadWrongFormatLogo() throws ValidationException {
+    public void wrongFormatLogo_shouldFail() throws ValidationException {
         ForumSetting logo = new ForumSetting().withObject("1.txt");
         ForumSettings.uploadLogo(logo);
     }
 
     @Test
-    public void adminCanResetLogo() {
+    public void resetLogo_shouldPass() {
         ForumSetting logo = new ForumSetting();
         ForumSettings.resetLogo(logo);
     }
@@ -66,25 +66,25 @@ public class AdministrationTest {
     //favicon tests:
 
     @Test
-    public void adminCanUploadValidFavIcon(){
+    public void validFavIcon_shouldPass(){
         ForumSetting favicon = new ForumSetting().withObject("1Kb.jpg");
         ForumSettings.uploadFavIcon(favicon);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_IMAGE_SIZE_ERROR)
-    public void adminCannotUploadTooLargeFavIcon() throws ValidationException {
+    public void tooLargeFavIcon_shouldFail() throws ValidationException {
         ForumSetting favicon = new ForumSetting().withObject("10Kb.jpg");
         ForumSettings.uploadFavIcon(favicon);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_IMAGE_FORMAT_ERROR)
-    public void adminCannotUploadWrongFormatFavIcon() throws ValidationException {
+    public void wrongFormatFavIcon_shouldFail() throws ValidationException {
         ForumSetting favicon = new ForumSetting().withObject("1.txt");
         ForumSettings.uploadFavIcon(favicon);
     }
 
     @Test
-    public void adminCanResetFavIcon() {
+    public void resetFavIcon_shouldPass() {
         ForumSetting favicon = new ForumSetting();
         ForumSettings.resetFavIcon(favicon);
     }
@@ -92,143 +92,143 @@ public class AdministrationTest {
     //forum title tests:
 
     @Test
-    public void adminCanEditValidForumTitle(){
+    public void settingValidForumTitle_shouldPass(){
         ForumSetting title = new ForumSetting();
-        ForumSettings.editForumTitle(title);
+        ForumSettings.setForumTitle(title);
     }
 
     @Test
-    public void adminCanSaveMaxValueForumTitle(){
+    public void settingForumTitleMaxBoundary_shouldPass(){
         ForumSetting title = new ForumSetting().withValue(randomAlphanumeric(100));
-        ForumSettings.editForumTitle(title);
+        ForumSettings.setForumTitle(title);
     }
 
     @Test
-    public void adminCanSaveMinValueForumTitle(){
+    public void settingForumTitleMinBoundary_shouldPass(){
         ForumSetting title = new ForumSetting().withValue(randomAlphanumeric(1));
-        ForumSettings.editForumTitle(title);
+        ForumSettings.setForumTitle(title);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_TITLE_LENGTH_ERROR)
-    public void adminCannotExceedMaxForumTitleLimit() throws ValidationException {
+    public void exceedingForumTitleMaxBoundary_shouldFail() throws ValidationException {
         ForumSetting title = new ForumSetting().withValue(randomAlphanumeric(101));
-        ForumSettings.editForumTitle(title);
+        ForumSettings.setForumTitle(title);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_TITLE_LENGTH_ERROR)
-    public void adminCannotSaveEmptyForumTitle() throws ValidationException {
+    public void emptyForumTitle_shouldFail() throws ValidationException {
         ForumSetting title = new ForumSetting().withValue("");
-        ForumSettings.editForumTitle(title);
+        ForumSettings.setForumTitle(title);
     }
 
     //forum description tests:
 
     @Test
-    public void adminCanEditValidForumDescription(){
+    public void settingValidForumDescription_shouldPass(){
         ForumSetting desc = new ForumSetting();
-        ForumSettings.editForumDescription(desc);
+        ForumSettings.setForumDescription(desc);
     }
 
     @Test
-    public void adminCanSaveMaxValueForumDescription(){
+    public void settingForumDescriptionMaxBoundary_shouldPass(){
         ForumSetting desc = new ForumSetting().withValue(randomAlphanumeric(255));
-        ForumSettings.editForumDescription(desc);
+        ForumSettings.setForumDescription(desc);
     }
 
     @Test
-    public void adminCanSaveMinValueForumDescription(){
+    public void settingForumDescriptionMinBoundary_shouldPass(){
         ForumSetting desc = new ForumSetting().withValue(randomAlphanumeric(1));
-        ForumSettings.editForumDescription(desc);
+        ForumSettings.setForumDescription(desc);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
-    public void adminCannotExceedMaxForumDescriptionLimit() throws ValidationException {
+    public void exceedingForumDescriptionMaxBoundary_shouldFail() throws ValidationException {
         ForumSetting desc = new ForumSetting().withValue(randomAlphanumeric(256));
-        ForumSettings.editForumDescription(desc);
+        ForumSettings.setForumDescription(desc);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
-    public void adminCannotSaveEmptyForumDescription() throws ValidationException {
+    public void emptyForumDescription_shouldFail() throws ValidationException {
         ForumSetting desc = new ForumSetting().withValue("");
-        ForumSettings.editForumDescription(desc);
+        ForumSettings.setForumDescription(desc);
     }
 
     //pages prefix tests:
 
     @Test
-    public void adminCanEditValidPagesPrefix(){
+    public void settingValidPagesPrefix_shouldPass(){
         ForumSetting prefix = new ForumSetting();
-        ForumSettings.editPrefix(prefix);
+        ForumSettings.setPrefix(prefix);
     }
 
     @Test
-    public void adminCanSaveMaxValuePagesPrefix(){
+    public void settingPagesPrefixMaxBoundary_shouldPass(){
         ForumSetting prefix = new ForumSetting().withValue(randomAlphanumeric(255));
-        ForumSettings.editPrefix(prefix);
+        ForumSettings.setPrefix(prefix);
     }
 
     @Test
-    public void adminCanSaveEmptyPagesPrefix(){
+    public void emptyPagesPrefix_shouldPass(){
         ForumSetting prefix = new ForumSetting().withValue("");
-        ForumSettings.editPrefix(prefix);
+        ForumSettings.setPrefix(prefix);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
-    public void adminCannotExceedMaxPagesPrefixLimit() throws ValidationException {
+    public void exceedingPagesPrefixMaxBoundary_shouldFail() throws ValidationException {
         ForumSetting prefix = new ForumSetting().withValue(randomAlphanumeric(256));
-        ForumSettings.editPrefix(prefix);
+        ForumSettings.setPrefix(prefix);
     }
 
    //logo tooltip tests:
 
     @Test
-    public void adminCanEditValidLogoTooltip(){
+    public void settingValidLogoTooltip_shouldPass(){
         ForumSetting tooltip = new ForumSetting();
-        ForumSettings.editLogoTooltip(tooltip);
+        ForumSettings.setLogoTooltip(tooltip);
     }
 
     @Test
-    public void adminCanSaveMaxValueLogoTooltip(){
+    public void settingLogoTooltipMaxBoundary_shouldPass(){
         ForumSetting tooltip = new ForumSetting().withValue(randomAlphanumeric(255));
-        ForumSettings.editLogoTooltip(tooltip);
+        ForumSettings.setLogoTooltip(tooltip);
     }
 
     @Test
-    public void adminCanSaveEmptyLogoTooltip(){
+    public void emptyLogoTooltip_shouldPass(){
         ForumSetting tooltip = new ForumSetting().withValue("");
-        ForumSettings.editLogoTooltip(tooltip);
+        ForumSettings.setLogoTooltip(tooltip);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
-    public void adminCannotExceedMaxLogoTooltipLimit() throws ValidationException {
+    public void exceedingLogoTooltipMaxBoundary_shouldFail() throws ValidationException {
         ForumSetting tooltip = new ForumSetting().withValue(randomAlphanumeric(256));
-        ForumSettings.editLogoTooltip(tooltip);
+        ForumSettings.setLogoTooltip(tooltip);
     }
 
     //copyright tests:
 
     @Test
-    public void adminCanEditValidCopyright(){
+    public void settingValidCopyright_shouldPass(){
         ForumSetting copyright = new ForumSetting();
-        ForumSettings.editCopyright(copyright);
+        ForumSettings.setCopyright(copyright);
     }
 
     @Test
-    public void adminCanSaveMaxValueCopyright(){
+    public void settingCopyrightMaxBoundary_shouldPass(){
         ForumSetting copyright = new ForumSetting().withValue(randomAlphanumeric(255));
-        ForumSettings.editCopyright(copyright);
+        ForumSettings.setCopyright(copyright);
     }
 
     @Test
-    public void adminCanSaveEmptyLogoCopyright(){
+    public void emptyCopyright_shouldPass(){
         ForumSetting copyright = new ForumSetting().withValue("");
-        ForumSettings.editCopyright(copyright);
+        ForumSettings.setCopyright(copyright);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
-    public void adminCannotExceedMaxCopyrightLimit() throws ValidationException {
+    public void exceedingCopyrightMaxBoundary_shouldFail() throws ValidationException {
         ForumSetting copyright = new ForumSetting().withValue(randomAlphanumeric(256));
-        ForumSettings.editCopyright(copyright);
+        ForumSettings.setCopyright(copyright);
     }
 
 }

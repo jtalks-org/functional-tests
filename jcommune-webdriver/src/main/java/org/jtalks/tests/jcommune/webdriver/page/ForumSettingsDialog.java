@@ -4,7 +4,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
 /**
- * Created by Юлия on 29.03.14.
+ * @author Yuliya
  */
 public class ForumSettingsDialog {
 
