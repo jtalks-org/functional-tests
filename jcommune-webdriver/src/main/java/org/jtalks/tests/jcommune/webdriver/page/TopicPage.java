@@ -125,7 +125,8 @@ public class TopicPage {
             topicPage.getNewButton().click();
         } catch (NoSuchElementException e) {
             info("No such button found!");
-            throw new PermissionsDeniedException();
+            throw new PermissionsDeniedException("Couldn't find New Topic button. Here is the page source: \n"
+                    + driver.getPageSource());
         }
     }
 
