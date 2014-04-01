@@ -27,6 +27,9 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 
@@ -50,7 +53,11 @@ public class Topics {
     public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
         gotoMainPage();
         if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
+            List<WebElement> branches = branchPage.getBranches();
+            if(isEmpty(branches)){
+                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page");
+            }
+            Branch branch = new Branch(branches.get(0).getText());
             topic.withBranch(branch);
         }
         info("Creating " + topic + " in " + topic.getBranch());
