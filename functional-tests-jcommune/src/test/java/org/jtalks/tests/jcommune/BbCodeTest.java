@@ -1,12 +1,11 @@
 package org.jtalks.tests.jcommune;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriverException;
 import org.testng.annotations.*;
 
 import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
@@ -36,20 +35,7 @@ public class BbCodeTest {
     @Parameters({"appUrl"})
     public void clickLeaveThePageIfPreviousTestFailed(String appUrl) {
         driver.get(appUrl);
-        try {
-            driver.switchTo().alert().accept();
-        } catch (WebDriverException e) {
-            Throwable cause = e.getCause();
-            if (cause == null) {
-                throw e;
-            }
-            Class<? extends Throwable> causeClass = cause.getClass();
-            if (causeClass != NoAlertPresentException.class && causeClass != UnsupportedOperationException.class) {
-                info("Got exception when trying to close dialog: " + e);
-                throw e;
-            }
-            //else nothing to do since there is no alert in the browser or browser doesn't support alerts
-        }
+        DriverMethodHelp.closeAlertIfExists(driver);
     }
 
     @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = true)

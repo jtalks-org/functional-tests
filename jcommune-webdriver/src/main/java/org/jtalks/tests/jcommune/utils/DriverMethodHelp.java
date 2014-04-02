@@ -1,11 +1,10 @@
 package org.jtalks.tests.jcommune.utils;
 
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.getCapabilities;
 
 /**
@@ -71,5 +70,35 @@ public class DriverMethodHelp {
         } finally {
             driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
         }
+    }
+
+    /**
+     * If alert is open, then closing it (pressing Ok) or doing nothing if there is no dialog open.
+     *
+     * @return true if dialog was actually closed, false otherwise
+     * @throws RuntimeException well, web driver can throw anything it wants, we handle only
+     *                          {@link org.openqa.selenium.NoAlertPresentException} and
+     *                          {@link java.lang.UnsupportedOperationException} that can be thrown by HtmlUnit
+     */
+    public static boolean closeAlertIfExists(WebDriver driver) {
+        try {
+            driver.switchTo().alert().accept();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        } catch (WebDriverException e) {
+            Throwable cause = e.getCause();
+            if (cause == null) {
+                info("Got exception when trying to close dialog, but it's not NoAlertException: " + e);
+                throw e;
+            }
+            Class<? extends Throwable> causeClass = cause.getClass();
+            if (causeClass != NoAlertPresentException.class && causeClass != UnsupportedOperationException.class) {
+                info("Got exception when trying to close dialog: " + e);
+                throw e;
+            }
+            //else nothing to do since there is no alert in the browser or browser doesn't support alerts
+        }
+        return false;
     }
 }
