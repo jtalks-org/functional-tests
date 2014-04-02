@@ -19,9 +19,9 @@ public abstract class Header {
     protected WebElement smallScreenMenuButton;
     @FindBy(id = "signin")
     protected WebElement loginLink;
-    @FindBy(xpath = "//a[@href=\'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout\']")
+    @FindBy(id = "user-menu-logout")
     protected WebElement logOutButton;
-    @FindBy(xpath = "//a[@href=\'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/inbox\']")
+    @FindBy(id = "user-menu-private-messages")
     protected WebElement privateMessagesLink;
     @FindAll({@FindBy(id = "links_editor"), @FindBy(id = "links_editor_top")})
     protected WebElement editExternalLinksControl;

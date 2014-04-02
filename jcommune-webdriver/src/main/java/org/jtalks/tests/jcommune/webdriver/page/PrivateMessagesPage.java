@@ -15,6 +15,15 @@ import java.util.List;
  * @author yacov
  */
 public class PrivateMessagesPage {
+    public static final String INCORRECT_TO_FIELD_ERROR = "User not found\n";
+
+    public static final String EMPTY_SUBJECT_FIELD_ERROR = "may not be empty\n";
+
+    public static final String INCORRECT_SUBJECT_LENGTH_ERROR = "should be 2 - 120 characters\n";
+
+    public static final String EMPTY_CONTENT_FIELD_ERROR = "may not be empty\n";
+
+    public static final String INCORRECT_LENGTH_CONTENT_FIELD = "should be 2 - 20000 characters\n";
 
     public static final String pmInboxLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/inbox']";
 
@@ -28,7 +37,7 @@ public class PrivateMessagesPage {
 
     public static final String titleFieldSel = "title";
 
-    public static final String messageFieldSel = "tbMsg";
+    public static final String messageFieldSel = "postBody";
 
     public static final String DEL_BUTTON_ENABLED = "a#deleteCheckedPM.btn.btn-danger";
 
@@ -37,6 +46,8 @@ public class PrivateMessagesPage {
     public static final String SEND_BUTTON_SEL = "post";
 
     public static final String pmSubjectLinksSel = "//td/a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/pm/')]";
+
+    public static final String pmPaginationSel = "a[contains(@href,'?page=')]";
 
     public static final String recipientErrorMessageSel = "recipient.errors";
 
@@ -63,6 +74,8 @@ public class PrivateMessagesPage {
     public static final String draftMessageCheckboxesSel = "//input[@class='checker']";
 
     public static final String PM_CHECKBOXES_SEL = "//input[@class='checker']";
+
+    public static final String PM_LIST_SINGLE_MESSAGE_LINE_SEL = "//tr[@class='mess']";
     /**
      * If checkbox is checked and the message is unread, then the class of checkbox is next.
      */
@@ -113,7 +126,10 @@ public class PrivateMessagesPage {
     private WebElement delButton;
 
     @FindBy(xpath = pmSubjectLinksSel)
-    private List<WebElement> pmSubjectLinks;
+    private WebElement pmSubjectLink;
+
+    @FindBy (xpath = pmPaginationSel)
+    private List<WebElement> pmPaginationList;
 
     @FindBy(id = recipientErrorMessageSel)
     private WebElement recipientErrorMessage;
@@ -154,6 +170,15 @@ public class PrivateMessagesPage {
     @FindBy(xpath = recepientsListSel)
     private List<WebElement> recepientsList;
 
+    @FindBy(className = "mess")
+    private List<WebElement> messageList;
+
+    @FindBy(className = "checker")
+    private WebElement singlePmCheckbox;
+
+    @FindBy(id="remove-pm-ok")
+    private WebElement okButtonRemovingPmDialog;
+
 
     public PrivateMessagesPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -192,8 +217,8 @@ public class PrivateMessagesPage {
         return sendButton;
     }
 
-    public List<WebElement> getPmSubjectLinks() {
-        return pmSubjectLinks;
+    public WebElement getPmSubjectLink() {
+        return pmSubjectLink;
     }
 
     public WebElement getRecipientErrorMessage() {
@@ -265,6 +290,11 @@ public class PrivateMessagesPage {
         return recepientsList;
     }
 
+    public List<WebElement> getPmList() {return messageList; }
+
+    public WebElement getSinglePmCheckbox() {return singlePmCheckbox;}
+
+    public WebElement getOkButtonRemovingPmDialog() {return okButtonRemovingPmDialog;}
     /**
      * Checks whether there is a checkbox for read or unread messages (we don't know here whether the message is checked
      * since we don't create that message).
@@ -275,5 +305,9 @@ public class PrivateMessagesPage {
         } catch (AssertionError e) {
             Existence.assertElementExistsBySelector(driver, PM_CHECKED_READ_CHECKBOX);
         }
+    }
+
+    public void clickComposeMessage() {
+        getPmNewMessageLink().click();
     }
 }
