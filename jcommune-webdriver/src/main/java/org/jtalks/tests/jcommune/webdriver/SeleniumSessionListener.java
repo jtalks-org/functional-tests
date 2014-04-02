@@ -86,7 +86,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
 
     private String getTimeOnVideo(long startTimeOfMethod) {
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat("mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
             Date date = new Date(startTimeOfMethod - startTime.get());
             return sdf.format(date);
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
     }
 
     private JCommuneSeleniumConfig seleniumConfig;
-    private final ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+    private final ThreadLocal<Long> startTime = new ThreadLocal<>();
     /**
      * TestNG runs tests in groups split by class name. So first it runs all the tests in class 1, then in class 2. We
      * change the value of this field when first method of class 2 is invoked - this is a sign that we need to start a
