@@ -56,8 +56,10 @@ public class Topics {
         if (topic.getBranch() == null) {
             List<WebElement> branches = branchPage.getBranches();
             if (isEmpty(branches)) {
-                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. Page source: "
-                        + JCommuneSeleniumConfig.driver);
+                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
+                        "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
+                        "Page Title: [" + JCommuneSeleniumConfig.driver.getTitle() + "]. " +
+                        "Page source: " + JCommuneSeleniumConfig.driver);
             }
             Branch branch = new Branch(branches.get(0).getText());
             topic.withBranch(branch);
