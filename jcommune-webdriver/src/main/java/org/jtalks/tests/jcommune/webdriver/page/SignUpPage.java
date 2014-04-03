@@ -33,13 +33,13 @@ public class SignUpPage {
     public static final String submitButtonSel = "signup-submit-button";
     public static final String okButtonOnInfoWindowSel = "btn-primary";
     public static final String errorFormElementsSel = "div.control-group.error";
-    public static final String EMPTY_LOGIN_ERROR = "Имя пользователя: Не может быть пустым\n";
+    public static final String EMPTY_LOGIN_ERROR = "Имя пользователя: Длина имени пользователя должна быть между 1 и 25 символами\n";
     public static final String WRONG_PASSWORD_CONFIRMATION_ERROR =
             "Подтвердите пароль: Пароль и подтверждение пароля не совпадают\n";
-    public static final String EMPTY_PASSWORD_ERROR = "Пароль: Не может быть пустым\n" +
+    public static final String EMPTY_PASSWORD_ERROR = "Пароль: Длина пароля должна быть между 1 и 50 символами\n" +
             WRONG_PASSWORD_CONFIRMATION_ERROR;
     public static final String TOO_LONG_LOGIN_ERROR = "Имя пользователя: Длина имени пользователя должна быть между 1 и 25 символами\n";
-    public static final String TOO_LONG_PASSWORD_ERROR = "Пароль: Размер должен быть между 1 и 50\n";
+    public static final String TOO_LONG_PASSWORD_ERROR = "Пароль: Длина пароля должна быть между 1 и 50 символами\n";
     public static final String EMPTY_EMAIL_ERROR = "Адрес электронной почты: Не может быть пустым\n";
     public static final String NOT_UNIQUE_USERNAME_ERROR =
             "Имя пользователя: Пользователь с таким именем уже существует\n";
