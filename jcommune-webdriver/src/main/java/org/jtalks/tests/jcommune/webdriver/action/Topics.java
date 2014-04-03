@@ -59,7 +59,7 @@ public class Topics {
                 throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
                         "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
                         "Page Title: [" + JCommuneSeleniumConfig.driver.getTitle() + "]. " +
-                        "Page source: " + JCommuneSeleniumConfig.driver);
+                        "Page source: " + JCommuneSeleniumConfig.driver.getPageSource());
             }
             Branch branch = new Branch(branches.get(0).getText());
             topic.withBranch(branch);
