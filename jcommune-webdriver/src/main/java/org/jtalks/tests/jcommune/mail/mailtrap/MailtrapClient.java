@@ -31,9 +31,9 @@ import java.net.URI;
  */
 public class MailtrapClient {
 
-    private static final String API_INBOXES_URL = "http://mailtrap.io/api/v1/inboxes/";
-    private static final String JTALKS_AUTOTESTS_MESSAGES = "jtalks-autotests/messages/";
-    private static final String API_TOKEN_PARAM = "?token=fWJsZAhSzI4Ghb9cE42ouA";
+    private static final String API_INBOXES_URL = "https://mailtrap.io/api/v1/inboxes/";
+    private static final String JTALKS_AUTOTESTS_MESSAGES = "14272/messages/";
+    private static final String API_TOKEN_PARAM = "?api_token=089dbeb32c12ea062be1e1d87cef3267";
 
     static {
         Slf4jLoggerFacade loggerFacade = new Slf4jLoggerFacade();
@@ -49,8 +49,7 @@ public class MailtrapClient {
     public static String getMessages() throws CouldNotGetMessagesException {
         RestTemplate client = new RestTemplate();
         try {
-            return client.getForObject(new URI(mailtrapMessagesUri()),
-                    String.class);
+            return client.getForObject(new URI(mailtrapMessagesUri()), String.class);
         } catch (Exception e) {
             throw new CouldNotGetMessagesException(e);
         }

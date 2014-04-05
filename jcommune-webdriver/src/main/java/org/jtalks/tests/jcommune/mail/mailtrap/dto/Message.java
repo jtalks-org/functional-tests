@@ -15,16 +15,19 @@
 
 package org.jtalks.tests.jcommune.mail.mailtrap.dto;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.ISODateTimeFormat;
+
 /**
  *  The Data Transfer Object for message
  */
 public class Message {
     private String id;
-    private String from;
-    private String title;
-    private String source;
-    private String created_at;
-    private RecipientDto[] recipients;
+    private String from_email;
+    private String subject;
+    private String text_body;
+    private String sent_at;
+    private String to_email;
 
     public String getId() {
         return id;
@@ -35,42 +38,42 @@ public class Message {
     }
 
     public String getFrom() {
-        return from;
+        return from_email;
     }
 
     public void setFrom(String from) {
-        this.from = from;
+        this.from_email = from;
     }
 
     public String getTitle() {
-        return title;
+        return subject;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.subject = title;
     }
 
-    public String getCreated_at() {
-        return created_at;
+    public DateTime getCreated_at() {
+        return ISODateTimeFormat.dateTimeParser().parseDateTime(sent_at);
     }
 
     public void setCreated_at(String created_at) {
-        this.created_at = created_at;
+        this.sent_at = created_at;
     }
 
-    public RecipientDto[] getRecipients() {
-        return recipients;
+    public String getRecipient() {
+        return to_email;
     }
 
-    public void setRecipients(RecipientDto[] recipients) {
-        this.recipients = recipients;
+    public void setRecipient(String recipients) {
+        this.to_email = recipients;
     }
 
     public String getSource() {
-        return source;
+        return text_body;
     }
 
-    public void setSource(String source) {
-        this.source = source;
+    public void setSource(String text_body) {
+        this.text_body = text_body;
     }
 }

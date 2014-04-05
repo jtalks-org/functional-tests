@@ -97,62 +97,30 @@ public class MailtrapMail {
 
     private String tryToGetLink(String recipient) {
         Gson gson = new Gson();
-        MessageDto[] messages;
+        Message[] messages;
         String link = null;
 
-        messages = gson.fromJson(MailtrapClient.getMessages(), MessageDto[].class);
+        messages = gson.fromJson(MailtrapClient.getMessages(), Message[].class);
 
-        List<Metadata> metadataList = getMetadataList(messages);
-
-        String id = NOT_FOUND_ID;
-        DateTime createdAt = null;
-        for (Metadata metadata : metadataList) {
-            if (!recipient.equals(metadata.getRecipient())) {
-                continue;
-            }
-            if (id.equals(NOT_FOUND_ID) || metadata.getDateTime().isAfter(createdAt)) {
-                id = metadata.getId();
+        Message activationMail = null;
+        for (Message message: messages) {
+            if (recipient.equalsIgnoreCase(message.getRecipient())) {
+                activationMail = message;
             }
         }
-        if (id.equals(NOT_FOUND_ID)) {
-            return link;
+        if (activationMail == null) {
+            return null;
         }
-
-        MessageDto messageDto = gson.fromJson(MailtrapClient.getMessage(id), MessageDto.class);
 
         try {
-            String source = messageDto.getMessage().getSource();
-
-            MimeMessage message = new MimeMessage(Session.getInstance(new Properties()),
-                    (new ByteArrayInputStream(source.getBytes())));
-            Multipart multipart = (Multipart) message.getContent();
-            Multipart multipart1 = (Multipart) multipart.getBodyPart(0).getContent();
-            Multipart multipart2 = (Multipart) multipart1.getBodyPart(0).getContent();
-            String escapedText = (String) multipart2.getBodyPart(0).getContent();
-            String text = StringEscapeUtils.unescapeHtml(escapedText);
-            Matcher matcher = Pattern.compile("(http://.*/activate/.*)[\\s]").matcher(text);
+            String source = activationMail.getSource();
+            Matcher matcher = Pattern.compile("(http://.*/activate/.*)[\\s]").matcher(source);
             if (matcher.find()) {
                 link = matcher.group(1);
             }
-        } catch (MessagingException | IOException e) {
+        } catch (Exception e) {
             LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap", e);
         }
         return link;
-    }
-
-    private List<Metadata> getMetadataList(MessageDto[] messageDtoArray) {
-        List<Metadata> metadataList = new ArrayList<>();
-        Metadata metadata;
-        for (MessageDto messageDto : messageDtoArray) {
-            Message message = messageDto.getMessage();
-            metadata = new Metadata();
-            metadata.setId(message.getId());
-            metadata.setTitle(message.getTitle());
-            metadata.setRecipient(message.getRecipients()[0].getRecipient()
-                    .getTitle().replaceAll("[<>]", ""));
-            metadata.setDateTime(ISODateTimeFormat.dateTimeParser().parseDateTime(message.getCreated_at()));
-            metadataList.add(metadata);
-        }
-        return metadataList;
     }
 }
