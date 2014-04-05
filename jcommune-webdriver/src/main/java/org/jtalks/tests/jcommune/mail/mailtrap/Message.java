@@ -15,17 +15,15 @@
 
 package org.jtalks.tests.jcommune.mail.mailtrap;
 
-import org.joda.time.DateTime;
-
 /**
- * @author Guram Savinov
+ * The Data Transfer Object for message
  */
-public class Metadata {
-
+public class Message {
     private String id;
-    private String title;
-    private DateTime dateTime;
-    private String recipient;
+    private String from_email;
+    private String subject;
+    private String text_body;
+    private String to_email;
 
     public String getId() {
         return id;
@@ -35,27 +33,27 @@ public class Metadata {
         this.id = id;
     }
 
-    public String getRecipient() {
-        return recipient;
+    public String getFrom() {
+        return from_email;
     }
 
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
+    public void setFrom(String from) {
+        this.from_email = from;
     }
 
     public String getTitle() {
-        return title;
+        return subject;
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        this.subject = title;
     }
 
-    public DateTime getDateTime() {
-        return dateTime;
+    public String getRecipient() {
+        return to_email;
     }
 
-    public void setDateTime(DateTime dateTime) {
-        this.dateTime = dateTime;
+    public String getSource() {
+        return text_body;
     }
 }

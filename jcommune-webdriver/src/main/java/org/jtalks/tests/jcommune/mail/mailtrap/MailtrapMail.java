@@ -16,26 +16,12 @@
 package org.jtalks.tests.jcommune.mail.mailtrap;
 
 import com.google.gson.Gson;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
-import org.jtalks.tests.jcommune.mail.mailtrap.dto.Message;
-import org.jtalks.tests.jcommune.mail.mailtrap.dto.MessageDto;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
 import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.MailWasNotReceivedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.mail.MessagingException;
-import javax.mail.Multipart;
-import javax.mail.Session;
-import javax.mail.internet.MimeMessage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -52,7 +38,6 @@ import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 public class MailtrapMail {
     public static final int MAIL_POLL_INTERVAL = 500;
     private static final Logger LOGGER = LoggerFactory.getLogger(MailtrapMail.class);
-    private static final String NOT_FOUND_ID = "no message with this ID";
     private static final int MAILTRAP_TIMEOUT_SECS = 120;
     private final MailtrapStatistics statistics = MailtrapStatistics.instance();
     private String activationLink;
@@ -103,7 +88,7 @@ public class MailtrapMail {
         messages = gson.fromJson(MailtrapClient.getMessages(), Message[].class);
 
         Message activationMail = null;
-        for (Message message: messages) {
+        for (Message message : messages) {
             if (recipient.equalsIgnoreCase(message.getRecipient())) {
                 activationMail = message;
             }
