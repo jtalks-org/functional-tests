@@ -93,31 +93,31 @@ public class AdministrationTest {
 
     @Test
     public void settingValidForumTitle_shouldPass(){
-        ForumSetting title = new ForumSetting();
+        ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(30));
         ForumSettings.setForumTitle(title);
     }
 
     @Test
     public void settingForumTitleMaxBoundary_shouldPass(){
-        ForumSetting title = new ForumSetting().withValue(randomAlphanumeric(100));
+        ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(100));
         ForumSettings.setForumTitle(title);
     }
 
     @Test
     public void settingForumTitleMinBoundary_shouldPass(){
-        ForumSetting title = new ForumSetting().withValue(randomAlphanumeric(1));
+        ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(1));
         ForumSettings.setForumTitle(title);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_TITLE_LENGTH_ERROR)
     public void exceedingForumTitleMaxBoundary_shouldFail() throws ValidationException {
-        ForumSetting title = new ForumSetting().withValue(randomAlphanumeric(101));
+        ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(101));
         ForumSettings.setForumTitle(title);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_TITLE_LENGTH_ERROR)
     public void emptyForumTitle_shouldFail() throws ValidationException {
-        ForumSetting title = new ForumSetting().withValue("");
+        ForumSetting title = new ForumSetting().withTitle("");
         ForumSettings.setForumTitle(title);
     }
 
@@ -125,31 +125,31 @@ public class AdministrationTest {
 
     @Test
     public void settingValidForumDescription_shouldPass(){
-        ForumSetting desc = new ForumSetting();
+        ForumSetting desc = new ForumSetting().withDescription(randomAlphanumeric(30));
         ForumSettings.setForumDescription(desc);
     }
 
     @Test
     public void settingForumDescriptionMaxBoundary_shouldPass(){
-        ForumSetting desc = new ForumSetting().withValue(randomAlphanumeric(255));
+        ForumSetting desc = new ForumSetting().withDescription(randomAlphanumeric(255));
         ForumSettings.setForumDescription(desc);
     }
 
     @Test
     public void settingForumDescriptionMinBoundary_shouldPass(){
-        ForumSetting desc = new ForumSetting().withValue(randomAlphanumeric(1));
+        ForumSetting desc = new ForumSetting().withDescription(randomAlphanumeric(1));
         ForumSettings.setForumDescription(desc);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
     public void exceedingForumDescriptionMaxBoundary_shouldFail() throws ValidationException {
-        ForumSetting desc = new ForumSetting().withValue(randomAlphanumeric(256));
+        ForumSetting desc = new ForumSetting().withDescription(randomAlphanumeric(256));
         ForumSettings.setForumDescription(desc);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
     public void emptyForumDescription_shouldFail() throws ValidationException {
-        ForumSetting desc = new ForumSetting().withValue("");
+        ForumSetting desc = new ForumSetting().withDescription("");
         ForumSettings.setForumDescription(desc);
     }
 
@@ -157,25 +157,25 @@ public class AdministrationTest {
 
     @Test
     public void settingValidPagesPrefix_shouldPass(){
-        ForumSetting prefix = new ForumSetting();
+        ForumSetting prefix = new ForumSetting().withPrefix(randomAlphanumeric(30));
         ForumSettings.setPrefix(prefix);
     }
 
     @Test
     public void settingPagesPrefixMaxBoundary_shouldPass(){
-        ForumSetting prefix = new ForumSetting().withValue(randomAlphanumeric(255));
+        ForumSetting prefix = new ForumSetting().withPrefix(randomAlphanumeric(255));
         ForumSettings.setPrefix(prefix);
     }
 
     @Test
     public void emptyPagesPrefix_shouldPass(){
-        ForumSetting prefix = new ForumSetting().withValue("");
+        ForumSetting prefix = new ForumSetting().withPrefix("");
         ForumSettings.setPrefix(prefix);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
     public void exceedingPagesPrefixMaxBoundary_shouldFail() throws ValidationException {
-        ForumSetting prefix = new ForumSetting().withValue(randomAlphanumeric(256));
+        ForumSetting prefix = new ForumSetting().withPrefix(randomAlphanumeric(256));
         ForumSettings.setPrefix(prefix);
     }
 
@@ -183,25 +183,25 @@ public class AdministrationTest {
 
     @Test
     public void settingValidLogoTooltip_shouldPass(){
-        ForumSetting tooltip = new ForumSetting();
+        ForumSetting tooltip = new ForumSetting().withTooltip(randomAlphanumeric(30));
         ForumSettings.setLogoTooltip(tooltip);
     }
 
     @Test
     public void settingLogoTooltipMaxBoundary_shouldPass(){
-        ForumSetting tooltip = new ForumSetting().withValue(randomAlphanumeric(255));
+        ForumSetting tooltip = new ForumSetting().withTooltip(randomAlphanumeric(255));
         ForumSettings.setLogoTooltip(tooltip);
     }
 
     @Test
     public void emptyLogoTooltip_shouldPass(){
-        ForumSetting tooltip = new ForumSetting().withValue("");
+        ForumSetting tooltip = new ForumSetting().withTooltip("");
         ForumSettings.setLogoTooltip(tooltip);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
     public void exceedingLogoTooltipMaxBoundary_shouldFail() throws ValidationException {
-        ForumSetting tooltip = new ForumSetting().withValue(randomAlphanumeric(256));
+        ForumSetting tooltip = new ForumSetting().withTooltip(randomAlphanumeric(256));
         ForumSettings.setLogoTooltip(tooltip);
     }
 
@@ -209,25 +209,25 @@ public class AdministrationTest {
 
     @Test
     public void settingValidCopyright_shouldPass(){
-        ForumSetting copyright = new ForumSetting();
+        ForumSetting copyright = new ForumSetting().withCopyright(randomAlphanumeric(30));
         ForumSettings.setCopyright(copyright);
     }
 
     @Test
     public void settingCopyrightMaxBoundary_shouldPass(){
-        ForumSetting copyright = new ForumSetting().withValue(randomAlphanumeric(255));
+        ForumSetting copyright = new ForumSetting().withCopyright(randomAlphanumeric(255));
         ForumSettings.setCopyright(copyright);
     }
 
     @Test
     public void emptyCopyright_shouldPass(){
-        ForumSetting copyright = new ForumSetting().withValue("");
+        ForumSetting copyright = new ForumSetting().withCopyright("");
         ForumSettings.setCopyright(copyright);
     }
 
     @Test (expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = ForumSettingsDialog.WRONG_FIELD_LENGTH_ERROR)
     public void exceedingCopyrightMaxBoundary_shouldFail() throws ValidationException {
-        ForumSetting copyright = new ForumSetting().withValue(randomAlphanumeric(256));
+        ForumSetting copyright = new ForumSetting().withCopyright(randomAlphanumeric(256));
         ForumSettings.setCopyright(copyright);
     }
 
