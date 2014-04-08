@@ -15,8 +15,8 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
  * @author stanislav bashkirtsev
+ * @author Varro
  */
-@Test(groups = "htmlunit-incompatible")
 public class PrivateMessagesTest {
     private static final Logger logger = LoggerFactory.getLogger(Users.class);
 
@@ -31,12 +31,9 @@ public class PrivateMessagesTest {
     public void pmWithCorrectFields_ShouldPass() throws Exception {
         User receiver = Users.signUpAndSignIn();
         Users.logout();
-        Users.signUpAndSignIn();
+        User sender = Users.signUpAndSignIn();
         PrivateMessage pm = new PrivateMessage(receiver);
-        PrivateMessage createdPm = PrivateMessages.createPrivateMessage(pm);
-        PrivateMessages.sendMessage();
-        Users.logout();
-        Users.signIn(receiver);
-        Assert.assertTrue(PrivateMessages.pmIsReceived(createdPm));
+        PrivateMessages.sendPrivateMessage(pm);
+        PrivateMessages.assertPmReceived(sender, receiver, pm);
     }
 }

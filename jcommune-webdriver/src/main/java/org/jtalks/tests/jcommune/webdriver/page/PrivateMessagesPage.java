@@ -205,6 +205,21 @@ public class PrivateMessagesPage {
         return toField;
     }
 
+    public void fillToField(String username)
+    {
+        getToField().sendKeys(username);
+    }
+
+    public void fillTitleField(String title)
+    {
+        getTitleField().sendKeys(title);
+    }
+
+    public void fillMessageField(String message)
+    {
+        getMessageField().sendKeys(message);
+    }
+
     public WebElement getTitleField() {
         return titleField;
     }
@@ -309,5 +324,9 @@ public class PrivateMessagesPage {
 
     public void clickComposeMessage() {
         getPmNewMessageLink().click();
+    }
+
+    public void clickOpenOutboxMessages() {
+        getPmOutboxLink().click();
     }
 }

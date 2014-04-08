@@ -30,6 +30,7 @@ import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Contains actions for private messages
@@ -39,24 +40,20 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 public class PrivateMessages {
     private static final Logger LOGGER = LoggerFactory.getLogger(Topics.class);
 
-    public static PrivateMessage createPrivateMessage(PrivateMessage pm) {
+    public static void sendPrivateMessage(PrivateMessage pm) {
         mainPage.openPrivateMessages();
         pmPage.clickComposeMessage();
         fillPrivateMessageFields(pm);
-        return pm;
-    }
-
-    public static void fillPrivateMessageFields(PrivateMessage pm) {
-        info("Filling \"To\" field");
-        pmPage.getToField().sendKeys(pm.getReceiver().getUsername());
-        info("Filling \"Title\" field");
-        pmPage.getTitleField().sendKeys(pm.getMessageSubject());
-        info("Filling \"Message\" field");
-        pmPage.getMessageField().sendKeys(pm.getMessageContent());
-    }
-
-    public static void sendMessage() {
         pmPage.getSendButton().click();
+    }
+
+    private static void fillPrivateMessageFields(PrivateMessage pm) {
+        info("Filling \"To\" field");
+        pmPage.fillToField(pm.getReceiver().getUsername());
+        info("Filling \"Title\" field");
+        pmPage.fillTitleField(pm.getMessageSubject());
+        info("Filling \"Message\" field");
+        pmPage.fillMessageField(pm.getMessageContent());
     }
 
     public static boolean pmIsReceived(PrivateMessage pm) {
@@ -67,12 +64,11 @@ public class PrivateMessages {
         for(WebElement singlePmRow : pmList) {
             if(singlePmRow.findElements(By.cssSelector("a")).get(1).getText().equals(pm.getMessageSubject())) {
                 info("The private message was found!");
-                removePm(pm);
                 return true;
             }
         }
         LOGGER.info("Expected private message not found: {}", pm);
-        throw new AssertionFailedError("The private message is not present on the page: " + pm);
+        return false;
     }
 
     public static void removePm(PrivateMessage pm)
@@ -94,13 +90,20 @@ public class PrivateMessages {
         throw new AssertionFailedError("Can't delete private message because it's not present on the page: " + pm);
     }
 
-    private static WebElement getMessageLine(PrivateMessage pm) {
-        for (WebElement link : pmPage.getPmList()) {
-            String subject = link.findElement(By.xpath(PrivateMessagesPage.pmSubjectLinksSel)).getText();
-            if (subject == pm.getMessageSubject()) {
-                return link;
-            }
+    public static boolean assertPmReceived(User sender, User receiver, PrivateMessage pm)
+    {
+        Users.logout();
+        Users.signIn(receiver);
+        if(pmIsReceived(pm)) {
+            removePm(pm);
+            Users.logout();
+            Users.signIn(sender);
+            mainPage.openPrivateMessages();
+            pmPage.clickOpenOutboxMessages();
+            removePm(pm);
+            return true;
         }
-        return null;
+        throw new AssertionFailedError("The private message is not present on the page: " + pm);
     }
+
 }
