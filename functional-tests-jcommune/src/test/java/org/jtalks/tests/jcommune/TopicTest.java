@@ -55,7 +55,7 @@ public class TopicTest {
     }
 
     @Test(expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+            expectedExceptionsMessageRegExp = TopicPage.RUS_EMPTY_SUBJECT_ERROR)
     public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic("", "message");
