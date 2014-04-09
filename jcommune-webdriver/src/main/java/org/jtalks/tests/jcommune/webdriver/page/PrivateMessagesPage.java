@@ -10,6 +10,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+
 /**
  * @author masyan
  * @author yacov
@@ -205,18 +207,18 @@ public class PrivateMessagesPage {
         return toField;
     }
 
-    public void fillToField(String username)
-    {
+    public void fillToField(String username) {
+        info("Filling \"To\" field");
         getToField().sendKeys(username);
     }
 
-    public void fillTitleField(String title)
-    {
+    public void fillTitleField(String title) {
+        info("Filling \"Title\" field");
         getTitleField().sendKeys(title);
     }
 
-    public void fillMessageField(String message)
-    {
+    public void fillMessageField(String message) {
+        info("Filling \"Message\" field");
         getMessageField().sendKeys(message);
     }
 

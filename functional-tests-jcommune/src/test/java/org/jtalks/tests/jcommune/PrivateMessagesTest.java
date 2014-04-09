@@ -31,9 +31,9 @@ public class PrivateMessagesTest {
     public void pmWithCorrectFields_ShouldPass() throws Exception {
         User receiver = Users.signUpAndSignIn();
         Users.logout();
-        User sender = Users.signUpAndSignIn();
+        Users.signUpAndSignIn();
         PrivateMessage pm = new PrivateMessage(receiver);
         PrivateMessages.sendPrivateMessage(pm);
-        PrivateMessages.assertPmReceived(sender, receiver, pm);
+        PrivateMessages.assertPmReceived(receiver, pm);
     }
 }

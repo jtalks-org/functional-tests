@@ -48,11 +48,8 @@ public class PrivateMessages {
     }
 
     private static void fillPrivateMessageFields(PrivateMessage pm) {
-        info("Filling \"To\" field");
         pmPage.fillToField(pm.getReceiver().getUsername());
-        info("Filling \"Title\" field");
         pmPage.fillTitleField(pm.getMessageSubject());
-        info("Filling \"Message\" field");
         pmPage.fillMessageField(pm.getMessageContent());
     }
 
@@ -71,8 +68,7 @@ public class PrivateMessages {
         return false;
     }
 
-    public static void removePm(PrivateMessage pm)
-    {
+    public static void removePm(PrivateMessage pm) {
         info("Removing Private Message: " + pm);
         List<WebElement> pmList = pmPage.getPmList();
 
@@ -90,20 +86,14 @@ public class PrivateMessages {
         throw new AssertionFailedError("Can't delete private message because it's not present on the page: " + pm);
     }
 
-    public static boolean assertPmReceived(User sender, User receiver, PrivateMessage pm)
-    {
+    public static boolean assertPmReceived(User receiver, PrivateMessage pm) {
         Users.logout();
         Users.signIn(receiver);
         if(pmIsReceived(pm)) {
-            removePm(pm);
-            Users.logout();
-            Users.signIn(sender);
-            mainPage.openPrivateMessages();
-            pmPage.clickOpenOutboxMessages();
-            removePm(pm);
             return true;
         }
-        throw new AssertionFailedError("The private message is not present on the page: " + pm);
+        throw new AssertionFailedError(String.format("The private message is not present on the page " +
+                "(author - %1, receiver - %2, subject - %3)", pm.getAuthor(), pm.getReceiver(), pm.getMessageSubject()));
     }
 
 }
