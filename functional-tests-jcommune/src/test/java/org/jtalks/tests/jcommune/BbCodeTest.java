@@ -38,7 +38,7 @@ public class BbCodeTest {
         DriverMethodHelp.closeAlertIfExists(driver);
     }
 
-    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = false)
+    @Test(dataProvider = "bbCodesWithMessage_thatShouldPass", enabled = true)
     public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
         Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
