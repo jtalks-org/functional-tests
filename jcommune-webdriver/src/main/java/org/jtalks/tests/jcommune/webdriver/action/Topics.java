@@ -51,7 +51,7 @@ public class Topics {
      * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
      */
 
-    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException, InterruptedException {
+    public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
         gotoMainPage();
         if (topic.getBranch() == null) {
             List<WebElement> branches = branchPage.getBranches();
