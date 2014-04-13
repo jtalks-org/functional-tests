@@ -20,7 +20,6 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-import static java.lang.Thread.sleep;
 import static org.jtalks.tests.jcommune.utils.DriverMethodHelp.setCheckboxState;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
@@ -121,10 +120,9 @@ public class TopicPage {
         return newButton;
     }
 
-    public void clickCreateTopic() throws PermissionsDeniedException, InterruptedException {
+    public void clickCreateTopic() throws PermissionsDeniedException {
         info("Clicking New Topic button");
         try {
-            sleep(3000);
             topicPage.getNewButton().click();
         } catch (NoSuchElementException e) {
             info("No such button found!");
@@ -133,7 +131,7 @@ public class TopicPage {
         }
     }
 
-    public void fillTopicMainFields(Topic topic) throws PermissionsDeniedException, InterruptedException {
+    public void fillTopicMainFields(Topic topic) throws PermissionsDeniedException {
         info("Filling topic fields");
         fillTopicTitle(topic.getTitle());
         fillTopicBody(topic.getFirstPost().getPostContent());
@@ -141,9 +139,8 @@ public class TopicPage {
         markTopicAsAnnouncement(topic.isAnnouncement());
     }
 
-    private void fillTopicTitle(String topicTitle) throws InterruptedException {
+    private void fillTopicTitle(String topicTitle) {
         info("Fill topic title: [" + topicTitle + "]");
-        sleep(3000);
         this.subjectField.sendKeys(topicTitle);
     }
 
