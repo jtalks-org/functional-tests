@@ -8,8 +8,10 @@
     <version>0.1-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-
   <artifactId>functional-tests-jcommune</artifactId>
+  <properties>
+    <testnames>Smoke</testnames>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -20,6 +22,9 @@
           <suiteXmlFiles>
             <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
           </suiteXmlFiles>
+          <properties>
+            <testnames>${testnames}</testnames>
+          </properties>
         </configuration>
       </plugin>
     </plugins>

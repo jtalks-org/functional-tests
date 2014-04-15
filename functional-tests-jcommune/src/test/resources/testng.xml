@@ -9,7 +9,7 @@
     <listener class-name="org.uncommons.reportng.HTMLReporter"/>
     <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
   </listeners>
-  <test name="JCommune">
+  <test name="Smoke">
     <groups>
       <define name="manual"/>
       <!--Since HtmlUnit is a pretty buggy thing, it may not work for some functionality. Such tests will be marked
@@ -20,9 +20,18 @@
       <class name="org.jtalks.tests.jcommune.SignUpTest"/>
       <class name="org.jtalks.tests.jcommune.SignInTest"/>
       <class name="org.jtalks.tests.jcommune.TopicTest"/>
-      <class name="org.jtalks.tests.jcommune.BbCodeTest"/>
       <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
       <class name="org.jtalks.tests.jcommune.CheckMailCounterTest"/>
+    </classes>
+  </test>
+  <!--
+  This takes long time to run, usually will be run only headless (without browser) to speed up. It won't be run by
+  default, only Smokes are run. To run these tests pass to maven: -Dtestnames=FullRegression. See pom.xml for more
+  information.
+  -->
+  <test name="FullRegression">
+    <classes>
+      <class name="org.jtalks.tests.jcommune.BbCodeTest"/>
     </classes>
   </test>
 </suite>
