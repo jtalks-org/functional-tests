@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Antarcticle">
+    <parameter name="appUrl" value="http://autotests.jtalks.org/antarcticle"/>
+    <test name="TomcatVulnerability">
+        <classes>
+            <class name="org.jtalks.tests.antarcticle.security.TomcatVulnerabilityTest"/>
+        </classes>
+    </test>
+</suite>
+
