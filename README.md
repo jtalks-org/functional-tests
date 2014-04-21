@@ -16,7 +16,9 @@ Set "Use classpath of module" to maven module name (functional-tests-jcommune)
 Press "Ok".
 
 ####Running with Local Selenium Server
-If you'd like to use your local browser to run tests, [download selenium server|http://selenium.googlecode.com/files/selenium-java-2.35.0.zip], unzip it and run as `java -jar selenium-server-standalone-2.35.0.jar`. It will start on http://localhost:4444/wd/console. Now in IntelliJ you have to specify env vars: **Edit Configuration -> Environment Variables**:
+If you'd like to use your local browser to run tests, [download selenium server](http://selenium.googlecode.com/files/selenium-java-2.35.0.zip),
+unzip it and run as `java -jar selenium-server-standalone-2.35.0.jar`. It will start on http://localhost:4444/wd/console.
+Now in IntelliJ you have to specify env vars: **Edit Configuration -> Environment Variables**:
 - SELENIUM_VERSION - your browser version (e.g. 20)
 - SELENIUM_BROWSER - your browser name (firefox)
 - SELENIUM_URL - http://localhost:4444/wd/hub
