@@ -7,7 +7,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import java.util.List;
 
 /**
@@ -25,19 +27,11 @@ public class ProfilePage {
 
     public static final String editProfileButtonSel = "//a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/users/edit') and @type='submit']";
 
-    public static final String emailEditFieldIdSel = "email";
-
     public static final String saveEditButtonIdSel = "saveChanges";
 
     public static final String errorEmailMessageIdSel = "email.errors";
 
     public static final String emailSel = "//label[contains(@class,'test-mail')]";
-
-    public static final String currentPasswordFieldIdSel = "currentUserPassword";
-
-    public static final String newPasswordFieldIdSel = "newUserPassword";
-
-    public static final String confirmNewPasswordFieldIdSel = "newUserPasswordConfirm";
 
     public static final String errorCurrentUserPasswordMessageIdSel = "currentUserPassword.errors";
 
@@ -48,8 +42,6 @@ public class ProfilePage {
     public static final String backButtonSel = "//a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user') and @class='button']";
 
     public static final String profileLinkFromLastColumnSel = "//table[@id='topics-table']/tbody/tr/td[contains(@class,'latest-by')]/p/a";
-
-    public static final String signatureFieldSel = "signature";
 
     public static final String signatureTextSel = "//label[contains(@class,'test-signature')]";
 
@@ -81,29 +73,27 @@ public class ProfilePage {
 
     public static final String postCountDateTableFieldSel = "//label[contains(text(),'Post count')]";
 
-    public static final String pageSizeFieldSel = "pageSize";
-
     public static final String pmLinksFromLastColumnSel = "//td[contains(@class, 'latest-by')]/p/a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/users/')]";
 
-    public static final String WRONG_CURRENT_PASSWORD = "Password does not match to the current password";
+    public static final String WRONG_CURRENT_PASSWORD = "Пароль не совпадает с текущим паролем\n";
 
-    public static final String WRONG_CONFIRMATION_PASSWORD = "Password and confirmation password do not match";
+    public static final String WRONG_CONFIRMATION_PASSWORD = "Пароль и подтверждение пароля не совпадают\n";
 
-    public static final String TOO_LONG_PASSWORD = "size must be between 1 and 50";
+    public static final String TOO_LONG_PASSWORD = "Размер должен быть между 1 и 50\n";
 
-    public static final String TOO_LONG_FIRST_NAME = "should be 0 - 45 characters";
+    public static final String TOO_LONG_FIRST_NAME = "Должно быть 0 - 45 символов\n";
 
-    public static final String TOO_LONG_LAST_NAME = "should be 0 - 255 characters";
+    public static final String TOO_LONG_LAST_NAME = "Должно быть 0 - 255 символов\n";
 
-    public static final String TOO_LONG_LOCATION = "length must be between 0 and 30";
+    public static final String TOO_LONG_LOCATION = "Длина должна быть между 0 и 30\n";
 
-    public static final String TOO_LONG_SIGNATURE = "Signature length must be no more 255 characters";
+    public static final String TOO_LONG_SIGNATURE = "Длина подписи не должна превышать 255 символов\n";
 
-    public static final String TOO_LONG_EMAIL = "Email field should not contain more than 50 symbols";
+    public static final String TOO_LONG_EMAIL = "Поле Email не может содержать более 50 символов\n";
 
-    public static final String INVALID_EMAIL = "An email format should be like mail@mail.ru";
+    public static final String INVALID_EMAIL = "Допустимый формат email: mail@mail.ru\n";
 
-    public static final String EMPTY_EMAIL = "Must not be empty";
+    public static final String EMPTY_EMAIL = "Не может быть пустым\n";
 
     @FindBy(xpath = emptyMessageInPosListSel)
     private WebElement emptyMessageInPosList;
@@ -123,13 +113,13 @@ public class ProfilePage {
     @FindBy(id = errorCurrentUserPasswordMessageIdSel)
     private WebElement errorCurrentUserPasswordMessage;
 
-    @FindBy(id = currentPasswordFieldIdSel)
+    @FindBy(id = "userSecurityDto.currentUserPassword")
     private WebElement currentPasswordField;
 
-    @FindBy(id = newPasswordFieldIdSel)
+    @FindBy(id = "userSecurityDto.newUserPassword")
     private WebElement newPasswordField;
 
-    @FindBy(id = confirmNewPasswordFieldIdSel)
+    @FindBy(id = "userSecurityDto.newUserPasswordConfirm")
     private WebElement confirmNewPasswordField;
 
     @FindBy(xpath = emailSel)
@@ -150,7 +140,7 @@ public class ProfilePage {
     @FindBy(xpath = editProfileButtonSel)
     private WebElement editProfileButton;
 
-    @FindBy(id = emailEditFieldIdSel)
+    @FindBy(id = "userProfileDto.email")
     private WebElement emailEditField;
 
     @FindBy(id = saveEditButtonIdSel)
@@ -159,7 +149,7 @@ public class ProfilePage {
     @FindBy(xpath = profileLinkFromLastColumnSel)
     private WebElement profileLinkFromLastColumn;
 
-    @FindBy(id = signatureFieldSel)
+    @FindBy(id = "userProfileDto.signature")
     private WebElement signatureField;
 
     @FindBy(xpath = signatureTextSel)
@@ -201,18 +191,56 @@ public class ProfilePage {
     @FindBy(xpath = postCountDateTableFieldSel)
     private WebElement postCountDateTableField;
 
-    @FindBy(id = pageSizeFieldSel)
+    @FindBy(id = "userProfileDto.pageSize")
     private WebElement pageSizeField;
 
     @FindBy(xpath = pmLinksFromLastColumnSel)
     private List<WebElement> pmLinksFromLastColumn;
+
+    @FindBy(id = "userNotificationsDto.autosubscribe1")
+    private WebElement autoSubscribeCheckbox;
+
+    @FindBy(id = "userNotificationsDto.mentioningNotificationsEnabled1")
+    private WebElement notifyIfSomeoneMentionsYouCheckbox;
+
+    @FindBy(id = "userNotificationsDto.sendPmNotification1")
+    private WebElement notifyIfPrivateMessageIsReceivedCheckbox;
+
+    @FindBy(id = "userProfileDto.location")
+    private WebElement locationField;
+
+    @FindBy(id = "profileBtn")
+    private WebElement profileTabButton;
+
+    @FindBy(id = "contactsBtn")
+    private WebElement contacsTabButton;
+
+    @FindBy(id = "notificationsBtn")
+    private WebElement notificationsTabButton;
+
+    @FindBy(id = "securityBtn")
+    private WebElement securityTabButton;
+
+    @FindBy(id = "userProfileDto.firstName")
+    private WebElement firstNameField;
+
+    @FindBy(id = "userProfileDto.lastName")
+    private WebElement lastNameField;
+
+    @FindBy(id = "user-menu-profile")
+    private WebElement profileButton;
+
+    @FindBy(id = "user-dropdown-menu-link")
+    private WebElement dropDownMenu;
+
+    @FindBy(css = "div.control-group.error")
+    List<WebElement> errorFormElements;
 
     public ProfilePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
     }
 
     //Getters
-
 
     public WebElement getPostListButton() {
         return postListButton;
@@ -350,6 +378,53 @@ public class ProfilePage {
         return pmLinksFromLastColumn;
     }
 
+    public WebElement getAutoSubscribeCheckbox() {
+        return  autoSubscribeCheckbox;
+    }
+
+    public WebElement getNotifyIfSomeoneMentionsYouCheckbox() {
+        return notifyIfSomeoneMentionsYouCheckbox;
+    }
+
+    public WebElement getNotifyIfPrivateMessageIsReceivedCheckbox() {
+        return notifyIfPrivateMessageIsReceivedCheckbox;
+    }
+
+    public WebElement getProfileTabButton() {
+        return profileTabButton;
+    }
+
+    public WebElement getContacsTabButton() {
+        return contacsTabButton;
+    }
+
+    public WebElement getNotificationsTabButton() {
+        return notificationsTabButton;
+    }
+
+    public WebElement getSecurityTabButton() {
+        return securityTabButton;
+    }
+
+    public WebElement getLocationField() {
+        return locationField;
+    }
+
+    public WebElement getFirstNameField() {
+        return firstNameField;
+    }
+
+    public WebElement getLastNameField() {
+        return lastNameField;
+    }
+
+    public WebElement getProfileButton() {
+        return profileButton;
+    }
+
+    public WebElement getDropDownMenu() {
+        return dropDownMenu;
+    }
 
     //setters
 
@@ -358,4 +433,106 @@ public class ProfilePage {
         new Select(getPageSizeField()).selectByValue(sNum);
     }
 
+    public void selectAutoSubscribe(boolean flag) {
+        if (flag == autoSubscribeCheckbox.isSelected()) {
+            info(flag ? "Autosubscribe checkbox is already checked" : "Autosubscribe checkbox is already unchecked" + " so doing nothing");
+        } else {
+            info("Autosubscribe will be check");
+            autoSubscribeCheckbox.click();
+        }
+    }
+
+    public void selectNotifyIfSomeoneMentionsYou(boolean flag) {
+        if (flag == notifyIfSomeoneMentionsYouCheckbox.isSelected()) {
+            info(flag ? "NotifyIfSomeoneMentionsYouCheckbox checked" : "NotifyIfSomeoneMentionsYouCheckbox unchecked" + " so doing nothing");
+        } else {
+            info("NotifyIfSomeoneMentionsYouCheckbox will be check");
+            notifyIfSomeoneMentionsYouCheckbox.click();
+        }
+    }
+
+    public void selectNotifyIfPrivateMessageIsReceived(boolean flag) {
+        if (flag == notifyIfPrivateMessageIsReceivedCheckbox.isSelected()) {
+            info(flag ? "NotifyIfPrivateMessageIsReceivedCheckbox checked" : "unchecked" + " so doing nothing");
+        } else {
+            info("NotifyIfPrivateMessageIsReceivedCheckbox will be check");
+            notifyIfPrivateMessageIsReceivedCheckbox.click();
+        }
+    }
+
+    public void clickOnDropDownMenuForUserOnMainPage() {
+        dropDownMenu.click();
+    }
+
+    public void clickOnProfileInDropDownMenu() {
+        profileButton.click();
+    }
+
+    public void clickOnSaveButtonInProfile() {
+        saveEditButton.click();
+    }
+
+    public void fillFirstName(String firstName) {
+        info("First name: " + firstName);
+        firstNameField.clear();
+        firstNameField.sendKeys(firstName);
+    }
+
+    public void fillLastName(String lastName) {
+        info("Last name: " + lastName);
+        lastNameField.clear();
+        lastNameField.sendKeys(lastName);
+    }
+
+    public void fillSignature(String signature) {
+        info("Signature: " + signature);
+        signatureField.clear();
+        signatureField.sendKeys(signature);
+    }
+
+    public void fillEmail(String email) {
+        info("Email: " + email);
+        emailEditField.clear();
+        emailEditField.sendKeys(email);
+    }
+
+    public void fillLocation(String location) {
+        info("Location: " + location);
+        locationField.clear();
+        locationField.sendKeys(location);
+    }
+
+    public void fillCurrentPassword(String currentPassword) {
+        info("Current password: " + currentPassword);
+        currentPasswordField.sendKeys(currentPassword);
+    }
+
+    public void fillNewPassword(String newPassword) {
+        info("New password: " + newPassword);
+        newPasswordField.sendKeys(newPassword);
+    }
+
+    public void fillConfirmNewPassword(String confirmNewPassword) {
+        info("Confirm new password: " + confirmNewPassword);
+        confirmNewPasswordField.sendKeys(confirmNewPassword);
+    }
+
+    public void openContactsTab() {
+        info("Clicking on contacts tab button");
+        contacsTabButton.click();
+    }
+
+    public void openNotificationsTab() {
+        info("Clicking on notifications tab button");
+        notificationsTabButton.click();
+    }
+
+    public void openSecurityTab() {
+        info("Clicking on security tab button");
+        securityTabButton.click();
+    }
+
+    public List<WebElement> getErrorFormElements() {
+        return errorFormElements;
+    }
 }

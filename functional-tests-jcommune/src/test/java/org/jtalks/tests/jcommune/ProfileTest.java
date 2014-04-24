@@ -35,32 +35,32 @@ public class ProfileTest {
     @Test
     public void editProfileWithNoChanges_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void firstNameWithMinBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setFirstName("");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void firstNameWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setFirstName(randomAlphanumeric(25));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void firstNameWithMaxBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setFirstName(randomAlphanumeric(255));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        user.setFirstName(randomAlphanumeric(45));
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -68,31 +68,31 @@ public class ProfileTest {
     public void veryLongFirstName_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setFirstName(randomAlphanumeric(46));
-        Users.editProfile(user);
+        Users.editMainUserInfo(user);
     }
 
     @Test
     public void lastNameWithMinBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName("");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void lastNameWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(150));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void lastNameWithMaxBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(255));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -100,31 +100,31 @@ public class ProfileTest {
     public void veryLongLastName_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(256));
-        Users.editProfile(user);
+        Users.editMainUserInfo(user);
     }
 
     @Test
     public void signatureWithMinBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature("");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void signatureWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(255));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void signatureWithMaxBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(255));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -132,63 +132,63 @@ public class ProfileTest {
     public void veryLongSignature_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(256));
-        Users.editProfile(user);
-    }
-
-    @Test
-    public void emailWithMinBoundaryValue_shouldPass() throws Exception {
-        User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(1) + "@" + "jtalks.org");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
     }
 
     @Test
     public void emailWithMaxBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(39) + "@" + "jtalks.org");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
+    }
+
+    @Test
+    public void emailWithMinBoundaryValue_shouldPass() throws Exception {
+        User user = Users.signUpAndSignIn();
+        user.setEmail(randomAlphanumeric(1) + "@" + "jtalks.org");
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void validUsualEmail_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "@" + "jtalks.org");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void emailWithOneDotInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + ".common@" + "jtalks.org");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void emailWithMultipleDotInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "test.test.test@" + "jtalks.org");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void emailWithDotAndPlusInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + ".test+test@" + "jtalks.org");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void emailWithDotAndDashInAddress_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "test.test-test@" + "jtalks.org");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -196,15 +196,15 @@ public class ProfileTest {
     public void emailWithQuotesAndDotInAddress_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "\"test.test\"@" + "jtalks.org");
-        Users.editProfile(user);
+        Users.editMainUserInfo(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
            expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_EMAIL)
     public void veryLongEmail_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(40));
-        Users.editProfile(user);
+        user.setEmail(randomAlphanumeric(40) + "@jtalks.org");
+        Users.editMainUserInfo(user);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -212,55 +212,55 @@ public class ProfileTest {
     public void emptyFieldEmail_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail("");
-        Users.editProfile(user);
+        Users.editMainUserInfo(user);
     }
 
     @Test
     public void changePageSizeTo15_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setPageSize(15);
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void changePageSizeTo25_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setPageSize(25);
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void changePageSizeTo50_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setPageSize(50);
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void locationWithMinBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation("");
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void locationWithAllowedLength_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        user.setLocation(randomAlphanumeric(30));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        user.setLocation(randomAlphanumeric(15));
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test
     public void locationWithMaxBoundaryValue_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(30));
-        Users.editProfile(user);
-        Users.assertProfileEquals(user);
+        Users.editMainUserInfo(user);
+        Users.assertMainUserInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -268,7 +268,7 @@ public class ProfileTest {
     public void enterVeryLongLocation_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLocation(randomAlphanumeric(31));
-        Users.editProfile(user);
+        Users.editMainUserInfo(user);
     }
 
     @Test
@@ -277,7 +277,7 @@ public class ProfileTest {
         user.setNewPassword("");
         user.setConfirmPassword("");
         user.setCurrentPassword(user.getPassword());
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test
@@ -286,7 +286,7 @@ public class ProfileTest {
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
         user.setCurrentPassword(user.getPassword());
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -294,16 +294,16 @@ public class ProfileTest {
     public void shouldNotChangePassword_withoutConfirmAndCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD + ProfilePage.WRONG_CONFIRMATION_PASSWORD)
+            expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD)
     public void shouldNotChangePassword_withoutCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -311,9 +311,9 @@ public class ProfileTest {
     public void shouldNotChangePassword_withIncorrectConfirmPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
-        user.setCurrentPassword(user.getNewPassword());
+        user.setCurrentPassword(user.getPassword());
         user.setConfirmPassword(randomAlphanumeric(25));
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -323,7 +323,7 @@ public class ProfileTest {
         user.setNewPassword(randomAlphanumeric(25));
         user.setCurrentPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -333,7 +333,7 @@ public class ProfileTest {
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword("");
         user.setCurrentPassword(user.getPassword());
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -343,7 +343,7 @@ public class ProfileTest {
         user.setNewPassword("");
         user.setConfirmPassword(randomAlphanumeric(25));
         user.setCurrentPassword(user.getPassword());
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -353,7 +353,7 @@ public class ProfileTest {
         user.setNewPassword("");
         user.setConfirmPassword(randomAlphanumeric(25));
         user.setCurrentPassword("");
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 
     @Test (expectedExceptions = ValidationException.class,
@@ -363,6 +363,6 @@ public class ProfileTest {
         user.setNewPassword(randomAlphanumeric(51));
         user.setConfirmPassword(user.getNewPassword());
         user.setCurrentPassword(user.getPassword());
-        Users.editProfile(user);
+        Users.editPasswordInfo(user);
     }
 }

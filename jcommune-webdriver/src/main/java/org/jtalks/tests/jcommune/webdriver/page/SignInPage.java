@@ -21,8 +21,7 @@ public class SignInPage {
     public static final String notValidEmailErrorMessageSel = "userEmail.errors";
     public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
     public static final String errorFormElementsSel = "div.control-group.error";
-    public static final String LOGIN_ERROR = "Имя пользователя: \n" +
-            "Пароль: Попытка выполнить вход не удалась, попробуйте еще раз\n";
+    public static final String LOGIN_ERROR = "Попытка выполнить вход не удалась, попробуйте еще раз\n";
     @FindBy(id = "j_username")
     WebElement usernameField;
     @FindBy(id = "j_password")
