@@ -13,7 +13,6 @@
     <module>functional-tests-jcommune</module>
     <module>load-tests</module>
     <module>jcommune-webdriver</module>
-    <module>functional-tests-antarcticle</module>
   </modules>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
