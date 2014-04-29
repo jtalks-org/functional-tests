@@ -37,6 +37,9 @@ public class User {
     private String newPassword = "";
     private String confirmPassword = "";
     private String currentPassword = "";
+    private boolean autoSubscribe = false;
+    private boolean notifyIfSomeoneMentionsYou = false;
+    private boolean notifyIfPrivateMessageIsReceived = false;
 
     public User() {
     }
@@ -141,6 +144,36 @@ public class User {
 
     public void setCurrentPassword(String currentPassword) {
         this.currentPassword = currentPassword;
+    }
+
+    public boolean getAutoSubscribe() {
+        return autoSubscribe;
+    }
+
+    public User setAutoSubscribe(boolean autoSubscribe) {
+        User user = new User();
+        user.autoSubscribe = autoSubscribe;
+        return user;
+    }
+
+    public boolean getNotifyIfSomeoneMentionsYou() {
+        return notifyIfSomeoneMentionsYou;
+    }
+
+    public User setNotifyIfSomeoneMentionsYou(boolean notifyIfSomeoneMentionsYou) {
+        User user = new User();
+        user.notifyIfSomeoneMentionsYou = notifyIfSomeoneMentionsYou;
+        return user;
+    }
+
+    public boolean getNotifyIfPrivateMessageIsReceived() {
+        return notifyIfPrivateMessageIsReceived;
+    }
+
+    public User setNotifyIfPrivateMessageIsReceived() {
+        User user = new User();
+        user.notifyIfPrivateMessageIsReceived = notifyIfPrivateMessageIsReceived;
+        return user;
     }
 
     @Override

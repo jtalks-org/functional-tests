@@ -23,6 +23,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.MainPage;
+import org.jtalks.tests.jcommune.webdriver.page.ProfilePage;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
@@ -30,10 +31,13 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.Assert;
 
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
@@ -101,12 +105,12 @@ public class Users {
             String failedFields = "";
             for (WebElement element : errorElements) {
                 // Failed form field name
-                failedFields += element.findElement(By.tagName("input")).getAttribute("placeholder") + ": ";
+                // failedFields += element.findElement(By.tagName("input")).getAttribute("placeholder") + ": ";
                 // Add validator text if it present for this failed field
                 try {
                     failedFields += element.findElement(By.className("help-inline")).getText() + "\n";
                 } catch (NoSuchElementException e) {
-                    failedFields += "\n";
+                   //    failedFields += "\n";
                 }
             }
             info("Validation errors found");
@@ -206,11 +210,83 @@ public class Users {
     }
 
     public static void viewProfile(User user) {
+        profilePage.clickOnDropDownMenuForUserOnMainPage();
+        profilePage.clickOnProfileInDropDownMenu();
+        profilePage.openContactsTab();
+        profilePage.openNotificationsTab();
+        profilePage.openSecurityTab();
     }
 
-    public static void editProfile(User user) {
+    public static void editMainUserInfo(User user) throws ValidationException{
+        profilePage.clickOnDropDownMenuForUserOnMainPage();
+        profilePage.clickOnProfileInDropDownMenu();
+        profilePage.getFirstNameField();
+        profilePage.fillFirstName(user.getFirstName());
+        profilePage.getLastNameField();
+        profilePage.fillLastName(user.getLastName());
+        profilePage.getSignatureField();
+        profilePage.fillSignature(user.getSignature());
+        profilePage.getEmailEditField();
+        profilePage.fillEmail(user.getEmail());
+        profilePage.selectPageSizeByValue(user.getPageSize());
+        profilePage.getLocationField();
+        profilePage.fillLocation(user.getLocation());
+        profilePage.clickOnSaveButtonInProfile();
+        checkFormValidation(profilePage.getErrorFormElements());
     }
 
-    public static void assertProfileEquals(User user) {
+    public static void editNotifications(User user) {
+        profilePage.clickOnDropDownMenuForUserOnMainPage();
+        profilePage.clickOnProfileInDropDownMenu();
+        profilePage.openNotificationsTab();
+        profilePage.selectAutoSubscribe(user.getAutoSubscribe());
+        profilePage.selectNotifyIfSomeoneMentionsYou(user.getNotifyIfSomeoneMentionsYou());
+        profilePage.selectNotifyIfPrivateMessageIsReceived(user.getNotifyIfPrivateMessageIsReceived());
+    }
+
+    public static void editPasswordInfo(User user) throws ValidationException{
+        profilePage.clickOnDropDownMenuForUserOnMainPage();
+        profilePage.clickOnProfileInDropDownMenu();
+        profilePage.openSecurityTab();
+        profilePage.fillCurrentPassword(user.getCurrentPassword());
+        profilePage.fillNewPassword(user.getNewPassword());
+        profilePage.fillConfirmNewPassword(user.getConfirmPassword());
+        profilePage.clickOnSaveButtonInProfile();
+        checkFormValidation(profilePage.getErrorFormElements());
+    }
+
+    public static void assertMainUserInfo(User user) {
+        info("Begins assert the test profile fields");
+        assertTrue("FirstName wasn't changed" ,user.getFirstName().equals(profilePage.getFirstNameField().getAttribute("value")));
+        info("FirstName was changed");
+        assertTrue("LastName wasn't changed" ,user.getLastName().equals(profilePage.getLastNameField().getAttribute("value")));
+        info("LastName was changed successful");
+        assertTrue("Signature wasn't changed successful", user.getSignature().equals(profilePage.getSignatureField().getAttribute("value")));
+        info("Signature was changed successful");
+        assertTrue("Email wasn't changed successful" , user.getEmail().equals(profilePage.getEmailEditField().getAttribute("value")));
+        info("Email was changed successful");
+        assertEquals("PageSize wasn't changed successful", user.getPageSize(), Integer.parseInt(profilePage.getPageSizeField().getAttribute("value")));
+        info("PageSize was changed successful");
+        assertTrue("Location wasn't changed successful", user.getLocation().equals(profilePage.getLocationField().getAttribute("value")));
+        info("Location was changed successful");
+    }
+
+    public static void assertNotification(User user) {
+        assertEquals(user.getAutoSubscribe(), profilePage.getAutoSubscribeCheckbox().isSelected());
+        assertEquals(user.getNotifyIfSomeoneMentionsYou(), profilePage.getNotifyIfSomeoneMentionsYouCheckbox().isSelected());
+        assertEquals(user.getNotifyIfPrivateMessageIsReceived(), profilePage.getNotifyIfPrivateMessageIsReceivedCheckbox().isSelected());
+    }
+
+    public static void assertSecurity(User user) {
+        assertEquals(user.getCurrentPassword(), user.getNewPassword());
+    }
+
+    public static boolean isElementPresent(By by) {
+        try {
+            driver.findElement(by);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
     }
 }
