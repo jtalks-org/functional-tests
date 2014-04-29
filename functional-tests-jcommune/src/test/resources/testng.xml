@@ -19,6 +19,7 @@
     <classes>
       <class name="org.jtalks.tests.jcommune.SignUpTest"/>
       <class name="org.jtalks.tests.jcommune.SignInTest"/>
+      <class name="org.jtalks.tests.jcommune.ProfileTest"/>
       <class name="org.jtalks.tests.jcommune.TopicTest"/>
       <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
       <class name="org.jtalks.tests.jcommune.CheckMailCounterTest"/>

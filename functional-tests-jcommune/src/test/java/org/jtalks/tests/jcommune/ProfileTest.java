@@ -144,14 +144,6 @@ public class ProfileTest {
     }
 
     @Test
-    public void emailWithMinBoundaryValue_shouldPass() throws Exception {
-        User user = Users.signUpAndSignIn();
-        user.setEmail(randomAlphanumeric(1) + "@" + "jtalks.org");
-        Users.editMainUserInfo(user);
-        Users.assertMainUserInfo(user);
-    }
-
-    @Test
     public void validUsualEmail_shouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "@" + "jtalks.org");
