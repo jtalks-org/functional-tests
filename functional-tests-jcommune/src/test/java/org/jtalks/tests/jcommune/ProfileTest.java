@@ -4,12 +4,10 @@ import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.ProfilePage;
-import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.apache.commons.lang.RandomStringUtils.random;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -64,7 +62,7 @@ public class ProfileTest {
     }
 
     @Test(expectedExceptions = ValidationException.class,
-           expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_FIRST_NAME)
+            expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_FIRST_NAME)
     public void veryLongFirstName_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setFirstName(randomAlphanumeric(46));
@@ -96,7 +94,7 @@ public class ProfileTest {
     }
 
     @Test(expectedExceptions = ValidationException.class,
-           expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_LAST_NAME)
+            expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_LAST_NAME)
     public void veryLongLastName_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setLastName(randomAlphanumeric(256));
@@ -128,7 +126,7 @@ public class ProfileTest {
     }
 
     @Test(expectedExceptions = ValidationException.class,
-           expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_SIGNATURE)
+            expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_SIGNATURE)
     public void veryLongSignature_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setSignature(randomAlphanumeric(256));
@@ -184,7 +182,7 @@ public class ProfileTest {
     }
 
     @Test(expectedExceptions = ValidationException.class,
-           expectedExceptionsMessageRegExp = ProfilePage.INVALID_EMAIL)
+            expectedExceptionsMessageRegExp = ProfilePage.INVALID_EMAIL)
     public void emailWithQuotesAndDotInAddress_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(8) + "\"test.test\"@" + "jtalks.org");
@@ -192,7 +190,7 @@ public class ProfileTest {
     }
 
     @Test(expectedExceptions = ValidationException.class,
-           expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_EMAIL)
+            expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_EMAIL)
     public void veryLongEmail_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail(randomAlphanumeric(40) + "@jtalks.org");
@@ -200,7 +198,7 @@ public class ProfileTest {
     }
 
     @Test(expectedExceptions = ValidationException.class,
-           expectedExceptionsMessageRegExp = ProfilePage.EMPTY_EMAIL)
+            expectedExceptionsMessageRegExp = ProfilePage.EMPTY_EMAIL)
     public void emptyFieldEmail_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setEmail("");
@@ -255,7 +253,7 @@ public class ProfileTest {
         Users.assertMainUserInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_LOCATION)
     public void enterVeryLongLocation_shouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -273,7 +271,7 @@ public class ProfileTest {
     }
 
     @Test
-    public void shouldChangePassword_ifCorrectCurrentAndConfirmPassword() throws  Exception {
+    public void shouldChangePassword_ifCorrectCurrentAndConfirmPassword() throws Exception {
         User user = Users.signUpAndSignIn();
         user.setNewPassword(randomAlphanumeric(25));
         user.setConfirmPassword(user.getNewPassword());
@@ -281,7 +279,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD + ProfilePage.WRONG_CONFIRMATION_PASSWORD)
     public void shouldNotChangePassword_withoutConfirmAndCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -289,7 +287,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD)
     public void shouldNotChangePassword_withoutCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -298,7 +296,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
     public void shouldNotChangePassword_withIncorrectConfirmPassword() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -308,7 +306,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CURRENT_PASSWORD)
     public void shouldNotChangePassword_withIncorrectCurrentPassword() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -318,7 +316,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
     public void shouldNotChangePassword_withoutConfirmPassword() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -328,7 +326,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
     public void shouldNotChangePassword_withoutNewPassword() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -338,7 +336,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.WRONG_CONFIRMATION_PASSWORD)
     public void shouldNotChangePassword_withoutCurrentAndNewPassword() throws Exception {
         User user = Users.signUpAndSignIn();
@@ -348,7 +346,7 @@ public class ProfileTest {
         Users.editPasswordInfo(user);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = ProfilePage.TOO_LONG_PASSWORD)
     public void shouldNotChangePassword_ifNewPasswordTooLong() throws Exception {
         User user = Users.signUpAndSignIn();
