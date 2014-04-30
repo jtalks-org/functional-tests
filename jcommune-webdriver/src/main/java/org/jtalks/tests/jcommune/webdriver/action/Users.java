@@ -265,7 +265,7 @@ public class Users {
         info("Signature was changed successful");
         assertTrue("Email wasn't changed successful" , user.getEmail().equals(profilePage.getEmailEditField().getAttribute("value")));
         info("Email was changed successful");
-        assertEquals("PageSize wasn't changed successful", user.getPageSize(), Integer.parseInt(profilePage.getPageSizeField().getAttribute("value")));
+        assertEquals("PageSize wasn't changed successful", user.getPageSize(), Integer.parseInt(profilePage.getSelectedValueInList().getText()));
         info("PageSize was changed successful");
         assertTrue("Location wasn't changed successful", user.getLocation().equals(profilePage.getLocationField().getAttribute("value")));
         info("Location was changed successful");
@@ -279,14 +279,5 @@ public class Users {
 
     public static void assertSecurity(User user) {
         assertEquals(user.getCurrentPassword(), user.getNewPassword());
-    }
-
-    public static boolean isElementPresent(By by) {
-        try {
-            driver.findElement(by);
-            return true;
-        } catch (NoSuchElementException e) {
-            return false;
-        }
     }
 }
