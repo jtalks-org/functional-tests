@@ -535,4 +535,9 @@ public class ProfilePage {
     public List<WebElement> getErrorFormElements() {
         return errorFormElements;
     }
+
+    public WebElement getSelectedValueInList() {
+        Select select = new Select(getPageSizeField());
+        return select.getFirstSelectedOption();
+    }
 }
