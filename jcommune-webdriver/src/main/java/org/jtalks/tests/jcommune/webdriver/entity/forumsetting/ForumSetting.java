@@ -2,6 +2,8 @@ package org.jtalks.tests.jcommune.webdriver.entity.forumsetting;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.io.File;
+
 /**
  * @author Yuliya
  */

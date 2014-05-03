@@ -1,7 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page.elements;
 
 
-import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
@@ -25,6 +24,8 @@ public abstract class Header {
     protected WebElement privateMessagesLink;
     @FindAll({@FindBy(id = "links_editor"), @FindBy(id = "links_editor_top")})
     protected WebElement editExternalLinksControl;
+    @FindAll({@FindBy(id = "cmpName"), @FindBy(id = "cmpDescription")})
+    protected WebElement editForumSettingsControl;
     @FindBy(id = "searchText")
     protected WebElement searchInput;
 
@@ -43,4 +44,6 @@ public abstract class Header {
     public abstract boolean isAdminModeOn();
 
     public abstract void pressOpenExternalLinksDialog();
+
+    public abstract void pressOpenForumSettingsDialog();
 }
