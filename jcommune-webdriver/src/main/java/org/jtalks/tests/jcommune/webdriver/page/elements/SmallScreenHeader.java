@@ -68,6 +68,11 @@ public class SmallScreenHeader extends Header {
         editExternalLinksControl.click();
     }
 
+    public void pressOpenForumSettingsDialog() {
+        info("Clicking a button to open Forum Settings Dialog");
+        editForumSettingsControl.click();
+    }
+
     private void openMenu() {
         info("Opening top menu on small screen...");
         if (isMenuHidden()) {

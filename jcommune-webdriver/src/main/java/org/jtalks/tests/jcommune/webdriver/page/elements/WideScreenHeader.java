@@ -47,4 +47,9 @@ public class WideScreenHeader extends Header {
         info("Clicking a button to open External Links Editor");
         editExternalLinksControl.click();
     }
+
+    public void pressOpenForumSettingsDialog() {
+        info("Clicking a button to open Forum Settings Dialog");
+        editForumSettingsControl.click();
+    }
 }
