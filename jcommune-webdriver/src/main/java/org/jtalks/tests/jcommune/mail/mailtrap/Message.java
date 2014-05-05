@@ -19,26 +19,26 @@ package org.jtalks.tests.jcommune.mail.mailtrap;
  * The Data Transfer Object for message
  */
 public class Message {
-    private String id;
-    private String from_email;
+    private String server_id;
+    private String envelope_from;
     private String subject;
-    private String text_body;
-    private String to_email;
+    private String mail_body;
+    private String[] envelope_recipients;
 
     public String getId() {
-        return id;
+        return server_id;
     }
 
     public void setId(String id) {
-        this.id = id;
+        this.server_id = id;
     }
 
     public String getFrom() {
-        return from_email;
+        return envelope_from;
     }
 
     public void setFrom(String from) {
-        this.from_email = from;
+        this.envelope_from = from;
     }
 
     public String getTitle() {
@@ -50,10 +50,14 @@ public class Message {
     }
 
     public String getRecipient() {
-        return to_email;
+        StringBuilder builder = new StringBuilder();
+        for (String s : envelope_recipients) {
+            builder.append(s);
+        }
+        return builder.toString();
     }
 
     public String getSource() {
-        return text_body;
+        return mail_body;
     }
 }

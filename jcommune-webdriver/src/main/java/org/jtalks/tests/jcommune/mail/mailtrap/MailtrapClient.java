@@ -27,13 +27,11 @@ import java.net.URI;
  * This class contains operations for getting data from Mailtrap service by REST API: get inbox metadata,
  * get list of messages metadata, get message by identifier
  *
- * @author Guram Savinov
+ * @author Guram Savinov, edited for pochta by Bogdanov Igor, Targa Florio
  */
 public class MailtrapClient {
 
-    private static final String API_INBOXES_URL = "https://mailtrap.io/api/v1/inboxes/";
-    private static final String JTALKS_AUTOTESTS_MESSAGES = "14272/messages/";
-    private static final String API_TOKEN_PARAM = "?api_token=089dbeb32c12ea062be1e1d87cef3267";
+    private static final String API_INBOXES_URL = "http://pochta.jtalks.org/inboxes/autotests?token=autotests";
 
     static {
         Slf4jLoggerFacade loggerFacade = new Slf4jLoggerFacade();
@@ -56,7 +54,7 @@ public class MailtrapClient {
     }
 
     public static String mailtrapMessagesUri() {
-        return API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + API_TOKEN_PARAM;
+        return API_INBOXES_URL;
     }
 
     /**
@@ -69,7 +67,7 @@ public class MailtrapClient {
     public static String getMessage(String id) {
         RestTemplate client = new RestTemplate();
         try {
-            return client.getForObject(new URI(API_INBOXES_URL + JTALKS_AUTOTESTS_MESSAGES + id + API_TOKEN_PARAM),
+            return client.getForObject(new URI(API_INBOXES_URL),
                     String.class);
         } catch (Exception e) {
             throw new CouldNotGetMessageException(e);
