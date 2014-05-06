@@ -13,12 +13,12 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail.mailtrap;
+package org.jtalks.tests.jcommune.mail.pochta;
 
 import com.google.gson.Gson;
-import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
-import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
-import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.MailWasNotReceivedException;
+import org.jtalks.tests.jcommune.mail.pochta.exceptions.CouldNotGetMessageException;
+import org.jtalks.tests.jcommune.mail.pochta.exceptions.CouldNotGetMessagesException;
+import org.jtalks.tests.jcommune.mail.pochta.exceptions.MailWasNotReceivedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,15 +35,15 @@ import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
  *
  * @author Guram Savinov
  */
-public class MailtrapMail {
+public class PochtaMail {
     public static final int MAIL_POLL_INTERVAL = 500;
-    private static final Logger LOGGER = LoggerFactory.getLogger(MailtrapMail.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PochtaMail.class);
     private static final int MAILTRAP_TIMEOUT_SECS = 120;
-    private final MailtrapStatistics statistics = MailtrapStatistics.instance();
+    private final PochtaStatistics statistics = PochtaStatistics.instance();
     private String activationLink;
 
     /**
-     * Get activation link sent by JCommune for the not activated user. Because Mailtrap need any time to receive
+     * Get activation link sent by JCommune for the not activated user. Because Pochta need any time to receive
      * message getting activation link repeats for {@link #MAILTRAP_TIMEOUT_SECS} seconds with 500 milliseconds
      * interval.
      *
@@ -58,15 +58,15 @@ public class MailtrapMail {
                     .until(new Callable<Boolean>() {
                         public Boolean call() throws Exception {
                             LOGGER.debug("Trying to get activation link for email [{}]", recipient);
-                            statistics.tryToGetMail(MailtrapMail.this);
+                            statistics.tryToGetMail(PochtaMail.this);
                             activationLink = tryToGetLink(recipient);
                             return activationLink != null;
                         }
                     });
         } catch (Exception e) {
             info(String.format(
-                    "Failed to get the activation link from mailtrap for user [%s]. See [%s] for the list of messages",
-                    recipient, MailtrapClient.mailtrapMessagesUri()));
+                    "Failed to get the activation link from pochta for user [%s]. See [%s] for the list of messages",
+                    recipient, PochtaClient.mailtrapMessagesUri()));
             statistics.printStatistics(this);
             if (e.getClass().equals(CouldNotGetMessageException.class)) {
                 throw (CouldNotGetMessageException) e;
@@ -85,7 +85,7 @@ public class MailtrapMail {
         Message[] messages;
         String link = null;
 
-        messages = gson.fromJson(MailtrapClient.getMessages(), Message[].class);
+        messages = gson.fromJson(PochtaClient.getMessages(), Message[].class);
 
         Message activationMail = null;
         for (Message message : messages) {
@@ -104,7 +104,7 @@ public class MailtrapMail {
                 link = matcher.group(1);
             }
         } catch (Exception e) {
-            LOGGER.warn("Problem occurred while grabbing activation link from Mailtrap", e);
+            LOGGER.warn("Problem occurred while grabbing activation link from Pochta", e);
         }
         return link;
     }

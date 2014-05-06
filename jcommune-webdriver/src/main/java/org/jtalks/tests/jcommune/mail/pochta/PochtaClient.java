@@ -13,10 +13,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail.mailtrap;
+package org.jtalks.tests.jcommune.mail.pochta;
 
-import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessageException;
-import org.jtalks.tests.jcommune.mail.mailtrap.exceptions.CouldNotGetMessagesException;
+import org.jtalks.tests.jcommune.mail.pochta.exceptions.CouldNotGetMessageException;
+import org.jtalks.tests.jcommune.mail.pochta.exceptions.CouldNotGetMessagesException;
 import org.restlet.engine.Engine;
 import org.restlet.ext.slf4j.Slf4jLoggerFacade;
 import org.springframework.web.client.RestTemplate;
@@ -24,12 +24,12 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 
 /**
- * This class contains operations for getting data from Mailtrap service by REST API: get inbox metadata,
+ * This class contains operations for getting data from Pochta service by REST API: get inbox metadata,
  * get list of messages metadata, get message by identifier
  *
  * @author Guram Savinov, edited for pochta by Bogdanov Igor, Targa Florio
  */
-public class MailtrapClient {
+public class PochtaClient {
 
     private static final String API_INBOXES_URL = "http://pochta.jtalks.org/inboxes/autotests?token=autotests";
 

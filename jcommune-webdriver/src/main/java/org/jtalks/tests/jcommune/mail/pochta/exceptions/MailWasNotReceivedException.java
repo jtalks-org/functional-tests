@@ -13,15 +13,15 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail.mailtrap.exceptions;
+package org.jtalks.tests.jcommune.mail.pochta.exceptions;
 
 /**
- * Thrown if some I/O errors happened when getting data from Mailtrap API messages endpoint
+ * The exception for case when message was not received from JCommune
  *
  * @author Guram Savinov
  */
-public class CouldNotGetMessagesException extends RuntimeException {
-    public CouldNotGetMessagesException(Throwable cause) {
-        super("Could not get data from Mailtrap messages endpoint", cause);
+public class MailWasNotReceivedException extends RuntimeException {
+    public MailWasNotReceivedException(Throwable cause) {
+        super("Message was not received by pochta", cause);
     }
 }

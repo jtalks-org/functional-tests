@@ -13,7 +13,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-package org.jtalks.tests.jcommune.mail.mailtrap;
+package org.jtalks.tests.jcommune.mail.pochta;
 
 /**
  * The Data Transfer Object for message
