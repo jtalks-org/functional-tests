@@ -1,29 +1,28 @@
 /**
- * Copyright (C) 2011  JTalks.org Team
+ * Copyright (C) 2011 JTalks.org Team
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
  * Lesser General Public License for more details.
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
 
-import org.jtalks.tests.jcommune.mail.mailtrap.MailtrapMail;
+import org.jtalks.tests.jcommune.mail.pochta.PochtaMail;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.MainPage;
-import org.jtalks.tests.jcommune.webdriver.page.ProfilePage;
 import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
@@ -31,13 +30,11 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.Assert;
 
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
@@ -110,7 +107,7 @@ public class Users {
                 try {
                     failedFields += element.findElement(By.className("help-inline")).getText() + "\n";
                 } catch (NoSuchElementException e) {
-                   //    failedFields += "\n";
+                    // failedFields += "\n";
                 }
             }
             info("Validation errors found");
@@ -175,7 +172,7 @@ public class Users {
      */
     public static void activate(User user) {
         info("Looking up email at mailtrap. Activating a user by following activation link..");
-        MailtrapMail mailtrapMail = new MailtrapMail();
+        PochtaMail mailtrapMail = new PochtaMail();
         String activationLink = mailtrapMail.getActivationLink(user.getEmail());
         info("Clicking on activation link..");
         driver.get(activationLink);
