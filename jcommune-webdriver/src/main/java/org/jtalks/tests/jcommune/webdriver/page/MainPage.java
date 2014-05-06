@@ -35,6 +35,10 @@ public class MainPage {
     private WebElement modalDialog;
     @FindAll({@FindBy(id = "links_editor"), @FindBy(id = "links_editor_top")})
     private WebElement editExternalLinksControl;
+    @FindBy(id = "administration-modal-dialog")
+    private WebElement forumSettingsDialog;
+    @FindAll({@FindBy(id = "cmpName"), @FindBy(id = "cmpDescription")})
+    private WebElement editForumSettingsControl;
     @FindBy(id = "user-dropdown-administration-link")
     private WebElement administrationDropdownMenu;
     @FindBy(id = "Administration")
@@ -91,6 +95,10 @@ public class MainPage {
 
     public void pressOpenExternalLinksDialog() {
         getHeader().pressOpenExternalLinksDialog();
+    }
+
+    public void pressOpenForumSettingsDialog() {
+        getHeader().pressOpenForumSettingsDialog();
     }
 
     public void logOutIfLoggedIn(WebDriver driver) {
@@ -157,6 +165,10 @@ public class MainPage {
 
     public WebElement getModalDialog() {
         return modalDialog;
+    }
+
+    public WebElement getForumSettingsDialog() {
+        return forumSettingsDialog;
     }
 
     public WebElement getMailCounter() {
