@@ -16,6 +16,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 /**
  * @author Yuliya
  */
+@Test(groups = "htmlunit-incompatible")
 public class AdministrationTest {
 
     @BeforeClass
