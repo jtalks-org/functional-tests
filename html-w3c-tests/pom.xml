@@ -41,4 +41,8 @@
     </dependency>
   </dependencies>
 
+  <reporting>
+    <excludeDefaults>true</excludeDefaults>
+  </reporting>
+
 </project>
