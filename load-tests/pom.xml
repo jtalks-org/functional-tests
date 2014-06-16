@@ -56,4 +56,9 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <excludeDefaults>true</excludeDefaults>
+  </reporting>
+
 </project>

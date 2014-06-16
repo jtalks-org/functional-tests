@@ -72,4 +72,8 @@
     </repository>
   </repositories>
 
+  <reporting>
+    <excludeDefaults>true</excludeDefaults>
+  </reporting>
+
 </project>
