@@ -62,11 +62,13 @@ public class TopicPage {
     private List<WebElement> activeTopicsButton;
     @FindBy(xpath = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]")
     private WebElement profileLink;
-    @FindBy(className = "new-topic-btn")
+    @FindBy(className = "newTopicButton")
     private WebElement newButton;
     @FindBy(xpath = "//ul[@class='breadcrumb']/li[last()]")
     private WebElement branchName;
-    @FindBy(className = "new-code-review-btn")
+    @FindBy(className = "topic-types-dropdown")
+    private WebElement newTopicTypeToggle;
+    @FindBy(className = "newReviewButton")
     private WebElement newCodeReviewButton;
     @FindBy(id = "sticked")
     private WebElement topicSticked;
@@ -111,6 +113,7 @@ public class TopicPage {
 
     public void goToReviewCreatePage() throws ValidationException {
         topicPage.goToTopicPage();
+        topicPage.getNewTopicToggle().click();
         topicPage.getNewCodeReviewButton().click();
     }
 
@@ -261,6 +264,10 @@ public class TopicPage {
 
     public List<WebElement> getActiveTopicsButton() {
         return activeTopicsButton;
+    }
+
+    public WebElement getNewTopicToggle() {
+        return newTopicTypeToggle;
     }
 
     public WebElement getNewCodeReviewButton() {
