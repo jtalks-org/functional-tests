@@ -62,13 +62,13 @@ public class TopicPage {
     private List<WebElement> activeTopicsButton;
     @FindBy(xpath = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]")
     private WebElement profileLink;
-    @FindBy(className = "newTopicButton")
+    @FindBy(className = "new-topic-btn")
     private WebElement newButton;
     @FindBy(xpath = "//ul[@class='breadcrumb']/li[last()]")
     private WebElement branchName;
     @FindBy(className = "topic-types-dropdown")
     private WebElement newTopicTypeToggle;
-    @FindBy(className = "newReviewButton")
+    @FindBy(className = "new-code-review-btn")
     private WebElement newCodeReviewButton;
     @FindBy(id = "sticked")
     private WebElement topicSticked;
