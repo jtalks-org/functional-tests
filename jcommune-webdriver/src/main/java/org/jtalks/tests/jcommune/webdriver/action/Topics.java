@@ -104,6 +104,7 @@ public class Topics {
     }
 
     private static void createNewCodeReview(Topic topic) {
+        topicPage.getNewTopicToggle().click();
         topicPage.getNewCodeReviewButton().click();
         topicPage.getSubjectField().sendKeys(topic.getTitle());
         Post firstPost = topic.getPosts().get(0);

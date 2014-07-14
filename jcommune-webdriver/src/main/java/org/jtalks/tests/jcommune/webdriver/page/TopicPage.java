@@ -66,6 +66,8 @@ public class TopicPage {
     private WebElement newButton;
     @FindBy(xpath = "//ul[@class='breadcrumb']/li[last()]")
     private WebElement branchName;
+    @FindBy(className = "topic-types-dropdown")
+    private WebElement newTopicTypeToggle;
     @FindBy(className = "new-code-review-btn")
     private WebElement newCodeReviewButton;
     @FindBy(id = "sticked")
@@ -111,6 +113,7 @@ public class TopicPage {
 
     public void goToReviewCreatePage() throws ValidationException {
         topicPage.goToTopicPage();
+        topicPage.getNewTopicToggle().click();
         topicPage.getNewCodeReviewButton().click();
     }
 
@@ -261,6 +264,10 @@ public class TopicPage {
 
     public List<WebElement> getActiveTopicsButton() {
         return activeTopicsButton;
+    }
+
+    public WebElement getNewTopicToggle() {
+        return newTopicTypeToggle;
     }
 
     public WebElement getNewCodeReviewButton() {
