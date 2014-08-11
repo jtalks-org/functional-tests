@@ -398,6 +398,15 @@
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="GetAllBranches" enabled="true">
+              <stringProp name="XPathExtractor.default"></stringProp>
+              <stringProp name="XPathExtractor.refname">BRANCHES</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">descendant::a[@class=&apos;branch-title&apos;]/@href</stringProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">true</boolProp>
+              <boolProp name="XPathExtractor.namespace">false</boolProp>
+            </XPathExtractor>
+            <hashTree/>
             <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="CalculateBranchCount" enabled="true">
               <stringProp name="XPathExtractor.default">2</stringProp>
               <stringProp name="XPathExtractor.refname">BRANCH_COUNT</stringProp>
@@ -414,12 +423,13 @@
               <stringProp name="script">    public void setRandomBranch() {
         String branchCount = vars.get(&quot;BRANCH_COUNT&quot;);
         Random random = new Random();        
-        int branchId = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
-        vars.put(&quot;BRANCH_ID&quot;, String.valueOf(branchId));
+        int branchIndex = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
+        String pattern = &quot;/jcommune/branches/&quot;;
+        String branchId = vars.get(&quot;BRANCHES_&quot; + branchIndex).replaceAll(pattern, &quot;&quot;);
+        vars.put(&quot;BRANCH_ID&quot;, branchId);
     }
 
 setRandomBranch();
-
 </stringProp>
             </BeanShellPostProcessor>
             <hashTree/>
@@ -482,6 +492,15 @@ setRandomBranch();
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="GetAllBranches" enabled="true">
+              <stringProp name="XPathExtractor.default"></stringProp>
+              <stringProp name="XPathExtractor.refname">BRANCHES</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">descendant::a[@class=&apos;branch-title&apos;]/@href</stringProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">true</boolProp>
+              <boolProp name="XPathExtractor.namespace">false</boolProp>
+            </XPathExtractor>
+            <hashTree/>
             <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="CalculateBranchCount" enabled="true">
               <stringProp name="XPathExtractor.default">2</stringProp>
               <stringProp name="XPathExtractor.refname">BRANCH_COUNT</stringProp>
@@ -498,8 +517,10 @@ setRandomBranch();
               <stringProp name="script">    public void setRandomBranch() {
         String branchCount = vars.get(&quot;BRANCH_COUNT&quot;);
         Random random = new Random();        
-        int branchId = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
-        vars.put(&quot;BRANCH_ID&quot;, String.valueOf(branchId));
+        int branchIndex = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
+        String pattern = &quot;/jcommune/branches/&quot;;
+        String branchId = vars.get(&quot;BRANCHES_&quot; + branchIndex).replaceAll(pattern, &quot;&quot;);
+        vars.put(&quot;BRANCH_ID&quot;, branchId);
     }
 
 setRandomBranch();
@@ -575,45 +596,62 @@ setRandomBranch();
           <hashTree>
             <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Post Id Extractor" enabled="true">
               <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+              <stringProp name="RegexExtractor.refname">HEAD_POST_ID</stringProp>
+              <stringProp name="RegexExtractor.regex">(posts/)([0-9]+)</stringProp>
+              <stringProp name="RegexExtractor.template">$2$</stringProp>
+              <stringProp name="RegexExtractor.default">POST_NOT_FOUND</stringProp>
+              <stringProp name="RegexExtractor.match_number">1</stringProp>
+              <stringProp name="TestPlan.comments">Extract head post of the topic</stringProp>
+            </RegexExtractor>
+            <hashTree/>
+            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="Post Id Extractor" enabled="true">
+              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
               <stringProp name="RegexExtractor.refname">POST_ID</stringProp>
               <stringProp name="RegexExtractor.regex">(posts/)([0-9]+)</stringProp>
               <stringProp name="RegexExtractor.template">$2$</stringProp>
               <stringProp name="RegexExtractor.default">POST_NOT_FOUND</stringProp>
               <stringProp name="RegexExtractor.match_number">0</stringProp>
+              <stringProp name="TestPlan.comments">Extract random post of the topic</stringProp>
             </RegexExtractor>
             <hashTree/>
           </hashTree>
         </hashTree>
-        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="DeleteRandomPostController" enabled="true"/>
+        <IfController guiclass="IfControllerPanel" testclass="IfController" testname="CheckHeadPost" enabled="true">
+          <stringProp name="IfController.condition">${HEAD_POST_ID} != ${POST_ID}</stringProp>
+          <boolProp name="IfController.evaluateAll">false</boolProp>
+        </IfController>
         <hashTree>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DeleteRandomPost" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments">
-                <elementProp name="_method" elementType="HTTPArgument">
-                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.value">DELETE</stringProp>
-                  <stringProp name="Argument.metadata">=</stringProp>
-                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
-                  <stringProp name="Argument.name">_method</stringProp>
-                </elementProp>
-              </collectionProp>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain"></stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="HTTPSampler.protocol"></stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path">/jcommune/posts/${POST_ID}</stringProp>
-            <stringProp name="HTTPSampler.method">POST</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <boolProp name="HTTPSampler.monitor">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          </HTTPSamplerProxy>
-          <hashTree/>
+          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="DeleteRandomPostController" enabled="true"/>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="DeleteRandomPost" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="_method" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">DELETE</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">_method</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain"></stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+              <stringProp name="HTTPSampler.protocol"></stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">/jcommune/posts/${POST_ID}</stringProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.monitor">false</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree/>
+          </hashTree>
         </hashTree>
         <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="DeleteTopicController" enabled="true"/>
         <hashTree>
@@ -711,6 +749,15 @@ setRandomBranch();
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="GetAllBranches" enabled="true">
+              <stringProp name="XPathExtractor.default"></stringProp>
+              <stringProp name="XPathExtractor.refname">BRANCHES</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">descendant::a[@class=&apos;branch-title&apos;]/@href</stringProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">true</boolProp>
+              <boolProp name="XPathExtractor.namespace">false</boolProp>
+            </XPathExtractor>
+            <hashTree/>
             <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="CalculateBranchCount" enabled="true">
               <stringProp name="XPathExtractor.default">2</stringProp>
               <stringProp name="XPathExtractor.refname">BRANCH_COUNT</stringProp>
@@ -727,11 +774,14 @@ setRandomBranch();
               <stringProp name="script">    public void setRandomBranch() {
         String branchCount = vars.get(&quot;BRANCH_COUNT&quot;);
         Random random = new Random();        
-        int branchId = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
-        vars.put(&quot;BRANCH_ID&quot;, String.valueOf(branchId));
+        int branchIndex = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
+        String pattern = &quot;/jcommune/branches/&quot;;
+        String branchId = vars.get(&quot;BRANCHES_&quot; + branchIndex).replaceAll(pattern, &quot;&quot;);
+        vars.put(&quot;BRANCH_ID&quot;, branchId);
     }
 
 setRandomBranch();
+
 
 </stringProp>
             </BeanShellPostProcessor>
@@ -920,6 +970,15 @@ setRandomBranch();
             <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
           </HTTPSamplerProxy>
           <hashTree>
+            <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="GetAllBranches" enabled="true">
+              <stringProp name="XPathExtractor.default"></stringProp>
+              <stringProp name="XPathExtractor.refname">BRANCHES</stringProp>
+              <stringProp name="XPathExtractor.xpathQuery">descendant::a[@class=&apos;branch-title&apos;]/@href</stringProp>
+              <boolProp name="XPathExtractor.validate">false</boolProp>
+              <boolProp name="XPathExtractor.tolerant">true</boolProp>
+              <boolProp name="XPathExtractor.namespace">false</boolProp>
+            </XPathExtractor>
+            <hashTree/>
             <XPathExtractor guiclass="XPathExtractorGui" testclass="XPathExtractor" testname="CalculateBranchCount" enabled="true">
               <stringProp name="XPathExtractor.default">2</stringProp>
               <stringProp name="XPathExtractor.refname">BRANCH_COUNT</stringProp>
@@ -936,8 +995,10 @@ setRandomBranch();
               <stringProp name="script">    public void setRandomBranch() {
         String branchCount = vars.get(&quot;BRANCH_COUNT&quot;);
         Random random = new Random();        
-        int branchId = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
-        vars.put(&quot;BRANCH_ID&quot;, String.valueOf(branchId));
+        int branchIndex = random.nextInt(Integer.valueOf(branchCount) - 1) + 1;
+        String pattern = &quot;/jcommune/branches/&quot;;
+        String branchId = vars.get(&quot;BRANCHES_&quot; + branchIndex).replaceAll(pattern, &quot;&quot;);
+        vars.put(&quot;BRANCH_ID&quot;, branchId);
     }
 
 setRandomBranch();
