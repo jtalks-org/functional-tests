@@ -22,9 +22,9 @@ public class SignInPage {
     public static final String closeSignInWindowButtonSel = "//div[@class='jqiclose']";
     public static final String errorFormElementsSel = "div.control-group.error";
     public static final String LOGIN_ERROR = "Неверное имя пользователя или пароль\n";
-    @FindBy(id = "j_username")
+    @FindBy(id = "userName")
     WebElement usernameField;
-    @FindBy(id = "j_password")
+    @FindBy(id = "password")
     WebElement passwordField;
     @FindBy(id = "signin-submit-button")
     WebElement submitButton;
