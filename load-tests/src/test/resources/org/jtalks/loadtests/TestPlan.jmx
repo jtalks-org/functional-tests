@@ -22,7 +22,7 @@
             <stringProp name="Argument.name">AUTO_TEST_SERVER</stringProp>
             <stringProp name="Argument.value">autotests.jtalks.org</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">autotests.jtalks.org</stringProp>
+            <stringProp name="Argument.desc">server for performance testing</stringProp>
           </elementProp>
           <elementProp name="TOPIC_ID" elementType="Argument">
             <stringProp name="Argument.name">TOPIC_ID</stringProp>
@@ -470,16 +470,16 @@ setRandomBranch();
           <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="SendLogin&amp;Password" enabled="true">
             <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
               <collectionProp name="Arguments.arguments">
-                <elementProp name="j_username" elementType="HTTPArgument">
+                <elementProp name="userName" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.name">j_username</stringProp>
+                  <stringProp name="Argument.name">userName</stringProp>
                   <stringProp name="Argument.value">${login}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
                 </elementProp>
-                <elementProp name="j_password" elementType="HTTPArgument">
+                <elementProp name="password" elementType="HTTPArgument">
                   <boolProp name="HTTPArgument.always_encode">false</boolProp>
-                  <stringProp name="Argument.name">j_password</stringProp>
+                  <stringProp name="Argument.name">password</stringProp>
                   <stringProp name="Argument.value">${password}</stringProp>
                   <stringProp name="Argument.metadata">=</stringProp>
                   <boolProp name="HTTPArgument.use_equals">true</boolProp>
