@@ -20,9 +20,9 @@
         <collectionProp name="Arguments.arguments">
           <elementProp name="AUTO_TEST_SERVER" elementType="Argument">
             <stringProp name="Argument.name">AUTO_TEST_SERVER</stringProp>
-            <stringProp name="Argument.value">autotests.jtalks.org</stringProp>
+            <stringProp name="Argument.value">performance.jtalks.org</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">autotests.jtalks.org</stringProp>
+            <stringProp name="Argument.desc">Server for performance testing</stringProp>
           </elementProp>
           <elementProp name="TOPIC_ID" elementType="Argument">
             <stringProp name="Argument.name">TOPIC_ID</stringProp>
