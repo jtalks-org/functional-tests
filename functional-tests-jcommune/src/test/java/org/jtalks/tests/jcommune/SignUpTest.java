@@ -108,12 +108,6 @@ public class SignUpTest {
     }
 
     @Test
-    public void emailValidShouldPassRegistration_JC_6() throws Exception {
-        UserForRegistration user = new UserForRegistration();
-        Users.signUp(user);
-    }
-
-    @Test
     public void passwordValidShouldPassRegistration_JC_8() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPassword(randomAlphanumeric(49));
