@@ -49,7 +49,7 @@ public class TopicTest {
     @Test
     public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
         Users.signUpAndSignIn();
-        Topic topic = new Topic().withTitle("subject").withBody("message");
+        Topic topic = new Topic();
         Topic createdTopic = Topics.createTopic(topic);
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
