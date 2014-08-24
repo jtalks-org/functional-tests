@@ -18,6 +18,8 @@ package org.jtalks.tests.jcommune.webdriver.entity.topic;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+
 /**
  * Jcommune poll representation
  *
@@ -26,13 +28,25 @@ import java.util.Date;
 public class Poll {
     private static final String POLL_END_DATE_FORMAT = "dd-MM-yyyy";
     private String title;
-    private String[] options;
+    private String[] options = {randomAlphanumeric(10), randomAlphanumeric(10)};
     private Date endDate;
     private boolean multipleAnswers;
+
+    public Poll(String title) {
+        this.title = title;
+    }
 
     public Poll(String title, String[] options) {
         this.title = title;
         this.options = options;
+    }
+
+    public Poll withNumberOfOptions(int number){
+        this.options = new String[number];
+        for (int i = 0; i < number; i++) {
+            this.options[i] = randomAlphanumeric(10);
+        }
+        return this;
     }
 
     public String getTitle() {

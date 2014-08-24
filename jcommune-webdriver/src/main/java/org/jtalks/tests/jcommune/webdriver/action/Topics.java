@@ -85,6 +85,14 @@ public class Topics {
             WebElement bodyError = topicPage.getBodyErrorMessage();
             failedFields += bodyError.getText();
         }
+        if (Existence.exists(topicPage.getPollTitleErrorMessage())) {
+            WebElement pollTitleError = topicPage.getPollTitleErrorMessage();
+            failedFields += pollTitleError.getText();
+        }
+        if (Existence.exists(topicPage.getPollItemsErrorMessage())) {
+            WebElement pollItemsError = topicPage.getPollItemsErrorMessage();
+            failedFields += pollItemsError.getText();
+        }
         if (!failedFields.equals("")) {
             throw new ValidationException(failedFields);
         }

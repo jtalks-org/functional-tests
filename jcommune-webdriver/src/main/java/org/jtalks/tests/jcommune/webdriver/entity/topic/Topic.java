@@ -38,6 +38,17 @@ public class Topic {
         posts.add(new Post(firstPostContent));
     }
 
+    public Topic withTitle(String title){
+        this.title = title;
+        return this;
+    }
+
+    public Topic withBody(String body) {
+        Post firstPost = getPosts().get(0);
+        firstPost.setPostContent(body);
+        return this;
+    }
+
     public DateTime getModificationDate() {
         return modificationDate;
     }

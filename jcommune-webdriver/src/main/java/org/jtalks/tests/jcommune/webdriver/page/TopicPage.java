@@ -31,7 +31,14 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  */
 public class TopicPage {
     public static final String EMPTY_SUBJECT_ERROR = "(may not be empty\n)|(Не может быть пустым\n)";
-    public static final String EMPTY_BODY_ERROR = "size must be between 2 and 20000\n";
+    public static final String EMPTY_BODY_ERROR = "size must be between 2 and 20000";
+    public static final String SUBJECT_SIZE_ERROR = "size must be between 1 and 120\n";
+    public static final String POLL_SUBJECT_EMPTY_ERROR = "Poll title could not be blank if poll items arent blank";
+    public static final String POLL_SUBJECT_SIZE_ERROR = "size must be between 3 and 120";
+    public static final String POLL_OPTIONS_ERROR = "Poll items could not be blank if poll title is not blank";
+    public static final String POLL_OPTIONS_NUMBER_ERROR = "Options number should be 2 - 50";
+    public static final String POLL_OPTIONS_LENGTH_ERROR = "Item length should be 1 - 50";
+    public static final String POLL_DUPLICATES_ERROR = "Poll items could not contain duplicates";
     @FindBy(id = "subjectError")
     private WebElement subjectErrorMessage;
     @FindBy(id = "bodyText.errors")
@@ -54,6 +61,10 @@ public class TopicPage {
     private WebElement topicsPollEndDateField;
     @FindBy(id = "multipleChecker")
     private WebElement topicsPollMultipleChecker;
+    @FindBy(id = "topic.poll.title.errors")
+    private WebElement pollTitleErrorMessage;
+    @FindBy(id = "topic.poll.pollItems.errors")
+    private WebElement pollItemsErrorMessage;
     @FindBy(xpath = "//*[@id='topics-table']/tbody/tr[last()]")
     private WebElement lastTopicLine;
     @FindBy(xpath = "//div[@class='pagination pull-right forum-pagination']/ul/li/a")
@@ -244,6 +255,14 @@ public class TopicPage {
 
     public WebElement getBodyErrorMessage() {
         return bodyErrorMessage;
+    }
+
+    public WebElement getPollTitleErrorMessage() {
+        return pollTitleErrorMessage;
+    }
+
+    public WebElement getPollItemsErrorMessage() {
+        return pollItemsErrorMessage;
     }
 
     public List<WebElement> getTopicsButtons() {
