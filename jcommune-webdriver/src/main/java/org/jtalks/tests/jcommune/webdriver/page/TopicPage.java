@@ -81,6 +81,14 @@ public class TopicPage {
     private WebElement newTopicTypeToggle;
     @FindBy(className = "new-code-review-btn")
     private WebElement newCodeReviewButton;
+    @FindBy(className = "L0")
+    private WebElement codeReviewFirstLine;
+    @FindBy(className = "review-container-content")
+    private WebElement codeReviewCommentBodyField;
+    @FindBy(className = "review-container-controls-ok")
+    private WebElement codeReviewCommentAddBtn;
+    @FindBy(className = "review-container-controls-cancel")
+    private WebElement codeReviewCommentCancelBtn;
     @FindBy(id = "sticked")
     private WebElement topicSticked;
     @FindBy(id = "announcement")
@@ -229,6 +237,17 @@ public class TopicPage {
         }
     }
 
+    public void clickAddCommentToCodeReviewButton() throws PermissionsDeniedException {
+        info("Clicking a button to add comment to code review");
+        try {
+            codeReviewCommentAddBtn.click();
+            info("The button was clicked");
+        } catch (NoSuchElementException e) {
+            info("Couldn't click the button, looks like the permissions are granted");
+            throw new PermissionsDeniedException("User does not have permissions to leave comments in the branch");
+        }
+    }
+
     public WebElement getSubjectField() {
         return subjectField;
     }
@@ -295,6 +314,14 @@ public class TopicPage {
 
     public WebElement getBranchName() {
         return branchName;
+    }
+
+    public WebElement getCodeReviewCommentBodyField() {
+        return codeReviewCommentBodyField;
+    }
+
+    public WebElement getCodeReviewFirstLine() {
+        return codeReviewFirstLine;
     }
 
 }

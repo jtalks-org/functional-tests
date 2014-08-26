@@ -120,6 +120,18 @@ public class Topics {
         topicPage.getPostButton().click();
     }
 
+    public static void createCodeReviewComment(Topic topic, String commentBody)
+            throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
+        commentToCodeReview(commentBody);
+        LOGGER.info("postCommentToCodeInTopic {}", topic.getTitle());
+    }
+
+    private static void commentToCodeReview(String comment) throws PermissionsDeniedException {
+        topicPage.getCodeReviewFirstLine().click();
+        topicPage.getCodeReviewCommentBodyField().sendKeys(comment);
+        topicPage.clickAddCommentToCodeReviewButton();
+    }
+
     public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
         //TODO: this might need to be uncommented, but right now we're not on the main page when we answer to the
