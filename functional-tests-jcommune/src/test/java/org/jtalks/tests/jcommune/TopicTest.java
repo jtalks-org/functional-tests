@@ -48,6 +48,109 @@ public class TopicTest {
     }
 
     @Test
+    public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Assert.assertTrue(Topics.isCreated(createdTopic));
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+    public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withTitle("");
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMinTitle_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withTitle("a");
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMaxTitle_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withTitle(randomAlphanumeric(120));
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR)
+    public void createTopicExceedingMaxTitle_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withTitle(randomAlphanumeric(121));
+        Topics.createTopic(topic);
+    }
+
+    @Test(enabled = false, expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithEmptyMessage_ShouldFail_JC_26() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withBody("");
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithOneSymbolInMessage_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withBody("a");
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMinMessage_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withBody("ab");
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMaxMessage_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withBody(randomAlphanumeric(20000));
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicExceedingMaxMessage_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withBody(randomAlphanumeric(20001));
+        Topics.createTopic(topic);
+    }
+
+    @Test(enabled = false, expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
+    public void createTopicWithoutData_ShouldFail_JC_24() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic().withTitle("").withBody("");
+        Topics.createTopic(topic);
+    }
+
+    @Test(enabled = true)
+    public void loginAndCreateTopicValidateBranch_ShouldPass() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
+        Topic topic = new Topic().withBranch("Micro level");
+        topic.withTopicStarter(user);
+        Topics.createTopic(topic);
+        Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
+    }
+
+    @Test
+    public void signUpAndCreateTopicInBranch() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
+        Topic topic = new Topic().withBranch("Classical Mechanics");
+        topic.withTopicStarter(user);
+        Topics.createTopic(topic);
+    }
+
+    @Test
     public void signUpAndCreateCodeReviewInBranch() throws Exception {
         Topic topic = new Topic().withBranch("Acids and Bases");
         User user = Users.signUpAndSignIn();
@@ -61,6 +164,196 @@ public class TopicTest {
         Topic topic = new Topic();
         Topics.createCodeReview(topic);
         Topics.createCodeReviewComment(topic, randomAlphanumeric(50));
+    }
+
+    @Test
+    public void postValidAnswerToTopicShouldSucceed() throws Exception {
+        //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Topics.createTopic(topic);
+        Topics.postAnswer(topic, topic.getBranch().getTitle());
+    }
+
+    @Test(expectedExceptions = PermissionsDeniedException.class)
+    public void createTopicAsAnonymousShouldFail() throws Exception {
+        Topic topic = new Topic();
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createStickedTopic() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
+        Topic topic = new Topic();
+        topic.withTopicStarter(user);
+        topic.setSticked(true);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createAnnouncementTopic() throws Exception {
+        User user = User.admin();
+        Users.signIn(user);
+        Topic topic = new Topic();
+        topic.withTopicStarter(user);
+        topic.setAnnouncement(true);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithPoll() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title");
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_SUBJECT_EMPTY_ERROR)
+    public void createTopicWithoutPollSubject_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("");
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_SUBJECT_SIZE_ERROR)
+    public void createTopicWithInsufficientPollSubject_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("ab");
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMinPollSubject_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("abc");
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMaxPollSubject_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll(randomAlphanumeric(120));
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_SUBJECT_SIZE_ERROR)
+    public void createTopicWithExcessivePollSubject_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll(randomAlphanumeric(121));
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_OPTIONS_ERROR)
+    public void createTopicWithoutPollOptions_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title", new String[]{""});
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMinPollOptionsLengthAndNumber_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title", new String[]{"1", "2"});
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMaxPollOptionsLength_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title", new String[]{"option1", randomAlphanumeric(50)});
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_OPTIONS_LENGTH_ERROR)
+    public void createTopicWithExcessivePollOptionsLength_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title", new String[]{"option1", randomAlphanumeric(51)});
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_DUPLICATES_ERROR)
+    public void createTopicWithDuplicatedPollOptions_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title", new String[]{"option1", "option1"});
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_OPTIONS_NUMBER_ERROR)
+    public void createTopicWithOnlyPollOption_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title", new String[]{"option1"});
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithMaxPollOptionsNumber_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title").withNumberOfOptions(50);
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test(expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.POLL_OPTIONS_NUMBER_ERROR)
+    public void createTopicWithExcessivePollOptionsNumber_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title").withNumberOfOptions(51);
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+
+    @Test
+    public void createTopicWithPollEndDate() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title");
+        poll.setEndDate(new Date(System.currentTimeMillis() + 86400000));
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
+    }
+
+    @Test
+    public void createTopicWithPollMultipleAnswers() throws Exception {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
+        Poll poll = new Poll("poll title");
+        poll.setMultipleAnswers(true);
+        topic.setPoll(poll);
+        Topics.createTopic(topic);
     }
 
 }
