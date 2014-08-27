@@ -151,22 +151,6 @@ public class TopicTest {
     }
 
     @Test
-    public void signUpAndCreateCodeReviewInBranch() throws Exception {
-        Topic topic = new Topic().withBranch("Acids and Bases");
-        User user = Users.signUpAndSignIn();
-        topic.withTopicStarter(user);
-        Topics.createCodeReview(topic);
-    }
-
-    @Test
-    public void signUpCreateCodeReviewAndLeaveComment_ShouldPass() throws Exception {
-        Users.signUpAndSignIn();
-        Topic topic = new Topic();
-        Topics.createCodeReview(topic);
-        Topics.createCodeReviewComment(topic, randomAlphanumeric(50));
-    }
-
-    @Test
     public void postValidAnswerToTopicShouldSucceed() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         Users.signUpAndSignIn();

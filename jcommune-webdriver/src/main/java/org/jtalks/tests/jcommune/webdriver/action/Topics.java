@@ -18,6 +18,8 @@ package org.jtalks.tests.jcommune.webdriver.action;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
@@ -100,36 +102,6 @@ public class Topics {
 
     public static boolean isInCorrectBranch(Topic topic) {
         return topicPage.getBranchName().getText().trim().equals(topic.getBranch().getTitle());
-    }
-
-    public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
-        if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
-            topic.withBranch(branch);
-        }
-        Branches.openBranch(topic.getBranch().getTitle());
-        createNewCodeReview(topic);
-    }
-
-    private static void createNewCodeReview(Topic topic) {
-        topicPage.getNewTopicToggle().click();
-        topicPage.getNewCodeReviewButton().click();
-        topicPage.getSubjectField().sendKeys(topic.getTitle());
-        Post firstPost = topic.getPosts().get(0);
-        topicPage.getMainBodyArea().sendKeys(firstPost.getPostContent());
-        topicPage.getPostButton().click();
-    }
-
-    public static void createCodeReviewComment(Topic topic, String commentBody)
-            throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
-        commentToCodeReview(commentBody);
-        LOGGER.info("postCommentToCodeInTopic {}", topic.getTitle());
-    }
-
-    private static void commentToCodeReview(String comment) throws PermissionsDeniedException {
-        topicPage.getCodeReviewFirstLine().click();
-        topicPage.getCodeReviewCommentBodyField().sendKeys(comment);
-        topicPage.clickAddCommentToCodeReviewButton();
     }
 
     public static void postAnswer(Topic topic, String branchTitle)
@@ -236,5 +208,35 @@ public class Topics {
     }
 
     public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+    }
+
+    // Code review methods
+
+    public static CodeReview createCodeReview(CodeReview codeReview)
+            throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        if (codeReview.getBranch() == null) {
+            List<WebElement> branches = branchPage.getBranches();
+            if (isEmpty(branches)) {
+                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
+                        "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
+                        "Page Title: [" + JCommuneSeleniumConfig.driver.getTitle() + "]. " +
+                        "Page source: " + JCommuneSeleniumConfig.driver.getPageSource());
+            }
+            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
+            codeReview.withBranch(branch);
+        }
+        Branches.openBranch(codeReview.getBranch().getTitle());
+        topicPage.clickCreateCodeReview();
+        topicPage.fillCodeReviewFields(codeReview);
+        topicPage.clickAnswerToTopicButton();
+        assertFormValid();
+        return codeReview;
+    }
+
+    public static void createCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment)
+            throws PermissionsDeniedException {
+        topicPage.clickLineInCodeReviewForComment(codeReviewComment);
+        topicPage.fillCodeReviewCommentBody(codeReviewComment);
+        topicPage.clickAddCommentToCodeReviewButton();
     }
 }

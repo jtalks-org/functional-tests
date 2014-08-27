@@ -3,15 +3,17 @@ package org.jtalks.tests.jcommune.webdriver.entity.topic;
 import org.joda.time.DateTime;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+
 /**
  * Jcommune code review comment representation.
  */
 public class CodeReviewComment {
 
-    private int lineNumber;
+    private int lineNumber = 1;
     private User author;
     private DateTime creationDate;
-    private String body;
+    private String body = randomAlphanumeric(20);
     private CodeReview codeReview;
 
     public int getLineNumber() {

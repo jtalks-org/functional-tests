@@ -8,10 +8,13 @@ import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -81,8 +84,8 @@ public class TopicPage {
     private WebElement newTopicTypeToggle;
     @FindBy(className = "new-code-review-btn")
     private WebElement newCodeReviewButton;
-    @FindBy(className = "L0")
-    private WebElement codeReviewFirstLine;
+    @FindBy(xpath = "//ol[@class='linenums']/li")
+    private List<WebElement> codeReviewLines;
     @FindBy(className = "review-container-content")
     private WebElement codeReviewCommentBodyField;
     @FindBy(className = "review-container-controls-ok")
@@ -134,11 +137,6 @@ public class TopicPage {
         topicPage.goToTopicPage();
         topicPage.getNewTopicToggle().click();
         topicPage.getNewCodeReviewButton().click();
-    }
-
-    //Getters
-    public WebElement getNewButton() {
-        return newButton;
     }
 
     public void clickCreateTopic() throws PermissionsDeniedException {
@@ -237,15 +235,58 @@ public class TopicPage {
         }
     }
 
+    public void clickCreateCodeReview() throws PermissionsDeniedException {
+        info("Clicking New Code Review Button");
+        try {
+            if (getNewTopicToggle() != null) {
+                newTopicTypeToggle.click();
+            }
+            newCodeReviewButton.click();
+        } catch (NoSuchElementException e) {
+            info("No such button found!");
+            throw new PermissionsDeniedException("Couldn't find New Code Review button. Here is the page source: \n"
+                    + driver.getPageSource());
+        }
+    }
+
+    public void fillCodeReviewFields(CodeReview codeReview) {
+        getSubjectField().sendKeys(codeReview.getTitle());
+        for (int i = 0; i < codeReview.getLinesNumber(); i++) {
+            mainBodyArea.sendKeys(codeReview.getTopicContent());
+            mainBodyArea.sendKeys(Keys.ENTER);
+        }
+    }
+
+    public void clickLineInCodeReviewForComment(CodeReviewComment codeReviewComment) throws PermissionsDeniedException {
+        info("Clicking a line to leave comment");
+        try {
+            codeReviewLines.get(codeReviewComment.getLineNumber()-1).click();
+            info("The line was clicked");
+            codeReviewCommentBodyField.clear();
+        } catch (NoSuchElementException e) {
+            info("Clicking the line does nothing, looks like the permissions are not granted");
+            throw new PermissionsDeniedException("User does not have permissions to leave comments in branch");
+        }
+    }
+
+    public void fillCodeReviewCommentBody(CodeReviewComment codeReviewComment) {
+        codeReviewCommentBodyField.sendKeys(codeReviewComment.getBody());
+    }
+
     public void clickAddCommentToCodeReviewButton() throws PermissionsDeniedException {
         info("Clicking a button to add comment to code review");
         try {
             codeReviewCommentAddBtn.click();
             info("The button was clicked");
         } catch (NoSuchElementException e) {
-            info("Couldn't click the button, looks like the permissions are granted");
+            info("Couldn't click the button, looks like the permissions are not granted");
             throw new PermissionsDeniedException("User does not have permissions to leave comments in the branch");
         }
+    }
+
+    //Getters
+    public WebElement getNewButton() {
+        return newButton;
     }
 
     public WebElement getSubjectField() {
@@ -320,8 +361,8 @@ public class TopicPage {
         return codeReviewCommentBodyField;
     }
 
-    public WebElement getCodeReviewFirstLine() {
-        return codeReviewFirstLine;
+    public List<WebElement> getCodeReviewLines() {
+        return codeReviewLines;
     }
 
 }
