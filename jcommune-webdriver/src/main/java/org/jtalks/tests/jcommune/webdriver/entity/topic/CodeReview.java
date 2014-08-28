@@ -58,7 +58,7 @@ public class CodeReview {
         return this;
     }
 
-    public CodeReview withLinesNumber(int linesNumber) {
+    public CodeReview withNumberOfLines(int linesNumber) {
         this.linesNumber = linesNumber;
         return this;
     }

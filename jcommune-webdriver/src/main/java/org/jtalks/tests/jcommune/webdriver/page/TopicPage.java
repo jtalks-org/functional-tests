@@ -42,6 +42,7 @@ public class TopicPage {
     public static final String POLL_OPTIONS_NUMBER_ERROR = "Options number should be 2 - 50";
     public static final String POLL_OPTIONS_LENGTH_ERROR = "Item length should be 1 - 50";
     public static final String POLL_DUPLICATES_ERROR = "Poll items could not contain duplicates";
+    public static final String CR_COMMENT_LENGTH_ERROR = "size must be between 1 and 5000";
     @FindBy(id = "subjectError")
     private WebElement subjectErrorMessage;
     @FindBy(id = "bodyText.errors")

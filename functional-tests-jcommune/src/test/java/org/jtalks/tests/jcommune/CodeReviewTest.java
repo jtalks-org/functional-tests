@@ -6,7 +6,10 @@ import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
+import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.ExpectedExceptions;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -27,10 +30,76 @@ public class CodeReviewTest {
     }
 
     @Test
-    public void signUpAndCreateCodeReviewInBranch() throws Exception {
+    public void signUpAndCreateCodeReviewInBranch_ShouldPass() throws Exception {
         CodeReview codeReview = new CodeReview().withBranch("Acids and Bases");
-        User user = Users.signUpAndSignIn();
-        codeReview.withTopicStarter(user);
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test (expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR + TopicPage.EMPTY_SUBJECT_ERROR)
+    public void createCodeReviewWithEmptyTitle_ShouldFail() throws Exception {
+        CodeReview codeReview = new CodeReview().withTitle("");
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test
+    public void createCodeReviewWithMinTitle_ShouldPass() throws Exception {
+        CodeReview codeReview = new CodeReview().withTitle(randomAlphanumeric(1));
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test
+     public void createCodeReviewWithMaxTitle_ShouldPass() throws Exception {
+        CodeReview codeReview = new CodeReview().withTitle(randomAlphanumeric(120));
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test (expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR)
+    public void createCodeReviewExceedingMaxTitle_ShouldFail() throws Exception {
+        CodeReview codeReview = new CodeReview().withTitle(randomAlphanumeric(121));
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test (expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createCodeReviewWithEmptyBody_ShouldFail() throws Exception {
+        CodeReview codeReview = new CodeReview().withBody("");
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test
+    public void createCodeReviewWithMinBody_ShouldPass() throws Exception {
+        CodeReview codeReview = new CodeReview().withBody(randomAlphanumeric(2));
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test
+    public void createCodeReviewWithMaxBody_ShouldPass() throws Exception {
+        CodeReview codeReview = new CodeReview().withBody(randomAlphanumeric(20000));
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test (expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
+    public void createCodeReviewExceedingMaxBody_ShouldFail() throws Exception {
+        CodeReview codeReview = new CodeReview().withBody(randomAlphanumeric(20001));
+        Users.signUpAndSignIn();
+        Topics.createCodeReview(codeReview);
+    }
+
+    @Test
+    public void createCodeReviewWithMultipleLines_ShouldPass() throws Exception {
+        CodeReview codeReview = new CodeReview().withNumberOfLines(10);
+        Users.signUpAndSignIn();
         Topics.createCodeReview(codeReview);
     }
 
@@ -38,12 +107,56 @@ public class CodeReviewTest {
     public void signUpCreateValidCodeReviewAndLeaveComment_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         CodeReview codeReview = new CodeReview();
-        codeReview.withLinesNumber(5);
         CodeReviewComment codeReviewComment = new CodeReviewComment();
-        codeReviewComment.setLineNumber(3);
         Topics.createCodeReview(codeReview);
         Topics.createCodeReviewComment(codeReview, codeReviewComment);
     }
 
+    @Test (expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+    public void leaveEmptyCommentToCodeReview_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        CodeReview codeReview = new CodeReview();
+        CodeReviewComment codeReviewComment = new CodeReviewComment().withBody("");
+        Topics.createCodeReview(codeReview);
+        Topics.createCodeReviewComment(codeReview, codeReviewComment);
+    }
 
+    @Test
+    public void leaveMinCommentToCodeReview_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        CodeReview codeReview = new CodeReview();
+        CodeReviewComment codeReviewComment = new CodeReviewComment().withBody(randomAlphanumeric(1));
+        Topics.createCodeReview(codeReview);
+        Topics.createCodeReviewComment(codeReview, codeReviewComment);
+    }
+
+    @Test
+    public void leaveMaxCommentToCodeReview_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        CodeReview codeReview = new CodeReview();
+        CodeReviewComment codeReviewComment = new CodeReviewComment().withBody(randomAlphanumeric(5000));
+        Topics.createCodeReview(codeReview);
+        Topics.createCodeReviewComment(codeReview, codeReviewComment);
+    }
+
+    @Test (expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = TopicPage.CR_COMMENT_LENGTH_ERROR)
+    public void leaveCommentToCodeReviewExceedingMaxLength_ShouldFail() throws Exception {
+        Users.signUpAndSignIn();
+        CodeReview codeReview = new CodeReview();
+        CodeReviewComment codeReviewComment = new CodeReviewComment().withBody(randomAlphanumeric(5001));
+        Topics.createCodeReview(codeReview);
+        Topics.createCodeReviewComment(codeReview, codeReviewComment);
+    }
+
+    @Test
+    public void leaveCommentToCodeReviewNotInFirstLine_ShouldPass() throws Exception {
+        Users.signUpAndSignIn();
+        CodeReview codeReview = new CodeReview().withNumberOfLines(7);
+        CodeReviewComment codeReviewComment = new CodeReviewComment();
+        codeReviewComment.setLine(4);
+        Topics.createCodeReview(codeReview);
+        Topics.createCodeReviewComment(codeReview, codeReviewComment);
+    }
 }

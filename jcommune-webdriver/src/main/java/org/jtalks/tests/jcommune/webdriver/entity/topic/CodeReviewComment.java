@@ -20,7 +20,7 @@ public class CodeReviewComment {
         return lineNumber;
     }
 
-    public void setLineNumber(int lineNumber) {
+    public void setLine(int lineNumber) {
         this.lineNumber = lineNumber;
     }
 
@@ -44,8 +44,9 @@ public class CodeReviewComment {
         return body;
     }
 
-    public void setBody(String body) {
+    public CodeReviewComment withBody(String body) {
         this.body = body;
+        return this;
     }
 
     public CodeReview getCodeReview() {
