@@ -1,10 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
-import org.joda.time.DateTime;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
-import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
@@ -12,111 +9,53 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 /**
  * Jcommune code review representation.
  */
-public class CodeReview {
+public class CodeReview extends Topic {
 
-    private Branch branch;
-    private DateTime creationDate;
-    private DateTime modificationDate;
-    private User topicStarter;
-    private String title = randomAlphanumeric(30);
-    private String topicContent = randomAlphanumeric(50);
+    private String content;
     private int linesNumber = 1;
-    private Boolean closed;
-    private int views;
-    private boolean hasNewMessages;
-    private List<CodeReviewComment> comments = new ArrayList<CodeReviewComment>();
+    private List<CodeReviewComment> comments;
 
-    public CodeReview() {}
+    public CodeReview() {
+        this.withTitle(randomAlphanumeric(30));
+        this.content = randomAlphanumeric(200);
+    }
 
     public CodeReview(String title, String topicContent) {
-        this.title = title;
-        this.topicContent = topicContent;
+        this.withTitle(title);
+        this.content = topicContent;
     }
 
-    public CodeReview withBranch(Branch branch) {
-        this.branch = branch;
+    public CodeReview withContent(String content) {
+        this.content = content;
         return this;
     }
 
-    public CodeReview withBranch(String branchTitle) {
-        this.branch = new Branch(branchTitle);
+    public CodeReview setTitle(String title){
+        this.withTitle(title);
         return this;
     }
 
-    public CodeReview withTopicStarter(User topicStarter) {
-        this.topicStarter = topicStarter;
+    public CodeReview setBranch(Branch branch) {
+        this.withBranch(branch);
         return this;
     }
 
-    public CodeReview withTitle(String title){
-        this.title = title;
+    public CodeReview setBranch(String branchTitle) {
+        this.withBranch(branchTitle);
         return this;
     }
 
-    public CodeReview withBody(String topicContent) {
-        this.topicContent = topicContent;
-        return this;
-    }
-
-    public CodeReview withNumberOfLines(int linesNumber) {
+    public CodeReview withLinesNumber(int linesNumber) {
         this.linesNumber = linesNumber;
         return this;
     }
 
-    public DateTime getModificationDate() {
-        return modificationDate;
+    public String getContent() {
+        return content;
     }
 
-    public void setModificationDate(DateTime modificationDate) {
-        this.modificationDate = modificationDate;
-    }
-
-    public User getTopicStarter() {
-        return topicStarter;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Boolean getClosed() {
-        return closed;
-    }
-
-    public void setClosed(Boolean closed) {
-        this.closed = closed;
-    }
-
-    public int getViews() {
-        return views;
-    }
-
-    public void setViews(int views) {
-        this.views = views;
-    }
-
-    public Branch getBranch() {
-        return branch;
-    }
-
-    public String getTopicContent() {
-        return topicContent;
-    }
-
-    public int getLinesNumber() {
+    public int getLinesCount() {
         return linesNumber;
-    }
-
-    public boolean hasNewMessages() {
-        return hasNewMessages;
-    }
-
-    public void setHasNewMessages(boolean hasNewMessages) {
-        this.hasNewMessages = hasNewMessages;
     }
 
     public List<CodeReviewComment> getComments() {
@@ -127,9 +66,13 @@ public class CodeReview {
         this.comments = comments;
     }
 
+    public void addComment(CodeReviewComment codeReviewComment) {
+        this.comments.add(codeReviewComment);
+    }
+
     @Override
     public String toString() {
-        return String.format("Code review: title=[%s]", this.title);
+        return String.format("Code review: title=[%s]", this.getTitle());
     }
 
 }

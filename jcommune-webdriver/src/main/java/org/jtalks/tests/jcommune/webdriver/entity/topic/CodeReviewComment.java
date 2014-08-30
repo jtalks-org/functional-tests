@@ -1,51 +1,24 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
-import org.joda.time.DateTime;
-import org.jtalks.tests.jcommune.webdriver.entity.user.User;
-
-import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-
 /**
  * Jcommune code review comment representation.
  */
-public class CodeReviewComment {
+public class CodeReviewComment extends Post {
 
     private int lineNumber = 1;
-    private User author;
-    private DateTime creationDate;
-    private String body = randomAlphanumeric(20);
     private CodeReview codeReview;
 
     public int getLineNumber() {
         return lineNumber;
     }
 
-    public void setLine(int lineNumber) {
+    public CodeReviewComment withLineNumber(int lineNumber) {
         this.lineNumber = lineNumber;
+        return this;
     }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public DateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(DateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public CodeReviewComment withBody(String body) {
-        this.body = body;
+    public CodeReviewComment withContent(String content) {
+        this.setPostContent(content);
         return this;
     }
 

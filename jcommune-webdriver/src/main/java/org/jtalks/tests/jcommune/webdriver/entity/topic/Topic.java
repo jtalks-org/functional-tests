@@ -25,7 +25,6 @@ public class Topic {
     private Boolean closed;
     private int views;
     private Poll poll;
-    private CodeReview codeReview;
     private List<Post> posts = new ArrayList<Post>();
     private boolean hasNewMessages;
 
@@ -70,10 +69,6 @@ public class Topic {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public boolean isSticked() {
         return sticked;
     }
@@ -112,14 +107,6 @@ public class Topic {
 
     public void setPoll(Poll poll) {
         this.poll = poll;
-    }
-
-    public CodeReview getCodeReview() {
-        return codeReview;
-    }
-
-    public void setCodeReview(CodeReview codeReview) {
-        this.codeReview = codeReview;
     }
 
     public List<Post> getPosts() {

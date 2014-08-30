@@ -32,7 +32,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 /**
  * @author masyan
  */
-public class TopicPage {
+public class TopicPage extends PageFactory {
     public static final String EMPTY_SUBJECT_ERROR = "(may not be empty\n)|(Не может быть пустым\n)";
     public static final String EMPTY_BODY_ERROR = "size must be between 2 and 20000";
     public static final String SUBJECT_SIZE_ERROR = "size must be between 1 and 120\n";
@@ -252,17 +252,27 @@ public class TopicPage {
 
     public void fillCodeReviewFields(CodeReview codeReview) {
         getSubjectField().sendKeys(codeReview.getTitle());
-        for (int i = 0; i < codeReview.getLinesNumber(); i++) {
-            mainBodyArea.sendKeys(codeReview.getTopicContent());
-            mainBodyArea.sendKeys(Keys.ENTER);
+        fillCodeReviewBody(codeReview);
+    }
+
+    private void fillCodeReviewBody(CodeReview codeReview) {
+        info("Filling topic body: [" + StringUtils.left(codeReview.getContent(), 10) + "...]");
+        for (String token : Splitter.fixedLength(1).limit(codeReview.getLinesCount()).split(codeReview.getContent())) {
+            this.mainBodyArea.sendKeys(token);
+            this.mainBodyArea.sendKeys(Keys.ENTER);
         }
     }
 
-    public void clickLineInCodeReviewForComment(CodeReviewComment codeReviewComment) throws PermissionsDeniedException {
+    public void clickLineInCodeReviewForComment(int lineNumber) throws PermissionsDeniedException, ValidationException {
         info("Clicking a line to leave comment");
         try {
-            codeReviewLines.get(codeReviewComment.getLineNumber()-1).click();
-            info("The line was clicked");
+            codeReviewLines.get(lineNumber - 1).click();
+        } catch (IndexOutOfBoundsException e) {
+            info("The line doesn't exist");
+            throw new ValidationException("The commented line number exceeds the code review lines number");
+        }
+        info("The line was clicked");
+        try {
             codeReviewCommentBodyField.clear();
         } catch (NoSuchElementException e) {
             info("Clicking the line does nothing, looks like the permissions are not granted");
@@ -271,7 +281,7 @@ public class TopicPage {
     }
 
     public void fillCodeReviewCommentBody(CodeReviewComment codeReviewComment) {
-        codeReviewCommentBodyField.sendKeys(codeReviewComment.getBody());
+        codeReviewCommentBodyField.sendKeys(codeReviewComment.getPostContent());
     }
 
     public void clickAddCommentToCodeReviewButton() throws PermissionsDeniedException {

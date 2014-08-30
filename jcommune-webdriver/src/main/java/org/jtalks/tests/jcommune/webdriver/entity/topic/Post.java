@@ -3,6 +3,9 @@ package org.jtalks.tests.jcommune.webdriver.entity.topic;
 import org.joda.time.DateTime;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+
+
 /**
  * Jcommune post representation.
  */
@@ -13,6 +16,10 @@ public class Post {
     private User userCreated;
     private String postContent;
     private Topic topic;
+
+    public Post() {
+        this.postContent = randomAlphanumeric(100);
+    }
 
     public Post(String postContent) {
         this.postContent = postContent;

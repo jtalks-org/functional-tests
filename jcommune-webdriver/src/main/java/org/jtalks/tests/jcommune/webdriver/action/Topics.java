@@ -233,9 +233,11 @@ public class Topics {
         return codeReview;
     }
 
-    public static void createCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment)
-            throws PermissionsDeniedException {
-        topicPage.clickLineInCodeReviewForComment(codeReviewComment);
+    public static void leaveCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment)
+            throws PermissionsDeniedException, ValidationException {
+        codeReviewComment.setCodeReview(codeReview);
+        codeReview.addComment(codeReviewComment);
+        topicPage.clickLineInCodeReviewForComment(codeReviewComment.getLineNumber());
         topicPage.fillCodeReviewCommentBody(codeReviewComment);
         topicPage.clickAddCommentToCodeReviewButton();
     }
