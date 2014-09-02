@@ -24,13 +24,14 @@
       <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
       <class name="org.jtalks.tests.jcommune.CheckMailCounterTest"/>
       <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
+      <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
     </classes>
   </test>
   <!--
   This takes long time to run, usually will be run only headless (without browser) to speed up. It won't be run by
   default, only Smokes are run. To run these tests pass to maven: -Dtestnames=FullRegression. See pom.xml for more
-  information.
-  -->
+  information.-->
+
   <test name="FullRegression">
     <classes>
       <class name="org.jtalks.tests.jcommune.BbCodeTest"/>

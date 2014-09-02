@@ -8,6 +8,8 @@ import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
@@ -29,7 +31,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 /**
  * @author masyan
  */
-public class TopicPage {
+public class TopicPage extends PageFactory {
     public static final String EMPTY_SUBJECT_ERROR = "(may not be empty\n)|(Не может быть пустым\n)";
     public static final String EMPTY_BODY_ERROR = "size must be between 2 and 20000";
     public static final String SUBJECT_SIZE_ERROR = "size must be between 1 and 120\n";
@@ -39,6 +41,7 @@ public class TopicPage {
     public static final String POLL_OPTIONS_NUMBER_ERROR = "Options number should be 2 - 50";
     public static final String POLL_OPTIONS_LENGTH_ERROR = "Item length should be 1 - 50";
     public static final String POLL_DUPLICATES_ERROR = "Poll items could not contain duplicates";
+    public static final String CR_COMMENT_LENGTH_ERROR = "size must be between 1 and 5000";
     @FindBy(id = "subjectError")
     private WebElement subjectErrorMessage;
     @FindBy(id = "bodyText.errors")
@@ -81,6 +84,14 @@ public class TopicPage {
     private WebElement newTopicTypeToggle;
     @FindBy(className = "new-code-review-btn")
     private WebElement newCodeReviewButton;
+    @FindBy(xpath = "//ol[@class='linenums']/li")
+    private List<WebElement> codeReviewLines;
+    @FindBy(className = "review-container-content")
+    private WebElement codeReviewCommentBodyField;
+    @FindBy(className = "review-container-controls-ok")
+    private WebElement codeReviewCommentAddBtn;
+    @FindBy(className = "review-container-controls-cancel")
+    private WebElement codeReviewCommentCancelBtn;
     @FindBy(id = "sticked")
     private WebElement topicSticked;
     @FindBy(id = "announcement")
@@ -126,11 +137,6 @@ public class TopicPage {
         topicPage.goToTopicPage();
         topicPage.getNewTopicToggle().click();
         topicPage.getNewCodeReviewButton().click();
-    }
-
-    //Getters
-    public WebElement getNewButton() {
-        return newButton;
     }
 
     public void clickCreateTopic() throws PermissionsDeniedException {
@@ -229,6 +235,65 @@ public class TopicPage {
         }
     }
 
+    public void clickCreateCodeReview() throws PermissionsDeniedException {
+        info("Clicking New Code Review Button");
+        try {
+            if (getNewTopicToggle() != null) {
+                newTopicTypeToggle.click();
+            }
+            newCodeReviewButton.click();
+        } catch (NoSuchElementException e) {
+            info("No such button found!");
+            throw new PermissionsDeniedException("Couldn't find New Code Review button. Here is the page source: \n"
+                    + driver.getPageSource());
+        }
+    }
+
+    public void fillCodeReviewFields(CodeReview codeReview) {
+        info("Filling code review title: [" + StringUtils.left(codeReview.getTitle(), 100) + "...]");
+        getSubjectField().sendKeys(codeReview.getTitle());
+        info("Filling code review body: [" + StringUtils.left(codeReview.getContent(), 100) + "...]");
+        this.mainBodyArea.sendKeys(codeReview.getContent());
+    }
+
+    public void clickLineInCodeReviewForComment(int lineNumber) throws PermissionsDeniedException, ValidationException {
+        info("Clicking a line to leave comment");
+        try {
+            codeReviewLines.get(lineNumber - 1).click();
+        } catch (IndexOutOfBoundsException e) {
+            info("The line doesn't exist");
+            throw new ValidationException("The commented line number exceeds the code review lines number");
+        }
+        info("The line was clicked");
+        try {
+            codeReviewCommentBodyField.clear();
+        } catch (NoSuchElementException e) {
+            info("Clicking the line does nothing, looks like the permissions are not granted");
+            throw new PermissionsDeniedException("User does not have permissions to leave comments in branch");
+        }
+    }
+
+    public void fillCodeReviewCommentBody(CodeReviewComment codeReviewComment) {
+        info("Filling code review comment body: [" + StringUtils.left(codeReviewComment.getPostContent(), 100) + "...]");
+        codeReviewCommentBodyField.sendKeys(codeReviewComment.getPostContent());
+    }
+
+    public void clickAddCommentToCodeReviewButton() throws PermissionsDeniedException {
+        info("Clicking a button to add comment to code review");
+        try {
+            codeReviewCommentAddBtn.click();
+            info("The button was clicked");
+        } catch (NoSuchElementException e) {
+            info("Couldn't click the button, looks like the permissions are not granted");
+            throw new PermissionsDeniedException("User does not have permissions to leave comments in the branch");
+        }
+    }
+
+    //Getters
+    public WebElement getNewButton() {
+        return newButton;
+    }
+
     public WebElement getSubjectField() {
         return subjectField;
     }
@@ -295,6 +360,14 @@ public class TopicPage {
 
     public WebElement getBranchName() {
         return branchName;
+    }
+
+    public WebElement getCodeReviewCommentBodyField() {
+        return codeReviewCommentBodyField;
+    }
+
+    public List<WebElement> getCodeReviewLines() {
+        return codeReviewLines;
     }
 
 }

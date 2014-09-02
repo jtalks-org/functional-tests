@@ -82,7 +82,7 @@ public class SmallScreenHeader extends Header {
     }
 
     private boolean isMenuHidden() {
-        info("Checking whether search input is shown. If not - the menu is already opened.");
+        info("Checking whether search input is shown. If yes - the menu is already opened.");
         //using search input because menu button itself doesn't have correct class 'collapsed' on the initial page load
         return !searchInput.isDisplayed();
     }
