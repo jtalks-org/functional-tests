@@ -48,7 +48,7 @@ public class TopicTest {
     }
 
     @Test
-    public void createTopicWithTitleAndMessage_ShouldPass_JC_13() throws Exception {
+    public void createTopicWithTitleAndMessage_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
         Topic createdTopic = Topics.createTopic(topic);
@@ -57,7 +57,7 @@ public class TopicTest {
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
-    public void createTopicWithEmptyTitle_ShouldFail_JC_25() throws Exception {
+    public void createTopicWithEmptyTitle_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic().withTitle("");
         Topics.createTopic(topic);
@@ -87,7 +87,7 @@ public class TopicTest {
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithEmptyMessage_ShouldFail_JC_26() throws Exception {
+    public void createTopicWithEmptyMessage_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic().withBody("");
         Topics.createTopic(topic);
@@ -125,7 +125,7 @@ public class TopicTest {
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
-    public void createTopicWithoutData_ShouldFail_JC_24() throws Exception {
+    public void createTopicWithoutData_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic().withTitle("").withBody("");
         Topics.createTopic(topic);
@@ -142,7 +142,7 @@ public class TopicTest {
     }
 
     @Test
-    public void signUpAndCreateTopicInBranch() throws Exception {
+    public void signUpAndCreateTopicInBranch_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
         Topic topic = new Topic().withBranch("Classical Mechanics");
@@ -151,7 +151,7 @@ public class TopicTest {
     }
 
     @Test
-    public void postValidAnswerToTopicShouldSucceed() throws Exception {
+    public void postValidAnswerToTopic_ShouldPass() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         Users.signUpAndSignIn();
         Topic topic = new Topic();
@@ -160,13 +160,13 @@ public class TopicTest {
     }
 
     @Test(expectedExceptions = PermissionsDeniedException.class)
-    public void createTopicAsAnonymousShouldFail() throws Exception {
+    public void createTopicAsAnonymous_ShouldFail() throws Exception {
         Topic topic = new Topic();
         Topics.createTopic(topic);
     }
 
     @Test
-    public void createStickedTopic() throws Exception {
+    public void createStickedTopic_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
         Topic topic = new Topic();
@@ -176,7 +176,7 @@ public class TopicTest {
     }
 
     @Test
-    public void createAnnouncementTopic() throws Exception {
+    public void createAnnouncementTopic_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
         Topic topic = new Topic();
@@ -186,7 +186,7 @@ public class TopicTest {
     }
 
     @Test
-    public void createTopicWithPoll() throws Exception {
+    public void createTopicWithPoll_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
         Poll poll = new Poll("poll title");
@@ -321,7 +321,7 @@ public class TopicTest {
 
 
     @Test
-    public void createTopicWithPollEndDate() throws Exception {
+    public void createTopicWithPollEndDate_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
         Poll poll = new Poll("poll title");
@@ -331,7 +331,7 @@ public class TopicTest {
     }
 
     @Test
-    public void createTopicWithPollMultipleAnswers() throws Exception {
+    public void createTopicWithPollMultipleAnswers_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
         Poll poll = new Poll("poll title");
