@@ -12,21 +12,26 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 public class CodeReview extends Topic {
 
     private String content;
-    private int linesNumber = 1;
+    private int numberOfLines;
     private List<CodeReviewComment> comments;
 
     public CodeReview() {
+        this.numberOfLines = (int)(Math.random()*10 + 1);
         this.withTitle(randomAlphanumeric(30));
-        this.content = randomAlphanumeric(200);
+        for (int i = 0; i < this.numberOfLines; i++){
+            this.content += randomAlphanumeric(10) + System.getProperty("line.separator");
+        }
     }
 
-    public CodeReview(String title, String topicContent) {
+    public CodeReview(String title, String content) {
         this.withTitle(title);
-        this.content = topicContent;
+        this.content = content;
+        this.numberOfLines = 1;
     }
 
     public CodeReview withContent(String content) {
         this.content = content;
+        this.numberOfLines = 1;
         return this;
     }
 
@@ -45,8 +50,23 @@ public class CodeReview extends Topic {
         return this;
     }
 
-    public CodeReview withLinesNumber(int linesNumber) {
-        this.linesNumber = linesNumber;
+    // New content would be generated for each line of a code review
+    public CodeReview withNumberOfLines_RandContent(int numberOfLines) {
+        this.numberOfLines = numberOfLines;
+        this.content = "";
+        for (int i = 0; i < this.numberOfLines; i++){
+            this.content += randomAlphanumeric(10) + System.getProperty("line.separator");
+        }
+        return this;
+    }
+
+    // Passed argument %content% would be repeated for each line of a code review
+    public CodeReview withNumberOfLines_SetContent(int numberOfLines, String content) {
+        this.numberOfLines = numberOfLines;
+        this.content = "";
+        for (int i = 0; i < this.numberOfLines; i++){
+            this.content += content + System.getProperty("line.separator");
+        }
         return this;
     }
 
@@ -55,7 +75,7 @@ public class CodeReview extends Topic {
     }
 
     public int getLinesCount() {
-        return linesNumber;
+        return numberOfLines;
     }
 
     public List<CodeReviewComment> getComments() {

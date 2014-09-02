@@ -14,7 +14,6 @@ import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -251,16 +250,10 @@ public class TopicPage extends PageFactory {
     }
 
     public void fillCodeReviewFields(CodeReview codeReview) {
+        info("Filling code review title: [" + StringUtils.left(codeReview.getTitle(), 100) + "...]");
         getSubjectField().sendKeys(codeReview.getTitle());
-        fillCodeReviewBody(codeReview);
-    }
-
-    private void fillCodeReviewBody(CodeReview codeReview) {
-        info("Filling topic body: [" + StringUtils.left(codeReview.getContent(), 10) + "...]");
-        for (String token : Splitter.fixedLength(1).limit(codeReview.getLinesCount()).split(codeReview.getContent())) {
-            this.mainBodyArea.sendKeys(token);
-            this.mainBodyArea.sendKeys(Keys.ENTER);
-        }
+        info("Filling code review body: [" + StringUtils.left(codeReview.getContent(), 100) + "...]");
+        this.mainBodyArea.sendKeys(codeReview.getContent());
     }
 
     public void clickLineInCodeReviewForComment(int lineNumber) throws PermissionsDeniedException, ValidationException {
@@ -281,6 +274,7 @@ public class TopicPage extends PageFactory {
     }
 
     public void fillCodeReviewCommentBody(CodeReviewComment codeReviewComment) {
+        info("Filling code review comment body: [" + StringUtils.left(codeReviewComment.getPostContent(), 100) + "...]");
         codeReviewCommentBodyField.sendKeys(codeReviewComment.getPostContent());
     }
 

@@ -150,8 +150,8 @@ public class CodeReviewTest {
     @Test
     public void leaveCommentToCodeReviewNotInFirstLine_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
-        CodeReview codeReview = new CodeReview().withLinesNumber(5);
-        CodeReviewComment codeReviewComment = new CodeReviewComment().withLineNumber(4);
+        CodeReview codeReview = new CodeReview().withNumberOfLines_RandContent(5);
+        CodeReviewComment codeReviewComment = new CodeReviewComment().onLineNumber(4);
         Topics.createCodeReview(codeReview);
         Topics.leaveCodeReviewComment(codeReview, codeReviewComment);
     }

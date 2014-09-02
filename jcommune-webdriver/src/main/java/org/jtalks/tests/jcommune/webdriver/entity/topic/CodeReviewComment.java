@@ -5,15 +5,15 @@ package org.jtalks.tests.jcommune.webdriver.entity.topic;
  */
 public class CodeReviewComment extends Post {
 
-    private int lineNumber = 1;
+    private int commentedLineNumber = 1;
     private CodeReview codeReview;
 
-    public int getLineNumber() {
-        return lineNumber;
+    public int getCommentedLineNumber() {
+        return commentedLineNumber;
     }
 
-    public CodeReviewComment withLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
+    public CodeReviewComment onLineNumber(int commentedLineNumber) {
+        this.commentedLineNumber = commentedLineNumber;
         return this;
     }
 
