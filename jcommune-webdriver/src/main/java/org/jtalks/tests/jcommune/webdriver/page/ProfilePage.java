@@ -8,6 +8,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import java.util.List;
@@ -433,6 +434,7 @@ public class ProfilePage {
         new Select(getPageSizeField()).selectByValue(sNum);
     }
 
+    @Step
     public void selectAutoSubscribe(boolean flag) {
         if (flag == autoSubscribeCheckbox.isSelected()) {
             info(flag ? "Autosubscribe checkbox is already checked" : "Autosubscribe checkbox is already unchecked" + " so doing nothing");
@@ -442,6 +444,7 @@ public class ProfilePage {
         }
     }
 
+    @Step
     public void selectNotifyIfSomeoneMentionsYou(boolean flag) {
         if (flag == notifyIfSomeoneMentionsYouCheckbox.isSelected()) {
             info(flag ? "NotifyIfSomeoneMentionsYouCheckbox checked" : "NotifyIfSomeoneMentionsYouCheckbox unchecked" + " so doing nothing");
@@ -451,6 +454,7 @@ public class ProfilePage {
         }
     }
 
+    @Step
     public void selectNotifyIfPrivateMessageIsReceived(boolean flag) {
         if (flag == notifyIfPrivateMessageIsReceivedCheckbox.isSelected()) {
             info(flag ? "NotifyIfPrivateMessageIsReceivedCheckbox checked" : "unchecked" + " so doing nothing");
@@ -472,61 +476,72 @@ public class ProfilePage {
         saveEditButton.click();
     }
 
+    @Step
     public void fillFirstName(String firstName) {
         info("First name: " + firstName);
         firstNameField.clear();
         firstNameField.sendKeys(firstName);
     }
 
+    @Step
     public void fillLastName(String lastName) {
         info("Last name: " + lastName);
         lastNameField.clear();
         lastNameField.sendKeys(lastName);
     }
 
+    @Step
     public void fillSignature(String signature) {
         info("Signature: " + signature);
         signatureField.clear();
         signatureField.sendKeys(signature);
     }
 
+    @Step
     public void fillEmail(String email) {
         info("Email: " + email);
         emailEditField.clear();
         emailEditField.sendKeys(email);
     }
 
+    @Step
     public void fillLocation(String location) {
         info("Location: " + location);
         locationField.clear();
         locationField.sendKeys(location);
     }
 
+    @Step
     public void fillCurrentPassword(String currentPassword) {
         info("Current password: " + currentPassword);
         currentPasswordField.sendKeys(currentPassword);
     }
 
+    @Step
     public void fillNewPassword(String newPassword) {
         info("New password: " + newPassword);
         newPasswordField.sendKeys(newPassword);
     }
 
+    @Step
     public void fillConfirmNewPassword(String confirmNewPassword) {
         info("Confirm new password: " + confirmNewPassword);
         confirmNewPasswordField.sendKeys(confirmNewPassword);
     }
 
+    @Step
     public void openContactsTab() {
         info("Clicking on contacts tab button");
         contacsTabButton.click();
     }
 
+    @Step
     public void openNotificationsTab() {
         info("Clicking on notifications tab button");
         notificationsTabButton.click();
     }
 
+    @Step
     public void openSecurityTab() {
         info("Clicking on security tab button");
         securityTabButton.click();

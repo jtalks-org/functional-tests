@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -82,31 +83,37 @@ public class SignUpPage {
         return signUpButton;
     }
 
+    @Step
     public void fillUsername(String username) {
         info("Fill username: " + username);
         usernameField.sendKeys(username);
     }
 
+    @Step
     public void fillEmail(String email) {
         info("Fill email: " + email);
         emailField.sendKeys(email);
     }
 
+    @Step
     public void fillPassword(String password) {
         info("Fill password: " + password);
         passwordField.sendKeys(password);
     }
 
+    @Step
     public void fillPasswordConfirmation(String passwordConfirmation) {
         info("Fill password confirmation: " + passwordConfirmation);
         passwordConfirmField.sendKeys(passwordConfirmation);
     }
 
+    @Step
     public void submitForm() {
         info("Clicking submit button...");
         submitButton.click();
     }
 
+    @Step
     public void closeRegistrationWasSuccessfulDialog() {
         info("Waiting for dialog that says check your mailbox to open...");
         try {

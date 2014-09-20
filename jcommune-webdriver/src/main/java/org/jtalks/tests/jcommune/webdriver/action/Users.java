@@ -30,6 +30,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class Users {
      * @param user the {@code User} instance with sign in form data
      * @throws ValidationException
      */
+    @Step
     public static void signIn(User user) throws ValidationException {
         info("Sign in a User: " + user);
         openAndFillSignInDialog(user);
@@ -96,6 +98,7 @@ public class Users {
         signInPage.clickSubmitButton();
     }
 
+    @Step
     private static void checkFormValidation(List<WebElement> errorElements) throws ValidationException {
         info("Check there are no validation errors");
         if (!errorElements.isEmpty()) {
@@ -123,6 +126,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
+    @Step
     public static User signUp() throws ValidationException {
         info("Sign up a random user");
         return signUp(new UserForRegistration());
@@ -136,6 +140,7 @@ public class Users {
      * @return the {@code User} instance that contains registered user data
      * @throws ValidationException
      */
+    @Step
     public static User signUp(UserForRegistration userForRegistration) throws ValidationException {
         info("Sign Up a user: " + userForRegistration);
         mainPage.logOutIfLoggedIn(driver);
@@ -145,6 +150,7 @@ public class Users {
         return userForRegistration;
     }
 
+    @Step
     private static void openAndFillSignUpDialog(UserForRegistration userForRegistration) {
         signUpPage.getSignUpButton().click();
         // Check that sign-up dialog have been opened (JCommune open sign-up page instead dialog if JavaScript disabled)
@@ -170,6 +176,7 @@ public class Users {
      *
      * @param user - a user to activate its just registered account
      */
+    @Step
     public static void activate(User user) {
         info("Looking up email at mailtrap. Activating a user by following activation link..");
         PochtaMail mailtrapMail = new PochtaMail();
@@ -184,6 +191,7 @@ public class Users {
         }
     }
 
+    @Step
     public static void fillAndSendLoginForm(User user) throws ValidationException {
         info("Sign in a User: " + user);
         checkFormValidation(signInPage.getErrorFormElements());
@@ -193,6 +201,7 @@ public class Users {
         signInPage.getSubmitButtonAfterRegistration().click();
     }
 
+    @Step
     public static String redirectToLogIn() {
         WebElement lastAuthorButton = new MainPage(driver).getLastPostAuthor();
         String referer = lastAuthorButton.getAttribute("href");
@@ -252,6 +261,7 @@ public class Users {
         checkFormValidation(profilePage.getErrorFormElements());
     }
 
+    @Step
     public static void assertMainUserInfo(User user) {
         info("Begins assert the test profile fields");
         assertTrue("FirstName wasn't changed" ,user.getFirstName().equals(profilePage.getFirstNameField().getAttribute("value")));

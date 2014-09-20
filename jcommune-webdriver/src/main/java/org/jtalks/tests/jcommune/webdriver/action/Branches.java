@@ -5,6 +5,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.openqa.selenium.WebElement;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
@@ -15,6 +16,7 @@ import static org.testng.Assert.assertTrue;
  * @author andrey ivanov
  */
 public class Branches {
+    @Step
     public static void openBranch(String branchTitle) throws CouldNotOpenPageException {
         info("Opening branch: [" + branchTitle + "]");
         WebElement branch = branchPage.findBranch(branchTitle);

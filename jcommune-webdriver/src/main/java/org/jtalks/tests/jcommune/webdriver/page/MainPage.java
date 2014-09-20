@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.concurrent.TimeUnit;
 
@@ -101,6 +102,7 @@ public class MainPage {
         getHeader().pressOpenForumSettingsDialog();
     }
 
+    @Step
     public void logOutIfLoggedIn(WebDriver driver) {
         info("Logging Out If Logged In");
         try {
@@ -118,16 +120,19 @@ public class MainPage {
         registrationLink.click();
     }
 
+    @Step
     public void clickLogin() {
         info("Clicking login");
         getHeader().clickLogin();
     }
 
+    @Step
     public void clickLogout() {
         info("Clicking logout");
         getHeader().clickLogout();
     }
 
+    @Step
     public void openPrivateMessages() {
         info("Clicking private messages");
         getHeader().openPrivateMessages();
@@ -145,6 +150,7 @@ public class MainPage {
         return iconLinkToMainPage;
     }
 
+    @Step
     public void switchOnAdminMode() {
         if (!isAdminModeOn()) {
             info("Opening Administration context menu on top of the page");
@@ -154,6 +160,7 @@ public class MainPage {
         }
     }
 
+    @Step
     public void switchOffAdminMode() {
         if (isAdminModeOn()) {
             info("Opening Administration context menu on top of the page");
@@ -197,6 +204,7 @@ public class MainPage {
         }
     }
 
+    @Step
     public boolean isInSmallScreenMode() {
         info("Checking whether we're in small screen mode");
         try {

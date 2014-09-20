@@ -4,6 +4,7 @@ import junit.framework.AssertionFailedError;
 import org.jtalks.tests.jcommune.webdriver.entity.forumsetting.ForumSetting;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
@@ -15,6 +16,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 public class ForumSettings {
 
+    @Step
     public static void resetLogo(){
         info("Resetting logo");
         openForumSettingsDialog();
@@ -24,6 +26,7 @@ public class ForumSettings {
         forumSettingsDialog.clickSaveChangesButton();
     }
 
+    @Step
     public static void resetFavIcon(){
         info("Resetting favicon");
         openForumSettingsDialog();
@@ -33,6 +36,7 @@ public class ForumSettings {
         forumSettingsDialog.clickSaveChangesButton();
     }
 
+    @Step
     public static void setForumTitle(ForumSetting forumSetting){
         info("Editing the Forum Title");
         openForumSettingsDialog();
@@ -40,6 +44,7 @@ public class ForumSettings {
         forumSettingsDialog.clickSaveChangesButton();
     }
 
+    @Step
     public static void setForumDescription(ForumSetting forumSetting){
         info("Editing the Forum Description");
         openForumSettingsDialog();
@@ -47,6 +52,7 @@ public class ForumSettings {
         forumSettingsDialog.clickSaveChangesButton();
     }
 
+    @Step
     public static void setPrefix(ForumSetting forumSetting){
         info("Editing the Pages' Prefix");
         openForumSettingsDialog();
@@ -54,6 +60,7 @@ public class ForumSettings {
         forumSettingsDialog.clickSaveChangesButton();
     }
 
+    @Step
     public static void setLogoTooltip(ForumSetting forumSetting){
         info("Editing the Logo Tooltip");
         openForumSettingsDialog();
@@ -61,6 +68,7 @@ public class ForumSettings {
         forumSettingsDialog.clickSaveChangesButton();
     }
 
+    @Step
     public static void setCopyright(ForumSetting forumSetting){
         info("Editing the Forum Copyright");
         openForumSettingsDialog();
@@ -68,6 +76,7 @@ public class ForumSettings {
         forumSettingsDialog.clickSaveChangesButton();
     }
 
+    @Step
     public static boolean assertErrorVisible(){
         info("Checking whether the error has appeared");
         WebElement error = forumSettingsDialog.getErrorLine();
@@ -77,6 +86,7 @@ public class ForumSettings {
         throw new AssertionFailedError("The error is not present on the page");
     }
 
+    @Step
     private static void openForumSettingsDialog(){
         info("Opening Forum Settings dialog");
         WebElement dialog = mainPage.getForumSettingsDialog();

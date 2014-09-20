@@ -17,6 +17,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -133,6 +134,7 @@ public class TopicPage {
         return newButton;
     }
 
+    @Step
     public void clickCreateTopic() throws PermissionsDeniedException {
         info("Clicking New Topic button");
         try {
@@ -144,6 +146,7 @@ public class TopicPage {
         }
     }
 
+    @Step
     public void fillTopicMainFields(Topic topic) throws PermissionsDeniedException {
         info("Filling topic fields");
         fillTopicTitle(topic.getTitle());
@@ -152,11 +155,13 @@ public class TopicPage {
         markTopicAsAnnouncement(topic.isAnnouncement());
     }
 
+    @Step
     private void fillTopicTitle(String topicTitle) {
         info("Fill topic title: [" + topicTitle + "]");
         this.subjectField.sendKeys(topicTitle);
     }
 
+    @Step
     private void fillTopicBody(String body) {
         info("Filling topic body: [" + StringUtils.left(body, 100) + "...]");
         for (String token : Splitter.fixedLength(100).split(body)) {
@@ -164,6 +169,7 @@ public class TopicPage {
         }
     }
 
+    @Step
     private void markTopicAsSticked(boolean topicIsSticked) throws PermissionsDeniedException {
         if (topicIsSticked) {
             info("Marking topic as sticked");
@@ -177,6 +183,7 @@ public class TopicPage {
         }
     }
 
+    @Step
     private void markTopicAsAnnouncement(boolean isAnnouncement) throws PermissionsDeniedException {
         if (isAnnouncement) {
             info("Marking topic as announcement");
@@ -190,6 +197,7 @@ public class TopicPage {
         }
     }
 
+    @Step
     public void fillPollSpecificFields(Poll poll) {
         if (poll != null) {
             info("Filling poll title: " + poll.getTitle());
@@ -200,6 +208,7 @@ public class TopicPage {
         }
     }
 
+    @Step
     private void fillPollOptions(String[] pollOptions) {
         info("Filling poll options. Their number is: " + pollOptions.length);
         WebElement optionsField = getTopicPollItemsField();
@@ -209,6 +218,7 @@ public class TopicPage {
         }
     }
 
+    @Step
     private void fillPollEndDate(String endDate) {
         if (endDate != null) {
             info("Fill poll end date: " + endDate);
@@ -218,6 +228,7 @@ public class TopicPage {
         }
     }
 
+    @Step
     public void clickAnswerToTopicButton() throws PermissionsDeniedException {
         info("Clicking a button to post the topic/answer");
         try {

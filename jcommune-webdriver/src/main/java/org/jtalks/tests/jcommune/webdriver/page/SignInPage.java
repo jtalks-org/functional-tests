@@ -6,6 +6,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -55,16 +56,19 @@ public class SignInPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Step
     public void fillUsernameField(String username) {
         info("Fill username: " + username);
         usernameField.sendKeys(username);
     }
 
+    @Step
     public void fillPasswordField(String password) {
         info("Fill password: " + password);
         passwordField.sendKeys(password);
     }
 
+    @Step
     public void clickSubmitButton() {
         info("Clicking submit button");
         submitButton.click();

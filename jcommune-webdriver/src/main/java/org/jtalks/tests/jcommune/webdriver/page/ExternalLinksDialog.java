@@ -5,6 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -44,39 +45,46 @@ public class ExternalLinksDialog {
         PageFactory.initElements(driver, this);
     }
 
+    @Step
     public void closeDialog() {
         info("Closing dialog by pressing Close button");
         closeDialogButton.submit();
     }
 
+    @Step
     public void clickAddLinkButton() {
         info("Pressing on Add Link button");
         addLinkBut.click();
     }
 
+    @Step
     public void fillLinkTitleField(String title) {
         info("Fill Link Title field: " + title);
         titleField.clear();
         titleField.sendKeys(title);
     }
 
+    @Step
     public void fillLinkHrefField(String url) {
         info("Fill Link Href field: " + url);
         urlField.clear();
         urlField.sendKeys(url);
     }
 
+    @Step
     public void fillLinkHintField(String hint) {
         info("Fill Link Hint field: " + hint);
         hintField.clear();
         hintField.sendKeys(hint);
     }
 
+    @Step
     public void clickSaveLinkButton() {
         info("Clicking Save Link button");
         saveLinkBut.click();
     }
 
+    @Step
     public void clickRemoveLinkButton() {
         info("Clicking Remove Link button");
         removeLinkBut.click();
