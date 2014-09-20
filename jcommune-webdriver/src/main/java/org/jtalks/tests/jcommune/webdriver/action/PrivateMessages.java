@@ -24,6 +24,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -53,6 +54,7 @@ public class PrivateMessages {
         pmPage.fillMessageField(pm.getMessageContent());
     }
 
+    @Step
     public static boolean pmIsReceived(PrivateMessage pm) {
         mainPage.openPrivateMessages();
         info("Checking whether the private message subject is on the page");
@@ -68,6 +70,7 @@ public class PrivateMessages {
         return false;
     }
 
+    @Step
     public static void removePm(PrivateMessage pm) {
         info("Removing Private Message: " + pm);
         List<WebElement> pmList = pmPage.getPmList();

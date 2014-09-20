@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.yandex.qatools.allure.annotations.Step;
+
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
 
@@ -20,6 +22,7 @@ public class SmallScreenHeader extends Header {
         super(driver);
     }
 
+    @Step
     public void clickLogin() {
         info("Clicking Login");
         openMenu();
@@ -38,6 +41,7 @@ public class SmallScreenHeader extends Header {
     }
 
     @Override
+    @Step
     public boolean userIsLoggedIn() {
         openMenu();
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -62,17 +66,20 @@ public class SmallScreenHeader extends Header {
     }
 
     @Override
+    @Step
     public void pressOpenExternalLinksDialog() {
         openMenu();
         info("Clicking a button to open External Links Editor");
         editExternalLinksControl.click();
     }
 
+    @Step
     public void pressOpenForumSettingsDialog() {
         info("Clicking a button to open Forum Settings Dialog");
         editForumSettingsControl.click();
     }
 
+    @Step
     private void openMenu() {
         info("Opening top menu on small screen...");
         if (isMenuHidden()) {
@@ -81,6 +88,7 @@ public class SmallScreenHeader extends Header {
         }
     }
 
+    @Step
     private boolean isMenuHidden() {
         info("Checking whether search input is shown. If not - the menu is already opened.");
         //using search input because menu button itself doesn't have correct class 'collapsed' on the initial page load

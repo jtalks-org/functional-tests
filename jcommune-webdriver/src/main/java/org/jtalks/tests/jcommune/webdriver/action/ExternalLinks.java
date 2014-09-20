@@ -10,6 +10,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 public class ExternalLinks {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExternalLinks.class);
 
+    @Step
     public static ExternalLink createExternalLink(ExternalLink externalLink) {
         info("Creating an External Link: " + externalLink);
         openExternalLinksDialog();
@@ -35,6 +37,7 @@ public class ExternalLinks {
         return externalLink;
     }
 
+    @Step
     public static void removeExternalLink(ExternalLink externalLink) {
         info("Removing External Link: " + externalLink);
         openExternalLinksDialog();
@@ -45,6 +48,7 @@ public class ExternalLinks {
         externalLinksDialog.closeDialog();
     }
 
+    @Step
     public static void editExternalLink(ExternalLink externalLink) {
         info("Editing an External Link: " + externalLink);
         openExternalLinksDialog();
@@ -57,6 +61,7 @@ public class ExternalLinks {
         externalLinksDialog.closeDialog();
     }
 
+    @Step
     public static boolean assertLinkVisible(ExternalLink externalLink) {
         info("Checking whether the link is actually visible on the page");
         List<ExternalLink> linksFromPage = ExternalLink.fromForm(externalLinksDialog.getExternalLinks());
@@ -73,6 +78,7 @@ public class ExternalLinks {
         throw new AssertionFailedError("The links is not present on the page: " + externalLink);
     }
 
+    @Step
     public static boolean assertLinkIsNotVisible(ExternalLink externalLink) {
         info("Checking whether the link is actually NOT visible on the page");
         List<ExternalLink> linksFromPage = ExternalLink.fromForm(externalLinksDialog.getExternalLinks());
@@ -117,6 +123,7 @@ public class ExternalLinks {
         externalLinksDialog.fillLinkHintField(externalLink.getHint());
     }
 
+    @Step
     private static void openExternalLinksDialog() {
         info("Opening External Links dialog");
         WebElement dialog = mainPage.getModalDialog();

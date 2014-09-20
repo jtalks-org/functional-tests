@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -207,16 +208,19 @@ public class PrivateMessagesPage {
         return toField;
     }
 
+    @Step
     public void fillToField(String username) {
         info("Filling \"To\" field");
         getToField().sendKeys(username);
     }
 
+    @Step
     public void fillTitleField(String title) {
         info("Filling \"Title\" field");
         getTitleField().sendKeys(title);
     }
 
+    @Step
     public void fillMessageField(String message) {
         info("Filling \"Message\" field");
         getMessageField().sendKeys(message);

@@ -27,6 +27,7 @@ import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
@@ -51,6 +52,7 @@ public class Topics {
      * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
      */
 
+    @Step
     public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
         gotoMainPage();
         if (topic.getBranch() == null) {
@@ -120,6 +122,7 @@ public class Topics {
         topicPage.getPostButton().click();
     }
 
+    @Step
     public static void postAnswer(Topic topic, String branchTitle)
             throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
         //TODO: this might need to be uncommented, but right now we're not on the main page when we answer to the
@@ -159,6 +162,7 @@ public class Topics {
      * @return true if the specified topic was found
      * @throws CouldNotOpenPageException if specified topic was not found
      */
+    @Step
     public static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
             throws CouldNotOpenPageException {
         boolean found;
