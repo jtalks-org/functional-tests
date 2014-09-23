@@ -33,28 +33,28 @@ public class AdministrationTest {
         driver.get(appUrl);//in case some dialogs are not closed
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void enablingAdminMode_shouldPass() {
         mainPage.switchOnAdminMode();
     }
 
     //logo tests:
 
-    @Test
+    @Test(groups = "smoke")
     public void resetLogo_shouldPass() {
         ForumSettings.resetLogo();
     }
 
     //favicon tests:
 
-    @Test
+    @Test(groups = "smoke")
     public void resetFavIcon_shouldPass() {
         ForumSettings.resetFavIcon();
     }
 
     //forum title tests:
 
-    @Test
+    @Test(groups = "smoke")
     public void settingValidForumTitle_shouldPass(){
         ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(30));
         ForumSettings.setForumTitle(title);
@@ -72,7 +72,7 @@ public class AdministrationTest {
         ForumSettings.setForumTitle(title);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void exceedingForumTitleMaxBoundary_shouldFail(){
         ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(101));
         ForumSettings.setForumTitle(title);
@@ -88,7 +88,7 @@ public class AdministrationTest {
 
     //forum description tests:
 
-    @Test
+    @Test(groups = "smoke")
     public void settingValidForumDescription_shouldPass(){
         ForumSetting desc = new ForumSetting().withDescription(randomAlphanumeric(30));
         ForumSettings.setForumDescription(desc);
@@ -113,7 +113,7 @@ public class AdministrationTest {
         ForumSettings.assertErrorVisible();
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void emptyForumDescription_shouldFail(){
         ForumSetting desc = new ForumSetting().withDescription("");
         ForumSettings.setForumDescription(desc);
@@ -122,7 +122,7 @@ public class AdministrationTest {
 
     //pages prefix tests:
 
-    @Test
+    @Test(groups = "smoke")
     public void settingValidPagesPrefix_shouldPass(){
         ForumSetting prefix = new ForumSetting().withPrefix(randomAlphanumeric(30));
         ForumSettings.setPrefix(prefix);
@@ -140,7 +140,7 @@ public class AdministrationTest {
         ForumSettings.setPrefix(prefix);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void exceedingPagesPrefixMaxBoundary_shouldFail(){
         ForumSetting prefix = new ForumSetting().withPrefix(randomAlphanumeric(256));
         ForumSettings.setPrefix(prefix);
@@ -149,7 +149,7 @@ public class AdministrationTest {
 
    //logo tooltip tests:
 
-    @Test
+    @Test(groups = "smoke")
     public void settingValidLogoTooltip_shouldPass(){
         ForumSetting tooltip = new ForumSetting().withTooltip(randomAlphanumeric(30));
         ForumSettings.setLogoTooltip(tooltip);
@@ -167,7 +167,7 @@ public class AdministrationTest {
         ForumSettings.setLogoTooltip(tooltip);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void exceedingLogoTooltipMaxBoundary_shouldFail(){
         ForumSetting tooltip = new ForumSetting().withTooltip(randomAlphanumeric(256));
         ForumSettings.setLogoTooltip(tooltip);
@@ -176,7 +176,7 @@ public class AdministrationTest {
 
     //copyright tests:
 
-    @Test
+    @Test(groups = "smoke")
     public void settingValidCopyright_shouldPass(){
         ForumSetting copyright = new ForumSetting().withCopyright(randomAlphanumeric(30));
         ForumSettings.setCopyright(copyright);
@@ -194,7 +194,7 @@ public class AdministrationTest {
         ForumSettings.setCopyright(copyright);
     }
 
-    @Test
+    @Test(groups = "smoke")
     public void exceedingCopyrightMaxBoundary_shouldFail(){
         ForumSetting copyright = new ForumSetting().withCopyright(randomAlphanumeric(256));
         ForumSettings.setCopyright(copyright);
