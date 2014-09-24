@@ -36,7 +36,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 public class SignInTest {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters("appUrl")
     public void setup(String appUrl) {
         driver.get(appUrl);

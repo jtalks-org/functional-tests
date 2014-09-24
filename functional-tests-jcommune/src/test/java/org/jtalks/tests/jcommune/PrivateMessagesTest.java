@@ -20,7 +20,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 public class PrivateMessagesTest {
     private static final Logger logger = LoggerFactory.getLogger(Users.class);
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) throws ValidationException {
         driver.get(appUrl);

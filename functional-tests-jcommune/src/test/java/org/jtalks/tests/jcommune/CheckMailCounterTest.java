@@ -20,7 +20,7 @@ public class CheckMailCounterTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
     User registeredUser = new User("registered", "registered");
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters("appUrl")
     public void setup(String appUrl) {
         driver.get(appUrl);

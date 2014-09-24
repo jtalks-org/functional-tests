@@ -18,7 +18,7 @@ import static org.testng.Assert.fail;
 
 public class BbCodeTest {
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     @Parameters({"appUrl"})
     public void signInOnlyOnce_becauseTheseTestsDoNotRequireDataIsolation(String appUrl) throws Exception {
         driver.get(appUrl);
@@ -31,7 +31,7 @@ public class BbCodeTest {
      * next test will try to open another page, browser will ask whether user is sure to leave the current page and the
      * test will fail. Therefore we've added this alert
      */
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"appUrl"})
     public void clickLeaveThePageIfPreviousTestFailed(String appUrl) {
         driver.get(appUrl);

@@ -25,7 +25,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 public class ExternalLinksTest {
     private static final Logger logger = LoggerFactory.getLogger(Users.class);
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     @Parameters({"appUrl"})
     public void signInAsAdmin(String appUrl) {
         driver.get(appUrl);
@@ -38,7 +38,7 @@ public class ExternalLinksTest {
         }
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     @Parameters({"appUrl"})
     public void destroyCase(String appUrl) {
         driver.get(appUrl);//in case some dialogs are not closed

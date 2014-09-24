@@ -19,7 +19,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 @Test(groups = "htmlunit-incompatible")
 public class AdministrationTest {
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     @Parameters({"appUrl"})
     public void signInAsAdmin(String appUrl) throws Exception {
         driver.get(appUrl);
@@ -27,7 +27,7 @@ public class AdministrationTest {
         Users.signIn(User.admin());
     }
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"appUrl"})
     public void destroyCase(String appUrl) {
         driver.get(appUrl);//in case some dialogs are not closed

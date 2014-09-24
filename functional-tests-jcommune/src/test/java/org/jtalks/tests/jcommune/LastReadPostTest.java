@@ -17,7 +17,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 public class LastReadPostTest {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) {
         driver.get(appUrl);
