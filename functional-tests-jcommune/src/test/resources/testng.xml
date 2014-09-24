@@ -15,6 +15,10 @@
       <!--Since HtmlUnit is a pretty buggy thing, it may not work for some functionality. Such tests will be marked
       as incompatible with HtmlUnit and will be run only in browsers.-->
       <define name="htmlunit-incompatible"/>
+      <define name="smoke"/>
+      <run>
+       <include name="smoke"/>
+      </run>
     </groups>
     <classes>
       <class name="org.jtalks.tests.jcommune.SignUpTest"/>
@@ -32,8 +36,19 @@
   information.
   -->
   <test name="FullRegression">
+    <groups>
+      <run>
+        <exclude name="smoke"/>
+      </run>
+    </groups>
     <classes>
       <class name="org.jtalks.tests.jcommune.BbCodeTest"/>
+      <class name="org.jtalks.tests.jcommune.SignUpTest"/>
+      <class name="org.jtalks.tests.jcommune.SignInTest"/>
+      <class name="org.jtalks.tests.jcommune.ProfileTest"/>
+      <class name="org.jtalks.tests.jcommune.TopicTest"/>
+      <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
+      <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
     </classes>
   </test>
 </suite>

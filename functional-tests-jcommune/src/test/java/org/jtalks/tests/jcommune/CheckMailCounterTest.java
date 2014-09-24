@@ -14,6 +14,7 @@ import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 import static org.testng.Assert.assertTrue;
 
+@Test(groups = "smoke")
 public class CheckMailCounterTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
