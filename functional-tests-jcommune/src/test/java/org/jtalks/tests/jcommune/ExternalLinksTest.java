@@ -45,7 +45,7 @@ public class ExternalLinksTest {
         exitAdminMode();
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "UI_tests")
     public void externalLinkWithValidDataShouldBeCreated() throws Exception {
         ExternalLink externalLink = new ExternalLink();
 
@@ -65,7 +65,7 @@ public class ExternalLinksTest {
         ExternalLinks.removeExternalLink(link);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "UI_tests")
     public void titleMinValueShouldPassValidation() {
         ExternalLink link = new ExternalLink().withTitle(randomAlphanumeric(1));
 
@@ -85,7 +85,7 @@ public class ExternalLinksTest {
         ExternalLinks.removeExternalLink(link);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "UI_tests")
     public void emptyHrefShouldPassValidation() {
         ExternalLink link = new ExternalLink().withHref("");
 
@@ -106,7 +106,7 @@ public class ExternalLinksTest {
         ExternalLinks.removeExternalLink(link);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "UI_tests")
     public void emptyHintShouldPassValidation() {
         ExternalLink link = new ExternalLink().withHint("");
 
