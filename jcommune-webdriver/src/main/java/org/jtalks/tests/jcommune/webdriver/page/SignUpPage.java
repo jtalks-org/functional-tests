@@ -36,7 +36,8 @@ public class SignUpPage {
     public static final String errorFormElementsSel = "div.control-group.error";
     public static final String EMPTY_LOGIN_ERROR = "Длина имени пользователя должна быть между 1 и 25 символами\n";
     public static final String WRONG_PASSWORD_CONFIRMATION_ERROR = "Пароль и подтверждение пароля не совпадают\n";
-    public static final String EMPTY_PASSWORD_ERROR = "Не может быть пустым\n" +
+    public static final String EMPTY_PASSWORD_CONFIRMATION_ERROR = "Не может быть пустым\n";
+    public static final String EMPTY_PASSWORD_ERROR = "Длина пароля должна быть между 1 и 50 символами\n" +
             WRONG_PASSWORD_CONFIRMATION_ERROR;
     public static final String TOO_LONG_LOGIN_ERROR = "Длина имени пользователя должна быть между 1 и 25 символами\n";
     public static final String TOO_LONG_PASSWORD_ERROR = "Длина пароля должна быть между 1 и 50 символами\n";
