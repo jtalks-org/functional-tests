@@ -44,13 +44,13 @@ public class SignInTest {
     }
 
     @Test(groups = "smoke", expectedExceptions = ValidationException.class)
-    public void signInWithoutActivationRegistrationShouldFailLogin_JC_564() throws Exception {
+    public void signInWithoutActivationRegistration_shouldFail() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
     }
 
     @Test(groups = "smoke")
-    public void usernameAndPasswordCorrectShouldLogin_JC_20() throws Exception {
+    public void usernameAndPasswordCorrect_shouldPass() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
         Users.logout();
@@ -59,14 +59,14 @@ public class SignInTest {
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
-    public void usernameEmptyShouldFailLogin_JC_21() throws Exception {
+    public void usernameEmpty_shouldFail() throws Exception {
         String password = randomAlphanumeric(9);
         Users.signIn(new User("", password));
     }
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
-    public void usernameNotExistShouldFailLogin_JC_21() throws Exception {
+    public void usernameNotExist_shouldFail() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
         Users.logout();
@@ -76,7 +76,7 @@ public class SignInTest {
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
-    public void passwordIncorrectShouldFailLogIn_JC_22() throws Exception {
+    public void passwordIncorrect_shouldFail() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
         Users.logout();
@@ -86,14 +86,14 @@ public class SignInTest {
 
     @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
-    public void usernameAndPasswordNotExistShouldFailLogin() throws Exception {
+    public void usernameAndPasswordNotExist_shouldFail() throws Exception {
         String username = randomAlphanumeric(8);
         String password = randomAlphanumeric(9);
         Users.signIn(new User(username, password));
     }
 
     @Test(groups = "smoke")
-    public void usernameIsCaseInsensitiveShouldLogin() throws Exception {
+    public void usernameIsCaseInsensitive_shouldPass() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
         Users.logout();
@@ -103,7 +103,7 @@ public class SignInTest {
 
     @Test(groups = "smoke", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
-    public void passwordIsCaseInsensitiveShouldFailLogin() throws Exception {
+    public void passwordIsCaseInsensitive_shouldFail() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
         Users.logout();
@@ -112,7 +112,7 @@ public class SignInTest {
     }
 
     @Test
-    public void usernameContainsSlashShouldLogin() throws Exception {
+    public void usernameContainsSlash_shouldPass() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(randomAlphanumeric(10) + "/");
         User registeredUser = Users.signUp(user);
         Users.activate(user);
