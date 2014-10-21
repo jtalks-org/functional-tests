@@ -132,8 +132,16 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
+    @Test
+    public void spaceAsPassword_shouldPass() throws Exception {
+        UserForRegistration user = new UserForRegistration();
+        user.setPassword(" ");
+        user.setPasswordConfirmation(user.getPassword());
+        Users.signUp(user);
+    }
+
     @Test(groups = "smoke", expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = SignUpPage.EMPTY_PASSWORD_CONFIRMATION_ERROR)
+            expectedExceptionsMessageRegExp = SignUpPage.WRONG_PASSWORD_CONFIRMATION_ERROR)
     public void passwordConfirmationEmpty_shouldFail() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setPasswordConfirmation("");
