@@ -31,15 +31,30 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  * @author masyan
  */
 public class TopicPage {
-    public static final String EMPTY_SUBJECT_ERROR = "(may not be empty\n)|(Не может быть пустым\n)";
-    public static final String EMPTY_BODY_ERROR = "size must be between 2 and 20000";
-    public static final String SUBJECT_SIZE_ERROR = "size must be between 1 and 120\n";
-    public static final String POLL_SUBJECT_EMPTY_ERROR = "Poll title could not be blank if poll items arent blank";
-    public static final String POLL_SUBJECT_SIZE_ERROR = "size must be between 3 and 120";
-    public static final String POLL_OPTIONS_ERROR = "Poll items could not be blank if poll title is not blank";
-    public static final String POLL_OPTIONS_NUMBER_ERROR = "Options number should be 2 - 50";
-    public static final String POLL_OPTIONS_LENGTH_ERROR = "Item length should be 1 - 50";
-    public static final String POLL_DUPLICATES_ERROR = "Poll items could not contain duplicates";
+    public static final String EMPTY_SUBJECT_ERROR = "(may not be empty\n)" +
+            "|(Не может быть пустым\n)";
+    public static final String EMPTY_BODY_ERROR = "(size must be between 2 and 20000)" +
+            "|(Размер должен быть между 2 и 20000)";
+    public static final String SUBJECT_SIZE_ERROR = "(size must be between 1 and 120\n)" +
+            "|(Размер должен быть между 1 и 120\n)";
+    public static final String CR_SUBJECT_EMPTY_ERROR = "(may not be empty\nsize must be between 1 and 120\n)" +
+            "|(size must be between 1 and 120\nmay not be empty\n)" +
+            "|(Не может быть пустым\nРазмер должен быть между 1 и 120\n)" +
+            "|(Размер должен быть между 1 и 120\nНе может быть пустым\n)";
+    public static final String POLL_SUBJECT_EMPTY_ERROR = "(Poll title could not be blank if poll items arent blank)" +
+            "|(Если заданы опции голосования, то заголовок голосования не может быть пустым)";
+    public static final String POLL_SUBJECT_SIZE_ERROR = "(size must be between 3 and 120)" +
+            "|(Размер должен быть между 3 и 120)";
+    public static final String POLL_OPTIONS_ERROR = "(Poll items could not be blank if poll title is not blank)" +
+            "|(Если задан заголовок голосования, необходимо задать и опции голосования)";
+    public static final String POLL_OPTIONS_NUMBER_ERROR = "(Options number should be 2 - 50)" +
+            "|(Количество элементов должно быть 2 - 50)";
+    public static final String POLL_OPTIONS_LENGTH_ERROR = "(Item length should be 1 - 50)" +
+            "|(Длина опции голосования должна быть: 1 - 50)";
+    public static final String POLL_DUPLICATES_ERROR = "(Poll items could not contain duplicates)" +
+            "|(Опции голосования не могут содержать дубликаты)";
+    public static final String CR_COMMENT_LENGTH_ERROR = "(size must be between 1 and 5000\n)" +
+            "|(Размер должен быть между 1 и 5000\n)";
     @FindBy(id = "subjectError")
     private WebElement subjectErrorMessage;
     @FindBy(id = "bodyText.errors")
