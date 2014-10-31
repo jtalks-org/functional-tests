@@ -1,22 +1,64 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
-import java.util.ArrayList;
+import com.google.common.base.Splitter;
+import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
+import org.apache.commons.lang3.StringUtils;
 import java.util.List;
+
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
 /**
  * Jcommune code review representation.
  */
-public class CodeReview {
+public class CodeReview extends Topic {
 
-    private Topic topic;
-    private List<CodeReviewComment> comments = new ArrayList<CodeReviewComment>();
+    private String title = randomAlphanumeric(30);
+    private String content = randomAlphanumeric(50);
+    private int numberOfLines = 1;
+    private List<CodeReviewComment> comments;
 
-    public Topic getTopic() {
-        return topic;
+    public CodeReview() {}
+
+    public CodeReview(String title, String content) {
+        this.withTitle(title);
+        this.content = content;
     }
 
-    public void setTopic(Topic topic) {
-        this.topic = topic;
+    public CodeReview withContent(String content) {
+        this.content = "";
+        if (this.numberOfLines > 1) {
+            for (String token : Splitter.fixedLength(content.length()/this.numberOfLines).split(content)){
+                this.content += token + System.getProperty("line.separator");
+            }
+        } else {
+            this.content = content;
+        }
+        return this;
+    }
+
+    public CodeReview withNumberOfLines(int numberOfLines) {
+        this.numberOfLines = numberOfLines;
+        if (!this.content.equals("")) {
+            withContent(this.content);
+        } else {
+            for (int i = 0; i < this.numberOfLines; i++){
+                this.content += randomAlphanumeric(10) + System.getProperty("line.separator");
+            }
+        }
+        return this;
+    }
+
+    public CodeReview withTitle(String title){
+        this.title = title;
+        return this;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public int getLinesCount() {
+        return numberOfLines;
     }
 
     public List<CodeReviewComment> getComments() {
@@ -26,4 +68,14 @@ public class CodeReview {
     public void setComments(List<CodeReviewComment> comments) {
         this.comments = comments;
     }
+
+    public void addComment(CodeReviewComment codeReviewComment) {
+        this.comments.add(codeReviewComment);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Code review: title=[%s]", this.getTitle());
+    }
+
 }

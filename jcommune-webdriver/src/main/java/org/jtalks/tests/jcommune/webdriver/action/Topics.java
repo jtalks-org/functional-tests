@@ -18,6 +18,8 @@ package org.jtalks.tests.jcommune.webdriver.action;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
@@ -86,6 +88,10 @@ public class Topics {
         if (Existence.exists(topicPage.getBodyErrorMessage())) {
             WebElement bodyError = topicPage.getBodyErrorMessage();
             failedFields += bodyError.getText();
+        }
+        if (Existence.exists(topicPage.getCodeReviewCommentBodyError())) {
+            WebElement codeReviewCommentBodyError = topicPage.getCodeReviewCommentBodyError();
+            failedFields += codeReviewCommentBodyError.getText() + "\n";
         }
         if (Existence.exists(topicPage.getPollTitleErrorMessage())) {
             WebElement pollTitleError = topicPage.getPollTitleErrorMessage();
@@ -228,5 +234,36 @@ public class Topics {
     }
 
     public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+    }
+
+    // Code review methods
+
+    public static CodeReview createCodeReview(CodeReview codeReview)
+            throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        if (codeReview.getBranch() == null) {
+            List<WebElement> branches = branchPage.getBranches();
+            if (isEmpty(branches)) {
+                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
+                        "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
+                        "Page Title: [" + JCommuneSeleniumConfig.driver.getTitle() + "]. " +
+                        "Page source: " + JCommuneSeleniumConfig.driver.getPageSource());
+            }
+            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
+            codeReview.withBranch(branch);
+        }
+        Branches.openBranch(codeReview.getBranch().getTitle());
+        topicPage.clickCreateCodeReview();
+        topicPage.fillCodeReviewFields(codeReview);
+        topicPage.clickAnswerToTopicButton();
+        assertFormValid();
+        return codeReview;
+    }
+
+    public static void leaveCodeReviewComment(CodeReviewComment codeReviewComment)
+            throws PermissionsDeniedException, ValidationException {
+        topicPage.clickLineInCodeReviewForComment(codeReviewComment.getCommentedLineNumber());
+        topicPage.fillCodeReviewCommentBody(codeReviewComment);
+        topicPage.clickAddCommentToCodeReviewButton();
+        assertFormValid();
     }
 }

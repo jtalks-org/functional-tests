@@ -1,49 +1,25 @@
 package org.jtalks.tests.jcommune.webdriver.entity.topic;
 
-import org.joda.time.DateTime;
-import org.jtalks.tests.jcommune.webdriver.entity.user.User;
-
 /**
  * Jcommune code review comment representation.
  */
-public class CodeReviewComment {
+public class CodeReviewComment extends Post {
 
-    private int lineNumber;
-    private User author;
-    private DateTime creationDate;
-    private String body;
+    private int commentedLineNumber = 1;
     private CodeReview codeReview;
 
-    public int getLineNumber() {
-        return lineNumber;
+    public int getCommentedLineNumber() {
+        return commentedLineNumber;
     }
 
-    public void setLineNumber(int lineNumber) {
-        this.lineNumber = lineNumber;
+    public CodeReviewComment onLineNumber(int commentedLineNumber) {
+        this.commentedLineNumber = commentedLineNumber;
+        return this;
     }
 
-    public User getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(User author) {
-        this.author = author;
-    }
-
-    public DateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(DateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public String getBody() {
-        return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
+    public CodeReviewComment withContent(String content) {
+        this.setPostContent(content);
+        return this;
     }
 
     public CodeReview getCodeReview() {
