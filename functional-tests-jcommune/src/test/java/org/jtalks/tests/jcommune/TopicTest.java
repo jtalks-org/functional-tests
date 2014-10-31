@@ -47,7 +47,7 @@ public class TopicTest {
         mainPage.logOutIfLoggedIn(driver);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void createTopicWithTitleAndMessage_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
@@ -55,7 +55,7 @@ public class TopicTest {
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
     public void createTopicWithEmptyTitle_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -77,7 +77,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR)
     public void createTopicExceedingMaxTitle_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -85,7 +85,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", enabled = false, expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithEmptyMessage_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -131,7 +131,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void loginAndCreateTopicValidateBranch_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
@@ -141,7 +141,7 @@ public class TopicTest {
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void signUpAndCreateTopicInBranch_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
@@ -150,7 +150,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void postValidAnswerToTopic_ShouldPass() throws Exception {
         //In this test title of topic variable means subject of post we want to add answer to, and the answer, actually
         Users.signUpAndSignIn();
@@ -159,13 +159,13 @@ public class TopicTest {
         Topics.postAnswer(topic, topic.getBranch().getTitle());
     }
 
-    @Test(groups = "smoke", expectedExceptions = PermissionsDeniedException.class)
+    @Test(groups = "ui-tests", expectedExceptions = PermissionsDeniedException.class)
     public void createTopicAsAnonymous_ShouldFail() throws Exception {
         Topic topic = new Topic();
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void createStickedTopic_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
@@ -175,7 +175,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void createAnnouncementTopic_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
@@ -185,7 +185,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void createTopicWithPoll_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
@@ -194,7 +194,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.POLL_SUBJECT_EMPTY_ERROR)
     public void createTopicWithoutPollSubject_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -204,7 +204,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.POLL_SUBJECT_SIZE_ERROR)
     public void createTopicWithInsufficientPollSubject_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -242,7 +242,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.POLL_OPTIONS_ERROR)
     public void createTopicWithoutPollOptions_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -252,7 +252,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void createTopicWithMinPollOptionsLengthAndNumber_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
@@ -270,7 +270,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.POLL_OPTIONS_LENGTH_ERROR)
     public void createTopicWithExcessivePollOptionsLength_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -280,7 +280,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.POLL_DUPLICATES_ERROR)
     public void createTopicWithDuplicatedPollOptions_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -290,7 +290,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.POLL_OPTIONS_NUMBER_ERROR)
     public void createTopicWithOnlyPollOption_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -320,7 +320,7 @@ public class TopicTest {
     }
 
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void createTopicWithPollEndDate_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
@@ -330,7 +330,7 @@ public class TopicTest {
         Topics.createTopic(topic);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void createTopicWithPollMultipleAnswers_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic();

@@ -9,15 +9,15 @@
     <listener class-name="org.uncommons.reportng.HTMLReporter"/>
     <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
   </listeners>
-  <test name="Smoke">
+  <test name="UiTests">
     <groups>
       <define name="manual"/>
       <!--Since HtmlUnit is a pretty buggy thing, it may not work for some functionality. Such tests will be marked
       as incompatible with HtmlUnit and will be run only in browsers.-->
       <define name="htmlunit-incompatible"/>
-      <define name="smoke"/>
+      <define name="ui-tests"/>
       <run>
-       <include name="smoke"/>
+       <include name="ui-tests"/>
       </run>
     </groups>
     <classes>
@@ -39,7 +39,7 @@
   <test name="FullRegression">
     <groups>
       <run>
-        <exclude name="smoke"/>
+        <exclude name="ui-tests"/>
       </run>
     </groups>
     <classes>

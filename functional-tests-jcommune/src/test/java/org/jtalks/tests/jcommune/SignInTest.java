@@ -43,13 +43,13 @@ public class SignInTest {
         mainPage.logOutIfLoggedIn(driver);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class)
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class)
     public void signInWithoutActivationRegistration_shouldFail() throws Exception {
         User user = Users.signUp();
         Users.signIn(user);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void usernameAndPasswordCorrect_shouldPass() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
@@ -92,7 +92,7 @@ public class SignInTest {
         Users.signIn(new User(username, password));
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void usernameIsCaseInsensitive_shouldPass() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
@@ -101,7 +101,7 @@ public class SignInTest {
         Users.signIn(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignInPage.LOGIN_ERROR)
     public void passwordIsCaseInsensitive_shouldFail() throws Exception {
         User user = Users.signUp();

@@ -39,13 +39,13 @@ public class SignUpTest {
         mainPage.logOutIfLoggedIn(driver);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void registrationWithActivation_shouldPass() throws Exception {
         User user = Users.signUp();
         Users.activate(user);
     }
 
-    @Test(groups = "smoke")
+    @Test(groups = "ui-tests")
     public void registrationValid_shouldPass() throws Exception {
         UserForRegistration user = new UserForRegistration();
         Users.signUp(user);
@@ -61,14 +61,14 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.EMPTY_LOGIN_ERROR)
     public void usernameAsSpace_shouldFail() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(" ");
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.TOO_LONG_LOGIN_ERROR)
     public void usernameTooLong_shouldFail() throws Exception {
         UserForRegistration user = UserForRegistration.withUsername(randomAlphanumeric((26)));
@@ -93,14 +93,14 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.WRONG_EMAIL_FORMAT_ERROR)
     public void emailInvalidFormat_shouldFail() throws Exception {
         UserForRegistration user = UserForRegistration.withEmail(randomAlphanumeric(8) + "@" + "jtalks");
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.EMPTY_EMAIL_ERROR)
     public void emailEmpty_shouldFail() throws ValidationException {
         UserForRegistration user = UserForRegistration.withEmail("");
@@ -115,7 +115,7 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.EMPTY_PASSWORD_ERROR)
     public void passwordEmpty_shouldFail() throws Exception {
         UserForRegistration user = new UserForRegistration();
@@ -123,7 +123,7 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.TOO_LONG_PASSWORD_ERROR)
     public void passwordTooLong_shouldFail() throws Exception {
         UserForRegistration user = new UserForRegistration();
@@ -140,7 +140,7 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.WRONG_PASSWORD_CONFIRMATION_ERROR)
     public void passwordConfirmationEmpty_shouldFail() throws Exception {
         UserForRegistration user = new UserForRegistration();
@@ -172,7 +172,7 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = SignUpPage.NOT_UNIQUE_USERNAME_ERROR)
     public void usernameNotUnique_shouldFail() throws Exception {
         UserForRegistration uniqueUser = new UserForRegistration();
@@ -181,7 +181,7 @@ public class SignUpTest {
         Users.signUp(duplicatedUser);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.NOT_UNIQUE_EMAIL_ERROR)
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.NOT_UNIQUE_EMAIL_ERROR)
     public void emailNotUnique_shouldFail() throws Exception {
         UserForRegistration uniqueUser = new UserForRegistration();
         Users.signUp(uniqueUser);
@@ -189,7 +189,7 @@ public class SignUpTest {
         Users.signUp(duplicatedUser);
     }
 
-    @Test(groups = "smoke", expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.EMPTY_LOGIN_ERROR)
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class, expectedExceptionsMessageRegExp = SignUpPage.EMPTY_LOGIN_ERROR)
     public void loginEmpty_shouldFail() throws ValidationException {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("");
