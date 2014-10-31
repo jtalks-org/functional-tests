@@ -30,6 +30,7 @@ import org.testng.annotations.Test;
 
 import java.util.Date;
 
+import static org.apache.commons.lang.RandomStringUtils.randomAlphabetic;
 import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
@@ -121,6 +122,7 @@ public class TopicTest {
         Topic topic = new Topic().withBody(randomAlphanumeric(20001));
         Topics.createTopic(topic);
     }
+
     @Test(enabled = false, expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithoutData_ShouldFail() throws Exception {
@@ -146,14 +148,6 @@ public class TopicTest {
         Topic topic = new Topic().withBranch("Classical Mechanics");
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
-    }
-
-    @Test(groups = "smoke")
-    public void signUpAndCreateCodeReviewInBranch_ShouldPass() throws Exception {
-        Topic topic = new Topic().withBranch("Acids and Bases");
-        User user = Users.signUpAndSignIn();
-        topic.withTopicStarter(user);
-        Topics.createCodeReview(topic);
     }
 
     @Test(groups = "smoke")
