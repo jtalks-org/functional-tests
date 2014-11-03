@@ -18,6 +18,7 @@
       <define name="ui-tests"/>
       <run>
        <include name="ui-tests"/>
+       <include name="htmlunit-incompatible"/>
       </run>
     </groups>
     <classes>
