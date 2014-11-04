@@ -19,9 +19,9 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  */
 public class CodeReviewTest {
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     @Parameters({"appUrl"})
-    public void setupCase(String appUrl) {
+    public void setupCase(String appUrl) throws ValidationException {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
     }

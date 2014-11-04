@@ -12,7 +12,6 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
  */
 public class CodeReview extends Topic {
 
-    private String title = randomAlphanumeric(30);
     private String content = randomAlphanumeric(50);
     private int numberOfLines = 1;
     private List<CodeReviewComment> comments;
@@ -49,7 +48,7 @@ public class CodeReview extends Topic {
     }
 
     public CodeReview withTitle(String title){
-        this.title = title;
+        super.withTitle(title);
         return this;
     }
 
