@@ -26,14 +26,14 @@ public class CodeReviewTest {
         mainPage.logOutIfLoggedIn(driver);
     }
 
-    @Test
+    @Test(groups = "ui-tests")
     public void createCodeReviewWithValidData_ShouldPass() throws Exception {
         CodeReview codeReview = new CodeReview();
         Users.signUpAndSignIn();
         Topics.createCodeReview(codeReview);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.CR_SUBJECT_EMPTY_ERROR)
     public void createCodeReviewWithEmptyTitle_ShouldFail() throws Exception {
         CodeReview codeReview = new CodeReview().withTitle("");
@@ -55,7 +55,7 @@ public class CodeReviewTest {
         Topics.createCodeReview(codeReview);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR)
     public void createCodeReviewExceedingMaxTitle_ShouldFail() throws Exception {
         CodeReview codeReview = new CodeReview().withTitle(randomAlphanumeric(121));
@@ -63,7 +63,7 @@ public class CodeReviewTest {
         Topics.createCodeReview(codeReview);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createCodeReviewWithEmptyBody_ShouldFail() throws Exception {
         CodeReview codeReview = new CodeReview().withContent("");
@@ -85,7 +85,7 @@ public class CodeReviewTest {
         Topics.createCodeReview(codeReview);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_BODY_ERROR)
     public void createCodeReviewExceedingMaxBody_ShouldFail() throws Exception {
         CodeReview codeReview = new CodeReview().withContent(randomAlphanumeric(20001));
@@ -100,7 +100,7 @@ public class CodeReviewTest {
         Topics.createCodeReview(codeReview);
     }
 
-    @Test
+    @Test(groups = "ui-tests")
     public void leaveValidCommentToCodeReview_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         CodeReview codeReview = new CodeReview();
@@ -109,7 +109,7 @@ public class CodeReviewTest {
         Topics.leaveCodeReviewComment(codeReviewComment);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
     public void leaveEmptyCommentToCodeReview_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
@@ -137,7 +137,7 @@ public class CodeReviewTest {
         Topics.leaveCodeReviewComment(codeReviewComment);
     }
 
-    @Test (expectedExceptions = ValidationException.class,
+    @Test(expectedExceptions = ValidationException.class,
             expectedExceptionsMessageRegExp = TopicPage.CR_COMMENT_LENGTH_ERROR)
     public void leaveCommentToCodeReviewExceedingMaxLength_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
