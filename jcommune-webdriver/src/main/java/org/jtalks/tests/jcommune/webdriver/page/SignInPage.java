@@ -59,12 +59,14 @@ public class SignInPage {
     @Step
     public void fillUsernameField(String username) {
         info("Fill username: " + username);
+        usernameField.click();
         usernameField.sendKeys(username);
     }
 
     @Step
     public void fillPasswordField(String password) {
         info("Fill password: " + password);
+        passwordField.click();
         passwordField.sendKeys(password);
     }
 
