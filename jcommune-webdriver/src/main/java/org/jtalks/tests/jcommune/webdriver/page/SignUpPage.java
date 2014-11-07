@@ -86,24 +86,28 @@ public class SignUpPage {
     @Step
     public void fillUsername(String username) {
         info("Fill username: " + username);
+        usernameField.click();
         usernameField.sendKeys(username);
     }
 
     @Step
     public void fillEmail(String email) {
         info("Fill email: " + email);
+        emailField.click();
         emailField.sendKeys(email);
     }
 
     @Step
     public void fillPassword(String password) {
         info("Fill password: " + password);
+        passwordField.click();
         passwordField.sendKeys(password);
     }
 
     @Step
     public void fillPasswordConfirmation(String passwordConfirmation) {
         info("Fill password confirmation: " + passwordConfirmation);
+        passwordConfirmField.click();
         passwordConfirmField.sendKeys(passwordConfirmation);
     }
 

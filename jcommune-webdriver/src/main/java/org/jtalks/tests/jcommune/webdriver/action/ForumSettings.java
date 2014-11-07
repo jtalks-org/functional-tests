@@ -2,6 +2,8 @@ package org.jtalks.tests.jcommune.webdriver.action;
 
 import junit.framework.AssertionFailedError;
 import org.jtalks.tests.jcommune.webdriver.entity.forumsetting.ForumSetting;
+import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.allure.annotations.Step;
@@ -88,7 +90,22 @@ public class ForumSettings {
 
     @Step
     private static void openForumSettingsDialog(){
-        info("Opening Forum Settings dialog");
+        info("Checking if Forum Settings dialog is opened");
+        if (!isForumSettingsDialogVisible()) {
+            info("Forum Settings dialog isn't opened. Trying to open.");
+            mainPage.switchOnAdminMode();
+            mainPage.pressOpenForumSettingsDialog();
+            sleep(1000);
+            try {
+                mainPage.getForumSettingsDialog().isDisplayed();
+            } catch (NoSuchElementException e) {
+                throw new TimeoutException("Forum Settings Dialog was not opened for some reason (timeout?)", e);
+            }
+        }
+        driver.manage().window().maximize(); //Because forum settings' popup is not scrollable
+    }
+
+    private static boolean isForumSettingsDialogVisible() {
         WebElement dialog = mainPage.getForumSettingsDialog();
         boolean visible;
         try {
@@ -96,13 +113,9 @@ public class ForumSettings {
         } catch (NoSuchElementException e) {
             visible = false;
         }
-        if (!visible) {
-            mainPage.switchOnAdminMode();
-            mainPage.pressOpenForumSettingsDialog();
-            sleep(500);
-        }
-        driver.manage().window().maximize(); //Because forum settings' popup is not scrollable
+        return visible;
     }
+
 
     private static void sleep(int millis) {
         try {
