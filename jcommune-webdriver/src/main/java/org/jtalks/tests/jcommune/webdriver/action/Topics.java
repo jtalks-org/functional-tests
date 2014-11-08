@@ -16,6 +16,7 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import org.jtalks.tests.jcommune.assertion.Existence;
+import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
@@ -26,6 +27,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,35 +77,63 @@ public class Topics {
         topicPage.fillPollSpecificFields(topic.getPoll());
         topicPage.clickAnswerToTopicButton();
         topic.setModificationDate(org.joda.time.DateTime.now().plusMinutes(1));
-        assertFormValid();
+        assertTopicFormValid();
         return topic;
     }
 
-    public static void assertFormValid() throws ValidationException {
+    public static void assertTopicFormValid() throws ValidationException {
         String failedFields = "";
-        if (Existence.exists(topicPage.getSubjectErrorMessage())) {
+        info("Check subject");
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getSubjectErrorMessage())) {
             WebElement subjectError = topicPage.getSubjectErrorMessage();
             failedFields += subjectError.getText() + "\n";
         }
-        if (Existence.exists(topicPage.getBodyErrorMessage())) {
+        info("Check body");
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getBodyErrorMessage())) {
             WebElement bodyError = topicPage.getBodyErrorMessage();
             failedFields += bodyError.getText();
         }
-        if (Existence.exists(topicPage.getCodeReviewCommentBodyError())) {
-            WebElement codeReviewCommentBodyError = topicPage.getCodeReviewCommentBodyError();
-            failedFields += codeReviewCommentBodyError.getText() + "\n";
-        }
-        if (Existence.exists(topicPage.getPollTitleErrorMessage())) {
+        info("Check poll title");
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getPollTitleErrorMessage())) {
             WebElement pollTitleError = topicPage.getPollTitleErrorMessage();
             failedFields += pollTitleError.getText();
         }
-        if (Existence.exists(topicPage.getPollItemsErrorMessage())) {
+        info("Check poll items");
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getPollItemsErrorMessage())) {
             WebElement pollItemsError = topicPage.getPollItemsErrorMessage();
             failedFields += pollItemsError.getText();
         }
+        info("Check finished");
         if (!failedFields.equals("")) {
+            info("Found validation errors: " + failedFields);
             throw new ValidationException(failedFields);
         }
+        info("Check successful. No errors.");
+    }
+
+    public static void assertCodeReviewFormValid() throws ValidationException {
+        String failedFields = "";
+        info("Check subject");
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getSubjectErrorMessage())) {
+            WebElement subjectError = topicPage.getSubjectErrorMessage();
+            failedFields += subjectError.getText() + "\n";
+        }
+        info("Check body");
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getBodyErrorMessage())) {
+            WebElement bodyError = topicPage.getBodyErrorMessage();
+            failedFields += bodyError.getText();
+        }
+        info("Check CR comment body");
+        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getCodeReviewCommentBodyError())) {
+            WebElement codeReviewCommentBodyError = topicPage.getCodeReviewCommentBodyError();
+            failedFields += codeReviewCommentBodyError.getText() + "\n";
+        }
+        info("Check finished");
+        if (!failedFields.equals("")) {
+            info("Found validation errors: " + failedFields);
+            throw new ValidationException(failedFields);
+        }
+        info("Check successful. No errors.");
     }
 
     public static boolean isInCorrectBranch(Topic topic) {
@@ -255,7 +285,7 @@ public class Topics {
         topicPage.clickCreateCodeReview();
         topicPage.fillCodeReviewFields(codeReview);
         topicPage.clickAnswerToTopicButton();
-        assertFormValid();
+        assertCodeReviewFormValid();
         return codeReview;
     }
 
@@ -264,6 +294,6 @@ public class Topics {
         topicPage.clickLineInCodeReviewForComment(codeReviewComment.getCommentedLineNumber());
         topicPage.fillCodeReviewCommentBody(codeReviewComment);
         topicPage.clickAddCommentToCodeReviewButton();
-        assertFormValid();
+        assertCodeReviewFormValid();
     }
 }
