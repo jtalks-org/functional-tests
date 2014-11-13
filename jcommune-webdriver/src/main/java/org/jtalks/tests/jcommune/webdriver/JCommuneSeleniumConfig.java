@@ -22,9 +22,14 @@ public class JCommuneSeleniumConfig {
     public static final String JCOMMUNE_CONTEXT_PATH = "/jcommune";
     private final static Logger LOGGER = LoggerFactory.getLogger(JCommuneSeleniumConfig.class);
     /**
-     * Amount of time we wait for an element to appear if it's not on the screen yet.
+     * Max amount of time we wait for an element to appear if it's not on the screen yet.
      */
     public static final int SELENIUM_TIMEOUT_SEC = 10;
+    /**
+     * Max amount of time we wait for an element to appear if it's not on the screen yet.
+     * Shortened version for speed purposes (ex. Validation errors catching).
+     */
+    public static final int ERROR_ELEMENT_SHORT_TIMEOUT_SEC = 4;
     public static WebDriver driver = null;
     public static String webdriverType;
     private static String appUrl;

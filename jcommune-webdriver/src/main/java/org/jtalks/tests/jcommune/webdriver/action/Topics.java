@@ -16,7 +16,6 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import org.jtalks.tests.jcommune.assertion.Existence;
-import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
@@ -84,22 +83,22 @@ public class Topics {
     public static void assertTopicFormValid() throws ValidationException {
         String failedFields = "";
         info("Check subject");
-        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getSubjectErrorMessage())) {
+        if (Existence.existsImmediately(driver, topicPage.getSubjectErrorMessage())) {
             WebElement subjectError = topicPage.getSubjectErrorMessage();
             failedFields += subjectError.getText() + "\n";
         }
         info("Check body");
-        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getBodyErrorMessage())) {
+        if (Existence.existsImmediately(driver, topicPage.getBodyErrorMessage())) {
             WebElement bodyError = topicPage.getBodyErrorMessage();
             failedFields += bodyError.getText();
         }
         info("Check poll title");
-        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getPollTitleErrorMessage())) {
+        if (Existence.existsImmediately(driver, topicPage.getPollTitleErrorMessage())) {
             WebElement pollTitleError = topicPage.getPollTitleErrorMessage();
             failedFields += pollTitleError.getText();
         }
         info("Check poll items");
-        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getPollItemsErrorMessage())) {
+        if (Existence.existsImmediately(driver, topicPage.getPollItemsErrorMessage())) {
             WebElement pollItemsError = topicPage.getPollItemsErrorMessage();
             failedFields += pollItemsError.getText();
         }
@@ -114,17 +113,17 @@ public class Topics {
     public static void assertCodeReviewFormValid() throws ValidationException {
         String failedFields = "";
         info("Check subject");
-        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getSubjectErrorMessage())) {
+        if (Existence.existsImmediately(driver, topicPage.getSubjectErrorMessage())) {
             WebElement subjectError = topicPage.getSubjectErrorMessage();
             failedFields += subjectError.getText() + "\n";
         }
         info("Check body");
-        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getBodyErrorMessage())) {
+        if (Existence.existsImmediately(driver, topicPage.getBodyErrorMessage())) {
             WebElement bodyError = topicPage.getBodyErrorMessage();
             failedFields += bodyError.getText();
         }
         info("Check CR comment body");
-        if (DriverMethodHelp.isElementDisplayedImmediately(driver, topicPage.getCodeReviewCommentBodyError())) {
+        if (Existence.existsUsingLowerTimeout(driver, topicPage.getCodeReviewCommentBodyError())) {
             WebElement codeReviewCommentBodyError = topicPage.getCodeReviewCommentBodyError();
             failedFields += codeReviewCommentBodyError.getText() + "\n";
         }

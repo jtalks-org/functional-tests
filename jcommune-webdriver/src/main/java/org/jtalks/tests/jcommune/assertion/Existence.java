@@ -6,6 +6,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.ERROR_ELEMENT_SHORT_TIMEOUT_SEC;
+
+import java.util.concurrent.TimeUnit;
+
 /**
  * The class contains a check for the existence of elements
  *
@@ -59,4 +64,17 @@ public class Existence {
         }
     }
 
+    public static boolean existsUsingLowerTimeout(WebDriver driver, WebElement element) {
+        try {
+            driver.manage().timeouts().implicitlyWait(ERROR_ELEMENT_SHORT_TIMEOUT_SEC, TimeUnit.SECONDS);
+            element.isDisplayed();
+            return true;
+        } catch (NoSuchElementException ignored) {
+            return false;
+        }
+    }
+
+    public static boolean existsImmediately(WebDriver driver, WebElement element) {
+        return DriverMethodHelp.isElementDisplayedImmediately(driver, element);
+    }
 }
