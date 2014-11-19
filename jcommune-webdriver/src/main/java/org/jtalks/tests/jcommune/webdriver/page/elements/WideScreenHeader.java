@@ -3,7 +3,10 @@ package org.jtalks.tests.jcommune.webdriver.page.elements;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.allure.annotations.Step;
+
+import java.util.concurrent.TimeoutException;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;

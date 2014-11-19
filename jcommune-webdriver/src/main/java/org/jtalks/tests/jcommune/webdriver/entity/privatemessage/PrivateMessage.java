@@ -18,9 +18,8 @@ public class PrivateMessage {
     private DateTime creationDate;
     private boolean read;
 
-    public PrivateMessage(User receiver)
+    public PrivateMessage()
     {
-        this.receiver = receiver;
         this.messageSubject = RandomStringUtils.randomAlphanumeric(25);
         this.messageContent = RandomStringUtils.randomAlphanumeric(25);
     }
@@ -50,24 +49,27 @@ public class PrivateMessage {
         return this.receiver;
     }
 
-    public void setReceiver(User receiver){
+    public PrivateMessage withReceiver(User receiver){
         this.receiver = receiver;
+        return this;
     }
 
     public String getMessageSubject() {
         return this.messageSubject;
     }
 
-    public void setMessageSubject(String messageSubject){
+    public PrivateMessage withSubject(String messageSubject){
         this.messageSubject = messageSubject;
+        return this;
     }
 
     public String getMessageContent(){
         return this.messageContent;
     }
 
-    public void setMessageContent(String messageContent) {
+    public PrivateMessage withContent(String messageContent) {
         this.messageContent = messageContent;
+        return this;
     }
 
     public DateTime getCreationDate() {return this.creationDate; }

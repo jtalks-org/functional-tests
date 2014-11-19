@@ -30,6 +30,7 @@
       <class name="org.jtalks.tests.jcommune.CheckMailCounterTest"/>
       <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
       <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
+      <class name="org.jtalks.tests.jcommune.PrivateMessagesTest"/>
     </classes>
   </test>
   <!--
@@ -52,6 +53,7 @@
       <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
       <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
       <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
+      <class name="org.jtalks.tests.jcommune.PrivateMessagesTest"/>
     </classes>
   </test>
 </suite>

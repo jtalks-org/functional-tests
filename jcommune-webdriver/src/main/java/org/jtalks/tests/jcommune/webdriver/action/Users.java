@@ -67,6 +67,7 @@ public class Users {
         }
     }
 
+    @Step
     public static void logout() {
         mainPage.clickLogout();
     }
