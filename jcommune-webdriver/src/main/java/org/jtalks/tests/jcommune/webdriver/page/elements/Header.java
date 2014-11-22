@@ -11,7 +11,7 @@ public abstract class Header {
     @FindBy(id = "user-dropdown-administration-link")
     protected WebElement administrationDropdownMenu;
     @FindBy(id = "Administration")
-    protected WebElement toggleAdmineModeLink;
+    protected WebElement toggleAdminModeLink;
     @FindBy(id = "user-dropdown-menu-link")
     protected WebElement userMenuLink;
     @FindBy(className = "btn-navbar")
@@ -46,4 +46,6 @@ public abstract class Header {
     public abstract void pressOpenExternalLinksDialog();
 
     public abstract void pressOpenForumSettingsDialog();
+
+    public abstract void switchingAdminMode();
 }

@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page.elements;
 
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -24,7 +25,6 @@ public class SmallScreenHeader extends Header {
 
     @Step
     public void clickLogin() {
-        info("Clicking Login");
         openMenu();
         loginLink.click();
     }
@@ -34,13 +34,11 @@ public class SmallScreenHeader extends Header {
         logOutButton.click();
     }
 
-    @Override
     public void openPrivateMessages() {
         openMenu();
         privateMessagesLink.click();
     }
 
-    @Override
     @Step
     public boolean userIsLoggedIn() {
         openMenu();
@@ -55,17 +53,11 @@ public class SmallScreenHeader extends Header {
         }
     }
 
-    @Override
     public boolean isAdminModeOn() {
         openMenu();
-        try {
-            return editExternalLinksControl.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        return Existence.existsImmediately(driver, editExternalLinksControl);
     }
 
-    @Override
     @Step
     public void pressOpenExternalLinksDialog() {
         openMenu();
@@ -93,5 +85,12 @@ public class SmallScreenHeader extends Header {
         info("Checking whether search input is shown. If not - the menu is already opened.");
         //using search input because menu button itself doesn't have correct class 'collapsed' on the initial page load
         return !searchInput.isDisplayed();
+    }
+
+    @Step
+    public void switchingAdminMode() {
+        openMenu();
+        info("Choosing Enter/Exit Admin Mode menu item");
+        toggleAdminModeLink.click();
     }
 }

@@ -1,30 +1,32 @@
 package org.jtalks.tests.jcommune.webdriver.page.elements;
 
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
 public class WideScreenHeader extends Header {
+
     public WideScreenHeader(WebDriver driver) {
         super(driver);
     }
 
-    @Override
+    @Step
     public void clickLogin() {
         loginLink.click();
     }
 
-    @Override
     public void clickLogout() {
-        userMenuLink.click();
+        openMainMenu();
         logOutButton.click();
     }
 
-    @Override
     public void openPrivateMessages() {
-        userMenuLink.click();
+        openMainMenu();
         privateMessagesLink.click();
     }
 
@@ -37,11 +39,8 @@ public class WideScreenHeader extends Header {
     }
 
     public boolean isAdminModeOn() {
-        try {
-            return editExternalLinksControl.isDisplayed();
-        } catch (NoSuchElementException e) {
-            return false;
-        }
+        info("Checking if admin mode is already ON");
+        return Existence.existsImmediately(driver, editExternalLinksControl);
     }
 
     @Step
@@ -54,5 +53,37 @@ public class WideScreenHeader extends Header {
     public void pressOpenForumSettingsDialog() {
         info("Clicking a button to open Forum Settings Dialog");
         editForumSettingsControl.click();
+    }
+
+    @Step
+    public void switchingAdminMode() {
+        info("Opening Administration context menu on top of the page");
+        openAdminMenu();
+        info("Choosing Enter/Exit Admin Mode menu item");
+        toggleAdminModeLink.click();
+    }
+
+    private void openMainMenu() {
+        userMenuLink.click();
+        info("Clicked main menu");
+        if (!mainPage.isDropdownMenuOpened()) {
+            userMenuLink.click();
+            info("Clicked main menu");
+            if (!mainPage.isDropdownMenuOpened()) {
+                throw new NoSuchElementException("Tried to open main menu 2 times without any success");
+            }
+        }
+    }
+
+    private void openAdminMenu() {
+        administrationDropdownMenu.click();
+        info("Clicked administration menu");
+        if (!mainPage.isDropdownMenuOpened()) {
+            administrationDropdownMenu.click();
+            info("Clicked administration menu again");
+            if (!mainPage.isDropdownMenuOpened()) {
+                throw new NoSuchElementException("Tried to open administration menu 2 times without any success");
+            }
+        }
     }
 }

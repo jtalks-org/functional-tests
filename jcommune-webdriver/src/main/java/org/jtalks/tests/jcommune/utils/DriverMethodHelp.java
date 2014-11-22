@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.SELENIUM_TIMEOUT_SEC;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.getCapabilities;
 
 /**
@@ -68,7 +69,7 @@ public class DriverMethodHelp {
         } catch (NoSuchElementException e) {
             return false;
         } finally {
-            driver.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT_SEC, TimeUnit.SECONDS);
         }
     }
 

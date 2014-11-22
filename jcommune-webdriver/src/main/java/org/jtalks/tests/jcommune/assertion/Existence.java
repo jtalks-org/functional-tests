@@ -8,6 +8,7 @@ import org.testng.Assert;
 
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.ERROR_ELEMENT_SHORT_TIMEOUT_SEC;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.SELENIUM_TIMEOUT_SEC;
 
 import java.util.concurrent.TimeUnit;
 
@@ -71,6 +72,8 @@ public class Existence {
             return true;
         } catch (NoSuchElementException ignored) {
             return false;
+        } finally {
+            driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT_SEC, TimeUnit.SECONDS);
         }
     }
 

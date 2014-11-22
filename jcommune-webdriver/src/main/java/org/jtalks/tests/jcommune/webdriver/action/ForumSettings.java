@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import junit.framework.AssertionFailedError;
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.entity.forumsetting.ForumSetting;
 import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.openqa.selenium.By;
@@ -90,32 +91,21 @@ public class ForumSettings {
 
     @Step
     private static void openForumSettingsDialog(){
+        info("Trying to open Forum Settings dialog.");
+        mainPage.switchOnAdminMode();
+        mainPage.pressOpenForumSettingsDialog();
         info("Checking if Forum Settings dialog is opened");
-        if (!isForumSettingsDialogVisible()) {
-            info("Forum Settings dialog isn't opened. Trying to open.");
+        if (!mainPage.isForumSettingsDialogVisible()) {
+            info("Trying to open Forum Settings dialog again.");
             mainPage.switchOnAdminMode();
             mainPage.pressOpenForumSettingsDialog();
-            sleep(1000);
-            try {
-                mainPage.getForumSettingsDialog().isDisplayed();
-            } catch (NoSuchElementException e) {
-                throw new TimeoutException("Forum Settings Dialog was not opened for some reason (timeout?)", e);
+            info("Checking if Forum Settings dialog is opened");
+            if (!mainPage.isForumSettingsDialogVisible()) {
+                throw new NoSuchElementException("Tried to open Forum Settings dialog 2 times without any success");
             }
         }
         driver.manage().window().maximize(); //Because forum settings' popup is not scrollable
     }
-
-    private static boolean isForumSettingsDialogVisible() {
-        WebElement dialog = mainPage.getForumSettingsDialog();
-        boolean visible;
-        try {
-            visible = dialog.isDisplayed();
-        } catch (NoSuchElementException e) {
-            visible = false;
-        }
-        return visible;
-    }
-
 
     private static void sleep(int millis) {
         try {

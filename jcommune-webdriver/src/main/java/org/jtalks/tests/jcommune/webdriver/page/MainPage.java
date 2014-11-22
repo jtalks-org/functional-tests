@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.page.elements.Header;
 import org.jtalks.tests.jcommune.webdriver.page.elements.SmallScreenHeader;
@@ -29,7 +30,7 @@ public class MainPage {
     public static final String guestsUsersOnlineCountSel = "//span[@class='test-visitors-guests']";
     public static final String profileLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/user' and not(@class='currentusername')]";
     public static final String languageSwitcherSel = "//div[@id='lang-selector-toggle']/a/img";
-    public static final String languageDropdownMenuSel = "//li[@class='dropdown open']";
+    public static final String openedDropdownMenuSel = "//li[@class='dropdown open']";
     @FindBy(className = "btn-navbar")
     protected WebElement smallScreenMenuButton;
     @FindBy(id = "mainLinksEditor")
@@ -44,8 +45,8 @@ public class MainPage {
     private WebElement administrationDropdownMenu;
     @FindBy(id = "Administration")
     private WebElement toggleAdmineModeLink;
-    @FindBy(xpath = languageDropdownMenuSel)
-    private WebElement languageDropdownMenu;
+    @FindBy(xpath = openedDropdownMenuSel)
+    private WebElement openedDropdownMenu;
     @FindBy(xpath = languageSwitcherSel)
     private WebElement languageSwitcher;
     @FindBy(xpath = profileLinkSel)
@@ -96,6 +97,18 @@ public class MainPage {
 
     public void pressOpenExternalLinksDialog() {
         getHeader().pressOpenExternalLinksDialog();
+    }
+
+    public boolean isExternalLinksDialogVisible() {
+        return Existence.exists(getModalDialog());
+    }
+
+    public boolean isForumSettingsDialogVisible() {
+        return Existence.exists(getForumSettingsDialog());
+    }
+
+    public boolean isDropdownMenuOpened() {
+        return Existence.exists(getOpenedDropdownMenu());
     }
 
     public void pressOpenForumSettingsDialog() {
@@ -153,20 +166,14 @@ public class MainPage {
     @Step
     public void switchOnAdminMode() {
         if (!isAdminModeOn()) {
-            info("Opening Administration context menu on top of the page");
-            administrationDropdownMenu.click();
-            info("Choosing Enter Admin Mode menu item");
-            toggleAdmineModeLink.click();
+            getHeader().switchingAdminMode();
         }
     }
 
     @Step
     public void switchOffAdminMode() {
         if (isAdminModeOn()) {
-            info("Opening Administration context menu on top of the page");
-            administrationDropdownMenu.click();
-            info("Choosing Exit Admin Mode menu item");
-            toggleAdmineModeLink.click();
+            getHeader().switchingAdminMode();
         }
     }
 
@@ -202,6 +209,10 @@ public class MainPage {
         } else {
             return getWideHeader();
         }
+    }
+
+    public WebElement getOpenedDropdownMenu() {
+        return openedDropdownMenu;
     }
 
     @Step

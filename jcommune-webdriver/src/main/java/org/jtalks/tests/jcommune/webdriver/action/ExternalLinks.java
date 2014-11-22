@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import junit.framework.AssertionFailedError;
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
@@ -126,17 +127,17 @@ public class ExternalLinks {
     @Step
     private static void openExternalLinksDialog() {
         info("Opening External Links dialog");
-        WebElement dialog = mainPage.getModalDialog();
-        boolean visible;
-        try {
-            visible = dialog.isDisplayed();
-        } catch (NoSuchElementException e) {
-            visible = false;
-        }
-        if (!visible) {
+        mainPage.switchOnAdminMode();
+        mainPage.pressOpenExternalLinksDialog();
+        info("Checking if External Links dialog is opened");
+        if (!mainPage.isExternalLinksDialogVisible()) {
+            info("Opening External Links dialog again");
             mainPage.switchOnAdminMode();
             mainPage.pressOpenExternalLinksDialog();
-            sleep(500);
+            info("Checking if External Links dialog is opened");
+            if (!mainPage.isExternalLinksDialogVisible()) {
+                throw new NoSuchElementException("Tried to open External Links dialog 2 times without any success");
+            }
         }
     }
 
