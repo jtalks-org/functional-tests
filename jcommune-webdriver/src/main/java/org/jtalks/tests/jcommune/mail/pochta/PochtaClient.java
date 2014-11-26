@@ -31,7 +31,7 @@ import java.net.URI;
  */
 public class PochtaClient {
 
-    private static final String API_INBOXES_URL = "http://pochta.jtalks.org/inboxes/autotests?token=autotests";
+    private static final String API_INBOXES_URL = "http://pochta.jtalks.org/webinboxes/autotests?token=autotests";
 
     static {
         Slf4jLoggerFacade loggerFacade = new Slf4jLoggerFacade();
