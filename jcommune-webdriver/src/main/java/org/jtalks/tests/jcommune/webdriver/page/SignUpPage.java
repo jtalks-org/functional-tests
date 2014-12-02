@@ -46,7 +46,7 @@ public class SignUpPage {
     public static final String WRONG_EMAIL_FORMAT_ERROR = "Допустимый формат email: mail@mail.ru\n";
     @FindBy(id = signUpDialogFormSel)
     WebElement signUpDialogForm;
-    @FindBy(id = "signup")
+    @FindBy(id = "top-signup-link")
     WebElement signUpButton;
     @FindBy(id = "registration-successful-dialog")
     WebElement signUpWasSuccessfulDialog;
