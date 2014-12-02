@@ -51,6 +51,10 @@ public class SignInPage {
     WebElement closeSignInWindowButton;
     @FindBy(css = errorFormElementsSel)
     List<WebElement> errorFormElements;
+    @FindBy(id = " dialog-signup-link")
+    WebElement signUpButtonInDialog;
+    @FindBy(id = "page-signup-link")
+    WebElement signUpButtonOnPage;
 
     public SignInPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
