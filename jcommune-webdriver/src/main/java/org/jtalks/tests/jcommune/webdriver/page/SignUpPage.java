@@ -1,7 +1,10 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -121,7 +124,12 @@ public class SignUpPage {
     public void closeRegistrationWasSuccessfulDialog() {
         info("Waiting for dialog that says check your mailbox to open...");
         try {
-            signUpWasSuccessfulDialog.isDisplayed();
+            if (!Existence.exists(signUpWasSuccessfulDialog)) {
+                info("Might be slow connection. Giving it another chance...");
+                if (!Existence.existsUsingLowerTimeout(driver, signUpWasSuccessfulDialog)) {
+                    throw new NoSuchElementException("Tried to wait registration success dialog 2 times without any reaction");
+                }
+            }
             info("The dialog showed up!");
         } catch (org.openqa.selenium.TimeoutException e) {
             info("The dialog asked to check the mailbox");
