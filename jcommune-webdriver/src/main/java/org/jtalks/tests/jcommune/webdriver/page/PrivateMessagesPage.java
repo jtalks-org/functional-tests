@@ -1,10 +1,15 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import com.google.common.base.Splitter;
+import org.apache.commons.lang3.StringUtils;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
+import org.jtalks.tests.jcommune.webdriver.entity.privatemessage.PrivateMessage;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import ru.yandex.qatools.allure.annotations.Step;
@@ -12,23 +17,31 @@ import ru.yandex.qatools.allure.annotations.Step;
 import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
 /**
  * @author masyan
  * @author yacov
+ * @author andrey pancheshenko
  */
 public class PrivateMessagesPage {
-    public static final String INCORRECT_TO_FIELD_ERROR = "User not found\n";
+    public static final String INCORRECT_TO_FIELD_ERROR = "(User not found)|(Пользователь не найден)";
 
-    public static final String EMPTY_SUBJECT_FIELD_ERROR = "may not be empty\n";
+    public static final String SAME_USER_IN_TO_FIELD_ERROR = "(Sending messages to yourself is not allowed)|" +
+            "(Посылать сообщения самому себе - странная идея)";
 
-    public static final String INCORRECT_SUBJECT_LENGTH_ERROR = "should be 2 - 120 characters\n";
+    public static final String EMPTY_SUBJECT_FIELD_ERROR = "(may not be empty)|(Не может быть пустым)";
 
-    public static final String EMPTY_CONTENT_FIELD_ERROR = "may not be empty\n";
+    public static final String INCORRECT_SUBJECT_LENGTH_ERROR = "(should be 2 - 120 characters)|(Должно быть 2 - 120 символов)";
 
-    public static final String INCORRECT_LENGTH_CONTENT_FIELD = "should be 2 - 20000 characters\n";
+    public static final String EMPTY_CONTENT_FIELD_ERROR = "(may not be empty\nshould be 2 - 20000 characters)|" +
+            "(should be 2 - 20000 characters\nmay not be empty)|" +
+            "(Не может быть пустым\nДолжно быть 2 - 20000 символов)|" +
+            "(Должно быть 2 - 20000 символов\nНе может быть пустым)";
 
-    public static final String pmInboxLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/inbox']";
+    public static final String INCORRECT_LENGTH_CONTENT_FIELD = "(should be 2 - 20000 characters)|(Должно быть 2 - 20000 символов)";
+
+    public static final String pmInboxLinkSel = "//li[@id='inbox_link']/a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/inbox']";
 
     public static final String pmOutboxLinkSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/outbox']";
 
@@ -62,8 +75,6 @@ public class PrivateMessagesPage {
 
     public static final String quoteButtonSel = "//a[@class='btn' and contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/quote/')]";
 
-    public static final String SAVE_BUTTON = "savePM";
-
     public static final String draftMessageTitlesSel = "//td/a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/pm/')]";
 
     public static final String draftMessageEditButtonSel = "editCheckedPM";
@@ -91,6 +102,8 @@ public class PrivateMessagesPage {
     public static final String pmHeadingOutboxSel = "//li[@id='outbox_link' and @class='active']";
 
     public static final String recepientsListSel = "//td[@class='pm_user_to_from']/a";
+
+    public static final String counterSel = "test-pm-count";
 
     @FindBy(xpath = pmInboxLinkSel)
     private WebElement pmInboxLink;
@@ -149,8 +162,11 @@ public class PrivateMessagesPage {
     @FindBy(xpath = quoteButtonSel)
     private WebElement quoteButton;
 
-    @FindBy(id = SAVE_BUTTON)
+    @FindBy(id = "savePM")
     private WebElement saveButton;
+
+    @FindBy(xpath = "//input[@class='btn margin-left-big disabled']")
+    private WebElement saveButtonDisabled;
 
     @FindBy(xpath = draftMessageTitlesSel)
     private List<WebElement> draftMessageTitles;
@@ -179,9 +195,11 @@ public class PrivateMessagesPage {
     @FindBy(className = "checker")
     private WebElement singlePmCheckbox;
 
-    @FindBy(id="remove-pm-ok")
+    @FindBy(id = "remove-pm-ok")
     private WebElement okButtonRemovingPmDialog;
 
+    @FindBy(className = counterSel)
+    private WebElement messageCounter;
 
     public PrivateMessagesPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -209,21 +227,53 @@ public class PrivateMessagesPage {
     }
 
     @Step
-    public void fillToField(String username) {
-        info("Filling \"To\" field");
-        getToField().sendKeys(username);
+    public void fillPrivateMessageFields(PrivateMessage pm) {
+        info("Start filling PM fields.");
+        fillToField(pm.getReceiver().getUsername());
+        fillTitleField(pm.getMessageSubject());
+        fillMessageField(pm.getMessageContent());
     }
 
     @Step
-    public void fillTitleField(String title) {
-        info("Filling \"Title\" field");
-        getTitleField().sendKeys(title);
+    private void fillToField(String username) {
+        info("Filling 'To' field: [" + username + "]");
+        this.toField.sendKeys(username);
     }
 
     @Step
-    public void fillMessageField(String message) {
-        info("Filling \"Message\" field");
-        getMessageField().sendKeys(message);
+    private void fillTitleField(String title) {
+        info("Filling 'Title' field: [" + title + "]");
+        this.titleField.sendKeys(title);
+    }
+
+    @Step
+    private void fillMessageField(String message) {
+        info("Filling 'Message' field [" + StringUtils.left(message, 25) + "]");
+        for (String token : Splitter.fixedLength(100).split(message)) {
+            this.messageField.sendKeys(token);
+        }
+    }
+
+    @Step
+    public void clearPrivateMessageFields() {
+        info("Clearing all message fields.");
+        this.toField.clear();
+        this.titleField.clear();
+        this.messageField.clear();
+    }
+
+    public WebElement findPmBySubject(String subject) {
+        info("Looking for PM with subject: [" + subject + "]");
+        List<WebElement> pmList = getPmList();
+        for(WebElement singlePmRow : pmList) {
+            WebElement pmLink = singlePmRow.findElements(By.cssSelector("a")).get(1);
+            String messageSubject = pmLink.getText();
+            info("Found subject in the list: [" + StringUtils.left(messageSubject, 7) + "...]");
+            if(messageSubject.equals(subject)) {
+                return singlePmRow;
+            }
+        }
+        throw new NoSuchElementException("The PM with subject: [" + subject + "] doesn't exist.");
     }
 
     public WebElement getTitleField() {
@@ -278,6 +328,23 @@ public class PrivateMessagesPage {
         return saveButton;
     }
 
+    public WebElement getSaveButtonDisabled() {
+        return saveButtonDisabled;
+    }
+
+    public boolean isSaveButtonEnabled() {
+        info("Checking that the save button exists.");
+        if (Existence.existsImmediately(driver, getSaveButtonDisabled())) {
+            info("The save button disabled.");
+            return false;
+        } else if (Existence.existsImmediately(driver, getSaveButton())) {
+            info("The save button exists and enabled.");
+            return true;
+        } else {
+            throw new NoSuchElementException("Save button wasn't found.");
+        }
+    }
+
     public List<WebElement> getDraftMessageTitles() {
         return draftMessageTitles;
     }
@@ -329,10 +396,50 @@ public class PrivateMessagesPage {
     }
 
     public void clickComposeMessage() {
+        info("Clicking compose button");
         getPmNewMessageLink().click();
     }
 
     public void clickOpenOutboxMessages() {
+        info("Opening outbox folder");
         getPmOutboxLink().click();
+    }
+
+    public void clickOpenDrafts() {
+        info("Opening drafts folder");
+        getPmDraftsLink().click();
+    }
+
+    public void clickSendButton() {
+        info("Trying to send private message");
+        getSendButton().click();
+    }
+
+    public void clickSaveButton() {
+        info("Clicking Save PM button");
+        getSaveButton().click();
+    }
+
+    public void clickCheckbox(WebElement pmRow) {
+        info("Clicking on the checkbox");
+        pmRow.findElement(By.className("checker")).click();
+    }
+
+    public void clickDelButton() {
+        info("Clicking delete button");
+        getDelButton().click();
+    }
+
+    public void clickOkButtonRemovingPmDialog() {
+        info("Clicking ok button on the removing dialog");
+        getOkButtonRemovingPmDialog().click();
+    }
+
+    public int getMessagesCounter() {
+        try {
+            return Integer.parseInt(messageCounter.getText());
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Couldn't convert counter from string to integer!");
+        }
     }
 }
