@@ -1,6 +1,7 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 
+import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +12,7 @@ import ru.yandex.qatools.allure.annotations.Step;
 import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
 public class SignInPage {
     public static final String restorePasswordLinkSel = "//div[@class='form_controls']/a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/password/restore']";
@@ -78,6 +80,11 @@ public class SignInPage {
     public void clickSubmitButton() {
         info("Clicking submit button");
         submitButton.click();
+    }
+
+    public boolean isSignInDialogOpened() {
+        info("Checking whether sign in dialog is displayed");
+        return Existence.existsUsingLowerTimeout(driver, signInDialogForm);
     }
 
     public List<WebElement> getErrorFormElements() {

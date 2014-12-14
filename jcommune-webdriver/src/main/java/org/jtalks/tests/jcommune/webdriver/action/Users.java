@@ -59,7 +59,13 @@ public class Users {
         info("Sign in a User: " + user);
         openAndFillSignInDialog(user);
         checkFormValidation(signInPage.getErrorFormElements());
-
+        if (signInPage.isSignInDialogOpened()) {
+            info("WARNING: Sign in dialog is still opened after successful validation. Trying to click submit once again.");
+            signInPage.clickSubmitButton();
+            checkFormValidation(signInPage.getErrorFormElements());
+        } else {
+            info("Sign in dialog is closed");
+        }
         // Check that link to the user profile present on the page
         if (!mainPage.userIsLoggedIn()) {
             LOGGER.error("Could not find username in top right corner: {}", driver.getPageSource());
@@ -86,13 +92,10 @@ public class Users {
     private static void openAndFillSignInDialog(User user) {
         mainPage.clickLogin();
         // Check that sign-in dialog have been opened (JCommune open sign-in page instead dialog if JavaScript disabled)
-        try {
-            driver.findElement(By.id(SignInPage.signInDialogFormSel));
-        } catch (NoSuchElementException e) {
-            throw new CouldNotOpenPageException(
-                    "sign-in dialog form; may be JavaScript disabled in browser settings", e);
+        if (!signInPage.isSignInDialogOpened()) {
+            throw new CouldNotOpenPageException("sign-in dialog form; may be JavaScript disabled in browser settings");
         }
-
+        info("Sign in dialog opened");
         // Fill form values and submit
         signInPage.fillUsernameField(user.getUsername());
         signInPage.fillPasswordField(user.getPassword());

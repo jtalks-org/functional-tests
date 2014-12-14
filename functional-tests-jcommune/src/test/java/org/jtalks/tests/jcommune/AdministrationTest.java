@@ -54,13 +54,13 @@ public class AdministrationTest {
 
     //forum title tests:
 
-    @Test(groups = "ui-tests")
+    @Test(enabled = false, groups = "ui-tests") // bug with external links editor: http://jira.jtalks.org/browse/JC-994
     public void settingValidForumTitle_shouldPass(){
         ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(30));
         ForumSettings.setForumTitle(title);
     }
 
-    @Test
+    @Test(enabled = false) // bug with external links editor: http://jira.jtalks.org/browse/JC-994
     public void settingForumTitleMaxBoundary_shouldPass(){
         ForumSetting title = new ForumSetting().withTitle(randomAlphanumeric(100));
         ForumSettings.setForumTitle(title);
