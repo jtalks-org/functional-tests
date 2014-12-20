@@ -56,7 +56,7 @@ public class TopicTest {
     }
 
     @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+            expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR)
     public void createTopicWithEmptyTitle_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic().withTitle("");
@@ -124,7 +124,7 @@ public class TopicTest {
     }
 
     @Test(enabled = false, expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR + TopicPage.EMPTY_BODY_ERROR)
+            expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR + TopicPage.EMPTY_BODY_ERROR)
     public void createTopicWithoutData_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         Topic topic = new Topic().withTitle("").withBody("");

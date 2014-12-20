@@ -34,7 +34,7 @@ public class CodeReviewTest {
     }
 
     @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+            expectedExceptionsMessageRegExp = TopicPage.SUBJECT_SIZE_ERROR)
     public void createCodeReviewWithEmptyTitle_ShouldFail() throws Exception {
         CodeReview codeReview = new CodeReview().withTitle("");
         Users.signUpAndSignIn();
