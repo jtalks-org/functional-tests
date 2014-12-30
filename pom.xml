@@ -180,7 +180,8 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
+  <inceptionYear>2011</inceptionYear>
+  <url>http://jtalks.org</url>
   <build>
     <plugins>
       <plugin>
@@ -202,7 +203,7 @@
           <configuration>
           <testFailureIgnore>true</testFailureIgnore>
           <argLine>
-            -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+            -javaagent:'${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar'
           </argLine>
           <properties>
             <property>
