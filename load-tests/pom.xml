@@ -9,7 +9,9 @@
     <version>0.1-SNAPSHOT</version>
   </parent>
   <artifactId>load-tests</artifactId>
-
+  <properties>
+    <loadtests.include>*</loadtests.include>
+  </properties>
   <build>
     <plugins>
 
@@ -49,9 +51,12 @@
           </dependency>
         </dependencies>
         <configuration>
-          <testFilesDirectory>${project.basedir}/src/test/resources</testFilesDirectory>
+		  <testFilesDirectory>${project.basedir}/src/test/resources/org/jtalks/loadtests</testFilesDirectory>
+          <testFilesIncluded>
+            <jMeterTestFile>${loadtests.include}.jmx</jMeterTestFile>
+          </testFilesIncluded>
           <ignoreResultFailures>true</ignoreResultFailures>
-            <testResultsTimestamp>false</testResultsTimestamp>
+          <testResultsTimestamp>false</testResultsTimestamp>
         </configuration>
       </plugin>
     </plugins>
@@ -60,5 +65,4 @@
   <reporting>
     <excludeDefaults>true</excludeDefaults>
   </reporting>
-
 </project>
