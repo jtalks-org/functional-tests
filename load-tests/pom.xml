@@ -49,9 +49,8 @@
           </dependency>
         </dependencies>
         <configuration>
-          <testFilesDirectory>${project.basedir}/src/test/resources</testFilesDirectory>
           <ignoreResultFailures>true</ignoreResultFailures>
-            <testResultsTimestamp>false</testResultsTimestamp>
+          <testResultsTimestamp>false</testResultsTimestamp>
         </configuration>
       </plugin>
     </plugins>
@@ -60,5 +59,59 @@
   <reporting>
     <excludeDefaults>true</excludeDefaults>
   </reporting>
+
+  <profiles>
+    <profile>
+      <id>runAllTests</id>
+	  <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.lazerycode.jmeter</groupId>
+            <artifactId>jmeter-maven-plugin</artifactId>
+            <configuration>
+              <testFilesDirectory>${project.basedir}/src/test/resources</testFilesDirectory>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>      
+    </profile>
+	<profile>
+      <id>runBaseLine</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.lazerycode.jmeter</groupId>
+            <artifactId>jmeter-maven-plugin</artifactId>
+            <configuration>
+              <testFilesDirectory>${project.basedir}/src/test/resources/org/jtalks/loadtests</testFilesDirectory>
+              <testFilesIncluded>
+                <jMeterTestFile>BaseLine.jmx</jMeterTestFile>
+              </testFilesIncluded>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>      
+    </profile>
+	<profile>
+      <id>runMainTestPlan</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.lazerycode.jmeter</groupId>
+            <artifactId>jmeter-maven-plugin</artifactId>
+            <configuration>
+              <testFilesDirectory>${project.basedir}/src/test/resources/org/jtalks/loadtests</testFilesDirectory>
+              <testFilesIncluded>
+                <jMeterTestFile>TestPlan.jmx</jMeterTestFile>
+              </testFilesIncluded>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>      
+    </profile>
+  </profiles>
 
 </project>
