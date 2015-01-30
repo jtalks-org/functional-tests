@@ -55,7 +55,7 @@ public class MainPage {
     private WebElement logOutButton;
     @FindBy(id = "user-dropdown-menu-link")
     private WebElement userMenuLink;
-    @FindBy(id = "signup")
+    @FindBy(id = "top-signup-link")
     private WebElement registrationLink;
     @FindBy(className = "text_errorpage")
     private WebElement errorPage;
