@@ -42,7 +42,7 @@ public class WideScreenHeader extends Header {
     }
 
     public boolean isAdminModeOn() {
-        info("Checking if admin mode is already ON");
+        info("Checking admin mode status");
         return Existence.existsImmediately(driver, editExternalLinksControl);
     }
 

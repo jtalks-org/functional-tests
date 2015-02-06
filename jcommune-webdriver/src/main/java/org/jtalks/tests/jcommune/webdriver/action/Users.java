@@ -287,9 +287,9 @@ public class Users {
         profilePage.clickOnDropDownMenuForUserOnMainPage();
         profilePage.clickOnProfileInDropDownMenu();
         profilePage.openMainProfileTab();
-        info("Begin asserting the automatic stripping of the excess spaces in username");
-        assertTrue("Excess space characters were not cut", profilePage.getUsernameTableField().getText().equals(strippedUsername));
-        info("Excess space characters are stripped to 1 in the middle");
+        info("Asserting that username on profile is same as: " + strippedUsername);
+        profilePage.assertUsernameInProfile(strippedUsername);
+        info("Assertion passed");
     }
 
     public static void assertNotification(User user) {

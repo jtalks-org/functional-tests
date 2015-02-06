@@ -55,6 +55,7 @@ public class SmallScreenHeader extends Header {
 
     public boolean isAdminModeOn() {
         openMenu();
+        info("Checking admin mode status");
         return Existence.existsImmediately(driver, editExternalLinksControl);
     }
 

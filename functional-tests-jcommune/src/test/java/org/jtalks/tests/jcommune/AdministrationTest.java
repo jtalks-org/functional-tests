@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.webdriver.action.Branches;
 import org.jtalks.tests.jcommune.webdriver.action.ForumSettings;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.forumsetting.ForumSetting;
@@ -11,6 +12,7 @@ import org.testng.annotations.Test;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 
 /**
@@ -199,6 +201,16 @@ public class AdministrationTest {
         ForumSetting copyright = new ForumSetting().withCopyright(randomAlphanumeric(256));
         ForumSettings.setCopyright(copyright);
         ForumSettings.assertErrorVisible();
+    }
+
+    // branch visibility test
+
+    @Test(groups = "ui-tests")
+    public void branchWithoutViewTopicsPermissionIsVisibleInAdminMode_shouldPass() {
+        mainPage.switchOffAdminMode();
+        Branches.assertBranchIsInvisible("Invisible Branch");
+        mainPage.switchOnAdminMode();
+        Branches.assertBranchIsVisible("Invisible Branch");
     }
 
 }

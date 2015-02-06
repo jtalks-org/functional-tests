@@ -9,6 +9,8 @@ import ru.yandex.qatools.allure.annotations.Step;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertNull;
 import static org.testng.Assert.assertTrue;
 
 /**
@@ -46,5 +48,17 @@ public class Branches {
 
     public static void assertUserBrowsesBranch(Branch branch) {
         assertTrue(JCommuneSeleniumConfig.driver.getCurrentUrl().endsWith("/branches/" + branch.getId()));
+    }
+
+    public static void assertBranchIsVisible(String branchTitle) {
+        info("Begin searching for [" + branchTitle + "] branch");
+        assertNotNull(branchPage.findBranch(branchTitle), "Branch was not found");
+        info("Success. Branch was found");
+    }
+
+    public static void assertBranchIsInvisible(String branchTitle) {
+        info("Begin searching for \"" + branchTitle + "\" branch");
+        assertNull(branchPage.findBranch(branchTitle), "Branch is visible");
+        info("Success. Branch wasn't found");
     }
 }
