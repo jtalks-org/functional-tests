@@ -530,6 +530,12 @@ public class ProfilePage {
     }
 
     @Step
+    public void openMainProfileTab() {
+        info("Clicking on profile tab button");
+        profileTabButton.click();
+    }
+
+    @Step
     public void openContactsTab() {
         info("Clicking on contacts tab button");
         contacsTabButton.click();

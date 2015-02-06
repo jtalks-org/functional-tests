@@ -282,6 +282,16 @@ public class Users {
         info("Location was changed successful");
     }
 
+    @Step
+    public static void assertUsername(String strippedUsername) {
+        profilePage.clickOnDropDownMenuForUserOnMainPage();
+        profilePage.clickOnProfileInDropDownMenu();
+        profilePage.openMainProfileTab();
+        info("Begin asserting the automatic stripping of the excess spaces in username");
+        assertTrue("Excess space characters were not cut", profilePage.getUsernameTableField().getText().equals(strippedUsername));
+        info("Excess space characters are stripped to 1 in the middle");
+    }
+
     public static void assertNotification(User user) {
         assertEquals(user.getAutoSubscribe(), profilePage.getAutoSubscribeCheckbox().isSelected());
         assertEquals(user.getNotifyIfSomeoneMentionsYou(), profilePage.getNotifyIfSomeoneMentionsYouCheckbox().isSelected());
