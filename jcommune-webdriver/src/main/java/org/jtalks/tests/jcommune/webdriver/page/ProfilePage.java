@@ -10,6 +10,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.UnexpectedTagNameException;
 import ru.yandex.qatools.allure.annotations.Step;
 
+import static junit.framework.Assert.assertEquals;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import java.util.List;
 
@@ -427,6 +428,12 @@ public class ProfilePage {
         return dropDownMenu;
     }
 
+    public String getUsername() {return usernameTableField.getText(); }
+
+    public List<WebElement> getErrorFormElements() {
+        return errorFormElements;
+    }
+
     //setters
 
     public void selectPageSizeByValue(int num) {
@@ -530,6 +537,12 @@ public class ProfilePage {
     }
 
     @Step
+    public void openMainProfileTab() {
+        info("Clicking on profile tab button");
+        profileTabButton.click();
+    }
+
+    @Step
     public void openContactsTab() {
         info("Clicking on contacts tab button");
         contacsTabButton.click();
@@ -547,12 +560,13 @@ public class ProfilePage {
         securityTabButton.click();
     }
 
-    public List<WebElement> getErrorFormElements() {
-        return errorFormElements;
+    public void assertUsernameInProfile(String checkUsername) {
+        assertEquals(usernameTableField.getText(), checkUsername);
     }
 
     public WebElement getSelectedValueInList() {
         Select select = new Select(getPageSizeField());
         return select.getFirstSelectedOption();
     }
+
 }

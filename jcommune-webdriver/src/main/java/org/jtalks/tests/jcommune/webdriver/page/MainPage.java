@@ -165,16 +165,26 @@ public class MainPage {
 
     @Step
     public void switchOnAdminMode() {
+        info("Switching ON admin mode...");
         if (!isAdminModeOn()) {
+            info("Admin mode is off. Switching it ON");
             getHeader().switchingAdminMode();
+        } else {
+            info("Admin mode was switched on already, doing nothing");
         }
+        info("Admin mode is switched ON");
     }
 
     @Step
     public void switchOffAdminMode() {
+        info("Switching OFF admin mode...");
         if (isAdminModeOn()) {
+            info("Admin mode is on. Switching it OFF");
             getHeader().switchingAdminMode();
+        } else {
+            info("Admin mode was switched off already, doing nothing");
         }
+        info("Admin mode is switched OFF");
     }
 
     public WebElement getModalDialog() {

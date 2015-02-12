@@ -282,6 +282,16 @@ public class Users {
         info("Location was changed successful");
     }
 
+    @Step
+    public static void assertUsername(String strippedUsername) {
+        profilePage.clickOnDropDownMenuForUserOnMainPage();
+        profilePage.clickOnProfileInDropDownMenu();
+        profilePage.openMainProfileTab();
+        info("Asserting that username on profile is same as: " + strippedUsername);
+        profilePage.assertUsernameInProfile(strippedUsername);
+        info("Assertion passed");
+    }
+
     public static void assertNotification(User user) {
         assertEquals(user.getAutoSubscribe(), profilePage.getAutoSubscribeCheckbox().isSelected());
         assertEquals(user.getNotifyIfSomeoneMentionsYou(), profilePage.getNotifyIfSomeoneMentionsYouCheckbox().isSelected());

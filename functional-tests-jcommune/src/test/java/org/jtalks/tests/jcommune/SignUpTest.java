@@ -209,4 +209,26 @@ public class SignUpTest {
         user.setUsername("\\" + randomAlphanumeric(8));
         Users.signUp(user);
     }
+
+    /**
+     * JC-2077 Add cases on stripping whitespaces from username
+     *
+     * The current requirement is that several spaces in the middle are reduced to single space character.
+     *
+     * Requirement came from Stanislav Bashkyrtsev:
+     * > I would leave it as is. Not because I like it, but because it's a
+     * > very bizarre case I don't want to spend time on.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void usernameContainsSeveralSpacesInTheMiddle_shouldPass() throws Exception {
+        UserForRegistration user = new UserForRegistration();
+        String spaces = "        ";
+        user.setUsername(randomAlphanumeric(5) + spaces + randomAlphanumeric(5));
+        Users.signUp(user);
+        Users.activate(user);
+        String strippedUsername = user.getUsername().replace(spaces, " ");
+        Users.assertUsername(strippedUsername);
+    }
 }

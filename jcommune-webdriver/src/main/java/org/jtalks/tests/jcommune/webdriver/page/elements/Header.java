@@ -28,6 +28,8 @@ public abstract class Header {
     protected WebElement editForumSettingsControl;
     @FindBy(id = "searchText")
     protected WebElement searchInput;
+    @FindBy(xpath = "//div[@class='nav-collapse in collapse']")
+    protected WebElement openedMainMenu;
 
     public Header(WebDriver driver) {
         PageFactory.initElements(driver, this);
