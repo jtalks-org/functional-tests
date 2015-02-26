@@ -105,6 +105,10 @@ public class PrivateMessagesPage {
 
     public static final String counterSel = "test-pm-count";
 
+    public static final String autocompleteWidgetSel = "ui-autocomplete";
+
+    public static final String autocompleteChoiceSel = "//li[@class='ui-menu-item']/a";
+
     @FindBy(xpath = pmInboxLinkSel)
     private WebElement pmInboxLink;
 
@@ -119,6 +123,12 @@ public class PrivateMessagesPage {
 
     @FindBy(id = toFieldSel)
     private WebElement toField;
+
+    @FindBy(className = autocompleteWidgetSel)
+    private WebElement autoCompleteList;
+
+    @FindBy(xpath = autocompleteChoiceSel)
+    private List<WebElement> autocompleteChoices;
 
     @FindBy(id = titleFieldSel)
     private WebElement titleField;
@@ -230,6 +240,14 @@ public class PrivateMessagesPage {
     public void fillPrivateMessageFields(PrivateMessage pm) {
         info("Start filling PM fields.");
         fillToField(pm.getReceiver().getUsername());
+        if (Existence.exists(autoCompleteList)) {
+            for (WebElement choice : autocompleteChoices) {
+                if (choice.getText().equals(pm.getReceiver().getUsername())) {
+                    choice.click();
+                    break;
+                }
+            }
+        }
         fillTitleField(pm.getMessageSubject());
         fillMessageField(pm.getMessageContent());
     }
