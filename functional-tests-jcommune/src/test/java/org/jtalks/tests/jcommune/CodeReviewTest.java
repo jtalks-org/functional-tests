@@ -110,7 +110,7 @@ public class CodeReviewTest {
     }
 
     @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = TopicPage.EMPTY_SUBJECT_ERROR)
+            expectedExceptionsMessageRegExp = TopicPage.CR_COMMENT_EMPTY_ERROR)
     public void leaveEmptyCommentToCodeReview_ShouldFail() throws Exception {
         Users.signUpAndSignIn();
         CodeReview codeReview = new CodeReview();

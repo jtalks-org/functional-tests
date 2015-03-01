@@ -33,15 +33,15 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
  * @author masyan
  */
 public class TopicPage {
-    public static final String EMPTY_SUBJECT_ERROR = "(may not be empty\n)" +
+    public static final String CR_COMMENT_EMPTY_ERROR = "(may not be empty\n)" +
             "|(Не может быть пустым\n)";
-    public static final String EMPTY_BODY_ERROR = "(size must be between 2 and 20000)" +
+    public static final String EMPTY_BODY_ERROR = "(Size must be between 2 and 20000)" +
             "|(Размер должен быть между 2 и 20000)";
     public static final String SUBJECT_SIZE_ERROR = "(Length must be between 1 and 120 symbols\n)" +
             "|(Длина должна быть между 1 и 120 символами\n)";
     public static final String POLL_SUBJECT_EMPTY_ERROR = "(Poll title could not be blank if poll items arent blank)" +
             "|(Если заданы опции голосования, то заголовок голосования не может быть пустым)";
-    public static final String POLL_SUBJECT_SIZE_ERROR = "(size must be between 3 and 120)" +
+    public static final String POLL_SUBJECT_SIZE_ERROR = "(Size must be between 3 and 120)" +
             "|(Размер должен быть между 3 и 120)";
     public static final String POLL_OPTIONS_ERROR = "(Poll items could not be blank if poll title is not blank)" +
             "|(Если задан заголовок голосования, необходимо задать и опции голосования)";
@@ -51,7 +51,7 @@ public class TopicPage {
             "|(Длина опции голосования должна быть: 1 - 50)";
     public static final String POLL_DUPLICATES_ERROR = "(Poll items could not contain duplicates)" +
             "|(Опции голосования не могут содержать дубликаты)";
-    public static final String CR_COMMENT_LENGTH_ERROR = "(size must be between 1 and 5000\n)" +
+    public static final String CR_COMMENT_LENGTH_ERROR = "(Size must be between 1 and 5000\n)" +
             "|(Размер должен быть между 1 и 5000\n)";
     @FindBy(id = "subjectError")
     private WebElement subjectErrorMessage;
