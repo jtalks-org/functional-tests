@@ -25,11 +25,18 @@ import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
+import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+
+import org.jtalks.tests.jcommune.webdriver.page.PostPage;
+import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
@@ -37,15 +44,15 @@ import java.util.List;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
-
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 
 /**
  * Contain topic actions like creating, deleting etc.
  *
  * @author Guram Savinov
+ * @author pancheshenko andrey
  */
 public class Topics {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Topics.class);
 
     /**
      * Creates new topic. If {@link Topic#getBranch()} is null, then topic is created in a random branch,
@@ -54,12 +61,13 @@ public class Topics {
      * @throws PermissionsDeniedException if use cannot post in the first visible branch, she has no permissions
      * @throws CouldNotOpenPageException  if user was not able to find and open a branch with the specified name
      */
-
     @Step
     public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
-        gotoMainPage();
+        if (!JCommuneSeleniumConfig.driver.getCurrentUrl().equals(JCommuneSeleniumConfig.getAppUrl())) {
+            gotoMainPage();
+        }
         if (topic.getBranch() == null) {
-            List<WebElement> branches = branchPage.getBranches();
+            List<WebElement> branches = sectionPage.getBranches();
             if (isEmpty(branches)) {
                 throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
                         "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
@@ -70,8 +78,8 @@ public class Topics {
             topic.withBranch(branch);
         }
         info("Creating " + topic + " in " + topic.getBranch());
-        Branches.openBranch(topic.getBranch().getTitle());
-        topicPage.clickCreateTopic();
+        Branches.openBranch(topic.getBranch());
+        branchPage.clickCreateTopic();
         topicPage.fillTopicMainFields(topic);
         topicPage.fillPollSpecificFields(topic.getPoll());
         topicPage.clickAnswerToTopicButton();
@@ -80,7 +88,209 @@ public class Topics {
         return topic;
     }
 
-    public static void assertTopicFormValid() throws ValidationException {
+    @Step
+    public static Post postAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+        openRequiredTopic(topic);
+
+        Post newPost = new Post(randomAlphanumeric(200));
+        topic.addPost(newPost);
+        postPage.getMessageField().sendKeys(newPost.getPostContent());
+        postPage.clickAnswerToTopicButton();
+
+        info("Answer to topic [" + topic.getTitle() + "] was left");
+        return newPost;
+    }
+
+    @Step
+    public static void editPost(Topic topic, Post postToEdit) {
+        openRequiredTopic(topic);
+
+        postPage.clickEditInPostContainingString(postToEdit.getPostContent());
+        try {
+            (new WebDriverWait(driver, 40)).until(ExpectedConditions.refreshed(ExpectedConditions
+                    .presenceOfElementLocated(By.xpath(TopicPage.backButtonOnEditFormSel))));
+        } catch (TimeoutException e) {
+            info("Edit post method failed by timeout after button [edit] was clicked.");
+            throw e;
+        }
+        String newPostContent = randomAlphanumeric(100);
+        topicPage.editPostMessageBody(newPostContent);
+        topicPage.clickAnswerToTopicButton();
+        for(int i = 0; i < topic.getPosts().size(); i++) {
+            if (topic.getPosts().get(i).getPostContent().equals(postToEdit.getPostContent())) {
+                topic.getPosts().get(i).setPostContent(newPostContent);
+                break;
+            }
+        }
+        (new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(postPage.getFirstPost()));
+    }
+
+    @Step
+    public static void deleteTopic(Topic topic) throws PermissionsDeniedException {
+        openRequiredTopic(topic);
+        info("Clicking delete button for topic's first post");
+        try {
+            postPage.getDeleteTopicButton().click();
+        } catch (NoSuchElementException e) {
+            info("Delete button was not found");
+            throw new PermissionsDeniedException("Delete button was not found. Lack of permissions?");
+        }
+        postPage.closeDeleteConfirmDialogOk();
+    }
+
+    @Step
+    public static void deletePost(Topic topic, Post selectedPost) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Step
+    public static void moveTopic(Topic topic) {
+        openRequiredTopic(topic);
+        postPage.openMoveTopicEditorDialog();
+        String newBranchName = moveTopicEditor.chooseBranchIndex(0);
+        moveTopicEditor.clickConfirmMoveButton();
+        info("Waiting for the page being refreshed and move performed successfully");
+        try {
+            (new WebDriverWait(driver, 40)).until(ExpectedConditions.refreshed(ExpectedConditions
+                    .presenceOfElementLocated(By.xpath(PostPage.branchNameSel + "[contains(text(),'" + newBranchName.trim() + "')]"))));
+        } catch (TimeoutException e) {
+            info("Move method failed by timeout after button [move] was clicked.");
+            throw e;
+        }
+        topic.withBranch(newBranchName);
+    }
+
+    @Step
+    public static void moveTopic(Topic topic, String newBranchName) {
+        openRequiredTopic(topic);
+        postPage.openMoveTopicEditorDialog();
+        moveTopicEditor.chooseBranch(newBranchName);
+        moveTopicEditor.clickConfirmMoveButton();
+        info("Waiting for the page being refreshed and move performed successfully");
+        try {
+            (new WebDriverWait(driver, 40)).until(ExpectedConditions.refreshed(ExpectedConditions
+                    .presenceOfElementLocated(By.xpath(PostPage.branchNameSel + "[contains(text(),'" + newBranchName.trim() + "')]"))));
+        } catch (TimeoutException e) {
+            info("Move method failed by timeout after button [move] was clicked.");
+            throw e;
+        }
+        topic.withBranch(newBranchName);
+    }
+
+    @Step
+    public static void subscribe(Topic topic) throws NoSuchElementException {
+        openRequiredTopic(topic);
+        try {
+            if (postPage.isUserAlreadySubscribed()) {
+                info("User already subscribed on the topic");
+            } else {
+                info("Clicking subscribe button");
+                postPage.getSubscribeButton().click();
+            }
+        } catch (NoSuchElementException e) {
+            info("Subscribe button was not found");
+            throw new NoSuchElementException("Subscribe button was not found", e);
+        }
+    }
+
+    @Step
+    public static void unsubscribe(Topic topic) throws NoSuchElementException {
+        openRequiredTopic(topic);
+        try {
+            if (postPage.isUserAlreadySubscribed()) {
+                info("User already subscribed on the topic. Clicking unsubscribe button");
+                postPage.getSubscribeButton().click();
+            } else {
+                info("User isn't subscribed to branch");
+            }
+        } catch (NoSuchElementException e) {
+            info("Subscribe button was not found");
+            throw new NoSuchElementException("Subscribe button was not found", e);
+        }
+    }
+
+    public static void openRequiredTopic(Topic topic) {
+        if (!postPage.isUserInsideCorrectTopic(topic.getTitle())) {
+            info("User isn't browsing required topic");
+            Branches.openBranch(topic.getBranch());
+            openTopicInCurrentBranch(50, topic.getTitle());
+        }
+    }
+
+    /**
+     * Looks through several pages of the branch in order to find the topic with the specified title.
+     *
+     * @param numberOfPagesToCheck since the topic might not be on the first page (either someone simultaneously creates
+     *                             a lot of topics, or there are a lot of sticked topics), we have to iteration through
+     *                             this number of pages to search for the topic
+     * @param topicToFind          a topic title to look for
+     * @return true if the specified topic was found
+     * @throws CouldNotOpenPageException if specified topic was not found
+     */
+    @Step
+    public static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind) throws CouldNotOpenPageException {
+        boolean found;
+        while (!(found = branchPage.findAndOpenTopic(topicToFind))) {
+            info("Topic [" + topicToFind + "] wasn't found on " + branchPage.getActiveTopicsButton().get(0).getText() + " page");
+            if (!branchPage.openNextPage(numberOfPagesToCheck)) break;
+        }
+        if (!found) {
+            info("No topic with title [" + topicToFind + "] found");
+            throw new CouldNotOpenPageException(topicToFind);
+        }
+        (new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(postPage.getTopicTitle()));
+        return found;
+    }
+
+    private static void gotoMainPage() {
+        mainPage.clickForumsTitle();
+    }
+
+    public static void goToBranchPage() throws ValidationException {
+        Users.signUpAndSignIn();
+        Topic topic = new Topic("subject123", "New final test answer");
+        if (topic.getBranch() == null) {
+            Branch branch = new Branch(sectionPage.getBranches().get(0).getText());
+            topic.withBranch(branch);
+        }
+        Branches.openBranch(topic.getBranch());
+    }
+
+    public static void goToTopicCreatePage() throws ValidationException {
+        goToBranchPage();
+        branchPage.getNewOrdinaryTopicButton().click();
+    }
+
+    public static void goToReviewCreatePage() throws ValidationException {
+        goToBranchPage();
+        branchPage.getNewTopicToggle().click();
+        branchPage.getNewCodeReviewButton().click();
+    }
+
+    public static boolean isCreated(Topic topic) {
+        String expectedTitle = topic.getTitle();
+        String actualTitle = postPage.getTopicTitle().getText();
+
+        return actualTitle.equals(expectedTitle);
+    }
+
+    public static boolean isInCorrectBranch(Topic topic) {
+        return postPage.getBranchName().getText().trim().equals(topic.getBranch().getTitle());
+    }
+
+    public static void assertHasNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void assertIsSubscribed(Topic topic) {
+        Assert.assertTrue(postPage.isUserAlreadySubscribed(), "Assertion failed! User is not subscribed to the topic.");
+    }
+
+    private static void assertTopicFormValid() throws ValidationException {
         String failedFields = "";
         info("Check subject");
         if (Existence.existsImmediately(driver, topicPage.getSubjectErrorMessage())) {
@@ -110,6 +320,63 @@ public class Topics {
         info("Check successful. No errors.");
     }
 
+    // Code review methods
+
+    public static CodeReview createCodeReview(CodeReview codeReview)
+            throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        if (codeReview.getBranch() == null) {
+            List<WebElement> branches = sectionPage.getBranches();
+            if (isEmpty(branches)) {
+                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
+                        "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
+                        "Page Title: [" + JCommuneSeleniumConfig.driver.getTitle() + "]. " +
+                        "Page source: " + JCommuneSeleniumConfig.driver.getPageSource());
+            }
+            Branch branch = new Branch(sectionPage.getBranches().get(0).getText());
+            codeReview.withBranch(branch);
+        }
+        Branches.openBranch(codeReview.getBranch());
+        branchPage.clickCreateCodeReview();
+        topicPage.fillCodeReviewFields(codeReview);
+        topicPage.clickAnswerToTopicButton();
+        assertCodeReviewFormValid();
+        return codeReview;
+    }
+
+    public static CodeReviewComment leaveCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment)
+            throws PermissionsDeniedException, ValidationException {
+        openRequiredTopic(codeReview);
+        postPage.clickLineInCodeReviewForComment(codeReviewComment.getCommentedLineNumber());
+        postPage.fillCodeReviewCommentBody(codeReviewComment);
+        postPage.clickAddCommentToCodeReviewButton();
+        assertCodeReviewFormValid();
+        codeReview.addComment(codeReviewComment);
+        return codeReviewComment;
+    }
+
+    public static void editCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment) {
+        openRequiredTopic(codeReview);
+
+        postPage.clickEditInCodeReviewCommentContainingString(codeReviewComment.getPostContent());
+        try {
+            (new WebDriverWait(driver, 20)).until(ExpectedConditions.refreshed(ExpectedConditions
+                    .presenceOfElementLocated(By.xpath(PostPage.codeReviewCommentTextFieldSel))));
+        } catch (TimeoutException e) {
+            info("Edit post method failed by timeout after button [edit] was clicked.");
+            throw e;
+        }
+        String newCommentContent = randomAlphanumeric(100);
+        postPage.editCodeReviewCommentBody(newCommentContent);
+        postPage.clickOkButtonInEditComment();
+        for(int i = 0; i < codeReview.getComments().size(); i++) {
+            if (codeReview.getComments().get(i).getPostContent().equals(codeReviewComment.getPostContent())) {
+                codeReview.getComments().get(i).setPostContent(newCommentContent);
+                break;
+            }
+        }
+        (new WebDriverWait(driver, 20)).until(ExpectedConditions.visibilityOf(postPage.getFirstPost()));
+    }
+
     public static void assertCodeReviewFormValid() throws ValidationException {
         String failedFields = "";
         info("Check subject");
@@ -123,8 +390,8 @@ public class Topics {
             failedFields += bodyError.getText();
         }
         info("Check CR comment body");
-        if (Existence.existsUsingLowerTimeout(driver, topicPage.getCodeReviewCommentBodyError())) {
-            WebElement codeReviewCommentBodyError = topicPage.getCodeReviewCommentBodyError();
+        if (Existence.existsUsingLowerTimeout(driver, postPage.getCRCommentBodyErrorMessage())) {
+            WebElement codeReviewCommentBodyError = postPage.getCRCommentBodyErrorMessage();
             failedFields += codeReviewCommentBodyError.getText() + "\n";
         }
         info("Check finished");
@@ -135,204 +402,14 @@ public class Topics {
         info("Check successful. No errors.");
     }
 
-    public static boolean isInCorrectBranch(Topic topic) {
-        return topicPage.getBranchName().getText().trim().equals(topic.getBranch().getTitle());
-    }
-
-    public static void createCodeReview(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
-        if (topic.getBranch() == null) {
-            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
-            topic.withBranch(branch);
-        }
-        Branches.openBranch(topic.getBranch().getTitle());
-        createNewCodeReview(topic);
-    }
-
-    private static void createNewCodeReview(Topic topic) {
-        topicPage.getNewTopicToggle().click();
-        topicPage.getNewCodeReviewButton().click();
-        topicPage.getSubjectField().sendKeys(topic.getTitle());
-        Post firstPost = topic.getPosts().get(0);
-        topicPage.getMainBodyArea().sendKeys(firstPost.getPostContent());
-        topicPage.getPostButton().click();
-    }
-
-    @Step
-    public static void postAnswer(Topic topic, String branchTitle)
-            throws PermissionsDeniedException, CouldNotOpenPageException, InterruptedException {
-        //TODO: this might need to be uncommented, but right now we're not on the main page when we answer to the
-        // topic - we are on the topic page already!
-//        Branches.openBranch(branchTitle);
-//        if (openTopicInCurrentBranch(100, topic.getTitle())) {
-        answerToTopic(topic.getLastPost().getPostContent());
-        LOGGER.info("postAnswerToTopic {}", topic.getTitle());
-//        }
-    }
-
-    private static boolean findTopic(String topicTitle) throws CouldNotOpenPageException {
-        boolean found = false;
-
-        for (WebElement topics : topicPage.getTopicsList()) {
-            if (topics.getText().trim().equals(topicTitle.trim())) {
-                topics.click();
-                found = true;
-                break;
-            }
-        }
-        return found;
-    }
-
-    private static void answerToTopic(String answer) throws PermissionsDeniedException {
-        topicPage.getMainBodyArea().sendKeys(answer);
-        topicPage.clickAnswerToTopicButton();
-    }
-
-    /**
-     * Looks through several pages of the branch in order to find the topic with the specified id.
-     *
-     * @param numberOfPagesToCheck since the topic might not be on the first page (either someone simultaneously creates
-     *                             a lot of topics, or there are a lot of sticked topics), we have to iteration through
-     *                             this number of pages to search for the topic
-     * @param topicToFind          a topic id to look for
-     * @return true if the specified topic was found
-     * @throws CouldNotOpenPageException if specified topic was not found
-     */
-    @Step
-    public static boolean openTopicInCurrentBranch(int numberOfPagesToCheck, String topicToFind)
-            throws CouldNotOpenPageException {
-        boolean found;
-        while (!(found = findTopic(topicToFind))) {
-            if (!openNextPage(numberOfPagesToCheck)) break;
-        }
-        if (!found) {
-            LOGGER.info("No topic with title [{}]  found", topicToFind);
-            throw new CouldNotOpenPageException(topicToFind);
-        }
-        return found;
-    }
-
-    private static boolean openNextPage(int pagesToCheck) {
-        int max = 0;
-        if (topicPage.getActiveTopicsButton().size() < 1) {
-            return false;
-        }
-        WebElement activeBtn = topicPage.getActiveTopicsButton().get(0);
-        int active = Integer.parseInt(activeBtn.getText().trim());
-        for (WebElement el : topicPage.getTopicsButtons()) {
-            if (Integer.parseInt(el.getText().trim()) > max)
-                max = Integer.parseInt(el.getText().trim());
-        }
-        if ((active < pagesToCheck) && (active < max)) {
-            for (WebElement elem : topicPage.getTopicsButtons()) {
-                if (Integer.parseInt(elem.getText().trim()) == (active + 1)) {
-                    elem.click();
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    private static void gotoMainPage() {
-        mainPage.clickForumsTitle();
-    }
-
-    public static boolean isCreated(Topic topic) {
-        String expectedTitle = topic.getTitle();
-        String actualTitle = topicPage.getTopicSubjectAfterCreation().getText();
-
-        return actualTitle.equals(expectedTitle);
-    }
-
-    public static void editPost (Topic topic, Integer indexNumberOfPostInTopic) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void deleteByUser(Topic topic, User user) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void deleteTopic(Topic topic) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void moveTopic(Topic topic, String branchTitleWhereTopicMoves) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void subscribe(Topic topic) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void unsubscribe(Topic topic) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void moveByUser(Topic topic, User user) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void deleteAnswer(Topic topic, Post selectedPost) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void assertHasNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
-        throw new UnsupportedOperationException();
-    }
-
-    // Code review methods
-
-    public static CodeReview createCodeReview(CodeReview codeReview)
-            throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
-        if (codeReview.getBranch() == null) {
-            List<WebElement> branches = branchPage.getBranches();
-            if (isEmpty(branches)) {
-                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
-                        "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
-                        "Page Title: [" + JCommuneSeleniumConfig.driver.getTitle() + "]. " +
-                        "Page source: " + JCommuneSeleniumConfig.driver.getPageSource());
-            }
-            Branch branch = new Branch(branchPage.getBranches().get(0).getText());
-            codeReview.withBranch(branch);
-        }
-        Branches.openBranch(codeReview.getBranch().getTitle());
-        topicPage.clickCreateCodeReview();
-        topicPage.fillCodeReviewFields(codeReview);
-        topicPage.clickAnswerToTopicButton();
-        assertCodeReviewFormValid();
-        return codeReview;
-    }
-
-    public static void leaveCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment)
-            throws PermissionsDeniedException, ValidationException {
-        topicPage.clickLineInCodeReviewForComment(codeReviewComment.getCommentedLineNumber());
-        topicPage.fillCodeReviewCommentBody(codeReviewComment);
-        topicPage.clickAddCommentToCodeReviewButton();
-        assertCodeReviewFormValid();
-    }
-
-    public static void assertIsSubscribed(Topic topic){
-        throw new UnsupportedOperationException("To be implemented");
-    }
-
-    public static void editCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
-        throw new UnsupportedOperationException("To be implemented");
-    }
-
-    public static void leaveCodeReviewComment(CodeReview codeReview){
-        throw new UnsupportedOperationException("To be implemented");
-    }
-
-    //overloaded method below was added to avoid compilation errors
-    public static void leaveCodeReviewComment(CodeReviewComment codeReviewComment){
-        throw new UnsupportedOperationException("To be implemented");
+    public static void editPost(CodeReview codeReview, Post postToEdit) {
+        throw new UnsupportedOperationException("Edit post can't be done in code review type topics");
     }
 
     public static void deleteCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
-        throw new UnsupportedOperationException("To be implemented");
+        openRequiredTopic(codeReview);
+
+        postPage.clickDeleteInCodeReviewCommentContainingString(codeReviewComment.getPostContent());
+        postPage.closeDeleteCRCommentConfirmDialogOk();
     }
 }

@@ -74,6 +74,12 @@ public class Users {
     }
 
     @Step
+    public static void logOutAndSignIn(User user) throws ValidationException {
+        logout();
+        signIn(user);
+    }
+
+    @Step
     public static void logout() {
         mainPage.clickLogout();
     }

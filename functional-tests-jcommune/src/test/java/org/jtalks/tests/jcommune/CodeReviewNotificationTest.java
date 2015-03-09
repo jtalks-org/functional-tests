@@ -32,7 +32,7 @@ public class CodeReviewNotificationTest {
     }
 
     @Test
-    public void autosubscribe_codeReviewStarterAutomaticallySubscribes() throws Exception{
+    public void autosubscribe_codeReviewStarterAutomaticallySubscribes() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
 
@@ -40,11 +40,10 @@ public class CodeReviewNotificationTest {
     }
 
     @Test
-    public void  autosubscribe_codeReviewCommentatorAutomaticallySubscribes() throws Exception{
+    public void autosubscribe_codeReviewCommentatorAutomaticallySubscribes() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
 
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
-        Users.logout();
 
         User codeReviewCommentator = Users.signUpAndSignIn();
         Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
@@ -53,42 +52,35 @@ public class CodeReviewNotificationTest {
     }
 
     @Test
-    public void createCodeReview_UserSubscribedToBranchReceivesBranchNotificationOnly() throws  Exception{
+    public void createCodeReview_userSubscribedToBranch_receivesBranchNotificationOnly() throws Exception {
         CodeReview codeReview = new CodeReview().withBranch(NOTIFICATION_BRANCH);
 
         User branchSubscriber = Users.signUpAndSignIn();
         Branches.subscribe(codeReview.getBranch());
-        Users.logout();
 
-        User codeReviewStarter = Users.signUpAndSignIn();
+        Users.signUpAndSignIn();
         Topics.createCodeReview(codeReview);
-        Users.logout();
 
-        Users.signIn(branchSubscriber);
+        Users.logOutAndSignIn(branchSubscriber);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, branchSubscriber);
-        Notifications.assertNotificationOnBranchSent(codeReview.getBranch(), branchSubscriber);
-
+        Notifications.assertNotificationOnTopicNotSentBranchSent(codeReview, branchSubscriber);
     }
 
     @Test
-    public void createCodeReview_UserNotSubscribedToBranchDoNotReciveNotifications() throws  Exception{
+    public void createCodeReview_userNotSubscribedToBranch_doNotReceiveNotifications() throws Exception {
         CodeReview codeReview = new CodeReview().withBranch(NOTIFICATION_BRANCH);
 
-        User branchSubscriber = Users.signUpAndSignIn();
-        Users.logout();
+        User testUser = Users.signUpAndSignIn();
 
         User codeReviewStarter = Users.signUpAndSignIn();
         Topics.createCodeReview(codeReview);
-        Users.logout();
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), branchSubscriber);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, branchSubscriber);
+        Notifications.assertNotificationsNotSent(codeReview, testUser);
     }
 
     @Test
-    public void createCodeReview_UserSubscribedToBranchDoNotReciveNotificationsIfCreatedCodeReviewHimself() throws  Exception{
+    public void createCodeReview_userSubscribedToBranch_doNotReceiveNotificationsIfCreatedCodeReviewHimself() throws Exception {
         CodeReview codeReview = new CodeReview().withBranch(NOTIFICATION_BRANCH);
 
         User branchSubscriber = Users.signUpAndSignIn();
@@ -96,384 +88,310 @@ public class CodeReviewNotificationTest {
         Topics.createCodeReview(codeReview);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), branchSubscriber);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, branchSubscriber);
+        Notifications.assertNotificationsNotSent(codeReview, branchSubscriber);
     }
 
     @Test
-    public void addCommentToCodeReview_UserSubscribedToCodeReviewOnlyReceivesCodeReviewNotificationOnly() throws Exception {
+    public void addCommentToCodeReview_userSubscribedToCodeReviewOnly_receivesCodeReviewNotificationOnly() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Users.logout();
 
         User topicCommentator = Users.signUpAndSignIn();
         Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
 
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void addCommentToCodeReview_UserSubscribedToBranchOnlyDoNotReceiveNotifications() throws Exception{
+    public void addCommentToCodeReview_userSubscribedToBranchOnly_doNotReceiveNotifications() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         Topics.unsubscribe(codeReview);
         Branches.subscribe(codeReview.getBranch());
-        Users.logout();
-
-        User topicCommentator = Users.signUpAndSignIn();
-        Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
-        Users.logout();
-
-        Users.signIn(codeReviewStarter);
-        Branches.unsubscribeIgnoringFail(codeReview.getBranch());
-
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
-
-    }
-
-    @Test
-    public void addCommentToCodeReview_UserSubscribedBothToBranchAndCodReviewReceivesCodeReviewNotificationOnly() throws Exception{
-        User codeReviewStarter = Users.signUpAndSignIn();
-        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
-        //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Branches.subscribe(codeReview.getBranch());
-        Users.logout();
-
-        User topicCommentator = Users.signUpAndSignIn();
-        Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
-        Users.logout();
-
-        Users.signIn(codeReviewStarter);
-        Branches.unsubscribeIgnoringFail(codeReview.getBranch());
-
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-    }
-
-    @Test
-    public void addCommentToCodeReview_UserSubscribedToCodeReviewDoNotReceiveNotificationsAboutHisOwnComments() throws Exception{
-        User codeReviewStarter = Users.signUpAndSignIn();
-        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
-        //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
-
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
-    }
-
-    @Test
-    public void addCommentToCodeReview_UnsubscribedUserDoNotReceiveNotifications() throws Exception{
-        User codeReviewStarter = Users.signUpAndSignIn();
-        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
-        Topics.unsubscribe(codeReview);
-        Users.logout();
 
         User topicCommentator = Users.signUpAndSignIn();
         Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
-    }
-
-    @Test
-    public void deleteCodeReview_UserSubscribedToCodeReviewOnlyReceivesCodeReviewNotificationOnly() throws Exception {
-        User codeReviewStarter = Users.signUpAndSignIn();
-        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
-        //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Users.logout();
-
-        User codeReviewDeleter = Users.signUpAndSignIn();
-        Topics.deleteTopic(codeReview);
-
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-    }
-
-    @Test
-    public void deleteCodeReview_UserSubscribedToBranchOnlyReceivesBranchNotificationOnly() throws Exception{
-        User codeReviewStarter = Users.signUpAndSignIn();
-        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
-        Topics.unsubscribe(codeReview);
-        Branches.subscribe(codeReview.getBranch());
-        Users.logout();
-
-        User codeReviewDeleter = Users.signUpAndSignIn();
-        Topics.deleteTopic(codeReview);
-        Users.logout();
-
-        Users.signIn(codeReviewStarter);
+        Users.logOutAndSignIn(codeReviewStarter);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationOnBranchSent(codeReview.getBranch(), codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReview_UserSubscribedBothToBranchAndCodeReviewReceivesCodeReviewNotificationOnly() throws Exception{
+    public void addCommentToCodeReview_userSubscribedBothToBranchAndCodeReview_receivesCodeReviewNotificationOnly() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
         Branches.subscribe(codeReview.getBranch());
-        Users.logout();
+
+        User topicCommentator = Users.signUpAndSignIn();
+        Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
+
+        Users.logOutAndSignIn(codeReviewStarter);
+        Branches.unsubscribeIgnoringFail(codeReview.getBranch());
+
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
+    }
+
+    @Test
+    public void addCommentToCodeReview_userSubscribedToCodeReview_doNotReceiveNotificationsAboutHisOwnComments() throws Exception {
+        User codeReviewStarter = Users.signUpAndSignIn();
+        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
+        //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
+        Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
+
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
+    }
+
+    @Test
+    public void addCommentToCodeReview_unsubscribedUser_doNotReceiveNotifications() throws Exception {
+        User codeReviewStarter = Users.signUpAndSignIn();
+        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
+        Topics.unsubscribe(codeReview);
+
+        User topicCommentator = Users.signUpAndSignIn();
+        Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
+
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
+    }
+
+    @Test
+    public void deleteCodeReview_userSubscribedToCodeReviewOnly_receivesCodeReviewNotificationOnly() throws Exception {
+        User codeReviewStarter = Users.signUpAndSignIn();
+        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
+        //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
 
         User codeReviewDeleter = Users.signUpAndSignIn();
         Topics.deleteTopic(codeReview);
 
-        Users.signIn(codeReviewStarter);
-        Branches.unsubscribeIgnoringFail(codeReview.getBranch());
-
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReview_UserSubscribedToCodeReviewDoNotReceiveNotificationIfHeHimselfDeletedCodeReview() throws Exception{
+    public void deleteCodeReview_userSubscribedToBranchOnly_receivesBranchNotificationOnly() throws Exception {
+        User codeReviewStarter = Users.signUpAndSignIn();
+        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
+        Topics.unsubscribe(codeReview);
+        Branches.subscribe(codeReview.getBranch());
+
+        User codeReviewDeleter = Users.signUpAndSignIn();
+        Topics.deleteTopic(codeReview);
+
+        Users.logOutAndSignIn(codeReviewStarter);
+        Branches.unsubscribeIgnoringFail(codeReview.getBranch());
+
+        Notifications.assertNotificationOnTopicNotSentBranchSent(codeReview, codeReviewStarter);
+    }
+
+    @Test
+    public void deleteCodeReview_userSubscribedBothToBranchAndCodeReview_receivesCodeReviewNotificationOnly() throws Exception {
+        User codeReviewStarter = Users.signUpAndSignIn();
+        CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
+        //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
+        Branches.subscribe(codeReview.getBranch());
+
+        User codeReviewDeleter = Users.signUpAndSignIn();
+        Topics.deleteTopic(codeReview);
+
+        Users.logOutAndSignIn(codeReviewStarter);
+        Branches.unsubscribeIgnoringFail(codeReview.getBranch());
+
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
+    }
+
+    @Test
+    public void deleteCodeReview_userSubscribedToCodeReview_doNotReceiveNotificationIfHeDeletedCodeReview() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
         Topics.deleteTopic(codeReview);
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReview_UserSubscribedToBranchDoNotReceiveNotificationIfHeHimselfDeletedCodeReview() throws Exception{
+    public void deleteCodeReview_userSubscribedToBranch_doNotReceiveNotificationIfHeDeletedCodeReview() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         Branches.subscribe(codeReview.getBranch());
         Topics.unsubscribe(codeReview);
+
         Topics.deleteTopic(codeReview);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReview_UnsubscribedUserDoNotReceiveNotifications() throws Exception{
+    public void deleteCodeReview_unsubscribedUser_doNotReceiveNotifications() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         Topics.unsubscribe(codeReview);
-        Users.logout();
 
         User codeReviewDeleter = Users.signUpAndSignIn();
         Topics.deleteTopic(codeReview);
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void moveCodeReview_UserSubscribedToCodeReviewOnlyReceivesCodeReviewNotificationOnly() throws Exception{
+    public void moveCodeReview_userSubscribedToCodeReviewOnly_receivesCodeReviewNotificationOnly() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Branch oldBranch = codeReview.getBranch();
-        Users.logout();
 
         User codeReviewMover = Users.signUpAndSignIn();
         Topics.moveTopic(codeReview, BRANCH_NAME_TO_MOVE_TOPIC_IN);
 
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(oldBranch, codeReviewStarter);
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void moveCodeReview_UserSubscribedToBranchOnlyDoNotReceiveNotification() throws Exception{
+    public void moveCodeReview_userSubscribedToBranchOnly_doNotReceiveNotification() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         Topics.unsubscribe(codeReview);
         Branches.subscribe(codeReview.getBranch());
+
         Branch oldBranch = codeReview.getBranch();
-        Users.logout();
 
         User codeReviewMover = Users.signUpAndSignIn();
         Topics.moveTopic(codeReview, BRANCH_NAME_TO_MOVE_TOPIC_IN);
-        Users.logout();
 
-        Users.signIn(codeReviewStarter);
+        Users.logOutAndSignIn(codeReviewStarter);
         Branches.unsubscribeIgnoringFail(oldBranch);
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(oldBranch, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void moveCodeReview_UserSubscribedBothToBranchAndCodeReviewReceivesCodeReviewNotificationOnly() throws Exception{
+    public void moveCodeReview_userSubscribedBothToBranchAndCodeReview_receivesCodeReviewNotificationOnly() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
         Branches.subscribe(codeReview.getBranch());
         Branch oldBranch = codeReview.getBranch();
-        Users.logout();
 
         User codeReviewMover = Users.signUpAndSignIn();
         Topics.moveTopic(codeReview, BRANCH_NAME_TO_MOVE_TOPIC_IN);
-        Users.logout();
 
-        Users.signIn(codeReviewStarter);
+        Users.logOutAndSignIn(codeReviewStarter);
         Branches.unsubscribeIgnoringFail(oldBranch);
 
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(oldBranch, codeReviewStarter);
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void moveCodeReview_UserSubscribedToCodeReviewDoNotReceiveNotificationIfHeHimselfMovedCodeReview() throws Exception{
+    public void moveCodeReview_userSubscribedToCodeReview_doNotReceiveNotificationIfHeMovedCodeReview() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Branch oldBranch = codeReview.getBranch();
         Topics.moveTopic(codeReview, BRANCH_NAME_TO_MOVE_TOPIC_IN);
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(oldBranch, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void moveCodeReview_UnsubscribedUserDoNotReceiveNotifications() throws Exception{
+    public void moveCodeReview_unsubscribedUser_doNotReceiveNotifications() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         Branch oldBranch = codeReview.getBranch();
         Topics.unsubscribe(codeReview);
-        Users.logout();
 
         User codeReviewMover = Users.signUpAndSignIn();
         Topics.moveTopic(codeReview, BRANCH_NAME_TO_MOVE_TOPIC_IN);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(oldBranch, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void editCodeReviewComment_UserSubscribedToCodeReviewOnlyDoNotReciveNotification() throws Exception {
+    public void editCodeReviewComment_userSubscribedToCodeReviewOnly_doNotReceiveNotification() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Users.logout();
 
         User codeReviewCommentEditor = Users.signUpAndSignIn();
-        Topics.leaveCodeReviewComment(codeReview);
-        CodeReviewComment codeReviewComment = codeReview.getComments().get(0);
-        // two lines above should be replaced by following:
-        // CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview);
+        CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
         Topics.editCodeReviewComment(codeReview, codeReviewComment);
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void editCodeReviewComment_UserSubscribedToBranchOnlyDoNotReciveNotification() throws Exception {
+    public void editCodeReviewComment_userSubscribedToBranchOnly_doNotReceiveNotification() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         Topics.unsubscribe(codeReview);
         Branches.subscribe(codeReview.getBranch());
-        Users.logout();
 
         User codeReviewCommentEditor = Users.signUpAndSignIn();
-        Topics.leaveCodeReviewComment(codeReview);
-        CodeReviewComment codeReviewComment = codeReview.getComments().get(0);
-        // two lines above should be replaced by following:
-        // CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview);
+        CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
         Topics.editCodeReviewComment(codeReview, codeReviewComment);
-        Users.logout();
 
-        Users.signIn(codeReviewStarter);
+        Users.logOutAndSignIn(codeReviewStarter);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReviewComment_UserSubscribedToCodeReviewOnlyReceivesCodeReviewNotificationOnly() throws Exception {
+    public void deleteCodeReviewComment_userSubscribedToCodeReviewOnly_receivesCodeReviewNotificationOnly() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Users.logout();
 
         User codeReviewCommentDeleter = Users.signUpAndSignIn();
-        Topics.leaveCodeReviewComment(codeReview);
-        CodeReviewComment codeReviewComment = codeReview.getComments().get(0);
-        // two lines above should be replaced by following:
-        // CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview);
+        CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
         Topics.deleteCodeReviewComment(codeReview, codeReviewComment);
 
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReviewComment_UserSubscribedToBranchOnlyDoNotReceiveNotifications() throws Exception{
+    public void deleteCodeReviewComment_userSubscribedToBranchOnly_doNotReceiveNotifications() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         Topics.unsubscribe(codeReview);
         Branches.subscribe(codeReview.getBranch());
-        Users.logout();
 
         User codeReviewCommentDeleter = Users.signUpAndSignIn();
-        Topics.leaveCodeReviewComment(codeReview);
-        CodeReviewComment codeReviewComment = codeReview.getComments().get(0);
-        // two lines above should be replaced by following:
-        // CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview);
+        CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
         Topics.deleteCodeReviewComment(codeReview, codeReviewComment);
-        Users.logout();
 
-        Users.signIn(codeReviewStarter);
+        Users.logOutAndSignIn(codeReviewStarter);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReviewComment_UserSubscribedBothToBranchAndCodeReviewReceivesCodeReviewNotificationOnly() throws Exception{
+    public void deleteCodeReviewComment_userSubscribedBothToBranchAndCodeReview_receivesCodeReviewNotificationOnly() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
         Branches.subscribe(codeReview.getBranch());
-        Users.logout();
 
         User codeReviewCommentDeleter = Users.signUpAndSignIn();
-        Topics.leaveCodeReviewComment(codeReview);
-        CodeReviewComment codeReviewComment = codeReview.getComments().get(0);
-        // two lines above should be replaced by following:
-        // CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview);
+        CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
         Topics.deleteCodeReviewComment(codeReview, codeReviewComment);
-        Users.logout();
 
-        Users.signIn(codeReviewStarter);
+        Users.logOutAndSignIn(codeReviewStarter);
         Branches.unsubscribeIgnoringFail(codeReview.getBranch());
 
-        Notifications.assertNotificationOnTopicSent(codeReview, codeReviewStarter);
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
+        Notifications.assertNotificationOnTopicSentBranchNotSent(codeReview, codeReviewStarter);
     }
 
     @Test
-    public void deleteCodeReviewComment_UserSubscribedToCodeReviewOnlyDoNotReceiveNotificationsIfHimselfDeletesComment() throws Exception {
+    public void deleteCodeReviewComment_userSubscribedToCodeReviewOnly_doNotReceiveNotificationsIfHeDeletesComment() throws Exception {
         User codeReviewStarter = Users.signUpAndSignIn();
         CodeReview codeReview = Topics.createCodeReview(new CodeReview().withBranch(NOTIFICATION_BRANCH));
         //We do not subscribe codeReviewStarter to topic explicitly, because he is automatically subscribed
-        Topics.leaveCodeReviewComment(codeReview);
-        CodeReviewComment codeReviewComment = codeReview.getComments().get(0);
-        // two lines above should be replaced by following:
-        // CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview);
+        CodeReviewComment codeReviewComment = Topics.leaveCodeReviewComment(codeReview, new CodeReviewComment());
         Topics.deleteCodeReviewComment(codeReview, codeReviewComment);
 
-        Notifications.assertNotificationsOnBranchNotSent(codeReview.getBranch(), codeReviewStarter);
-        Notifications.assertNotificationsOnTopicNotSent(codeReview, codeReviewStarter);
+        Notifications.assertNotificationsNotSent(codeReview, codeReviewStarter);
     }
-
 }

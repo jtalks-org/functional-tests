@@ -43,7 +43,7 @@ public class LastReadPostTest {
         Topics.createTopic(newTopic);
 
         User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
-        Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
+        Topics.postAnswer(newTopic);
 
         Topics.assertHasNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
@@ -55,7 +55,7 @@ public class LastReadPostTest {
         mainPage.clickLogout();
 
         User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
-        Branches.openBranch(newTopic.getBranch().getTitle());
+        Branches.openBranch(newTopic.getBranch());
         Branches.clickMarkAllAsRead();
 
         Topics.assertHasNoNewMessages(newTopic, userThatWantsToSeeNewMessages);
@@ -65,8 +65,8 @@ public class LastReadPostTest {
     public void givenTopicContainsUnreadPost_afterThatPostIsRemoved_topicBecomesRead() throws Exception {
         Users.signUpAndSignIn();
         Topic newTopic = Topics.createTopic(new Topic());
-        Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
-        Topics.deleteAnswer(newTopic, newTopic.getLastPost());
+        Topics.postAnswer(newTopic);
+        Topics.deletePost(newTopic, newTopic.getLastPost());
 
         User userThatWantsToSeeNewMessages = Users.signUpAndSignIn();
 
@@ -80,7 +80,7 @@ public class LastReadPostTest {
         newTopic.withTopicStarter(userThatWantsToSeeNewMessages);
         Topics.createTopic(newTopic);
 
-        Branches.openBranch(newTopic.getBranch().getTitle());
+        Branches.openBranch(newTopic.getBranch());
         Branches.clickMarkAllAsRead();
 
         Topics.assertHasNoNewMessages(newTopic, userThatWantsToSeeNewMessages);
@@ -92,7 +92,7 @@ public class LastReadPostTest {
         Topic newTopic = Topics.createTopic(new Topic());
         mainPage.clickLogout();
 
-        Branches.openBranch(newTopic.getBranch().getTitle());
+        Branches.openBranch(newTopic.getBranch());
         Branches.clickMarkAllAsRead();
 
         //null should be changed to anonymous user representation
@@ -105,9 +105,9 @@ public class LastReadPostTest {
         Users.signUpAndSignIn();
         Topic newTopic = Topics.createTopic(new Topic());
 
-        Branches.openBranch(newTopic.getBranch().getTitle());
+        Branches.openBranch(newTopic.getBranch());
         for (int i = 0; i < 2 * postsCountOnPage; ++i) {
-            Topics.postAnswer(newTopic, newTopic.getBranch().getTitle());
+            Topics.postAnswer(newTopic);
         }
 
         mainPage.clickLogout();
@@ -116,7 +116,7 @@ public class LastReadPostTest {
         Topics.openTopicInCurrentBranch(1, newTopic.getTitle());
 
         //Check, do we need to open branch page.
-        Branches.openBranch(newTopic.getBranch().getTitle());
+        Branches.openBranch(newTopic.getBranch());
         Topics.assertHasNewMessages(newTopic, userThatWantsToSeeNewMessages);
     }
 

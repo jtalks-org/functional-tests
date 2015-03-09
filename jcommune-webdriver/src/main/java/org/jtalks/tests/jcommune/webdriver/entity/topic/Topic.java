@@ -15,7 +15,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
  * Jcommune topic representation.
  */
 public class Topic {
-    private Branch branch;
+    protected Branch branch;
     private DateTime creationDate;
     private DateTime modificationDate;
     private User topicStarter;
@@ -48,16 +48,8 @@ public class Topic {
         return this;
     }
 
-    public DateTime getModificationDate() {
-        return modificationDate;
-    }
-
     public void setModificationDate(DateTime modificationDate) {
         this.modificationDate = modificationDate;
-    }
-
-    public User getTopicStarter() {
-        return topicStarter;
     }
 
     public Topic withTopicStarter(User topicStarter) {
@@ -65,56 +57,32 @@ public class Topic {
         return this;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public boolean isSticked() {
-        return sticked;
-    }
-
     public void setSticked(boolean sticked) {
         this.sticked = sticked;
-    }
-
-    public boolean isAnnouncement() {
-        return announcement;
     }
 
     public void setAnnouncement(boolean announcement) {
         this.announcement = announcement;
     }
 
-    public Boolean getClosed() {
-        return closed;
-    }
-
     public void setClosed(Boolean closed) {
         this.closed = closed;
-    }
-
-    public int getViews() {
-        return views;
     }
 
     public void setViews(int views) {
         this.views = views;
     }
 
-    public Poll getPoll() {
-        return poll;
-    }
-
     public void setPoll(Poll poll) {
         this.poll = poll;
     }
 
-    public List<Post> getPosts() {
-        return posts;
-    }
-
     public void setPosts(List<Post> posts) {
         this.posts = posts;
+    }
+
+    public void addPost(Post post) {
+        posts.add(post);
     }
 
     public Branch getBranch() {
@@ -131,14 +99,6 @@ public class Topic {
         return this;
     }
 
-    public Post getFirstPost() {
-        return getPosts().get(0);
-    }
-
-    public Post getLastPost() {
-        return getPosts().get(getPosts().size() - 1);
-    }
-
     public boolean hasNewMessages() {
         return hasNewMessages;
     }
@@ -151,4 +111,52 @@ public class Topic {
     public String toString() {
         return String.format("Topic: title=[%s]", this.title);
     }
+
+    //Getters
+
+    public int getViews() {
+        return views;
+    }
+
+    public Poll getPoll() {
+        return poll;
+    }
+
+    public List<Post> getPosts() {
+        return posts;
+    }
+
+    public DateTime getModificationDate() {
+        return modificationDate;
+    }
+
+    public User getTopicStarter() {
+        return topicStarter;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public boolean isSticked() {
+        return sticked;
+    }
+
+    public boolean isAnnouncement() {
+        return announcement;
+    }
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public Post getFirstPost() {
+        return getPosts().get(0);
+    }
+
+    public Post getLastPost() {
+        return getPosts().get(getPosts().size() - 1);
+    }
+
+
 }

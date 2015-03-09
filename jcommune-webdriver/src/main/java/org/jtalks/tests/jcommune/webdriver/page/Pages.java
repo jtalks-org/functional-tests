@@ -15,6 +15,7 @@ public class Pages {
     public static ProfilePage profilePage;
     public static ExternalLinksDialog externalLinksDialog;
     public static ForumSettingsDialog forumSettingsDialog;
+    public static MoveTopicEditor moveTopicEditor;
 
 
     public static void createAllPages(WebDriver driver) {
@@ -29,5 +30,6 @@ public class Pages {
         profilePage = new ProfilePage(driver);
         externalLinksDialog = new ExternalLinksDialog(driver);
         forumSettingsDialog = new ForumSettingsDialog(driver);
+        moveTopicEditor = new MoveTopicEditor(driver);
     }
 }

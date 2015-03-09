@@ -3,6 +3,8 @@ package org.jtalks.tests.jcommune.webdriver.entity.topic;
 import com.google.common.base.Splitter;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
@@ -14,7 +16,7 @@ public class CodeReview extends Topic {
 
     private String content = randomAlphanumeric(50);
     private int numberOfLines = 1;
-    private List<CodeReviewComment> comments;
+    private List<CodeReviewComment> comments = new ArrayList<CodeReviewComment>();
 
     public CodeReview() {}
 
@@ -35,6 +37,12 @@ public class CodeReview extends Topic {
         return this;
     }
 
+    @Override
+    public CodeReview withBranch(String branchName) {
+        this.branch = new Branch(branchName);
+        return this;
+    }
+
     public CodeReview withNumberOfLines(int numberOfLines) {
         this.numberOfLines = numberOfLines;
         if (!this.content.equals("")) {
@@ -50,10 +58,6 @@ public class CodeReview extends Topic {
     public CodeReview withTitle(String title){
         super.withTitle(title);
         return this;
-    }
-
-    public CodeReview withBranch(String branchName) {
-        throw new UnsupportedOperationException("To be implemented");
     }
 
     public String getContent() {

@@ -15,11 +15,12 @@ import java.util.List;
 public class SectionPage {
 
     public static final String sectionListSel = "//a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
-
     public static final String breadCrumbsSectionLinkSel = "//ul[@class='breadcrumb']//a[contains(@href,'" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections/')]";
 
     @FindBy(xpath = sectionListSel)
     private List<WebElement> sectionList;
+    @FindBy(className = "branch-title")
+    private List<WebElement> branchList;
 
     @FindBy(xpath = breadCrumbsSectionLinkSel)
     private WebElement breadCrumbsSectionLink;
@@ -29,9 +30,22 @@ public class SectionPage {
         PageFactory.initElements(driver, this);
     }
 
+    public WebElement findBranch(String branchTitle) {
+        for (WebElement branch : getBranches()) {
+            if (branch.getText().equals(branchTitle)) {
+                return branch;
+            }
+        }
+        return null;
+    }
+
     //Getters
     public List<WebElement> getSectionList() {
         return sectionList;
+    }
+
+    public List<WebElement> getBranches() {
+        return branchList;
     }
 
     public WebElement getBreadCrumbsSectionLink() {

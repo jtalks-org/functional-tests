@@ -51,22 +51,22 @@ public class PagesW3CValidationTest {
     }
 
     @Test
-    public void topicPage_Test() throws Exception {
-        topicPage.goToTopicPage();
+    public void branchPage_Test() throws Exception {
+        Topics.goToBranchPage();
         String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void topicCreatePage_Test() throws Exception {
-        topicPage.goToTopicCreatePage();
+        Topics.goToTopicCreatePage();
         String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void codeReviewCreatePage_Test() throws Exception {
-        topicPage.goToReviewCreatePage();
+        Topics.goToReviewCreatePage();
         String pageSource = getPageSource();
         validatePage(pageSource);
     }
@@ -78,7 +78,7 @@ public class PagesW3CValidationTest {
         User user = Users.signUpAndSignIn();
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
-        Topics.postAnswer(topic, branchTitle);
+        Topics.postAnswer(topic);
         String pageSource = getPageSource();
         validatePage(pageSource);
     }

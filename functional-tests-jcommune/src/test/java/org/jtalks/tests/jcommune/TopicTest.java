@@ -156,7 +156,7 @@ public class TopicTest {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
         Topics.createTopic(topic);
-        Topics.postAnswer(topic, topic.getBranch().getTitle());
+        Topics.postAnswer(topic);
     }
 
     @Test(groups = "ui-tests", expectedExceptions = PermissionsDeniedException.class)

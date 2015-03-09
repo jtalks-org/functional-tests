@@ -39,6 +39,7 @@ public class PochtaMail {
     public static final int MAIL_POLL_INTERVAL = 500;
     private static final Logger LOGGER = LoggerFactory.getLogger(PochtaMail.class);
     private static final int MAILTRAP_TIMEOUT_SECS = 120;
+    private static final int MAILTRAP_NOTIFY_TIMEOUT_SECS = 20;
     private final PochtaStatistics statistics = PochtaStatistics.instance();
     private String activationLink;
 
@@ -107,5 +108,43 @@ public class PochtaMail {
             LOGGER.warn("Problem occurred while grabbing activation link from Pochta", e);
         }
         return link;
+    }
+
+    public boolean findNotificationMail(final String title, final String email) {
+        try {
+            await().dontCatchUncaughtExceptions().atMost(MAILTRAP_NOTIFY_TIMEOUT_SECS, TimeUnit.SECONDS)
+                    .pollInterval(MAIL_POLL_INTERVAL, TimeUnit.MILLISECONDS)
+                    .until(new Callable<Boolean>() {
+                        public Boolean call() throws Exception {
+                            return tryToGetMail(title, email);
+                        }
+                    });
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean findNotificationMailNoTimeout(final String stringToFindInBody, final String email) {
+        try {
+            return tryToGetMail(stringToFindInBody, email);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+    private boolean tryToGetMail(String stringToFindInBody, String email) {
+        Gson gson = new Gson();
+        Message[] messages;
+
+        messages = gson.fromJson(PochtaClient.getMessages(), Message[].class);
+
+        for (Message message : messages) {
+            if (email.equalsIgnoreCase(message.getRecipient()) && message.getSource().contains(stringToFindInBody)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

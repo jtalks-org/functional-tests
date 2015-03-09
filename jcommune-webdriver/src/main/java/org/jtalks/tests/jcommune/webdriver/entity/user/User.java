@@ -37,9 +37,9 @@ public class User {
     private String newPassword = "";
     private String confirmPassword = "";
     private String currentPassword = "";
-    private boolean autoSubscribe = false;
+    private boolean autoSubscribe = true;
     private boolean notifyIfSomeoneMentionsYou = false;
-    private boolean notifyIfPrivateMessageIsReceived = false;
+    private boolean notifyIfPrivateMessageIsReceived = true;
 
     public User() {
     }
