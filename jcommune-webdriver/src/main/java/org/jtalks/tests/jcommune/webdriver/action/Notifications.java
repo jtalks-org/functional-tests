@@ -6,15 +6,19 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 
 public class Notifications {
 
-    public static void assertTopicNotificationSent(Topic topic, User user) {
+    public static void assertNotificationsOnBranchNotSent(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 
-    public static void assertTopicNotificationNotSent(Topic topic, User user) {
+    public static void assertNotificationsOnTopicNotSent(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 
-    public static void assertBranchNotificationNotSentTo(Branch branch, User user) {
+    public static void assertNotificationOnTopicSentBranchNotSent(Topic topic, User user) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void assertNotificationOnTopicNotSentBranchSent(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 }

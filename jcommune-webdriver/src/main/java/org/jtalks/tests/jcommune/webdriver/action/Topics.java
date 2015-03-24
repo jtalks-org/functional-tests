@@ -244,11 +244,27 @@ public class Topics {
         return actualTitle.equals(expectedTitle);
     }
 
+    public static void editPost (Topic topic, Integer indexNumberOfPostInTopic) {
+        throw new UnsupportedOperationException();
+    }
+
     public static void deleteByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 
-    public static void subscribe(Topic topic, User user) {
+    public static void deleteTopic(Topic topic) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void moveTopic(Topic topic, String branchTitleWhereTopicMoves) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void subscribe(Topic topic) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static void unsubscribe(Topic topic) {
         throw new UnsupportedOperationException();
     }
 
@@ -257,12 +273,15 @@ public class Topics {
     }
 
     public static void deleteAnswer(Topic topic, Post selectedPost) {
+        throw new UnsupportedOperationException();
     }
 
     public static void assertHasNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+        throw new UnsupportedOperationException();
     }
 
     public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
+        throw new UnsupportedOperationException();
     }
 
     // Code review methods
@@ -295,4 +314,5 @@ public class Topics {
         topicPage.clickAddCommentToCodeReviewButton();
         assertCodeReviewFormValid();
     }
+
 }
