@@ -36,7 +36,15 @@ public class Branches {
         throw new UnsupportedOperationException("This is just stub method. Implementation will be created in the future");
     }
 
-    public static void subscribe(Branch branch, User user) {
+    public static void subscribe(Branch branch) {
+        throw new UnsupportedOperationException("To be implemented");
+    }
+
+    public static void unsubscribe(Branch branch) {
+        throw new UnsupportedOperationException("To be implemented");
+    }
+
+    public static void unsubscribeIgnoringFail(Branch branch){
         throw new UnsupportedOperationException("To be implemented");
     }
 
