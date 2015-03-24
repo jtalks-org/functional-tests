@@ -1,0 +1,3 @@
+admin	admin	admin
+registered	registered	registered
+moderator	moderator	moderator
