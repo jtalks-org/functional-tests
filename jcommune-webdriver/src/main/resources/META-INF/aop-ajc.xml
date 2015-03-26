@@ -1,0 +1,13 @@
+<!--AspectJ is used by Allure to find @Step method and wrap them with custom logic (creating steps in the report).-->
+<aspectj>
+  <aspects>
+    <aspect name="ru.yandex.qatools.allure.aspects.AllureAttachAspects"/>
+    <aspect name="ru.yandex.qatools.allure.aspects.AllureStepsAspects"/>
+  </aspects>
+  <weaver>
+    <!--..* means any package and their sub-packages. It must not point to all the packages in the classpath since
+    some of the classes (like w3c validator) cannot get loaded by AspectJ some why.-->
+    <include within="org.jtalks.tests..*"/>
+  </weaver>
+</aspectj>
+
