@@ -252,6 +252,10 @@ public class Topics {
         throw new UnsupportedOperationException();
     }
 
+    public static void moveByTopicMover(User user, Topic topic, String branch) {
+        throw new UnsupportedOperationException();
+    }
+
     public static void moveByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }

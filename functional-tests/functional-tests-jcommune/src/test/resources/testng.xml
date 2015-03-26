@@ -1,7 +1,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="JCommune">
   <parameter name="appUrl" value="http://autotests.jtalks.org/jcommune/"/>
-  <parameter name="webDriverUrl" value="http://selenium.jtalks.org/wd/hub"/>
+  <parameter name="webDriverUrl" value="http://localhost:4444/wd/hub"/>
   <listeners>
     <!--Creates a selenium session for tests to use-->
     <listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener"/>
