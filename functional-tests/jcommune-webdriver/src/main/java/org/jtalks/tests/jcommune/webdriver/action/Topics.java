@@ -18,10 +18,7 @@ package org.jtalks.tests.jcommune.webdriver.action;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.*;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
@@ -252,10 +249,6 @@ public class Topics {
         throw new UnsupportedOperationException();
     }
 
-    public static void moveByTopicMover(User user, Topic topic, String branch) {
-        throw new UnsupportedOperationException();
-    }
-
     public static void moveByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
@@ -268,6 +261,7 @@ public class Topics {
 
     public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
     }
+
 
     // Code review methods
 
@@ -299,4 +293,14 @@ public class Topics {
         topicPage.clickAddCommentToCodeReviewButton();
         assertCodeReviewFormValid();
     }
+
+    public static void createQA(QA qa, User user) {
+        throw new UnsupportedOperationException();
+    }
+
+    public static boolean hasTheSameURL(Topic topic) {
+        throw new UnsupportedOperationException();
+    }
+
+
 }
