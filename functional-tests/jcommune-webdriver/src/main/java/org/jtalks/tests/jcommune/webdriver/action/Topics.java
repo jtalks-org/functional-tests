@@ -252,6 +252,9 @@ public class Topics {
     public static void moveByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
+    public static void moveTopic(Topic topic, String branchTitleWhereTopicMoves) {
+        throw new UnsupportedOperationException();
+    }
 
     public static void deleteAnswer(Topic topic, Post selectedPost) {
     }
@@ -298,9 +301,6 @@ public class Topics {
         throw new UnsupportedOperationException();
     }
 
-    public static boolean hasTheSameURL(Topic topic) {
-        throw new UnsupportedOperationException();
-    }
 
 
 }
