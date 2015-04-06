@@ -36,9 +36,9 @@ public class MoveTopicsPermissionTest {
     }
 
     @Test
-    public void MoveTopicToOtherBranch_ShouldPass() throws Exception {
+    public void moveTopicToOtherBranch_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
+        Topic topic = Topics.createTopic(new Topic().withTopicStarter(user)).withBranch("Micro level");
         Users.logout();
 
         User userTopicMover = new User();
@@ -50,7 +50,7 @@ public class MoveTopicsPermissionTest {
 
     @Test // ( expectedExceptions = PermissionsDeniedException.class,
             //expectedExceptionsMessageRegExp = Page.ERROR)
-    public void UserWithoutMoveTopicsPermissionAndWithVewTopic_MoveTopic_ShouldFail() throws Exception {
+    public void userWithoutMoveTopicsPermissionAndWithVewTopic_MoveTopic_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
 
@@ -62,7 +62,7 @@ public class MoveTopicsPermissionTest {
 
     @Test //( expectedExceptions = PermissionsDeniedException.class,
           //  expectedExceptionsMessageRegExp = Page.ERROR)
-    public void UserWithMoveTopicsAndWithoutViewTopic_MoveTopic_ShouldFail() throws Exception {
+    public void userWithMoveTopicsAndWithoutViewTopic_MoveTopic_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
 
@@ -73,7 +73,7 @@ public class MoveTopicsPermissionTest {
 
     @Test //( expectedExceptions = PermissionsDeniedException.class,
     //  expectedExceptionsMessageRegExp = Page.ERROR)
-    public void UserWithoutMoveTopicsAndWithoutViewTopic_MoveTopic_ShouldFail() throws Exception {
+    public void userWithoutMoveTopicsAndWithoutViewTopic_MoveTopic_ShouldFail() throws Exception {
 
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
@@ -85,7 +85,7 @@ public class MoveTopicsPermissionTest {
 
     @Test //( expectedExceptions = PermissionsDeniedException.class,
     //  expectedExceptionsMessageRegExp = Page.ERROR)
-    public void AnonymousUser_MoveTopic_ShouldFail() throws Exception {
+    public void anonymousUser_MoveTopic_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
         Users.logout();
@@ -94,7 +94,7 @@ public class MoveTopicsPermissionTest {
     }
 
     @Test
-    public void User_MoveCodeReviewTopic_ShouldPass() throws Exception {
+    public void user_MoveCodeReviewTopic_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         CodeReview codeReview = new CodeReview();
         Topics.createCodeReview(codeReview);
@@ -104,7 +104,7 @@ public class MoveTopicsPermissionTest {
     }
 
     @Test
-    public void User_MoveQATopic_ShouldPass() throws Exception {
+    public void user_MoveQATopic_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         QA qa = new QA();
         Topics.createQA(qa,user);
@@ -115,7 +115,7 @@ public class MoveTopicsPermissionTest {
     }
 
     @Test
-    public void TopicsURLIsNotChangedAfterMove_ShouldPass() throws Exception {
+    public void topicsURLIsNotChangedAfterMove_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic());
         String s = JCommuneSeleniumConfig.driver.getCurrentUrl();
