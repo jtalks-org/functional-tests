@@ -48,8 +48,7 @@ public class MoveTopicsPermissionTest {
         Assert.assertEquals("Classical Mechanics", topic.getBranch().getTitle());
     }
 
-    @Test // ( expectedExceptions = PermissionsDeniedException.class,
-            //expectedExceptionsMessageRegExp = Page.ERROR)
+    @Test
     public void userWithoutMoveTopicsPermissionAndWithVewTopic_MoveTopic_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
@@ -60,8 +59,7 @@ public class MoveTopicsPermissionTest {
 
 
 
-    @Test //( expectedExceptions = PermissionsDeniedException.class,
-          //  expectedExceptionsMessageRegExp = Page.ERROR)
+    @Test
     public void userWithMoveTopicsAndWithoutViewTopic_MoveTopic_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
@@ -71,8 +69,7 @@ public class MoveTopicsPermissionTest {
     }
 
 
-    @Test //( expectedExceptions = PermissionsDeniedException.class,
-    //  expectedExceptionsMessageRegExp = Page.ERROR)
+    @Test
     public void userWithoutMoveTopicsAndWithoutViewTopic_MoveTopic_ShouldFail() throws Exception {
 
         User user = Users.signUpAndSignIn();
@@ -83,8 +80,7 @@ public class MoveTopicsPermissionTest {
     }
 
 
-    @Test //( expectedExceptions = PermissionsDeniedException.class,
-    //  expectedExceptionsMessageRegExp = Page.ERROR)
+    @Test
     public void anonymousUser_MoveTopic_ShouldFail() throws Exception {
         User user = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withTopicStarter(user));
@@ -107,22 +103,11 @@ public class MoveTopicsPermissionTest {
     public void user_MoveQATopic_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
         QA qa = new QA();
-        Topics.createQA(qa,user);
+        Topics.createQA(qa, user);
         Users.logout();
 
         User mover = Users.signUpAndSignIn();
         Topics.moveByUser(qa, mover);
     }
-
-    @Test
-    public void topicsURLIsNotChangedAfterMove_ShouldPass() throws Exception {
-        User user = Users.signUpAndSignIn();
-        Topic topic = Topics.createTopic(new Topic());
-        String s = JCommuneSeleniumConfig.driver.getCurrentUrl();
-        Topics.moveByUser(topic, user);
-
-        Assert.assertEquals(JCommuneSeleniumConfig.driver.getCurrentUrl(), s);
-    }
-
 
 }
