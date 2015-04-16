@@ -52,6 +52,10 @@ public class CodeReview extends Topic {
         return this;
     }
 
+    public CodeReview withBranch(String branchName) {
+        throw new UnsupportedOperationException("To be implemented");
+    }
+
     public String getContent() {
         return content;
     }

@@ -307,7 +307,7 @@ public class Topics {
         return codeReview;
     }
 
-    public static void leaveCodeReviewComment(CodeReviewComment codeReviewComment)
+    public static void leaveCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment)
             throws PermissionsDeniedException, ValidationException {
         topicPage.clickLineInCodeReviewForComment(codeReviewComment.getCommentedLineNumber());
         topicPage.fillCodeReviewCommentBody(codeReviewComment);
@@ -315,4 +315,24 @@ public class Topics {
         assertCodeReviewFormValid();
     }
 
+    public static void assertIsSubscribed(Topic topic){
+        throw new UnsupportedOperationException("To be implemented");
+    }
+
+    public static void editCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
+        throw new UnsupportedOperationException("To be implemented");
+    }
+
+    public static void leaveCodeReviewComment(CodeReview codeReview){
+        throw new UnsupportedOperationException("To be implemented");
+    }
+
+    //overloaded method below was added to avoid compilation errors
+    public static void leaveCodeReviewComment(CodeReviewComment codeReviewComment){
+        throw new UnsupportedOperationException("To be implemented");
+    }
+
+    public static void deleteCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
+        throw new UnsupportedOperationException("To be implemented");
+    }
 }

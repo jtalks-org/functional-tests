@@ -66,7 +66,7 @@ public class TopicNotificationTest {
         Users.signIn(subscribedUser);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
         Notifications.assertNotificationsOnTopicNotSent(topic, subscribedUser);//need to be implemented
-        Notifications.assertNotificationsOnBranchNotSent(topic, subscribedUser);//need to be implemented
+        Notifications.assertNotificationsOnBranchNotSent(topic.getBranch(), subscribedUser);//need to be implemented
     }
 
     @Test
@@ -85,7 +85,7 @@ public class TopicNotificationTest {
         Users.signIn(subscribedUser);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
         Notifications.assertNotificationsOnTopicNotSent(topic, subscribedUser);//need to be implemented
-        Notifications.assertNotificationsOnBranchNotSent(topic, subscribedUser);//need to be implemented
+        Notifications.assertNotificationsOnBranchNotSent(topic.getBranch(), subscribedUser);//need to be implemented
     }
 
     @Test
@@ -103,7 +103,7 @@ public class TopicNotificationTest {
 
         Users.signIn(subscribedUser);
         Notifications.assertNotificationsOnTopicNotSent(topic, subscribedUser);//need to be implemented
-        Notifications.assertNotificationsOnBranchNotSent(topic, subscribedUser);//need to be implemented
+        Notifications.assertNotificationsOnBranchNotSent(topic.getBranch(), subscribedUser);//need to be implemented
     }
 
 
@@ -169,7 +169,7 @@ public class TopicNotificationTest {
         Branches.subscribe(topic.getBranch());
         Topics.postAnswer(topic, topic.getBranch().getTitle());
         Branches.unsubscribeIgnoringFail(topic.getBranch());
-        Notifications.assertNotificationsOnBranchNotSent(topic, user);//need to be implemented
+        Notifications.assertNotificationsOnBranchNotSent(topic.getBranch(), user);//need to be implemented
     }
 
 
