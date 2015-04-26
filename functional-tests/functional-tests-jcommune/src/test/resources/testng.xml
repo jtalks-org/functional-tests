@@ -1,0 +1,60 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="JCommune">
+  <parameter name="appUrl" value="http://autotests.jtalks.org/jcommune/"/>
+  <parameter name="webDriverUrl" value="http://localhost:4444/wd/hub"/>
+  <listeners>
+    <!--Creates a selenium session for tests to use-->
+    <listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener"/>
+    <!--Creates HTML Reports with test steps that each test passes!-->
+    <listener class-name="org.uncommons.reportng.HTMLReporter"/>
+    <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
+  </listeners>
+  <test name="UiTests">
+    <groups>
+      <define name="manual"/>
+      <!--Since HtmlUnit is a pretty buggy thing, it may not work for some functionality. Such tests will be marked
+      as incompatible with HtmlUnit and will be run only in browsers.-->
+      <define name="htmlunit-incompatible"/>
+      <define name="ui-tests"/>
+      <run>
+       <include name="ui-tests"/>
+       <include name="htmlunit-incompatible"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="org.jtalks.tests.jcommune.SignUpTest"/>
+      <class name="org.jtalks.tests.jcommune.SignInTest"/>
+      <class name="org.jtalks.tests.jcommune.ProfileTest"/>
+      <class name="org.jtalks.tests.jcommune.TopicTest"/>
+      <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
+      <class name="org.jtalks.tests.jcommune.CheckMailCounterTest"/>
+      <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
+      <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
+      <class name="org.jtalks.tests.jcommune.PrivateMessagesTest"/>
+    </classes>
+  </test>
+  <!--
+  This takes long time to run, usually will be run only headless (without browser) to speed up. It won't be run by
+  default, only Smokes are run. To run these tests pass to maven: -Dtestnames=FullRegression. See pom.xml for more
+  information.-->
+
+  <test name="FullRegression">
+    <groups>
+      <run>
+        <exclude name="ui-tests"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="org.jtalks.tests.jcommune.BbCodeTest"/>
+      <class name="org.jtalks.tests.jcommune.SignUpTest"/>
+      <class name="org.jtalks.tests.jcommune.SignInTest"/>
+      <class name="org.jtalks.tests.jcommune.ProfileTest"/>
+      <class name="org.jtalks.tests.jcommune.TopicTest"/>
+      <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
+      <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
+      <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
+      <class name="org.jtalks.tests.jcommune.PrivateMessagesTest"/>
+    </classes>
+  </test>
+</suite>
+
