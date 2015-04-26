@@ -106,7 +106,7 @@ public class CodeReviewTest {
         CodeReview codeReview = new CodeReview();
         CodeReviewComment codeReviewComment = new CodeReviewComment();
         Topics.createCodeReview(codeReview);
-        Topics.leaveCodeReviewComment(codeReviewComment);
+        Topics.leaveCodeReviewComment(codeReview, codeReviewComment);
     }
 
     @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
@@ -116,7 +116,7 @@ public class CodeReviewTest {
         CodeReview codeReview = new CodeReview();
         CodeReviewComment codeReviewComment = new CodeReviewComment().withContent("");
         Topics.createCodeReview(codeReview);
-        Topics.leaveCodeReviewComment(codeReviewComment);
+        Topics.leaveCodeReviewComment(codeReview, codeReviewComment);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class CodeReviewTest {
         CodeReview codeReview = new CodeReview();
         CodeReviewComment codeReviewComment = new CodeReviewComment().withContent(randomAlphanumeric(1));
         Topics.createCodeReview(codeReview);
-        Topics.leaveCodeReviewComment(codeReviewComment);
+        Topics.leaveCodeReviewComment(codeReview, codeReviewComment);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class CodeReviewTest {
         CodeReview codeReview = new CodeReview();
         CodeReviewComment codeReviewComment = new CodeReviewComment().withContent(randomAlphanumeric(5000));
         Topics.createCodeReview(codeReview);
-        Topics.leaveCodeReviewComment(codeReviewComment);
+        Topics.leaveCodeReviewComment(codeReview, codeReviewComment);
     }
 
     @Test(expectedExceptions = ValidationException.class,
@@ -144,7 +144,7 @@ public class CodeReviewTest {
         CodeReview codeReview = new CodeReview();
         CodeReviewComment codeReviewComment = new CodeReviewComment().withContent(randomAlphanumeric(5001));
         Topics.createCodeReview(codeReview);
-        Topics.leaveCodeReviewComment(codeReviewComment);
+        Topics.leaveCodeReviewComment(codeReview, codeReviewComment);
     }
 
     @Test
@@ -153,6 +153,6 @@ public class CodeReviewTest {
         CodeReview codeReview = new CodeReview().withNumberOfLines(5);
         CodeReviewComment codeReviewComment = new CodeReviewComment().onLineNumber(4);
         Topics.createCodeReview(codeReview);
-        Topics.leaveCodeReviewComment(codeReviewComment);
+        Topics.leaveCodeReviewComment(codeReview, codeReviewComment);
     }
 }
