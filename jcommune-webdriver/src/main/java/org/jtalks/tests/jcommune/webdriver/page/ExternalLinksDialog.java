@@ -14,6 +14,7 @@ import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 public class ExternalLinksDialog {
     public static final String externalLinksFromDialogSel = "//div[@class='modal-body']/table/tbody/tr";
     public static final String externalLinksHrefFromDialogSel = "td[@class='link-url']";
+    public static final String firstTrachIconSel = "/html/body/form/div[2]/table/tbody/tr[1]/td[5]/a";
     //class name
     public static final String externalLinksRemoveIconFromDialogSel = "icon-trash";
     public static final String externalLinksEditIconFromDialogSel = "icon-pencil";
@@ -40,6 +41,8 @@ public class ExternalLinksDialog {
     private WebElement closeDialogButton;
     @FindBy(xpath = externalLinksFromDialogSel)
     private List<WebElement> externalLinksFromDialog;
+    @FindBy(xpath = firstTrachIconSel)
+    private WebElement firstTrachIconButton;
 
     public ExternalLinksDialog(WebDriver driver) {
         PageFactory.initElements(driver, this);
@@ -90,11 +93,21 @@ public class ExternalLinksDialog {
         removeLinkBut.click();
     }
 
+    @Step
+    public void clickFistTrashIconButton() {
+        info("Clicking First Trash icon button");
+        firstTrachIconButton.click();
+    }
+
     public List<WebElement> getExternalLinks() {
         return externalLinks;
     }
 
     public List<WebElement> getExternalLinksFromDialog() {
         return externalLinksFromDialog;
+    }
+
+    public WebElement getFirstTrachIconButton() {
+        return firstTrachIconButton;
     }
 }

@@ -1,7 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import junit.framework.AssertionFailedError;
-import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.externallink.ExternalLink;
@@ -13,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.annotations.Step;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
@@ -157,5 +157,25 @@ public class ExternalLinks {
             }
         }
         return null;
+    }
+
+    public static void removeExistedExternalLinks() {
+        info("Remove existed External links");
+        openExternalLinksDialog();
+        List<WebElement> links = externalLinksDialog.getExternalLinksFromDialog();
+        Iterator <WebElement> iterator = links.iterator();
+        if (links.size() != 0) {
+            LOGGER.info("Going to remove {} links", links.size());
+            while (iterator.hasNext()) {
+                WebElement link = iterator.next();
+                externalLinksDialog.clickFistTrashIconButton();
+                externalLinksDialog.clickRemoveLinkButton();
+                sleep(500);
+                iterator.remove();
+            }
+        }else {
+            LOGGER.info("There are no External links. There is nothing to remove");
+            externalLinksDialog.closeDialog();
+        }
     }
 }
