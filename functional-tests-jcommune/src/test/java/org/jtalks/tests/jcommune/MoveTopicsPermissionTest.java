@@ -8,7 +8,7 @@ import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.QA;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Question;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
@@ -102,12 +102,12 @@ public class MoveTopicsPermissionTest {
     @Test
     public void user_MoveQATopic_ShouldPass() throws Exception {
         User user = Users.signUpAndSignIn();
-        QA qa = new QA();
-        Topics.createQA(qa, user);
+        Question question = new Question();
+        Topics.createQuestion(question, user);
         Users.logout();
 
         User mover = Users.signUpAndSignIn();
-        Topics.moveByUser(qa, mover);
+        Topics.moveByUser(question, mover);
     }
 
 }

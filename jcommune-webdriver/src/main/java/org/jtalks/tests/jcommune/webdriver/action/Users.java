@@ -47,7 +47,6 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
  */
 public class Users {
     private static final Logger LOGGER = LoggerFactory.getLogger(Users.class);
-    private static User user;
 
     /**
      * Sign in user by dialog. Action can by started from any page of JCommune.
@@ -57,7 +56,6 @@ public class Users {
      */
     @Step
     public static void signIn(User user) throws ValidationException {
-        Users.user = user;
         info("Sign in a User: " + user);
         openAndFillSignInDialog(user);
         checkFormValidation(signInPage.getErrorFormElements());

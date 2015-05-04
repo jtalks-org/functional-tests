@@ -296,7 +296,7 @@ public class Topics {
         topicPage.clickAddCommentToCodeReviewButton();
         assertCodeReviewFormValid();
     }
-    public static void createQA(QA qa, User user) {
+    public static void createQuestion(Question question, User user) {
         throw new UnsupportedOperationException();
     }
 }
