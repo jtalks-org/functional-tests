@@ -18,10 +18,7 @@ package org.jtalks.tests.jcommune.webdriver.action;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.*;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
@@ -244,44 +241,28 @@ public class Topics {
         return actualTitle.equals(expectedTitle);
     }
 
-    public static void editPost (Topic topic, Integer indexNumberOfPostInTopic) {
-        throw new UnsupportedOperationException();
-    }
-
     public static void deleteByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 
-    public static void deleteTopic(Topic topic) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void moveTopic(Topic topic, String branchTitleWhereTopicMoves) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void subscribe(Topic topic) {
-        throw new UnsupportedOperationException();
-    }
-
-    public static void unsubscribe(Topic topic) {
+    public static void subscribe(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
 
     public static void moveByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
+    public static void moveTopic(Topic topic, String branchTitleWhereTopicMoves) {
+        throw new UnsupportedOperationException();
+    }
 
     public static void deleteAnswer(Topic topic, Post selectedPost) {
-        throw new UnsupportedOperationException();
     }
 
     public static void assertHasNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
-        throw new UnsupportedOperationException();
     }
 
     public static void assertHasNoNewMessages(Topic newTopic, User userThatWantsToSeeNewMessages) {
-        throw new UnsupportedOperationException();
     }
 
     // Code review methods
@@ -307,7 +288,7 @@ public class Topics {
         return codeReview;
     }
 
-    public static void leaveCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment)
+    public static void leaveCodeReviewComment(CodeReviewComment codeReviewComment)
             throws PermissionsDeniedException, ValidationException {
         topicPage.clickLineInCodeReviewForComment(codeReviewComment.getCommentedLineNumber());
         topicPage.fillCodeReviewCommentBody(codeReviewComment);
@@ -315,24 +296,4 @@ public class Topics {
         assertCodeReviewFormValid();
     }
 
-    public static void assertIsSubscribed(Topic topic){
-        throw new UnsupportedOperationException("To be implemented");
-    }
-
-    public static void editCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
-        throw new UnsupportedOperationException("To be implemented");
-    }
-
-    public static void leaveCodeReviewComment(CodeReview codeReview){
-        throw new UnsupportedOperationException("To be implemented");
-    }
-
-    //overloaded method below was added to avoid compilation errors
-    public static void leaveCodeReviewComment(CodeReviewComment codeReviewComment){
-        throw new UnsupportedOperationException("To be implemented");
-    }
-
-    public static void deleteCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
-        throw new UnsupportedOperationException("To be implemented");
-    }
 }
