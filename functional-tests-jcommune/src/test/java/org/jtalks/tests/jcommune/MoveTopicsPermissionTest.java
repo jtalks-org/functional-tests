@@ -99,17 +99,6 @@ public class MoveTopicsPermissionTest {
         Topics.moveByUser(codeReview, user);
     }
 
-    @Test
-    public void user_MoveQATopic_ShouldPass() throws Exception {
-        User user = Users.signUpAndSignIn();
-        Question question = new Question();
-        Topics.createQuestion(question, user);
-        Users.logout();
-
-        User mover = Users.signUpAndSignIn();
-        Topics.moveByUser(question, mover);
-    }
-
 }
 
 

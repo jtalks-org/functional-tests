@@ -249,7 +249,6 @@ public class Topics {
         throw new UnsupportedOperationException();
     }
 
-
     public static void moveByUser(Topic topic, User user) {
         throw new UnsupportedOperationException();
     }
@@ -296,7 +295,5 @@ public class Topics {
         topicPage.clickAddCommentToCodeReviewButton();
         assertCodeReviewFormValid();
     }
-    public static void createQuestion(Question question, User user) {
-        throw new UnsupportedOperationException();
-    }
+
 }
