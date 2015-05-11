@@ -52,31 +52,29 @@ public class PagesW3CValidationTest {
 
     @Test
     public void branchPage_Test() throws Exception {
-        Topics.goToBranchPage();
+        Topics.w3cGoToBranchPage();
         String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void topicCreatePage_Test() throws Exception {
-        Topics.goToTopicCreatePage();
+        Topics.w3cGoToTopicCreatePage();
         String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void codeReviewCreatePage_Test() throws Exception {
-        Topics.goToReviewCreatePage();
+        Topics.w3cGoToReviewCreatePage();
         String pageSource = getPageSource();
         validatePage(pageSource);
     }
 
     @Test
     public void postPage_Test() throws Exception {
-        Topic topic = new Topic(randomAlphanumeric(40), randomAlphanumeric(100));
-        String branchTitle = "TestBranch";
-        User user = Users.signUpAndSignIn();
-        topic.withTopicStarter(user);
+        Users.signUpAndSignIn();
+        Topic topic = new Topic();
         Topics.createTopic(topic);
         Topics.postAnswer(topic);
         String pageSource = getPageSource();

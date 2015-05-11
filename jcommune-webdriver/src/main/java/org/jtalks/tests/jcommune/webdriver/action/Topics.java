@@ -64,7 +64,7 @@ public class Topics {
     @Step
     public static Topic createTopic(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
         if (!JCommuneSeleniumConfig.driver.getCurrentUrl().equals(JCommuneSeleniumConfig.getAppUrl())) {
-            gotoMainPage();
+            mainPage.clickForumsTitle();
         }
         if (topic.getBranch() == null) {
             List<WebElement> branches = sectionPage.getBranches();
@@ -242,29 +242,20 @@ public class Topics {
         return found;
     }
 
-    private static void gotoMainPage() {
-        mainPage.clickForumsTitle();
-    }
-
-    public static void goToBranchPage() throws ValidationException {
+    public static void w3cGoToBranchPage() throws ValidationException {
         Users.signUpAndSignIn();
-        Topic topic = new Topic("subject123", "New final test answer");
-        if (topic.getBranch() == null) {
-            Branch branch = new Branch(sectionPage.getBranches().get(0).getText());
-            topic.withBranch(branch);
-        }
-        Branches.openBranch(topic.getBranch());
+        Branch branch = new Branch(sectionPage.getBranches().get(0).getText());
+        Branches.openBranch(branch);
     }
 
-    public static void goToTopicCreatePage() throws ValidationException {
-        goToBranchPage();
-        branchPage.getNewOrdinaryTopicButton().click();
+    public static void w3cGoToTopicCreatePage() throws ValidationException {
+        w3cGoToBranchPage();
+        branchPage.clickCreateTopic();
     }
 
-    public static void goToReviewCreatePage() throws ValidationException {
-        goToBranchPage();
-        branchPage.getNewTopicToggle().click();
-        branchPage.getNewCodeReviewButton().click();
+    public static void w3cGoToReviewCreatePage() throws ValidationException {
+        w3cGoToBranchPage();
+        branchPage.clickCreateCodeReview();
     }
 
     public static boolean isCreated(Topic topic) {

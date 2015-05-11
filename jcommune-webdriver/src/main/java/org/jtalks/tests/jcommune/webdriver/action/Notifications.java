@@ -11,56 +11,24 @@ import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
  */
 public class Notifications {
 
-    private static boolean topicResult;
-    private static boolean branchResult;
-
-    public static void assertNotificationOnTopicSentBranchNotSent(Topic topic, User user) {
-        if (!checkCurrentNotificationsShortCycle(user)) {
-            checkCurrentNotifications(user);
-        }
-        if (!topicResult || branchResult) {
-            throw new AssertionError("Assertion failed"); // todo info what actually failed
-        }
+    public static void assertTopicNotificationSent(User user) {
+        if (!isNotificationReceived("/posts", user.getEmail()))
+            throw new AssertionError("Topic notification was not received. Assertion failed");
     }
 
-    public static void assertNotificationOnTopicNotSentBranchSent(Topic topic, User user) {
-        if (!checkCurrentNotificationsShortCycle(user)) {
-            checkCurrentNotifications(user);
-        }
-        if (topicResult || !branchResult) {
-            throw new AssertionError("Assertion failed");
-        }
+    public static void assertTopicNotificationNotSent(User user) {
+        if (isNotificationReceived("/posts", user.getEmail()))
+            throw new AssertionError("Topic notification received. Assertion failed");
     }
 
-    public static void assertNotificationsNotSent(Topic topic, User user) {
-        if (!checkCurrentNotificationsShortCycle(user)) {
-            checkCurrentNotifications(user);
-        }
-        if (topicResult || branchResult) {
-            throw new AssertionError("Assertion failed");
-        }
+    public static void assertBranchNotificationSent(User user) {
+        if (!isNotificationReceived("/branches", user.getEmail()))
+            throw new AssertionError("Branch notification was not received. Assertion failed");
     }
 
-    private static boolean checkCurrentNotificationsShortCycle(User user) {
-        info("Short cycle notifications check start.");
-        info("Asserting whether topic notification was received.");
-        topicResult = isNotificationReceivedNoTimeout("/posts", user.getEmail());
-        info("Topic notification mail was " + (topicResult ? "received" : "not sent"));
-
-        info("Asserting whether branch notification was received...");
-        branchResult = isNotificationReceivedNoTimeout("/branches", user.getEmail());
-        info("Branch notification mail was " + (branchResult ? "received" : "not sent"));
-        return (topicResult || branchResult);
-    }
-
-    private static void checkCurrentNotifications(User user) {
-        info("Asserting whether topic notification was received...");
-        topicResult = isNotificationReceived("/posts", user.getEmail());
-        info("Topic notification mail was " + (topicResult ? "received" : "not sent"));
-
-        info("Asserting whether branch notification was received...");
-        branchResult = isNotificationReceivedNoTimeout("/branches", user.getEmail());
-        info("Branch notification mail was " + (branchResult ? "received" : "not sent"));
+    public static void assertBranchNotificationNotSent(User user) {
+        if (isNotificationReceived("/branches", user.getEmail()))
+            throw new AssertionError("Branch notification received. Assertion failed");
     }
 
     /**

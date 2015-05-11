@@ -22,6 +22,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
  * @author Pancheshenko Andrey
  */
 public class TopicNotificationTest {
+
     private final String NOTIFICATION_BRANCH = "Notification tests";
     private final String BRANCH_NAME_TO_MOVE_TOPIC_IN = "Classical Mechanics";
 
@@ -35,7 +36,7 @@ public class TopicNotificationTest {
     // create topic
 
     @Test
-    public void topicCreatedByOther_ifSubscribedToBranch_shouldReceiveBranchNotificationNotTopic() throws Exception {
+    public void topicCreatedByOther_ifSubscribedToBranch_shouldReceiveBranchNotificationOnly() throws Exception {
         Topic topic = new Topic().withBranch(NOTIFICATION_BRANCH);
 
         User subscriber = Users.signUpAndSignIn();
@@ -46,7 +47,9 @@ public class TopicNotificationTest {
 
         Users.logOutAndSignIn(subscriber);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
-        Notifications.assertNotificationOnTopicNotSentBranchSent(topic, subscriber);
+
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationSent(subscriber);
     }
 
     @Test
@@ -59,7 +62,8 @@ public class TopicNotificationTest {
         Users.signUpAndSignIn();
         Topics.createTopic(topic);
 
-        Notifications.assertNotificationsNotSent(topic, subscriber);
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationNotSent(subscriber);
     }
 
     @Test
@@ -71,7 +75,9 @@ public class TopicNotificationTest {
         Topics.createTopic(topic);
 
         Branches.unsubscribeIgnoringFail(topic.getBranch());
-        Notifications.assertNotificationsNotSent(topic, creator);
+
+        Notifications.assertTopicNotificationNotSent(creator);
+        Notifications.assertBranchNotificationNotSent(creator);
     }
 
     // edit topic
@@ -91,7 +97,8 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(subscriber);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, subscriber);
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationNotSent(subscriber);
     }
 
     @Test
@@ -109,7 +116,8 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(subscriber);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, subscriber);
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationNotSent(subscriber);
     }
 
     @Test
@@ -124,7 +132,8 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Topics.editPost(topic, topic.getFirstPost());
 
-        Notifications.assertNotificationsNotSent(topic, subscriber);
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationNotSent(subscriber);
     }
 
     @Test
@@ -138,13 +147,14 @@ public class TopicNotificationTest {
 
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     // add post
 
     @Test
-    public void otherUserPostsInTopic_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotificationNotBranch() throws Exception {
+    public void otherUserPostsInTopic_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotificationOnly() throws Exception {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
         Topics.subscribe(topic);
@@ -156,7 +166,8 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationOnTopicSentBranchNotSent(topic, topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
+        Notifications.assertTopicNotificationSent(topicCreator);
     }
 
     @Test
@@ -172,11 +183,12 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     @Test
-    public void otherUserPostsInTopic_ifSubscribedToTopicOnly_shouldReceiveTopicNotificationNotBranch() throws Exception {
+    public void otherUserPostsInTopic_ifSubscribedToTopicOnly_shouldReceiveTopicNotificationOnly() throws Exception {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
         Topics.subscribe(topic);
@@ -185,7 +197,8 @@ public class TopicNotificationTest {
         Users.signUpAndSignIn();
         Topics.postAnswer(topic);
 
-        Notifications.assertNotificationOnTopicSentBranchNotSent(topic, topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
+        Notifications.assertTopicNotificationSent(topicCreator);
     }
 
     @Test
@@ -197,7 +210,8 @@ public class TopicNotificationTest {
         Topics.postAnswer(topic);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     @Test
@@ -208,7 +222,8 @@ public class TopicNotificationTest {
         Branches.unsubscribe(topic.getBranch());
         Topics.postAnswer(topic);
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     @Test
@@ -220,7 +235,8 @@ public class TopicNotificationTest {
         Topics.postAnswer(topic);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     // edit subscriber's post
@@ -230,7 +246,7 @@ public class TopicNotificationTest {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
-        User subscribedUser = Users.signUpAndSignIn();
+        User subscriber = Users.signUpAndSignIn();
         Post postToEdit = Topics.postAnswer(topic);
         Topics.subscribe(topic);
         Branches.subscribe(topic.getBranch());
@@ -238,10 +254,11 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Topics.editPost(topic, postToEdit);
 
-        Users.logOutAndSignIn(subscribedUser);
+        Users.logOutAndSignIn(subscriber);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, subscribedUser);
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationNotSent(subscriber);
     }
 
     @Test
@@ -249,7 +266,7 @@ public class TopicNotificationTest {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
-        User subscribedUser = Users.signUpAndSignIn();
+        User subscriber = Users.signUpAndSignIn();
         Post postToEdit = Topics.postAnswer(topic);
         Topics.unsubscribe(topic);
         Branches.subscribe(topic.getBranch());
@@ -257,10 +274,11 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Topics.editPost(topic, postToEdit);
 
-        Users.logOutAndSignIn(subscribedUser);
+        Users.logOutAndSignIn(subscriber);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, subscribedUser);
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationNotSent(subscriber);
     }
 
     @Test
@@ -268,7 +286,7 @@ public class TopicNotificationTest {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
-        User subscribedUser = Users.signUpAndSignIn();
+        User subscriber = Users.signUpAndSignIn();
         Post postToEdit = Topics.postAnswer(topic);
         Topics.subscribe(topic);
         Branches.unsubscribe(topic.getBranch());
@@ -276,7 +294,8 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Topics.editPost(topic, postToEdit);
 
-        Notifications.assertNotificationsNotSent(topic, subscribedUser);
+        Notifications.assertTopicNotificationNotSent(subscriber);
+        Notifications.assertBranchNotificationNotSent(subscriber);
     }
 
     @Test
@@ -293,7 +312,8 @@ public class TopicNotificationTest {
         Topics.editPost(topic, postToEdit);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     // delete post
@@ -302,7 +322,7 @@ public class TopicNotificationTest {
     // delete topic
 
     @Test (enabled = false) // bug: receives branch notification
-    public void topicDeletedByOther_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotificationNotBranch() throws Exception {
+    public void topicDeletedByOther_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotificationOnly() throws Exception {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
@@ -315,11 +335,12 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationOnTopicSentBranchNotSent(topic, topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
+        Notifications.assertTopicNotificationSent(topicCreator);
     }
 
     @Test
-    public void topicDeletedByOther_ifSubscribedToBranchOnly_shouldReceiveBranchNotificationNotTopic() throws Exception {
+    public void topicDeletedByOther_ifSubscribedToBranchOnly_shouldReceiveBranchNotificationOnly() throws Exception {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
@@ -332,11 +353,12 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationOnTopicNotSentBranchSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationSent(topicCreator);
     }
 
     @Test (enabled = false) // bug: receives branch notification
-    public void topicDeletedByOther_ifSubscribedToTopicOnly_shouldReceiveTopicNotificationNotBranch() throws Exception {
+    public void topicDeletedByOther_ifSubscribedToTopicOnly_shouldReceiveTopicNotificationOnly() throws Exception {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
@@ -346,7 +368,8 @@ public class TopicNotificationTest {
         Users.signUpAndSignIn();
         Topics.deleteTopic(topic);
 
-        Notifications.assertNotificationOnTopicSentBranchNotSent(topic, topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
+        Notifications.assertTopicNotificationSent(topicCreator);
     }
 
     @Test
@@ -360,13 +383,14 @@ public class TopicNotificationTest {
         Topics.deleteTopic(topic);
         Branches.unsubscribeIgnoringFail(topic.getBranch());
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     // move topic
 
     @Test (enabled = false) // bug: receives branch notification
-    public void topicMovedByOther_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotificationNotBranch() throws Exception {
+    public void topicMovedByOther_ifSubscribedToBothBranchAndTopic_shouldReceiveTopicNotificationOnly() throws Exception {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
@@ -379,7 +403,8 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Branches.unsubscribeIgnoringFail(new Branch(NOTIFICATION_BRANCH));
 
-        Notifications.assertNotificationOnTopicSentBranchNotSent(topic, topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
+        Notifications.assertTopicNotificationSent(topicCreator);
     }
 
     @Test
@@ -396,11 +421,12 @@ public class TopicNotificationTest {
         Users.logOutAndSignIn(topicCreator);
         Branches.unsubscribeIgnoringFail(new Branch(NOTIFICATION_BRANCH));
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 
     @Test (enabled = false) // bug: receives branch notification
-    public void topicMovedByOther_ifSubscribedToTopicOnly_shouldReceiveTopicNotificationNotBranch() throws Exception {
+    public void topicMovedByOther_ifSubscribedToTopicOnly_shouldReceiveTopicNotificationOnly() throws Exception {
         User topicCreator = Users.signUpAndSignIn();
         Topic topic = Topics.createTopic(new Topic().withBranch(NOTIFICATION_BRANCH));
 
@@ -411,7 +437,8 @@ public class TopicNotificationTest {
 
         Topics.moveTopic(topic, BRANCH_NAME_TO_MOVE_TOPIC_IN);
 
-        Notifications.assertNotificationOnTopicSentBranchNotSent(topic, topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
+        Notifications.assertTopicNotificationSent(topicCreator);
     }
 
     @Test
@@ -425,6 +452,7 @@ public class TopicNotificationTest {
         Topics.moveTopic(topic, BRANCH_NAME_TO_MOVE_TOPIC_IN);
         Branches.unsubscribeIgnoringFail(new Branch(NOTIFICATION_BRANCH));
 
-        Notifications.assertNotificationsNotSent(topic, topicCreator);
+        Notifications.assertTopicNotificationNotSent(topicCreator);
+        Notifications.assertBranchNotificationNotSent(topicCreator);
     }
 }
