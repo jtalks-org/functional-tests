@@ -23,6 +23,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.moveTopicEditor;
 /**
  * @author masyan
  * @author pancheshenko andrey
+ * PageObject that represents the opened topic with list of posts page
  */
 public class PostPage {
 

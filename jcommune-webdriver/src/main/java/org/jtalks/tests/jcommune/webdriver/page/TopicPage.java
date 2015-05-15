@@ -23,6 +23,7 @@ import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 /**
  * @author masyan
  * @author pancheshenko andrey
+ * PageObject that represents the "Create new topic/CR" pages
  */
 public class TopicPage {
     public static final String CR_COMMENT_EMPTY_ERROR = "(may not be empty\n)" +

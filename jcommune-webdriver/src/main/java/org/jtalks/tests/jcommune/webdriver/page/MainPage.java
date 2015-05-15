@@ -19,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.getCapabilities;
 
+/**
+ * PageObject that represents main menus and main technical info of the main page
+ */
 public class MainPage {
     public static final String logOutButtonSel = "//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/logout']";
     public static final String breadCrumbsForumLinkSel = "//ul[@class='breadcrumb']//a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/sections']";

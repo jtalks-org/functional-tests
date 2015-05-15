@@ -102,6 +102,19 @@ public class Topics {
     }
 
     @Step
+    public static void postAnswer(Topic topic, Post post) throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        openRequiredTopic(topic);
+
+        postPage.getMessageField().clear();
+        postPage.getMessageField().sendKeys(post.getPostContent());
+        postPage.clickAnswerToTopicButton();
+        assertTopicPostFormValid();
+
+        topic.addPost(post);
+        info("Answer to topic [" + topic.getTitle() + "] was left");
+    }
+
+    @Step
     public static void editPost(Topic topic, Post postToEdit) {
         openRequiredTopic(topic);
 
@@ -302,6 +315,21 @@ public class Topics {
         if (Existence.existsImmediately(driver, topicPage.getPollItemsErrorMessage())) {
             WebElement pollItemsError = topicPage.getPollItemsErrorMessage();
             failedFields += pollItemsError.getText();
+        }
+        info("Check finished");
+        if (!failedFields.equals("")) {
+            info("Found validation errors: " + failedFields);
+            throw new ValidationException(failedFields);
+        }
+        info("Check successful. No errors.");
+    }
+
+    private static void assertTopicPostFormValid() throws ValidationException {
+        String failedFields = "";
+        info("Check body");
+        if (Existence.existsImmediately(driver, topicPage.getBodyErrorMessage())) {
+            WebElement bodyError = topicPage.getBodyErrorMessage();
+            failedFields += bodyError.getText();
         }
         info("Check finished");
         if (!failedFields.equals("")) {

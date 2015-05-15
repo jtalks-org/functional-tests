@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * @author masyan
+ * PageObject that reperesents the main forum page with list of sections and branches
  */
 public class SectionPage {
 
