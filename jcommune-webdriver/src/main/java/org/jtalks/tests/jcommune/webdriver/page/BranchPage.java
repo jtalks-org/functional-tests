@@ -19,6 +19,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
 
 /**
  * @author pancheshenko andrey
+ * PageObject that represents opened branch page with list of topics page
  */
 public class BranchPage {
 

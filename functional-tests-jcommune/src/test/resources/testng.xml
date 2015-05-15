@@ -54,6 +54,8 @@
       <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
       <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
       <class name="org.jtalks.tests.jcommune.PrivateMessagesTest"/>
+      <class name="org.jtalks.tests.jcommune.TopicNotificationTest"/>
+      <class name="org.jtalks.tests.jcommune.CodeReviewNotificationTest"/>
     </classes>
   </test>
 </suite>

@@ -4,7 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.*;
 
@@ -13,10 +15,13 @@ import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.fail;
 
 public class BbCodeTest {
+
+    public static Topic TEST_TOPIC = new Topic();
 
     @BeforeClass(alwaysRun = true)
     @Parameters({"appUrl"})
@@ -24,18 +29,7 @@ public class BbCodeTest {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
         Users.signUpAndSignIn();
-    }
-
-    /**
-     * Previous test could've been failed on the topic page open with field data. If that's the case, then when
-     * next test will try to open another page, browser will ask whether user is sure to leave the current page and the
-     * test will fail. Therefore we've added this alert
-     */
-    @BeforeMethod(alwaysRun = true)
-    @Parameters({"appUrl"})
-    public void clickLeaveThePageIfPreviousTestFailed(String appUrl) {
-        driver.get(appUrl);
-        DriverMethodHelp.closeAlertIfExists(driver);
+        Topics.createTopic(TEST_TOPIC);
     }
 
     @Test(dataProvider = "bbCodesWithMessage_thatShouldPass")
@@ -47,14 +41,22 @@ public class BbCodeTest {
     }
 
     @Test(dataProvider = "bbCodesMessage_thatShouldFail")
-    public void bbCodesWithTextThatShouldFail(String topicBody, String messageIfTestFails) throws Exception {
+    public void bbCodesWithTextThatShouldFail(String postBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
-        Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
-        try {
-            Topics.createTopic(topic);//show throw error if validation failed
-            fail(messageIfTestFails);
-        } catch (ValidationException e) {
-            //if validation error happened, then the test passed
+        int cycles = 0;
+        while (true) {
+            try {
+                cycles++;
+                Topics.postAnswer(TEST_TOPIC, new Post(postBody)); //should throw exception if validation failed
+                fail(messageIfTestFails);
+            } catch (ValidationException e) {
+                break; //if validation error happened, then the test passed
+            } catch (CouldNotOpenPageException e) {
+                info("Topic might be lost in too deep branch. Trying to create new one and " + (2 == cycles ? "repeat test..." : "finish test..."));
+                TEST_TOPIC = Topics.createTopic(new Topic()); // in case that some forces throw out of the topic
+                // and it couldn't be navigated back to (it's farther then 50'th page in branch)
+                if (2 == cycles) fail("Twice in a row topic was lost in deep branch. Something throws user out of topic when creating post.");
+            }
         }
     }
 
