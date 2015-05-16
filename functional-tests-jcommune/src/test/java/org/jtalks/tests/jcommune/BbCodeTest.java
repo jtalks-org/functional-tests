@@ -1,9 +1,9 @@
 package org.jtalks.tests.jcommune;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.*;
@@ -13,10 +13,12 @@ import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
-import static org.testng.Assert.assertTrue;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
 import static org.testng.Assert.fail;
 
 public class BbCodeTest {
+
+    public static Topic TEST_TOPIC = new Topic();
 
     @BeforeClass(alwaysRun = true)
     @Parameters({"appUrl"})
@@ -24,34 +26,32 @@ public class BbCodeTest {
         driver.get(appUrl);
         mainPage.logOutIfLoggedIn(driver);
         Users.signUpAndSignIn();
+        Topics.createTopic(TEST_TOPIC);
     }
 
-    /**
-     * Previous test could've been failed on the topic page open with field data. If that's the case, then when
-     * next test will try to open another page, browser will ask whether user is sure to leave the current page and the
-     * test will fail. Therefore we've added this alert
-     */
     @BeforeMethod(alwaysRun = true)
-    @Parameters({"appUrl"})
-    public void clickLeaveThePageIfPreviousTestFailed(String appUrl) {
-        driver.get(appUrl);
-        DriverMethodHelp.closeAlertIfExists(driver);
+    public void checkIfWeStillAreInsideTheCreatedTopic_otherwiseCreateNewOne() {
+        if (!postPage.isUserInsideCorrectTopic(TEST_TOPIC.getTitle())) {
+            info("User isn't browsing correct topic. Branch is too deep to search for it, so creating new one...");
+            TEST_TOPIC = Topics.createTopic(new Topic());
+        }
     }
 
     @Test(dataProvider = "bbCodesWithMessage_thatShouldPass")
-    public void bbCodesWithTextThatShouldPass(String topicBody, String messageIfTestFails) throws Exception {
+    public void bbCodesWithTextThatShouldPass(String postBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
-        Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
-        Topic createdTopic = Topics.createTopic(topic);
-        assertTrue(Topics.isCreated(createdTopic), messageIfTestFails);
+        try {
+            Topics.postAnswer(TEST_TOPIC, new Post(postBody)); //should throw exception if validation failed
+        } catch (ValidationException e) {
+            fail(messageIfTestFails); //if validation error happened, then the test failed
+        }
     }
 
     @Test(dataProvider = "bbCodesMessage_thatShouldFail")
-    public void bbCodesWithTextThatShouldFail(String topicBody, String messageIfTestFails) throws Exception {
+    public void bbCodesWithTextThatShouldFail(String postBody, String messageIfTestFails) throws Exception {
         info("Running a test case [" + messageIfTestFails + "]");
-        Topic topic = new Topic(topicTitleWithTestCaseName(messageIfTestFails), topicBody);
         try {
-            Topics.createTopic(topic);//show throw error if validation failed
+            Topics.postAnswer(TEST_TOPIC, new Post(postBody)); //should throw exception if validation failed
             fail(messageIfTestFails);
         } catch (ValidationException e) {
             //if validation error happened, then the test passed

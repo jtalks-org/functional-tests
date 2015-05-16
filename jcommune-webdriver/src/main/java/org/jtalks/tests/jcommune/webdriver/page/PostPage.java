@@ -252,6 +252,14 @@ public class PostPage {
         }
     }
 
+    public void fillPostBody(String body) {
+        info("Filling new post body: [" + StringUtils.left(body, 100) + "...]");
+        getMessageField().clear();
+        for (String token : Splitter.fixedLength(100).split(body)) {
+            getMessageField().sendKeys(token);
+        }
+    }
+
     public void fillCodeReviewCommentBody(CodeReviewComment codeReviewComment) {
         info("Filling code review comment body: [" + StringUtils.left(codeReviewComment.getPostContent(), 100) + "...]");
         getCRCommentTextField().sendKeys(codeReviewComment.getPostContent());
