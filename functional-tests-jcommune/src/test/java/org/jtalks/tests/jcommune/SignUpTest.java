@@ -51,7 +51,8 @@ public class SignUpTest {
         Users.signUp(user);
     }
 
-    @Test(expectedExceptions = ValidationException.class)
+    @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
+            expectedExceptionsMessageRegExp = SignUpPage.EMPTY_LOGIN_ERROR + SignUpPage.EMPTY_EMAIL_ERROR + SignUpPage.EMPTY_PASSWORD_ERROR )
     public void dataEmpty_shouldFail() throws Exception {
         UserForRegistration user = new UserForRegistration();
         user.setUsername("");
