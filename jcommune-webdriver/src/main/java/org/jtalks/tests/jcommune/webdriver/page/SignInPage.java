@@ -3,15 +3,19 @@ package org.jtalks.tests.jcommune.webdriver.page;
 
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.SELENIUM_TIMEOUT_SEC;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
 public class SignInPage {
@@ -80,6 +84,12 @@ public class SignInPage {
     public void clickSubmitButton() {
         info("Clicking submit button");
         submitButton.click();
+    }
+
+    public void waitSignInDialogToClose() {
+        info("Waiting for sign in dialog to be closed...");
+        (new WebDriverWait(driver, SELENIUM_TIMEOUT_SEC)).until(ExpectedConditions.invisibilityOfElementLocated(By.id(signInDialogFormSel)));
+        info("Sign in dialog is closed");
     }
 
     public boolean isSignInDialogOpened() {

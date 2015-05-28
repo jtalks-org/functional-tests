@@ -23,10 +23,10 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.UserForRegistration;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.MainPage;
-import org.jtalks.tests.jcommune.webdriver.page.SignInPage;
 import org.jtalks.tests.jcommune.webdriver.page.SignUpPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,13 +58,14 @@ public class Users {
     public static void signIn(User user) throws ValidationException {
         info("Sign in a User: " + user);
         openAndFillSignInDialog(user);
+        signInPage.clickSubmitButton();
         checkFormValidation(signInPage.getErrorFormElements());
-        if (signInPage.isSignInDialogOpened()) {
-            info("WARNING: Sign in dialog is still opened after successful validation. Trying to click submit once again.");
-            signInPage.clickSubmitButton();
+        try {
+            signInPage.waitSignInDialogToClose();
+        } catch (TimeoutException e) {
+            info("WARNING: Sign in dialog is still opened. Might be laggy. Check validation once again.");
             checkFormValidation(signInPage.getErrorFormElements());
-        } else {
-            info("Sign in dialog is closed");
+            signInPage.waitSignInDialogToClose();
         }
         // Check that link to the user profile present on the page
         if (!mainPage.userIsLoggedIn()) {
@@ -105,7 +106,6 @@ public class Users {
         // Fill form values and submit
         signInPage.fillUsernameField(user.getUsername());
         signInPage.fillPasswordField(user.getPassword());
-        signInPage.clickSubmitButton();
     }
 
     @Step
