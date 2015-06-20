@@ -22,7 +22,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
 public class CodeReviewNotificationTest {
 
     public final String NOTIFICATION_BRANCH = "Notification tests";
-    public final String BRANCH_NAME_TO_MOVE_TOPIC_IN = "Notification tests branch 2";
+    public final String BRANCH_NAME_TO_MOVE_TOPIC_IN = "Competitions";
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({"appUrl"})

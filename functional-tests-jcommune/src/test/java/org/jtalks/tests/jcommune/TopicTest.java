@@ -135,7 +135,7 @@ public class TopicTest {
     public void loginAndCreateTopicValidateBranch_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
-        Topic topic = new Topic().withBranch("Micro level");
+        Topic topic = new Topic().withBranch("Cricet");
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
@@ -145,7 +145,7 @@ public class TopicTest {
     public void signUpAndCreateTopicInBranch_ShouldPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
-        Topic topic = new Topic().withBranch("Classical Mechanics");
+        Topic topic = new Topic().withBranch("Field hockey");
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
     }
