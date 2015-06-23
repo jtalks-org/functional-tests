@@ -103,7 +103,7 @@ public class PrivateMessagesTest {
     }
 
     @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = PrivateMessagesPage.EMPTY_SUBJECT_FIELD_ERROR)
+            expectedExceptionsMessageRegExp = PrivateMessagesPage.INCORRECT_SUBJECT_LENGTH_ERROR)
     public void sendPmEmptySubject_ShouldFail() throws Exception {
         User receiver = Users.signUpAndSignIn();
         Users.logout();
@@ -113,7 +113,7 @@ public class PrivateMessagesTest {
     }
 
     @Test(groups = "ui-tests", expectedExceptions = ValidationException.class,
-            expectedExceptionsMessageRegExp = PrivateMessagesPage.EMPTY_CONTENT_FIELD_ERROR)
+            expectedExceptionsMessageRegExp = PrivateMessagesPage.INCORRECT_LENGTH_CONTENT_FIELD)
     public void sendPmEmptyMessage_ShouldFail() throws Exception {
         User receiver = Users.signUpAndSignIn();
         Users.logout();

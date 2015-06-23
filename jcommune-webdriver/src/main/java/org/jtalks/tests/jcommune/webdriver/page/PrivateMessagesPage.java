@@ -30,16 +30,11 @@ public class PrivateMessagesPage {
     public static final String SAME_USER_IN_TO_FIELD_ERROR = "(Sending messages to yourself is not allowed)|" +
             "(Посылать сообщения самому себе - странная идея)";
 
-    public static final String EMPTY_SUBJECT_FIELD_ERROR = "(may not be empty)|(Не может быть пустым)";
+    public static final String INCORRECT_SUBJECT_LENGTH_ERROR = "(Size must be between 2 and 120)|" +
+            "(Размер должен быть между 2 и 120)";
 
-    public static final String INCORRECT_SUBJECT_LENGTH_ERROR = "(should be 2 - 120 characters)|(Должно быть 2 - 120 символов)";
-
-    public static final String EMPTY_CONTENT_FIELD_ERROR = "(may not be empty\nshould be 2 - 20000 characters)|" +
-            "(should be 2 - 20000 characters\nmay not be empty)|" +
-            "(Не может быть пустым\nДолжно быть 2 - 20000 символов)|" +
-            "(Должно быть 2 - 20000 символов\nНе может быть пустым)";
-
-    public static final String INCORRECT_LENGTH_CONTENT_FIELD = "(should be 2 - 20000 characters)|(Должно быть 2 - 20000 символов)";
+    public static final String INCORRECT_LENGTH_CONTENT_FIELD = "(Size must be between 2 and 20000)|" +
+            "(Размер должен быть между 2 и 20000)";
 
     public static final String pmInboxLinkSel = "//li[@id='inbox_link']/a[@href='" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/inbox']";
 
