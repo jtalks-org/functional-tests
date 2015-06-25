@@ -296,7 +296,7 @@ public class Topics {
     private static void assertTopicFormValid() throws ValidationException {
         String failedFields = "";
         info("Check subject");
-        if (Existence.existsImmediately(driver, topicPage.getSubjectErrorMessage())) {
+        if (Existence.exists(topicPage.getSubjectErrorMessage())) {
             WebElement subjectError = topicPage.getSubjectErrorMessage();
             failedFields += subjectError.getText() + "\n";
         }
@@ -326,7 +326,7 @@ public class Topics {
     private static void assertTopicPostFormValid() throws ValidationException {
         String failedFields = "";
         info("Check body");
-        if (Existence.existsImmediately(driver, topicPage.getBodyErrorMessage())) {
+        if (Existence.exists(topicPage.getBodyErrorMessage())) {
             WebElement bodyError = topicPage.getBodyErrorMessage();
             failedFields += bodyError.getText();
         }
