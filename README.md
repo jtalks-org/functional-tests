@@ -1,6 +1,5 @@
 ###IntelliJ IDEA set up for work with functional tests
-1. Make sure that you have installed JDK, Maven and GIT and set all environment variables
-from [wiki-guide](http://jtalks.org/pages/viewpage.action?pageId=6422581)
+1. Make sure that you have installed JDK, Maven and GIT and set all environment variables for these tools
 2. Download [IntelliJ IDEA](http://www.jetbrains.com/idea/download/index.html) (choose Community Edition FREE)
 3. Clone repository for functional tests via Git or IntelliJ IDEA.
 4. Open file **pom.xml** with IntelliJ IDEA
