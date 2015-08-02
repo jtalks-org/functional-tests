@@ -32,4 +32,8 @@ public class Pages {
         forumSettingsDialog = new ForumSettingsDialog(driver);
         moveTopicEditor = new MoveTopicEditor(driver);
     }
+
+    public static void reloadPage(WebDriver driver) {
+        driver.navigate().refresh();
+    }
 }
