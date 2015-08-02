@@ -10,6 +10,22 @@ public class Draft extends Post {
     }
 
     public void loseFocus() {
+        // actions for losing focus
+    }
 
+    public void publish() {
+        // publish draft as post/answer
+    }
+
+    public void remove() {
+        // remove draft by clicking trash button
+    }
+
+    public void deleteContent() {
+        // delete content by pressing Backspace
+    }
+
+    public void editContent(int quantitySymbRemain) {
+        // remain quantity of symb that specified in parameters
     }
 }

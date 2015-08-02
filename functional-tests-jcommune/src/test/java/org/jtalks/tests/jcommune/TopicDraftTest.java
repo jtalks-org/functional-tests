@@ -270,4 +270,65 @@ public class TopicDraftTest {
 
         Assert.assertFalse(Topics.isDraftCreated(draft));
     }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void removeDraft_PublishPost_ShouldRemove_QA2777() {
+        Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = (Draft) Topics.typeAnswer(createdTopic);
+        draft.loseFocus();
+
+        draft.publish();
+        Pages.reloadPage(driver);
+
+        Assert.assertFalse(Topics.isDraftCreated(draft));
+    }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void removeDraft_ClickTrashIcon_ShouldRemove_QA2763() {
+        Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = (Draft) Topics.typeAnswer(createdTopic);
+        draft.loseFocus();
+
+        draft.remove();
+        Pages.reloadPage(driver);
+
+        Assert.assertFalse(Topics.isDraftCreated(draft));
+    }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void removeDraft_DeleterContent_ShouldRemove_QA2765() {
+        Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = (Draft) Topics.typeAnswer(createdTopic);
+        draft.loseFocus();
+
+        draft.deleteContent();
+        Pages.reloadPage(driver);
+
+        Assert.assertFalse(Topics.isDraftCreated(draft));
+    }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void autoSaveDraft_AfterEditRemain1Symb_ShouldSave_QA2778() {
+        int quntitySymb = 1;
+        Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = (Draft) Topics.typeAnswer(createdTopic);
+        draft.loseFocus();
+
+        draft.editContent(quntitySymb);
+        Pages.reloadPage(driver);
+
+        Assert.assertFalse(Topics.isDraftCreated(draft));
+    }
 }
