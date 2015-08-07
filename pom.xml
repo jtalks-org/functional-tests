@@ -108,6 +108,11 @@
         <version>1.0.1</version>
       </dependency>
       <dependency>
+        <groupId>com.sun.jersey</groupId>
+        <artifactId>jersey-core</artifactId>
+        <version>1.19</version>
+      </dependency>
+      <dependency>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-w3c</artifactId>
         <version>1.2</version>
