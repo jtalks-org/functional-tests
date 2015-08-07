@@ -3,16 +3,13 @@ package org.jtalks.tests.jcommune;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
-import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import static org.apache.commons.lang.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.PageHtmlValidator.validatePage;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
 /**
  * @author Leonid Kazancev

@@ -110,7 +110,7 @@
       <dependency>
         <groupId>com.rexsl</groupId>
         <artifactId>rexsl-w3c</artifactId>
-        <version>0.4.14</version>
+        <version>0.13.3</version>
       </dependency>
       <dependency>
         <groupId>org.uncommons</groupId>

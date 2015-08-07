@@ -7,6 +7,7 @@ import com.rexsl.w3c.ValidatorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +29,12 @@ public final class PageHtmlValidator {
 
     public static void validatePage(String pageSource) {
         Validator htmlValidator = new ValidatorBuilder().html();
-        ValidationResponse response = htmlValidator.validate(pageSource);
+        ValidationResponse response = null;
+        try {
+            response = htmlValidator.validate(pageSource);
+        } catch (IOException e) {
+            logger.info("Error validation {}", e);
+        }
 
         Set<Defect> errors = response.errors();
         int errorCount = errors.size();
