@@ -402,9 +402,9 @@ public class PrivateMessagesPage {
      */
     public void assertOneOfPmMessagesIsChecked(WebDriver driver) {
         try {
-            Existence.assertElementExistsBySelector(driver, PM_CHECKED_UNREAD_CHECKBOX);
+            Existence.assertElementExistsBySelector(driver, By.xpath(PM_CHECKED_UNREAD_CHECKBOX));
         } catch (AssertionError e) {
-            Existence.assertElementExistsBySelector(driver, PM_CHECKED_READ_CHECKBOX);
+            Existence.assertElementExistsBySelector(driver, By.xpath(PM_CHECKED_READ_CHECKBOX));
         }
     }
 
