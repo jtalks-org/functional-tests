@@ -1,9 +1,9 @@
 package org.jtalks.tests.jcommune;
 
-import com.rexsl.w3c.Defect;
-import com.rexsl.w3c.ValidationResponse;
-import com.rexsl.w3c.Validator;
-import com.rexsl.w3c.ValidatorBuilder;
+import com.jcabi.w3c.Defect;
+import com.jcabi.w3c.ValidationResponse;
+import com.jcabi.w3c.Validator;
+import com.jcabi.w3c.ValidatorBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +33,7 @@ public final class PageHtmlValidator {
         try {
             response = htmlValidator.validate(pageSource);
         } catch (IOException e) {
-            logger.info("Error validation {}", e);
+            logger.error("Error validation {}", e);
         }
 
         Set<Defect> errors = response.errors();

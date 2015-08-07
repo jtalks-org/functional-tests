@@ -108,9 +108,9 @@
         <version>1.0.1</version>
       </dependency>
       <dependency>
-        <groupId>com.rexsl</groupId>
-        <artifactId>rexsl-w3c</artifactId>
-        <version>0.13.3</version>
+        <groupId>com.jcabi</groupId>
+        <artifactId>jcabi-w3c</artifactId>
+        <version>1.2</version>
       </dependency>
       <dependency>
         <groupId>org.uncommons</groupId>

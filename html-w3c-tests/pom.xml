@@ -32,8 +32,8 @@
       <artifactId>javax.json</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.rexsl</groupId>
-      <artifactId>rexsl-w3c</artifactId>
+      <groupId>com.jcabi</groupId>
+      <artifactId>jcabi-w3c</artifactId>
     </dependency>
     <dependency>
       <groupId>org.jtalks.functional-tests</groupId>
