@@ -36,6 +36,18 @@
       <artifactId>jcabi-w3c</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.jcabi</groupId>
+      <artifactId>jcabi-matchers</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.bval</groupId>
+      <artifactId>bval-jsr303</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.jtalks.functional-tests</groupId>
       <artifactId>jcommune-webdriver</artifactId>
     </dependency>
