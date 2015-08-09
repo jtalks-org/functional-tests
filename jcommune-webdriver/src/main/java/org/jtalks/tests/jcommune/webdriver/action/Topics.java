@@ -107,7 +107,7 @@ public class Topics {
     }
 
     @Step
-    public static Post typeAnswerWithinMilSec(Topic topic, int withinMilSec) throws PermissionsDeniedException, CouldNotOpenPageException {
+    public static Draft typeAnswerWithinMilSec(Topic topic, int withinMilSec) throws PermissionsDeniedException, CouldNotOpenPageException {
         openRequiredTopic(topic);
 
         Post newPost = new Draft(randomAlphanumeric(200));
@@ -116,7 +116,7 @@ public class Topics {
         assertDraftCreated();
 
 //        info("Answer to topic [" + topic.getTitle() + "] was left");
-        return newPost;
+        return (Draft) newPost;
     }
 
     private static void assertDraftCreated() {
@@ -124,30 +124,31 @@ public class Topics {
     }
 
     @Step
-    public static Post typeAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+    public static Draft typeAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         openRequiredTopic(topic);
 
-        Post newPost = new Draft(randomAlphanumeric(200));
-        topic.addPost(newPost);
-        postPage.getMessageField().sendKeys(newPost.getPostContent());
+        Post newDraft = new Draft(randomAlphanumeric(200));
+        topic.addPost(newDraft);
+        postPage.getMessageField().sendKeys(newDraft.getPostContent());
 
-//        info("Answer to topic [" + topic.getTitle() + "] was left");
-        return newPost;
+        info("Draft in topic [" + topic.getTitle() + "] saving ...");
+        return (Draft) newDraft;
     }
 
     @Step
-    public static Post typeAnswer(Topic topic, Post post) throws PermissionsDeniedException, CouldNotOpenPageException {
+    public static Draft typeAnswerCustomLength(Topic topic, int lengthText) throws PermissionsDeniedException, CouldNotOpenPageException {
         openRequiredTopic(topic);
 
-        Post newPost = new Draft(post.getPostContent());
-        postPage.getMessageField().sendKeys(newPost.getPostContent());
+        Post newDraft = new Draft(randomAlphanumeric(lengthText));
+        topic.addPost(newDraft);
+        postPage.getMessageField().sendKeys(newDraft.getPostContent());
 
-//        info("Answer to topic [" + topic.getTitle() + "] was left");
-        return newPost;
+        info("Draft in topic [" + topic.getTitle() + "] saving ...");
+        return (Draft) newDraft;
     }
 
     @Step
-    public static Post pasteAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+    public static Draft pasteAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         openRequiredTopic(topic);
 
         Post newPost = new Draft(randomAlphanumeric(200));
@@ -157,7 +158,7 @@ public class Topics {
         postPage.getMessageField().sendKeys(newPost.getPostContent());
 
 //        info("Answer to topic [" + topic.getTitle() + "] was left");
-        return newPost;
+        return (Draft) newPost;
     }
 
     @Step
@@ -336,9 +337,9 @@ public class Topics {
         return actualTitle.equals(expectedTitle);
     }
 
-    public static boolean isDraftCreated(Post draft) {
-
-        return false;
+    public static boolean isDraftCreated() {
+        info("Check presence of draft counter ...");
+        return postPage.checkCounter();
     }
 
     public static boolean isInCorrectBranch(Topic topic) {
