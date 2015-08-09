@@ -19,6 +19,8 @@ import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.moveTopicEditor;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.scrollToEl;
 
 /**
  * @author masyan
@@ -103,6 +105,17 @@ public class PostPage {
     public static final String codeReviewCommentConfirmButtonSel = "//input[@class='btn btn-primary review-container-controls-ok']";
 
     public static final String codeReviewCommentBodyErrorMessageSel = "//div[@id='add-comment-form']/div[@class='control-group error']/span[@class='help-inline']";
+
+    public static final String textareaEditorTag = "textarea";
+
+    public static final String postDtoId = "postDto";
+
+    public static final String draftCounterId = "counter";
+
+    // space symbol is used for localization compatibility, in any language counter message will have spaces
+    public static final String draftCounterActiveSel = "//span[@id='" + draftCounterId + "' and contains(text(),' ')]";
+
+    public static final String postLinkClass = "postLink";
 
     @FindBy(xpath = topicTitleSel)
     private WebElement topicTitle;
@@ -217,6 +230,21 @@ public class PostPage {
 
     @FindBy(xpath = codeReviewCommentBodyErrorMessageSel)
     private WebElement codeReviewCommentBodyErrorMessage;
+
+    @FindBy(tagName = textareaEditorTag)
+    private WebElement textareaEditor;
+
+    @FindBy(id = postDtoId)
+    private WebElement postDto;
+
+    @FindBy(id = draftCounterId)
+    private WebElement draftCounter;
+
+    @FindBy(xpath = draftCounterActiveSel)
+    private WebElement draftCounterActive;
+
+    @FindBy(className = postLinkClass)
+    private WebElement postLink;
 
     private WebDriver driver;
 
@@ -391,6 +419,35 @@ public class PostPage {
         return false;
     }
 
+    public void setFocusOnPostLinkButton() {
+        // move focus outside of textarea
+        getPostLinkButton().sendKeys("");
+        info("Focus set on edit post button");
+    }
+
+    public String scrollDownAndFindDraftCountMessage() {
+        // scroll page to the bottom of post editor,
+        // guarantee that draft counter message will be visible for driver
+        scrollToEl(getPostDto());
+        info("Trying to find draft counter message");
+        return getDraftCounterActiveSpan().getText();
+    }
+
+    public String findDraftContent() {
+        checkCounter();
+        info("Trying to find draft content");
+        return getTextareaEditor().getAttribute("value");
+    }
+
+    public boolean checkCounter() {
+        try {
+            postPage.scrollDownAndFindDraftCountMessage();
+        } catch (Exception e) {
+            throw new RuntimeException("Draft was not created", e);
+        }
+        return true;
+    }
+
     //Getters
 
     public WebElement getTopicTitle() {
@@ -549,5 +606,25 @@ public class PostPage {
 
     public WebElement getCRCommentBodyErrorMessage() {
         return codeReviewCommentBodyErrorMessage;
+    }
+
+    public WebElement getPostDto() {
+        return postDto;
+    }
+
+    public WebElement getDraftCounter() {
+        return draftCounter;
+    }
+
+    public WebElement getDraftCounterActiveSpan() {
+        return draftCounterActive;
+    }
+
+    public WebElement getTextareaEditor() {
+        return textareaEditor;
+    }
+
+    public WebElement getPostLinkButton() {
+        return postLink;
     }
 }
