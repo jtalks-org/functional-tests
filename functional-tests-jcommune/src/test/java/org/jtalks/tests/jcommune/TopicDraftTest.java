@@ -1,4 +1,3 @@
-
 package org.jtalks.tests.jcommune;
 
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
@@ -44,13 +43,13 @@ public class TopicDraftTest {
         assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }
 
-    // bug, draft are not shown after reloading, it's shown only after the second reloading
+    @Test(groups = {"ui-tests", "primary"})
     public void autoSaveDraft_ReloadPage_ShouldSave_QA2757() {
         Users.signUpAndSignIn();
 
         Topic topic = new Topic();
         Topic createdTopic = Topics.createTopic(topic);
-        Draft draft = Topics.typeAnswer(createdTopic).reloadPage();
+        Draft draft = Topics.typeAnswer(createdTopic).loseFocus().reloadPage();
 
         assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }
@@ -69,7 +68,7 @@ public class TopicDraftTest {
         Assert.assertTrue(Topics.isDraftCreated());
     }
 
-@Test(groups = {"ui-tests", "primary"})
+    @Test(groups = {"ui-tests", "primary"})
     public void autoSaveDraft_MoveFocus_ShouldSave_QA2758() {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
@@ -80,7 +79,7 @@ public class TopicDraftTest {
         assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }
 
-@Test(groups = {"ui-tests", "primary"})
+    @Test(groups = {"ui-tests", "primary"})
     public void autoSaveDraft_Logout_ShouldSave_QA2759() {
         User draftCreator = Users.signUpAndSignIn();
 
@@ -125,7 +124,7 @@ public class TopicDraftTest {
         assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }
 
-@Test(groups = {"ui-tests", "primary"})
+    @Test(groups = {"ui-tests", "primary"})
     public void autoSaveDraft_ContentWith2Symb_ShouldSave_QA2774() {
         int quantitySymb = 2;
 
@@ -187,7 +186,7 @@ public class TopicDraftTest {
         assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }
 
-@Test(groups = {"ui-tests", "primary"})
+    @Test(groups = {"ui-tests", "primary"})
     public void autoSaveDraft_DifferentUsersSameTopic_ShouldSaveBoth_QA2768() {
         User firstUser = Users.signUpAndSignIn();
 
@@ -210,7 +209,7 @@ public class TopicDraftTest {
         assertThat(firstDraft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }
 
-@Test(groups = {"ui-tests", "primary"})
+    @Test(groups = {"ui-tests", "primary"})
     public void autoSaveDraft_DifferentDraftInDifferentBranches_ShouldSave_QA2780() {
         Users.signUpAndSignIn();
 
