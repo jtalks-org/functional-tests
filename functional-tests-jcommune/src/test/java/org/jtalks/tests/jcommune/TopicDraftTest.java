@@ -175,7 +175,7 @@ public class TopicDraftTest {
         Assert.assertFalse(Topics.isDraftCreated());
     }
 
-    // Only business logic
+    @Test(groups = {"ui-tests", "primary"})
     public void autoSaveDraft_ContentCopyPast_ShouldSave_QA2779() {
         Users.signUpAndSignIn();
 

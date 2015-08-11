@@ -31,6 +31,7 @@ import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.jtalks.tests.jcommune.webdriver.page.PostPage;
 import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -38,8 +39,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import ru.yandex.qatools.allure.annotations.Step;
 
+import java.awt.datatransfer.StringSelection;
 import java.util.List;
 
+import static java.awt.Toolkit.getDefaultToolkit;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
@@ -50,6 +53,7 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.moveTopicEditor;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.sectionPage;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
+import static org.openqa.selenium.Keys.chord;
 
 /**
  * Contain topic actions like creating, deleting etc.
@@ -151,14 +155,16 @@ public class Topics {
     public static Draft pasteAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
         openRequiredTopic(topic);
 
-        Post newPost = new Draft(randomAlphanumeric(200));
-        topic.addPost(newPost);
+        Post newDraft = new Draft(randomAlphanumeric(200));
+        topic.addPost(newDraft);
 
-        // create method for paste data from clipboard
-        postPage.getMessageField().sendKeys(newPost.getPostContent());
+        getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(newDraft.getPostContent()), null);
 
-//        info("Answer to topic [" + topic.getTitle() + "] was left");
-        return (Draft) newPost;
+        String pasteChord = chord(Keys.CONTROL + "v");
+        postPage.getMessageField().sendKeys(pasteChord);
+
+        info("Draft in topic [" + topic.getTitle() + "] saving ...");
+        return (Draft) newDraft;
     }
 
     @Step
