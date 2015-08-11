@@ -117,6 +117,11 @@ public class PostPage {
 
     public static final String postLinkClass = "postLink";
 
+    public static final String buttonCloseTopicSel = "//a[contains(@class, 'open_topic') and contains(@href, 'close')]";
+
+    public static final String buttonReopenTopicSel = "//a[contains(@class, 'open_topic') and contains(@href, 'open')]";
+
+
     @FindBy(xpath = topicTitleSel)
     private WebElement topicTitle;
 
@@ -245,6 +250,12 @@ public class PostPage {
 
     @FindBy(className = postLinkClass)
     private WebElement postLink;
+
+    @FindBy(xpath = buttonCloseTopicSel)
+    private WebElement buttonCloseTopic;
+
+    @FindBy(xpath = buttonReopenTopicSel)
+    private WebElement buttonReopenTopic;
 
     private WebDriver driver;
 
@@ -448,6 +459,16 @@ public class PostPage {
         return true;
     }
 
+    public void clickButtonCloseTopic() {
+        info("Clicking button close topic ...");
+        getButtonCloseTopic().click();
+    }
+
+    public WebElement findButtonReopenTopic() {
+        info("Find Reopen button ...");
+        return getButtonReopenTopic();
+    }
+
     //Getters
 
     public WebElement getTopicTitle() {
@@ -626,5 +647,13 @@ public class PostPage {
 
     public WebElement getPostLinkButton() {
         return postLink;
+    }
+
+    public WebElement getButtonCloseTopic() {
+        return buttonCloseTopic;
+    }
+
+    public WebElement getButtonReopenTopic() {
+        return buttonReopenTopic;
     }
 }

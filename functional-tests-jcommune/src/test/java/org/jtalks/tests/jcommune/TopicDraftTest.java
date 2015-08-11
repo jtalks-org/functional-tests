@@ -112,14 +112,19 @@ public class TopicDraftTest {
         assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }
 
-    // Only business logic
-    public void remainDraft_CloseTopic_ShouldRemain_QA2773() {
-        Users.signUpAndSignIn();
+    @Test(groups = {"ui-tests", "primary"})
+    public void remainDraft_CloseTopicAndReloadPage_ShouldRemain_QA2773() {
+        // user with permissions to close topic
+        Users.signIn(User.admin());
 
         Topic topic = new Topic();
         Topic createdTopic = Topics.createTopic(topic);
         Draft draft = Topics.typeAnswer(createdTopic).loseFocus();
-        Topics.closeTopic(); // user should have permissions to close topic
+
+        assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
+
+        Topics.openAndCloseTopic(topic);
+        Pages.reloadPage(driver);
 
         assertThat(draft.getPostContent()).isEqualTo(postPage.findDraftContent());
     }

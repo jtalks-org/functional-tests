@@ -45,6 +45,7 @@ import java.util.List;
 import static java.awt.Toolkit.getDefaultToolkit;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.assertj.core.api.StrictAssertions.assertThat;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
@@ -502,7 +503,16 @@ public class Topics {
         postPage.closeDeleteCRCommentConfirmDialogOk();
     }
 
-    public static void closeTopic() {
+    @Step
+    public static void openAndCloseTopic(Topic topic) {
+        openRequiredTopic(topic);
+        info("Close topic ...");
+        postPage.clickButtonCloseTopic();
 
+        checkCurrentTopicClosed();
+    }
+
+    private static void checkCurrentTopicClosed() {
+        assertThat(postPage.findButtonReopenTopic()).isNotNull();
     }
 }
