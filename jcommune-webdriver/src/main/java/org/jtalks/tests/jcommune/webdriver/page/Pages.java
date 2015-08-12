@@ -1,6 +1,9 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.getJs;
 
 /** @author stanislav bashkirtsev */
 public class Pages {
@@ -31,5 +34,13 @@ public class Pages {
         externalLinksDialog = new ExternalLinksDialog(driver);
         forumSettingsDialog = new ForumSettingsDialog(driver);
         moveTopicEditor = new MoveTopicEditor(driver);
+    }
+
+    public static void reloadPage(WebDriver driver) {
+        driver.navigate().refresh();
+    }
+
+    public static void scrollToEl(WebElement el){
+        getJs().executeScript("arguments[0].scrollIntoView(false);", el);
     }
 }

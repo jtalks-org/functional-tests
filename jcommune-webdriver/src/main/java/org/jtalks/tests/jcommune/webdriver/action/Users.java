@@ -85,6 +85,12 @@ public class Users {
         mainPage.clickLogout();
     }
 
+    @Step
+    public static void deleteCookiesAndLogout() {
+        driver.manage().deleteAllCookies();
+        mainPage.clickLogout();
+    }
+
     public static User signUpAndSignIn() {
         User user;
         try {
