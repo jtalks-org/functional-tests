@@ -16,10 +16,12 @@
 package org.jtalks.tests.jcommune.webdriver.action;
 
 import org.jtalks.tests.jcommune.assertion.Existence;
+import org.jtalks.tests.jcommune.utils.Utils;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.Draft;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
@@ -27,8 +29,6 @@ import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
-import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-
 import org.jtalks.tests.jcommune.webdriver.page.PostPage;
 import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
@@ -42,9 +42,16 @@ import ru.yandex.qatools.allure.annotations.Step;
 import java.util.List;
 
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
-import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static org.assertj.core.api.StrictAssertions.assertThat;
+import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.branchPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.moveTopicEditor;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.sectionPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.topicPage;
 
 /**
  * Contain topic actions like creating, deleting etc.
@@ -99,6 +106,53 @@ public class Topics {
 
         info("Answer to topic [" + topic.getTitle() + "] was left");
         return newPost;
+    }
+
+    @Step
+    public static Draft typeAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+        openRequiredTopic(topic);
+
+        Post newDraft = new Draft(randomAlphanumeric(200));
+        topic.addPost(newDraft);
+        postPage.getMessageField().sendKeys(newDraft.getPostContent());
+
+        info("Draft in topic [" + topic.getTitle() + "] saving ...");
+        return (Draft) newDraft;
+    }
+
+    @Step
+    public static Draft typeAnswerCustomLength(Topic topic, int lengthText) throws PermissionsDeniedException, CouldNotOpenPageException {
+        openRequiredTopic(topic);
+
+        Post newDraft = new Draft(randomAlphanumeric(lengthText));
+        topic.addPost(newDraft);
+        postPage.getMessageField().sendKeys(newDraft.getPostContent());
+
+        info("Draft in topic [" + topic.getTitle() + "] saving ...");
+        return (Draft) newDraft;
+    }
+
+    @Step
+    public static Draft pasteAnswer(Topic topic) throws PermissionsDeniedException, CouldNotOpenPageException {
+        openRequiredTopic(topic);
+
+        Post newDraft = new Draft(randomAlphanumeric(200));
+        topic.addPost(newDraft);
+
+        Utils.setTextToClipboard(newDraft.getPostContent());
+        postPage.getMessageField().sendKeys(Utils.PASTE_CHORD);
+
+        info("Draft in topic [" + topic.getTitle() + "] saving ...");
+        return (Draft) newDraft;
+    }
+
+    @Step
+    public static void findAndCloseTopic(Topic topic) {
+        openRequiredTopic(topic);
+        info("Close topic ...");
+        postPage.clickButtonCloseTopic();
+
+        checkCurrentTopicClosed();
     }
 
     @Step
@@ -277,6 +331,11 @@ public class Topics {
         return actualTitle.equals(expectedTitle);
     }
 
+    public static boolean isDraftCreated() {
+        info("Check presence of draft counter ...");
+        return postPage.checkCounter();
+    }
+
     public static boolean isInCorrectBranch(Topic topic) {
         return postPage.getBranchName().getText().trim().equals(topic.getBranch().getTitle());
     }
@@ -429,5 +488,9 @@ public class Topics {
 
         postPage.clickDeleteInCodeReviewCommentContainingString(codeReviewComment.getPostContent());
         postPage.closeDeleteCRCommentConfirmDialogOk();
+    }
+
+    private static void checkCurrentTopicClosed() {
+        assertThat(postPage.findButtonReopenTopic()).isNotNull();
     }
 }
