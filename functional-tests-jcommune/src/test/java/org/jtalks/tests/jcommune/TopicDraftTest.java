@@ -5,6 +5,7 @@ import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Draft;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
@@ -46,6 +47,20 @@ public class TopicDraftTest {
         Topic createdTopic = Topics.createTopic(topic);
 
         Draft draft = Topics.typeAnswer(createdTopic).loseFocus();
+
+        assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+    }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void autoSaveDraft_Logout_ShouldSave() {
+        User draftCreator = Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = Topics.typeAnswer(createdTopic);
+
+        Users.logOutAndSignIn(draftCreator);
+        Topics.openRequiredTopic(createdTopic);
 
         assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
     }
