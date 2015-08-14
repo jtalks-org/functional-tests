@@ -26,6 +26,7 @@
       <class name="org.jtalks.tests.jcommune.SignInTest"/>
       <class name="org.jtalks.tests.jcommune.ProfileTest"/>
       <class name="org.jtalks.tests.jcommune.TopicTest"/>
+      <class name="org.jtalks.tests.jcommune.TopicDraftTest"/>
       <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
       <class name="org.jtalks.tests.jcommune.CheckMailCounterTest"/>
       <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
@@ -50,6 +51,7 @@
       <class name="org.jtalks.tests.jcommune.SignInTest"/>
       <class name="org.jtalks.tests.jcommune.ProfileTest"/>
       <class name="org.jtalks.tests.jcommune.TopicTest"/>
+      <class name="org.jtalks.tests.jcommune.TopicDraftTest"/>
       <class name="org.jtalks.tests.jcommune.ExternalLinksTest"/>
       <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
       <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
