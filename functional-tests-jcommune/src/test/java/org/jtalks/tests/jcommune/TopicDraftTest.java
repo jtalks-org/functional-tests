@@ -64,4 +64,18 @@ public class TopicDraftTest {
 
         assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
     }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void remainDraft_LoseFocusCloseTopic_ShouldRemain() {
+        // user with permissions to close topic
+        Users.signIn(User.admin());
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = Topics.typeAnswer(createdTopic).loseFocus();
+
+        Topics.findAndCloseTopic(topic);
+
+        assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+    }
 }
