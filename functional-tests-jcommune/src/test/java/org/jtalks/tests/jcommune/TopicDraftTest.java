@@ -91,4 +91,15 @@ public class TopicDraftTest {
 
         assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
     }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void autoSaveDraft_ContentCopyPastLoseFocus_ShouldSave() {
+        Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = Topics.pasteAnswer(createdTopic).loseFocus();
+
+        assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+    }
 }
