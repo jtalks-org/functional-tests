@@ -135,4 +135,19 @@ public class TopicDraftTest {
         Draft draftSecond = Topics.typeAnswer(topicSecond).loseFocus();
         assertThat(draftSecond.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
     }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void presenceOfDraft_LoseFocusLogoutDeleteCookies_ShouldBePresent() {
+        User user = Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft draft = Topics.typeAnswer(createdTopic).loseFocus();
+
+        Users.logoutAndDeleteAllCookies();
+        Users.signIn(user);
+        Topics.openRequiredTopic(createdTopic);
+
+        assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+    }
 }
