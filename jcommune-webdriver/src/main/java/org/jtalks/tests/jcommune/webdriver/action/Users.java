@@ -38,7 +38,10 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
-import static org.jtalks.tests.jcommune.webdriver.page.Pages.*;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.mainPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.profilePage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.signInPage;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.signUpPage;
 
 /**
  * Contain user actions like sign in, sign out etc.
@@ -83,6 +86,18 @@ public class Users {
     @Step
     public static void logout() {
         mainPage.clickLogout();
+    }
+
+    @Step
+    public static void logoutSignUpAndSignIn() {
+        logout();
+        signUpAndSignIn();
+    }
+
+    @Step
+    public static void logoutAndDeleteAllCookies() {
+        mainPage.clickLogout();
+        driver.manage().deleteAllCookies();
     }
 
     public static User signUpAndSignIn() {

@@ -19,6 +19,8 @@ import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
 import static org.jtalks.tests.jcommune.webdriver.page.Pages.moveTopicEditor;
+import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
+import static org.jtalks.tests.jcommune.webdriver.action.Pages.scrollToEl;
 
 /**
  * @author masyan
@@ -218,6 +220,28 @@ public class PostPage {
     @FindBy(xpath = codeReviewCommentBodyErrorMessageSel)
     private WebElement codeReviewCommentBodyErrorMessage;
 
+    @FindBy(tagName = "textarea")
+    private WebElement textareaEditor;
+
+    @FindBy(id = "postDto")
+    private WebElement postDto;
+
+    @FindBy(id = "counter")
+    private WebElement draftCounter;
+
+    // space symbol is used for localization compatibility, in any language counter message will have spaces
+    @FindBy(xpath = "//span[@id='counter' and contains(text(),' ')]")
+    private WebElement draftCounterActive;
+
+    @FindBy(className = "postLink")
+    private WebElement postLink;
+
+    @FindBy(xpath = "//a[contains(@class, 'open_topic') and contains(@href, 'close')]")
+    private WebElement buttonCloseTopic;
+
+    @FindBy(xpath = "//a[contains(@class, 'open_topic') and contains(@href, 'open')]")
+    private WebElement buttonReopenTopic;
+
     private WebDriver driver;
 
     public PostPage(WebDriver driver) {
@@ -391,6 +415,47 @@ public class PostPage {
         return false;
     }
 
+    public void setFocusOnPostLinkButton() {
+        // move focus outside of textarea
+        getPostLinkButton().sendKeys("");
+        info("Focus set on edit post button");
+    }
+
+    public String scrollDownAndFindDraftCountMessage() {
+        // scroll page to the bottom of post editor,
+        // guarantee that draft counter message will be visible for driver
+        scrollToEl(getPostDto());
+        info("Trying to find draft counter message");
+        return getDraftCounterActiveSpan().getText();
+    }
+
+    public String reloadAndFindDraftContent() {
+        checkCounter();
+        // reload page to get confidence that draft really saved
+        org.jtalks.tests.jcommune.webdriver.action.Pages.refreshPage();
+        info("Trying to find draft content");
+        return getTextareaEditor().getAttribute("value");
+    }
+
+    public boolean checkCounter() {
+        try {
+            postPage.scrollDownAndFindDraftCountMessage();
+        } catch (Exception e) {
+            throw new RuntimeException("Draft was not created", e);
+        }
+        return true;
+    }
+
+    public void clickButtonCloseTopic() {
+        info("Clicking button close topic ...");
+        getButtonCloseTopic().click();
+    }
+
+    public WebElement findButtonReopenTopic() {
+        info("Find Reopen button ...");
+        return getButtonReopenTopic();
+    }
+
     //Getters
 
     public WebElement getTopicTitle() {
@@ -549,5 +614,33 @@ public class PostPage {
 
     public WebElement getCRCommentBodyErrorMessage() {
         return codeReviewCommentBodyErrorMessage;
+    }
+
+    public WebElement getPostDto() {
+        return postDto;
+    }
+
+    public WebElement getDraftCounter() {
+        return draftCounter;
+    }
+
+    public WebElement getDraftCounterActiveSpan() {
+        return draftCounterActive;
+    }
+
+    public WebElement getTextareaEditor() {
+        return textareaEditor;
+    }
+
+    public WebElement getPostLinkButton() {
+        return postLink;
+    }
+
+    public WebElement getButtonCloseTopic() {
+        return buttonCloseTopic;
+    }
+
+    public WebElement getButtonReopenTopic() {
+        return buttonReopenTopic;
     }
 }
