@@ -102,4 +102,21 @@ public class TopicDraftTest {
 
         assertThat(draft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
     }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void autoSaveDraft_DifferentUsersSameTopicLoseFocus_ShouldSaveBoth() {
+        Users.signUpAndSignIn();
+
+        Topic topic = new Topic();
+        Topic createdTopic = Topics.createTopic(topic);
+        Draft firstDraft = Topics.pasteAnswer(createdTopic).loseFocus();
+
+        assertThat(firstDraft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+
+        Users.logoutSignUpAndSignIn();
+        Topics.openRequiredTopic(createdTopic);
+        Draft secondDraft = Topics.pasteAnswer(createdTopic).loseFocus();
+
+        assertThat(secondDraft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+    }
 }
