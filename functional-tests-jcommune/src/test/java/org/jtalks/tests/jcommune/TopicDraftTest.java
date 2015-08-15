@@ -21,6 +21,9 @@ import static org.jtalks.tests.jcommune.webdriver.page.Pages.postPage;
  */
 public class TopicDraftTest {
 
+    private final String BRANCH_BICYCLE = "Bicycle";
+    private final String BRANCH_EUROPE = "Europe";
+
     @BeforeMethod(alwaysRun = true)
     @Parameters({"appUrl"})
     public void setupCase(String appUrl) throws ValidationException {
@@ -118,5 +121,18 @@ public class TopicDraftTest {
         Draft secondDraft = Topics.pasteAnswer(createdTopic).loseFocus();
 
         assertThat(secondDraft.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+    }
+
+    @Test(groups = {"ui-tests", "primary"})
+    public void autoSaveDraft_DifferentDraftInDifferentBranchesLoseFocus_ShouldSave() {
+        Users.signUpAndSignIn();
+
+        Topic topicFirst = Topics.createTopic(new Topic().withBranch(BRANCH_EUROPE));
+        Draft draftFirst = Topics.typeAnswer(topicFirst).loseFocus();
+        assertThat(draftFirst.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
+
+        Topic topicSecond = Topics.createTopic(new Topic().withBranch(BRANCH_BICYCLE));
+        Draft draftSecond = Topics.typeAnswer(topicSecond).loseFocus();
+        assertThat(draftSecond.getPostContent()).isEqualTo(postPage.reloadAndFindDraftContent());
     }
 }
