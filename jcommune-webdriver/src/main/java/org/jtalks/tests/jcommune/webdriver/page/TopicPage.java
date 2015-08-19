@@ -31,8 +31,8 @@ public class TopicPage {
     public static final String EMPTY_BODY_ERROR = "(Size must be between 2 and 20000)" +
             "|(Размер должен быть между 2 и 20000)";
 
-    public static final String SUBJECT_SIZE_ERROR = "(Length must be between 1 and 120 symbols\n)" +
-            "|(Длина должна быть между 1 и 120 символами\n)";
+    public static final String SUBJECT_SIZE_ERROR = "(Size must be between 1 and 120\n)" +
+            "|(Размер должен быть между 1 и 120\n)";
 
     public static final String POLL_SUBJECT_EMPTY_ERROR = "(Poll title could not be blank if poll items arent blank)" +
             "|(Если заданы опции голосования, то заголовок голосования не может быть пустым)";
