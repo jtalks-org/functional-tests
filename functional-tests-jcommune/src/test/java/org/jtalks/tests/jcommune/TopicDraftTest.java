@@ -26,7 +26,7 @@ public class TopicDraftTest {
         mainPage.logOutIfLoggedIn(driver);
     }
 
-    @Test(groups = {"ui-tests", "primary"})
+    @Test(groups = {"primary"})
     public void autoSaveDraft_MoveFocus_ShouldSave() {
         Users.signUpAndSignIn();
         Topic topic = new Topic();
