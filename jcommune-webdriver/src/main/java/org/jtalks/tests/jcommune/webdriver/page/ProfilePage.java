@@ -81,7 +81,7 @@ public class ProfilePage {
 
     public static final String WRONG_CONFIRMATION_PASSWORD = "Пароль и подтверждение пароля не совпадают\n";
 
-    public static final String TOO_LONG_PASSWORD = "Размер должен быть между 1 и 50\n";
+    public static final String TOO_LONG_PASSWORD = "Длина должна быть между 1 и 50 символами\n";
 
     public static final String TOO_LONG_FIRST_NAME = "Должно быть 0 - 45 символов\n";
 
