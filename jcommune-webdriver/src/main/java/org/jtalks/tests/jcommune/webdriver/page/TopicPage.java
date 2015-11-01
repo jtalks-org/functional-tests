@@ -148,6 +148,7 @@ public class TopicPage {
 
     private void fillTopicTitle(String topicTitle) {
         info("Fill topic title: [" + topicTitle + "]");
+        getSubjectField().clear();
         this.subjectField.sendKeys(topicTitle);
     }
 
@@ -189,6 +190,7 @@ public class TopicPage {
     public void fillPollSpecificFields(Poll poll) {
         if (poll != null) {
             info("Filling poll title: " + poll.getTitle());
+            getTopicsPollTitleField().clear();
             getTopicsPollTitleField().sendKeys(poll.getTitle());
             fillPollOptions(poll.getOptions());
             fillPollEndDate(poll.getEndDateAsString());
@@ -199,6 +201,7 @@ public class TopicPage {
     private void fillPollOptions(String[] pollOptions) {
         info("Filling poll options. Their number is: " + pollOptions.length);
         WebElement optionsField = getTopicPollItemsField();
+        optionsField.clear();
         for (String option : pollOptions) {
             info("Filling poll option: " + option);
             optionsField.sendKeys(option + "\n");
