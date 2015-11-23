@@ -229,8 +229,8 @@ public class TopicPage {
         }
     }
 
-    public void editPostMessageBody(String newMessage) {
-        info("Editing post body: [" + StringUtils.left(newMessage, 100) + "...]");
+    public void fillBody(String newMessage) {
+        info("Fill body: [" + StringUtils.left(newMessage, 100) + "...]");
         getMainBodyArea().clear();
         for (String token : Splitter.fixedLength(100).split(newMessage)) {
             getMainBodyArea().sendKeys(token);
@@ -240,8 +240,7 @@ public class TopicPage {
     public void fillCodeReviewFields(CodeReview codeReview) {
         info("Filling code review title: [" + StringUtils.left(codeReview.getTitle(), 100) + "...]");
         getSubjectField().sendKeys(codeReview.getTitle());
-        info("Filling code review body: [" + StringUtils.left(codeReview.getContent(), 100) + "...]");
-        getMainBodyArea().sendKeys(codeReview.getContent());
+        fillBody(codeReview.getContent());
     }
     
     //Getters

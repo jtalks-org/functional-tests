@@ -126,7 +126,7 @@ public class Topics {
             throw e;
         }
         String newPostContent = randomAlphanumeric(100);
-        topicPage.editPostMessageBody(newPostContent);
+        topicPage.fillBody(newPostContent);
         topicPage.clickAnswerToTopicButton();
         for(int i = 0; i < topic.getPosts().size(); i++) {
             if (topic.getPosts().get(i).getPostContent().equals(postToEdit.getPostContent())) {
