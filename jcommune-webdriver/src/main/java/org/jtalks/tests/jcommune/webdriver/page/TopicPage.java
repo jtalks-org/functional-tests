@@ -61,7 +61,7 @@ public class TopicPage {
 
     public static final String backButtonOnEditFormSel = "//a[@class='back-btn']";
     
-    @FindBy(id = "subjectError")
+    @FindBy(id = "topic.title.errors")
     private WebElement subjectErrorMessage;
 
     @FindBy(id = "bodyText.errors")
