@@ -9,7 +9,7 @@ class ArticleManagementTest extends Specification {
   def 'article title positive cases'() {
     given: 'user is created and logged in'
     when: "user creates an article with $caseName"
-    then: 'article should not get created'
+    then: 'article should get created'
     where:
       caseName        | articleTitle         | messageIfCaseFailed
       'Min boundary'  | randomAlphabetic(1)  | 'Could not create article with min title boundary'
@@ -33,7 +33,7 @@ class ArticleManagementTest extends Specification {
       Users.signIn();
     when: "user creates an article with $caseName"
       Article article = Articles.create(new Article(content: articleContent))
-    then: 'article should not get created'
+    then: 'article should get created'
       Articles.assertArticleExists(article, messageIfCaseFailed)
     where:
       caseName        | articleContent           | messageIfCaseFailed
@@ -104,6 +104,30 @@ class ArticleManagementTest extends Specification {
       language        | translationLanguage | messageIfCaseFailed
       'second'        | $randomLanguage     | 'Could not create second translation of article'
       'same language' | 'English'           | 'Could not create translation of article on same language'
+  }
+  
+  def 'comment adding positive cases'() {
+    given: 'user is created and logged in'
+        and: 'article is created and opened'
+    when: "user creates a comment with $caseName"
+    then: 'comment should be added'
+    where:
+      caseName        | commentLength           | messageIfCaseFailed
+      'Min boundary'  | randomAlphabetic(1)     | 'Could not create comment with min length boundary'
+      'Max boundary'  | randomAlphabetic(65535) | 'Could not create comment with max length boundary'
+      'Average length'| randomAlphabetic(3000)  | 'Could not create comment of average length'
+  }
+  
+def 'comment adding negative cases'() {
+    given: 'user is created and logged in'
+        and: 'article is created and opened'
+    when: "user creates a comment with $caseName"
+    then: 'comment should not get added'
+    where:
+      caseName           | commentLength           | messageIfCaseFailed
+      'Empty comment'    | ''                      | 'Empty comment was possible to create while this is not allowed''
+      'Too long comment' | randomAlphabetic(65536) | 'It was possible to create a comment with too long length'
+      'Spaces in comment'| '   '                   | 'Comment with only spaces should not be allowed!'
   }
 
 }
