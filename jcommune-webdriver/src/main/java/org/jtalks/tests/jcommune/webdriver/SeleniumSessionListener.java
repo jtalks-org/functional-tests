@@ -69,7 +69,8 @@ public class SeleniumSessionListener implements ITestListener, IInvokedMethodLis
             seleniumConfig = new JCommuneSeleniumConfig();
             XmlSuite suite = testClass.getXmlTest().getSuite();
             try {
-                seleniumConfig.init(suite.getParameter("webDriverUrl"), suite.getParameter("appUrl"));
+                seleniumConfig.init(suite.getParameter("webDriverUrl"), suite.getParameter("appUrl"),
+                        currentTestClass.getSimpleName());
             } catch (Exception e) {
                 logger.error("Unexpected error during Selenium configuration.", e);
                 throw new RuntimeException(e);
