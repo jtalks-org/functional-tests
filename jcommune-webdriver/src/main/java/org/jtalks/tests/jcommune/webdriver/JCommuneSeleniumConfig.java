@@ -47,15 +47,16 @@ public class JCommuneSeleniumConfig {
      */
     @BeforeSuite(alwaysRun = true)
     @Parameters({"webDriverUrl"})
-    public void init(String webDriverUrl, String appUrl) throws Exception {
+    public void init(String webDriverUrl, String appUrl, String testName) throws Exception {
         JCommuneSeleniumConfig.appUrl = appUrl;
         webdriverType = getBrowser();
-        initDriver(webDriverUrl);
+        initDriver(webDriverUrl, testName);
         Pages.createAllPages(driver);
     }
 
-    private void initDriver(String defaultSeleniumServerUrl) throws MalformedURLException {
+    private void initDriver(String defaultSeleniumServerUrl, String testName) throws MalformedURLException {
         DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("name", testName);
         capabilities.setCapability(CapabilityType.PLATFORM, getOs());
         capabilities.setBrowserName(getBrowser());
         capabilities.setVersion(getBrowserVersion());
