@@ -44,7 +44,7 @@ class ArticleManagementTest extends Specification {
 
   def 'translation title positive cases'() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation should get created'
     where:
@@ -56,7 +56,7 @@ class ArticleManagementTest extends Specification {
 
   def 'translation title negative cases'() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation should not get created'
     where:
@@ -68,7 +68,7 @@ class ArticleManagementTest extends Specification {
 
   def 'translation content positive cases'() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation should get created'
     where:
@@ -80,7 +80,7 @@ class ArticleManagementTest extends Specification {
 
   def "translation content negative cases"() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation of article should not get created'
     where:
@@ -96,8 +96,8 @@ class ArticleManagementTest extends Specification {
 
   def "create second translation"() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
-      and: 'translation in English is created'
+    and: 'article is created and opened'
+    and: 'translation in English is created'
     when: "user creates a translation on $language"
     then: 'translation of article should get created'
     where:
@@ -108,7 +108,7 @@ class ArticleManagementTest extends Specification {
   
   def 'comment adding positive cases'() {
     given: 'user is created and logged in'
-        and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a comment with $caseName"
     then: 'comment should be added'
     where:  
@@ -120,7 +120,7 @@ class ArticleManagementTest extends Specification {
      
   def 'comment adding negative cases'() {
     given: 'user is created and logged in'
-        and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a comment with $caseName"  
     then: 'validation error should be shown'  
     where:  
