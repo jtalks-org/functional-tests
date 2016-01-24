@@ -3,6 +3,7 @@ package org.jtalks.tests.antarcticle
 import spock.lang.Specification
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic
+import static org.apache.commons.lang3.RandomStringUtils.random
 
 class ArticleManagementTest extends Specification {
 
@@ -105,5 +106,28 @@ class ArticleManagementTest extends Specification {
       'second'        | $randomLanguage     | 'Could not create second translation of article'
       'same language' | 'English'           | 'Could not create translation of article on same language'
   }
-
+  
+  def 'article tags positive cases'() {
+    given: 'user is created and logged in'
+    when: "user creates an article with $caseName"
+    then: 'article should get created'
+    where:
+      caseName             | articleTitle                                      | messageIfCaseFailed
+      'Min boundary'       | randomAlphabetic(1)                               | 'Could not create article with min tag boundary'
+      'Max boundary'       | randomAlphabetic(30)                              | 'Could not create an article with max tag boundary'
+      'Average title'      | randomAlphabetic(15)                              | 'Could not create an article of average tag length'
+      'Special characters' | random(15, '?#+-`\'.,')                           | 'Could not create an article with special characters in tag'
+      'With space'         | randomAlphabetic(10) + " " + randomAlphabetic(10) | 'Could not create an article with space in tag'
+  }
+  
+  def 'article tags negative cases'() {
+    given: 'user is created and logged in'
+    when: "user creates an article with $caseName"
+    then: 'article should not get created'
+    where:
+      caseName             | articleTitle                                          | messageIfCaseFailed
+      'Too long tag'       | randomAlphabetic(31)                                  | 'Could create too long tag when not allowed'
+      'Lead comma in tag'  | "," + randomAlphabetic(10)                            | 'Could create tag with lead comma when not allowed'
+      'Special characters' | random(15, 0, 18, false, false, '!@$%^&*()[]{}<>/\\') | 'Could create tag with special characters when not allowed'
+  }
 }
