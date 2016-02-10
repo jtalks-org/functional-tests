@@ -9,7 +9,7 @@ class ArticleManagementTest extends Specification {
   def 'article title positive cases'() {
     given: 'user is created and logged in'
     when: "user creates an article with $caseName"
-    then: 'article should not get created'
+    then: 'article should get created'
     where:
       caseName        | articleTitle         | messageIfCaseFailed
       'Min boundary'  | randomAlphabetic(1)  | 'Could not create article with min title boundary'
@@ -33,7 +33,7 @@ class ArticleManagementTest extends Specification {
       Users.signIn();
     when: "user creates an article with $caseName"
       Article article = Articles.create(new Article(content: articleContent))
-    then: 'article should not get created'
+    then: 'article should get created'
       Articles.assertArticleExists(article, messageIfCaseFailed)
     where:
       caseName        | articleContent           | messageIfCaseFailed
@@ -44,7 +44,7 @@ class ArticleManagementTest extends Specification {
 
   def 'translation title positive cases'() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation should get created'
     where:
@@ -56,7 +56,7 @@ class ArticleManagementTest extends Specification {
 
   def 'translation title negative cases'() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation should not get created'
     where:
@@ -68,7 +68,7 @@ class ArticleManagementTest extends Specification {
 
   def 'translation content positive cases'() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation should get created'
     where:
@@ -80,7 +80,7 @@ class ArticleManagementTest extends Specification {
 
   def "translation content negative cases"() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
+    and: 'article is created and opened'
     when: "user creates a translation with $caseName"
     then: 'translation of article should not get created'
     where:
@@ -96,8 +96,8 @@ class ArticleManagementTest extends Specification {
 
   def "create second translation"() {
     given: 'user is created and logged in'
-      and: 'article is created and opened'
-      and: 'translation in English is created'
+    and: 'article is created and opened'
+    and: 'translation in English is created'
     when: "user creates a translation on $language"
     then: 'translation of article should get created'
     where:
@@ -105,5 +105,30 @@ class ArticleManagementTest extends Specification {
       'second'        | $randomLanguage     | 'Could not create second translation of article'
       'same language' | 'English'           | 'Could not create translation of article on same language'
   }
+  
+  def 'comment adding positive cases'() {
+    given: 'user is created and logged in'
+    and: 'article is created and opened'
+    when: "user creates a comment with $caseName"
+    then: 'comment should be added'
+    where:  
+      caseName        | commentLength           | messageIfCaseFailed  
+      'Min boundary'  | randomAlphabetic(1)     | 'Could not create comment with min length boundary'  
+      'Max boundary'  | randomAlphabetic(65535) | 'Could not create comment with max length boundary'  
+      'Average length'| randomAlphabetic(3000)  | 'Could not create comment of average length'  
+  }  
+     
+  def 'comment adding negative cases'() {
+    given: 'user is created and logged in'
+    and: 'article is created and opened'
+    when: "user creates a comment with $caseName"  
+    then: 'validation error should be shown'  
+    where:  
+      caseName           | commentLength           |  messageIfCaseFailed  
+      'Empty comment'    | ''                      | 'Empty comment was possible to create while this is not allowed''  
+      'Too long comment' | randomAlphabetic(65536) | 'It was possible to create a comment with too long length'  
+      'Spaces in comment'| '   '                   | 'Comment with only spaces should not be allowed!'  
+  }  
+
 
 }
