@@ -132,22 +132,13 @@ public class TopicTest {
     }
 
     @Test(groups = "ui-tests")
-    public void loginAndCreateTopicValidateBranch_ShouldPass() throws Exception {
+    public void createTopicInBranch_mustPass() throws Exception {
         User user = User.admin();
         Users.signIn(user);
         Topic topic = new Topic().withBranch("Cricet");
         topic.withTopicStarter(user);
         Topics.createTopic(topic);
         Assert.assertEquals(true, Topics.isInCorrectBranch(topic));
-    }
-
-    @Test(groups = "ui-tests")
-    public void signUpAndCreateTopicInBranch_ShouldPass() throws Exception {
-        User user = User.admin();
-        Users.signIn(user);
-        Topic topic = new Topic().withBranch("Field hockey");
-        topic.withTopicStarter(user);
-        Topics.createTopic(topic);
     }
 
     @Test(groups = "ui-tests")
