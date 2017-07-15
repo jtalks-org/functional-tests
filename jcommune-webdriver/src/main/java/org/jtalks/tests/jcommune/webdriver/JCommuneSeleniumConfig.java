@@ -4,6 +4,8 @@ import org.jtalks.tests.jcommune.webdriver.page.Pages;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -58,7 +60,13 @@ public class JCommuneSeleniumConfig {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("name", testName);
         capabilities.setCapability(CapabilityType.PLATFORM, getOs());
-        capabilities.setBrowserName(getBrowser());
+        String browser = getBrowser();
+        capabilities.setBrowserName(browser);
+        if (browser.toLowerCase().contains("firefox")) {
+            FirefoxProfile profile = new FirefoxProfile();
+            profile.setPreference("security.insecure_field_warning.contextual.enabled", false); // disable insecure password warning
+            capabilities.setCapability(FirefoxDriver.PROFILE, profile);
+        }
         capabilities.setVersion(getBrowserVersion());
         capabilities.setCapability("max-duration", 10800);//max duration of a single test class in seconds (10800=3hrs)
 
