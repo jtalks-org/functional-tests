@@ -7,10 +7,7 @@ import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.jtalks.tests.jcommune.utils.TestStringUtils.randomUrl;
@@ -32,6 +29,7 @@ public class ExternalLinksTest {
         mainPage.logOutIfLoggedIn(driver);
         try {
             Users.signIn(User.admin());
+            ExternalLinks.removeExistedExternalLinks();
         } catch (ValidationException e) {
             logger.error("Can't login by user [{}]", User.admin().getUsername());
             throw new IllegalStateException("Can't login by user " + User.admin().getUsername());
