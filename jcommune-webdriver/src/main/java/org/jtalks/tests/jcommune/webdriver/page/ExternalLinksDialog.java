@@ -1,19 +1,25 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.annotations.Step;
 
 import java.util.List;
 
 import static org.jtalks.tests.jcommune.utils.ReportNgLogger.info;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.SELENIUM_TIMEOUT_SEC;
+import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
 public class ExternalLinksDialog {
     public static final String externalLinksFromDialogSel = "//div[@class='modal-body']/table/tbody/tr";
     public static final String externalLinksHrefFromDialogSel = "td[@class='link-url']";
+    public static final String externalLinksDialogSel = "mainLinksEditor";
     //class name
     public static final String externalLinksRemoveIconFromDialogSel = "icon-trash";
     public static final String externalLinksEditIconFromDialogSel = "icon-pencil";
@@ -49,6 +55,7 @@ public class ExternalLinksDialog {
     public void closeDialog() {
         info("Closing dialog by pressing Close button");
         closeDialogButton.submit();
+        (new WebDriverWait(driver, SELENIUM_TIMEOUT_SEC)).until(ExpectedConditions.invisibilityOfElementLocated(By.id(externalLinksDialogSel)));
     }
 
     @Step
