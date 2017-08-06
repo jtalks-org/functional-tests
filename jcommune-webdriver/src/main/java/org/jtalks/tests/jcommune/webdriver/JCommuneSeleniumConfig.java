@@ -64,7 +64,11 @@ public class JCommuneSeleniumConfig {
         capabilities.setBrowserName(browser);
         if (browser.toLowerCase().contains("firefox")) {
             FirefoxProfile profile = new FirefoxProfile();
-            profile.setPreference("security.insecure_field_warning.contextual.enabled", false); // disable insecure password warning
+            // disable insecure password warning to prevent next field hovering
+            profile.setPreference("security.insecure_field_warning.contextual.enabled", false); 
+            // disable autocomplete for Firefox as suggestions list for empty/space-filled field hovers next input field
+            // and click on the next field leads to choosing item from list for previous field
+            profile.setPreference("browser.formfill.enable", false);
             capabilities.setCapability(FirefoxDriver.PROFILE, profile);
         }
         capabilities.setVersion(getBrowserVersion());
