@@ -2,6 +2,7 @@ package org.jtalks.tests.jcommune.webdriver;
 
 import org.jtalks.tests.jcommune.webdriver.page.Pages;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -35,6 +36,7 @@ public class JCommuneSeleniumConfig {
     public static WebDriver driver = null;
     public static String webdriverType;
     private static String appUrl;
+    private static JavascriptExecutor js = null;
 
     public static Capabilities getCapabilities() {
         return ((RemoteWebDriver) driver).getCapabilities();
@@ -79,6 +81,7 @@ public class JCommuneSeleniumConfig {
         LOGGER.info("Selenium WebDriver URL: [{}]", seleniumUrl);
         driver = new RemoteWebDriver(new URL(seleniumUrl), capabilities);
         driver.manage().timeouts().implicitlyWait(SELENIUM_TIMEOUT_SEC, TimeUnit.SECONDS);
+        js = (JavascriptExecutor) driver;
     }
 
     private String getOs() {
@@ -133,5 +136,9 @@ public class JCommuneSeleniumConfig {
 
     public static String getAppUrl() {
         return appUrl;
+    }
+
+    public static JavascriptExecutor getJs() {
+        return js;
     }
 }
