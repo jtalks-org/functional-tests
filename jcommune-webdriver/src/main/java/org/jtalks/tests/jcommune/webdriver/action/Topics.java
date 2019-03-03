@@ -15,13 +15,12 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import com.google.common.base.Splitter;
+import org.apache.commons.lang3.StringUtils;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.*;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
@@ -29,11 +28,14 @@ import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
+import org.jtalks.tests.jcommune.webdriver.page.Pages;
 import org.jtalks.tests.jcommune.webdriver.page.PostPage;
+import org.jtalks.tests.jcommune.webdriver.page.QuestionAndAnswersPage;
 import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -128,7 +130,7 @@ public class Topics {
         String newPostContent = randomAlphanumeric(100);
         topicPage.fillBody(newPostContent);
         topicPage.clickAnswerToTopicButton();
-        for(int i = 0; i < topic.getPosts().size(); i++) {
+        for (int i = 0; i < topic.getPosts().size(); i++) {
             if (topic.getPosts().get(i).getPostContent().equals(postToEdit.getPostContent())) {
                 topic.getPosts().get(i).setPostContent(newPostContent);
                 break;
@@ -386,7 +388,7 @@ public class Topics {
         String newCommentContent = randomAlphanumeric(100);
         postPage.editCodeReviewCommentBody(newCommentContent);
         postPage.clickOkButtonInEditComment();
-        for(int i = 0; i < codeReview.getComments().size(); i++) {
+        for (int i = 0; i < codeReview.getComments().size(); i++) {
             if (codeReview.getComments().get(i).getPostContent().equals(codeReviewComment.getPostContent())) {
                 codeReview.getComments().get(i).setPostContent(newCommentContent);
                 break;
@@ -424,10 +426,104 @@ public class Topics {
         throw new UnsupportedOperationException("Edit post can't be done in code review type topics");
     }
 
-    public static void deleteCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
+    public static void deleteCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment) {
         openRequiredTopic(codeReview);
 
         postPage.clickDeleteInCodeReviewCommentContainingString(codeReviewComment.getPostContent());
         postPage.closeDeleteCRCommentConfirmDialogOk();
+    }
+
+    // QuestionAndAnswers methods
+
+    public static QuestionAndAnswers createQuestionAndAnswers(QuestionAndAnswers questionAndAnswers)
+            throws PermissionsDeniedException, CouldNotOpenPageException, ValidationException {
+        if (questionAndAnswers.getBranch() == null) {
+            List<WebElement> branches = sectionPage.getBranches();
+            if (isEmpty(branches)) {
+                throw new CouldNotOpenPageException("Could not open any branch, there were 0 on the page. " +
+                        "Page URL: [" + JCommuneSeleniumConfig.driver.getCurrentUrl() + "]. " +
+                        "Page Title: [" + JCommuneSeleniumConfig.driver.getTitle() + "]. " +
+                        "Page source: " + JCommuneSeleniumConfig.driver.getPageSource());
+            }
+            Branch branch = new Branch(sectionPage.getBranches().get(0).getText());
+            questionAndAnswers.withBranch(branch);
+        }
+        Branches.openBranch(questionAndAnswers.getBranch());
+        branchPage.clickQuestionAndAnswers();
+        questionAndAnswersPage.fillQuesionAndAnswersFields(questionAndAnswers);
+        questionAndAnswersPage.clickAnswerToTopicButton();
+        assertQuestionAndAnswersFormValid();
+        return questionAndAnswers;
+    }
+
+    private static void assertQuestionAndAnswersFormValid() throws ValidationException {
+        String failedFields = "";
+        info("Check subject");
+        if (Existence.existsImmediately(driver, questionAndAnswersPage.getSubjectErrorMessage())) {
+            WebElement subjectError = questionAndAnswersPage.getSubjectErrorMessage();
+            failedFields += subjectError.getText() + "\n";
+        }
+        info("Check body");
+        if (Existence.existsImmediately(driver, questionAndAnswersPage.getBodyErrorMessage())) {
+            WebElement bodyError = questionAndAnswersPage.getBodyErrorMessage();
+            failedFields += bodyError.getText();
+        }
+        info("Check finished");
+        if (!failedFields.equals("")) {
+            info("Found validation errors: " + failedFields);
+            throw new ValidationException(failedFields);
+        }
+        info("Check successful. No errors.");
+    }
+
+    @Step
+    public static String fillCommentToOwnQuestion(QuestionAndAnswers question, String comment)
+            throws PermissionsDeniedException, ValidationException {
+        openRequiredTopic(question);
+        info("We are in the required topic");
+        questionAndAnswersPage.addFirstComment(comment);
+        questionAndAnswersPage.clickSubmitCommentButton();
+        return comment;
+    }
+
+    @Step
+    public static String EditOwnCommentToQuestion(QuestionAndAnswers question, String comment)
+            throws PermissionsDeniedException, ValidationException {
+        openRequiredTopic(question);
+        info("We are in the required topic");
+        questionAndAnswersPage.findProperComment(comment);
+        questionAndAnswersPage.clickEditCommentButton();
+        String newCommentContent = randomAlphanumeric(100);
+        questionAndAnswersPage.addComment(newCommentContent);
+        questionAndAnswersPage.clickConfirmEditCommentButton();
+        Assert.assertEquals(questionAndAnswersPage.getFirstCommentContent().getText(),newCommentContent);
+        return newCommentContent;
+    }
+
+    @Step
+    public static void deleteOwnQAComment(QuestionAndAnswers question,String comment) throws PermissionsDeniedException {
+        openRequiredTopic(question);
+        info("We are in the required topic");
+        questionAndAnswersPage.findProperComment(comment);
+        info("Clicking delete button for topic's first comment");
+        try {
+            questionAndAnswersPage.clickDeleteCommentButton();;
+        } catch (NoSuchElementException e) {
+            info("Delete button was not found");
+            throw new PermissionsDeniedException("Delete button was not found. Lack of permissions?");
+        }
+        questionAndAnswersPage.getConfirmDeleteCommentButton().click();
+    }
+
+    @Step
+    public static void answerToOwnQuestion(QuestionAndAnswers question) throws PermissionsDeniedException {
+        openRequiredTopic(question);
+        info("We are in the required topic");
+        questionAndAnswersPage.clickAnswerToOwnQuestionButton();
+        questionAndAnswersPage.getConfirmAnswerButton().click();
+        info("Adding a new answer");
+        questionAndAnswersPage.fillBody(randomAlphanumeric(200));
+        info("Click the post answer button");
+        questionAndAnswersPage.getPostButton().click();
     }
 }

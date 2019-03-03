@@ -45,6 +45,10 @@ public class MainPage {
     private WebElement administrationDropdownMenu;
     @FindBy(id = "Administration")
     private WebElement toggleAdmineModeLink;
+    @FindBy (id = "PluginPage")
+    WebElement togglePluginPageLink;
+    @FindBy (className = "plugin-checkbox")
+    private WebElement QuestionAndAnswersCheckbox;
     @FindBy(xpath = openedDropdownMenuSel)
     private WebElement openedDropdownMenu;
     @FindBy(xpath = languageSwitcherSel)
@@ -244,6 +248,24 @@ public class MainPage {
             info("We're in a wide screen mode");
             return false;
         }
+    }
+
+    @Step
+    public void openPluginsPage() {
+        administrationDropdownMenu.click();
+        togglePluginPageLink.click();
+    }
+
+    @Step
+    public void checkingEnabledPlugins() {
+        info("Checking if Q&A plugin is enabled");
+        if (! QuestionAndAnswersCheckbox.isSelected()) {
+            info("Q&A plugin is disabled. Switching it ON");
+            QuestionAndAnswersCheckbox.click();
+        } else {
+            info("Q&A plugin is enabled already, doing nothing");
+        }
+        info("Q&A plugin is switched ON");
     }
 
     public WebElement getLastPostAuthor() {

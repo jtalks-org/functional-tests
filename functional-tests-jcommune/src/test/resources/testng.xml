@@ -1,7 +1,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="JCommune">
   <parameter name="appUrl" value="http://autotests.jtalks.org/jcommune/"/>
-  <parameter name="webDriverUrl" value="http://selenium-server.jtalks.org/wd/hub"/>
+  <!--<parameter name="webDriverUrl" value="http://selenium-server.jtalks.org/wd/hub"/>-->
+  <parameter name="webDriverUrl" value="http://localhost:4444/wd/hub"/>
   <listeners>
     <!--Creates a selenium session for tests to use-->
     <listener class-name="org.jtalks.tests.jcommune.webdriver.SeleniumSessionListener"/>
@@ -31,12 +32,13 @@
       <class name="org.jtalks.tests.jcommune.AdministrationTest"/>
       <class name="org.jtalks.tests.jcommune.CodeReviewTest"/>
       <class name="org.jtalks.tests.jcommune.PrivateMessagesTest"/>
-    </classes>
-  </test>
-  <!--
-  This takes long time to run, usually will be run only headless (without browser) to speed up. It won't be run by
-  default, only Smokes are run. To run these tests pass to maven: -Dtestnames=FullRegression. See pom.xml for more
-  information.-->
+      <class name="org.jtalks.tests.jcommune.QuestionAndAnswersTest"/>
+</classes>
+</test>
+<!--
+This takes long time to run, usually will be run only headless (without browser) to speed up. It won't be run by
+default, only Smokes are run. To run these tests pass to maven: -Dtestnames=FullRegression. See pom.xml for more
+information.-->
 
   <test name="FullRegression">
     <groups>
