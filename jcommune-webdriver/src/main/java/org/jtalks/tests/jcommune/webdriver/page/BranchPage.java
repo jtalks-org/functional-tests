@@ -43,6 +43,9 @@ public class BranchPage {
     @FindBy(className = "new-code-review-btn")
     private WebElement newCodeReviewButton;
 
+    @FindBy(className = "new-question-btn")
+    private WebElement newQuestionAndAnswersButton;
+
     @FindBy(xpath = "//table[@id='topics-table']/tbody/tr/td[@class='posts-td-small posts-td-small_2']/h2/a[contains(@href, '" + JCommuneSeleniumConfig.JCOMMUNE_CONTEXT_PATH + "/topics/')]")
     private List<WebElement> topicsList;
 
@@ -79,6 +82,23 @@ public class BranchPage {
                     + driver.getPageSource());
         }
     }
+
+
+    @Step
+    public void clickQuestionAndAnswers() throws PermissionsDeniedException {
+        info("Clicking New Question and Answers Button");
+        try {
+            if (getNewTopicToggle() != null) {
+                getNewTopicToggle().click();
+            }
+            getNewQuestionAndAnswersButton().click();
+        } catch (NoSuchElementException e) {
+            info("No such button found!");
+            throw new PermissionsDeniedException("Couldn't find New Question and Answers button. Check if Q&A plugin is enabled. Here is the page source: \n"
+                    + driver.getPageSource());
+        }
+    }
+
 
     public boolean isUserAlreadySubscribed() {
         return subscribeButton.getAttribute("href").contains("/unsubscribe");
@@ -167,6 +187,10 @@ public class BranchPage {
 
     public WebElement getNewCodeReviewButton() {
         return newCodeReviewButton;
+    }
+
+    public WebElement getNewQuestionAndAnswersButton() {
+        return newQuestionAndAnswersButton;
     }
 
     public List<WebElement> getTopicsList() {

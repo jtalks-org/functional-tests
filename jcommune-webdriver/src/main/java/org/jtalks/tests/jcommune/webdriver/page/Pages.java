@@ -1,5 +1,6 @@
 package org.jtalks.tests.jcommune.webdriver.page;
 
+import org.jtalks.tests.jcommune.webdriver.entity.topic.QuestionAndAnswers;
 import org.openqa.selenium.WebDriver;
 
 /** @author stanislav bashkirtsev */
@@ -16,6 +17,7 @@ public class Pages {
     public static ExternalLinksDialog externalLinksDialog;
     public static ForumSettingsDialog forumSettingsDialog;
     public static MoveTopicEditor moveTopicEditor;
+    public static QuestionAndAnswersPage questionAndAnswersPage;
 
 
     public static void createAllPages(WebDriver driver) {
@@ -31,5 +33,6 @@ public class Pages {
         externalLinksDialog = new ExternalLinksDialog(driver);
         forumSettingsDialog = new ForumSettingsDialog(driver);
         moveTopicEditor = new MoveTopicEditor(driver);
+        questionAndAnswersPage = new QuestionAndAnswersPage(driver);
     }
 }

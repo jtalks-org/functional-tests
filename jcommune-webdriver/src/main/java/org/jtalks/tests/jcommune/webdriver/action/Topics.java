@@ -15,13 +15,12 @@
 
 package org.jtalks.tests.jcommune.webdriver.action;
 
+import com.google.common.base.Splitter;
+import org.apache.commons.lang3.StringUtils;
 import org.jtalks.tests.jcommune.assertion.Existence;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.branch.Branch;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReviewComment;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Post;
-import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.*;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.CouldNotOpenPageException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
@@ -29,11 +28,14 @@ import org.jtalks.tests.jcommune.webdriver.exceptions.TimeoutException;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
 import static org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig.driver;
 
+import org.jtalks.tests.jcommune.webdriver.page.Pages;
 import org.jtalks.tests.jcommune.webdriver.page.PostPage;
+import org.jtalks.tests.jcommune.webdriver.page.QuestionAndAnswersPage;
 import org.jtalks.tests.jcommune.webdriver.page.TopicPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -128,7 +130,7 @@ public class Topics {
         String newPostContent = randomAlphanumeric(100);
         topicPage.fillBody(newPostContent);
         topicPage.clickAnswerToTopicButton();
-        for(int i = 0; i < topic.getPosts().size(); i++) {
+        for (int i = 0; i < topic.getPosts().size(); i++) {
             if (topic.getPosts().get(i).getPostContent().equals(postToEdit.getPostContent())) {
                 topic.getPosts().get(i).setPostContent(newPostContent);
                 break;
@@ -386,7 +388,7 @@ public class Topics {
         String newCommentContent = randomAlphanumeric(100);
         postPage.editCodeReviewCommentBody(newCommentContent);
         postPage.clickOkButtonInEditComment();
-        for(int i = 0; i < codeReview.getComments().size(); i++) {
+        for (int i = 0; i < codeReview.getComments().size(); i++) {
             if (codeReview.getComments().get(i).getPostContent().equals(codeReviewComment.getPostContent())) {
                 codeReview.getComments().get(i).setPostContent(newCommentContent);
                 break;
@@ -424,10 +426,11 @@ public class Topics {
         throw new UnsupportedOperationException("Edit post can't be done in code review type topics");
     }
 
-    public static void deleteCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment){
+    public static void deleteCodeReviewComment(CodeReview codeReview, CodeReviewComment codeReviewComment) {
         openRequiredTopic(codeReview);
 
         postPage.clickDeleteInCodeReviewCommentContainingString(codeReviewComment.getPostContent());
         postPage.closeDeleteCRCommentConfirmDialogOk();
     }
+
 }
