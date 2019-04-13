@@ -1,10 +1,12 @@
 package org.jtalks.tests.jcommune;
 
+import org.jtalks.tests.jcommune.webdriver.action.QuestionAndAnswersTopic;
 import org.jtalks.tests.jcommune.webdriver.action.Topics;
 import org.jtalks.tests.jcommune.webdriver.action.Users;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.QuestionAndAnswers;
 import org.jtalks.tests.jcommune.webdriver.entity.user.User;
 import org.jtalks.tests.jcommune.webdriver.exceptions.ValidationException;
+import org.jtalks.tests.jcommune.webdriver.page.QuestionAndAnswersPage;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -23,7 +25,7 @@ public class QuestionAndAnswersTest {
         mainPage.logOutIfLoggedIn(driver);
         Users.signIn(User.admin());
         mainPage.openPluginsPage();
-        mainPage.checkingEnabledPlugins();
+        mainPage.ensurePlugingEnabled();
     }
 
 
@@ -36,10 +38,10 @@ public class QuestionAndAnswersTest {
 
 
     @Test(groups = "ui-tests")
-    public void createQuestionWithTitleAndBody_ShouldPass() throws Exception {
+    public void userCanCreateQuestionWithValidTitleAndBody_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         QuestionAndAnswers question = new QuestionAndAnswers();
-        QuestionAndAnswers createdTopic = Topics.createQuestionAndAnswers(question);
+        QuestionAndAnswers createdTopic = QuestionAndAnswersTopic.createQuestionAndAnswers(question);
         Assert.assertTrue(Topics.isCreated(createdTopic));
     }
 
@@ -48,8 +50,8 @@ public class QuestionAndAnswersTest {
         Users.signUpAndSignIn();
         QuestionAndAnswers question = new QuestionAndAnswers();
         String comment = (randomAlphanumeric(200));
-        Topics.createQuestionAndAnswers(question);
-        Topics.fillCommentToOwnQuestion(question, comment);
+        QuestionAndAnswersTopic.createQuestionAndAnswers(question);
+        QuestionAndAnswersTopic.fillCommentToQuestion(question, comment);
     }
 
     @Test(groups = "ui-tests")
@@ -57,9 +59,9 @@ public class QuestionAndAnswersTest {
         Users.signUpAndSignIn();
         QuestionAndAnswers question = new QuestionAndAnswers();
         String comment = (randomAlphanumeric(200));
-        Topics.createQuestionAndAnswers(question);
-        Topics.fillCommentToOwnQuestion(question, comment);
-        Topics.EditOwnCommentToQuestion(question, comment);
+        QuestionAndAnswersTopic.createQuestionAndAnswers(question);
+        QuestionAndAnswersTopic.fillCommentToQuestion(question, comment);
+        QuestionAndAnswersTopic.editCommentToQuestion(question, comment);
     }
 
     @Test(groups = "ui-tests")
@@ -67,17 +69,19 @@ public class QuestionAndAnswersTest {
         Users.signUpAndSignIn();
         QuestionAndAnswers question = new QuestionAndAnswers();
         String comment = (randomAlphanumeric(200));
-        Topics.createQuestionAndAnswers(question);
-        Topics.fillCommentToOwnQuestion(question, comment);
-        Topics.deleteOwnQAComment(question, comment);
+        QuestionAndAnswersTopic.createQuestionAndAnswers(question);
+        QuestionAndAnswersTopic.fillCommentToQuestion(question, comment);
+        QuestionAndAnswersTopic.deleteQAComment(question, comment);
+        Thread.sleep(100);
+        Assert.assertFalse(driver.getPageSource().contains(comment), "The comment is still present on the page");
     }
 
     @Test(groups = "ui-tests")
     public void addAnswerToOwnQuestion_ShouldPass() throws Exception {
         Users.signUpAndSignIn();
         QuestionAndAnswers question = new QuestionAndAnswers();
-        Topics.createQuestionAndAnswers(question);
-        Topics.answerToOwnQuestion(question);
+        QuestionAndAnswersTopic.createQuestionAndAnswers(question);
+        QuestionAndAnswersTopic.answerToQuestion(question);
 
     }
 }

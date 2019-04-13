@@ -32,6 +32,9 @@ public class QuestionAndAnswersPage extends TopicPage {
     @FindBys({@FindBy (css= "[class^='comment-content']")})
     private List<WebElement> commentFieldsContent;
 
+    @FindBys({@FindBy (css= "[class^='content']")})
+    private List<WebElement> answersContent;
+
     @FindBy(css= "[class='comment-textarea edit-comment']")
     private WebElement commentTextArea;
 
@@ -73,17 +76,12 @@ public class QuestionAndAnswersPage extends TopicPage {
     }
 
     public void fillQuesionAndAnswersFields(QuestionAndAnswers question) {
-        info("Filling code review title: [" + StringUtils.left(question.getTitle(), 100) + "...]");
+        info("Filling QA title: [" + StringUtils.left(question.getTitle(), 100) + "...]");
         getSubjectField().sendKeys(question.getTitle());
         fillBody(question.getFirstPost().getPostContent());
     }
 
-    public QuestionAndAnswers getAnswer (QuestionAndAnswers question) {
-        getSubjectField().click();
-        return question;
-    }
-
-    public void findProperComment (String comment) {
+    public String findComment (String comment) {
         info("Trying to find comment with content: " + comment);
         for (WebElement currentComment : getCommentFieldsContent()) {
             if (currentComment.getText().contains(comment)) {
@@ -94,6 +92,21 @@ public class QuestionAndAnswersPage extends TopicPage {
             }
             break;
         }
+        return comment;
+    }
+
+    public String findAnswer (String answer) {
+        info("Trying to find answer with content: " + answer);
+        for (WebElement currentAnswer : getAnswersContent()) {
+            if (currentAnswer.getText().contains(answer)) {
+                info("Answer was found.");
+            }
+            else {
+                info("Answer wasn't found.");
+            }
+            break;
+        }
+        return answer;
     }
 
 
@@ -143,7 +156,7 @@ public class QuestionAndAnswersPage extends TopicPage {
         }
     }
 
-    public void clickAnswerToOwnQuestionButton() throws PermissionsDeniedException {
+    public void clickAnswerToQuestionButton() throws PermissionsDeniedException {
         info("Clicking the button to answer to own question");
         try {
             getAnswerButton().click();
@@ -219,7 +232,7 @@ public class QuestionAndAnswersPage extends TopicPage {
         }
     }
 
-    public void addComment (String newComment){
+    public void editComment (String newComment){
         getCommentTextArea().clear();
         info("Filling new comment: " + newComment);
         getCommentTextArea().sendKeys(newComment);
@@ -258,6 +271,10 @@ public class QuestionAndAnswersPage extends TopicPage {
 
     public List<WebElement> getCommentFieldsContent() {
         return commentFieldsContent;
+    }
+
+    public List<WebElement> getAnswersContent() {
+        return answersContent;
     }
 
     public WebElement getDeleteCommentButton() {

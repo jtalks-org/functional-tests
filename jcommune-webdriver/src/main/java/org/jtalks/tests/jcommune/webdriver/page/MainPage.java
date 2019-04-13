@@ -257,13 +257,13 @@ public class MainPage {
     }
 
     @Step
-    public void checkingEnabledPlugins() {
+    public void ensurePlugingEnabled() {
         info("Checking if Q&A plugin is enabled");
         if (! QuestionAndAnswersCheckbox.isSelected()) {
             info("Q&A plugin is disabled. Switching it ON");
             QuestionAndAnswersCheckbox.click();
         } else {
-            info("Q&A plugin is enabled already, doing nothing");
+            info("Q&A plugin is already enabled, doing nothing");
         }
         info("Q&A plugin is switched ON");
     }

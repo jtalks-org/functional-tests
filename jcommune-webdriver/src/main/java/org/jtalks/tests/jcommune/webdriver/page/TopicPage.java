@@ -6,6 +6,7 @@ import org.jtalks.tests.jcommune.utils.DriverMethodHelp;
 import org.jtalks.tests.jcommune.webdriver.JCommuneSeleniumConfig;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.CodeReview;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Poll;
+import org.jtalks.tests.jcommune.webdriver.entity.topic.QuestionAndAnswers;
 import org.jtalks.tests.jcommune.webdriver.entity.topic.Topic;
 import org.jtalks.tests.jcommune.webdriver.exceptions.PermissionsDeniedException;
 import org.openqa.selenium.NoSuchElementException;
@@ -242,6 +243,7 @@ public class TopicPage {
         getSubjectField().sendKeys(codeReview.getTitle());
         fillBody(codeReview.getContent());
     }
+
     
     //Getters
 
